@@ -1,6 +1,9 @@
-# 2024_2_WEB_1
-<br>
+# 독도의 기억
 
+
+![image](https://github.com/user-attachments/assets/b318257d-88fc-4cf0-857b-327d0e2268ae)
+
+<br>
 
 ## 🖥️Introduction
 역사 의식을 키우고 재미를 더하는 방탈출 웹 게임 
