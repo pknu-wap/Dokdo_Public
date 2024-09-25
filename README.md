@@ -1,9 +1,16 @@
 # 2024_2_WEB_1
-역사 의식을 키우고, 재미를 기여하기 위한 방탈출 웹게임 
+<br>
+
+
+## 🖥️Introduction
+역사 의식을 키우고 재미를 더하는 방탈출 웹 게임 
+
+<br>
+
+
 
 
 ## 🎮Contributors
-
 ### Front-End
 <table>
   <tr>
