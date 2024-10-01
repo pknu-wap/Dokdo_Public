@@ -1,7 +1,7 @@
 ---
 name: "\U0001F9F8FEATURE"
 about: 해당 이슈 생성 템플릿을 사용하여 새로운 기능 이슈를 생성해주세요!
-title: "[Feat] 이슈 제목"
+title: "[FEAT] 이슈 제목"
 labels: ''
 assignees: ''
 
