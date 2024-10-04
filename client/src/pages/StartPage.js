@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 function StartPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [nickname, setNickname] = useState();
+  const [nickname, setNickname] = useState('');
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -16,8 +16,8 @@ function StartPage() {
   };
 
   const handleSubmitNickname = () => {
-    console.log('닉네임:', nickname); // 닉네임을 콘솔에 출력
-    handleCloseModal(); // 모달 닫기
+    console.log('닉네임:', nickname); /* 닉네임을 콘솔에 출력 */
+    handleCloseModal(); /* 모달 닫기 */
   };
 
   return (
@@ -29,10 +29,10 @@ function StartPage() {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        title="닉네임 입력"
         onSubmit={handleSubmitNickname}
-        size="small" // 모달 크기 지정
+        size="small" /* 모달 크기 지정 */
       >
+        <h2>닉네임을 입력하세요.</h2>
         <input
           type="text"
           value={nickname}

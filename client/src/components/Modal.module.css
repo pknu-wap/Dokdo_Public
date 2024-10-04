@@ -29,3 +29,8 @@
   width: 900px; /* 큰 모달 */
   height: 700px;
 }
+
+.CloseButtonBox {
+  display: flex;
+  justify-content: flex-end;
+}

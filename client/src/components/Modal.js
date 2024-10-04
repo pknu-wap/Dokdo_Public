@@ -1,28 +1,30 @@
 import React from 'react';
 import styles from './Modal.module.css';
 
-const Modal = ({ isOpen, onClose, title, children, onSubmit, size = 'medium' }) => {
+const Modal = ({ isOpen, onClose, children, onSubmit, size = 'medium' }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (onSubmit) {
       onSubmit();
     }
-    onClose(); // 모달 닫기
+    onClose();
   };
 
-  if (!isOpen) return null; // 모달이 열리지 않으면 아무것도 렌더링하지 않음
+  if (!isOpen) return null; /* 모달이 열리지 않으면 아무것도 렌더링하지 않음 */
 
   return (
     <div className={styles.ModalContainer}>
       <div className={styles.ModalContent}>
-        <div className={`${styles.ModalContent} ${styles[size]}`}>
-          <h2>{title}</h2>
+        <div className={`${styles.ModalContent} ${styles[size]}`} onSubmit={handleSubmit}>
           <form onSubmit={handleSubmit}>
+            <div className={styles.CloseButtonBox}>
+              <button className={styles.CloseButton} type="button" onClick={onClose}>
+                X
+              </button>
+            </div>
+
             {children}
-            <button type="submit">제출</button>
-            <button type="button" onClick={onClose}>
-              취소
-            </button>
+            <button type="submit">확인</button>
           </form>
         </div>
       </div>
