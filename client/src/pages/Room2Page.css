@@ -1,0 +1,47 @@
+.Room2Box {
+  position: absolute;
+  top: 0px;
+  width: 200px;
+  height: 250px;
+}
+
+.Room2Box button {
+  width: 200px;
+  height: 250px;
+  background: none;
+  border: none;
+  padding-top: 350px;
+  padding-left: 50px;
+}
+
+.Room2Box img {
+  position: absolute;
+  top: 0px;
+  width: 200px;
+  height: 250px;
+}
+
+.background {
+  background-color: #c1a693;
+}
+
+.Room2Door {
+  padding-top: 300px;
+  padding-left: 500px;
+  grid-area: f;
+  width: 150px;
+  height: 200px;
+}
+
+.Room2Door img {
+  width: 100%;
+}
+
+.Room2Door button {
+  width: 200px;
+  height: auto;
+  padding: 0;
+  background: none;
+  border: none;
+  display: block;
+}
