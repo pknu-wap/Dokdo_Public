@@ -1,0 +1,33 @@
+.IntroBg {
+  height: 100vh;
+  background-color: black;
+  color: white;
+  position: relative;
+}
+
+.Center {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.Unvisible {
+  opacity: 0;
+}
+
+.FadeInOut {
+  animation: fadeInOutAnimation 7.5s ease-in-out 1;
+}
+
+@keyframes fadeInOutAnimation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
