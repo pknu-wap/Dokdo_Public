@@ -1,11 +1,10 @@
-.Room2Box {
-  position: absolute;
+.Stage2Box {
   top: 0px;
   width: 200px;
   height: 250px;
 }
 
-.Room2Box button {
+.Stage2Box button {
   width: 200px;
   height: 250px;
   background: none;
@@ -14,8 +13,7 @@
   padding-left: 50px;
 }
 
-.Room2Box img {
-  position: absolute;
+.Stage2Box img {
   top: 0px;
   width: 200px;
   height: 250px;
@@ -25,7 +23,7 @@
   background-color: #c1a693;
 }
 
-.Room2Door {
+.Stage2Door {
   padding-top: 300px;
   padding-left: 500px;
   grid-area: f;
@@ -33,11 +31,11 @@
   height: 200px;
 }
 
-.Room2Door img {
+.Stage2Door img {
   width: 100%;
 }
 
-.Room2Door button {
+.Stage2Door button {
   width: 200px;
   height: auto;
   padding: 0;

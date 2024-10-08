@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import './Room2Page.css';
+import './Stage2Page.css';
 import ToolBar from '../components/ToolBar.js';
 import { useState } from 'react';
-import BoxOpen from '../assets/Room2BoxOpen.png';
-import BoxClose from '../assets/Room2Box.png';
-import Door from '../assets/Room2Door.png';
+import BoxOpen from '../assets/Stage2BoxOpen.png';
+import BoxClose from '../assets/Stage2Box.png';
+import Door from '../assets/Stage2Door.png';
 
-function Room2Page() {
+function Stage2Page() {
   const [image, setImage] = useState(BoxClose);
   const handleImage = () => {
     setImage(BoxOpen);
@@ -18,12 +18,12 @@ function Room2Page() {
   return (
     <div>
       <ToolBar> </ToolBar>
-      <div className="Room2Door">
+      <div className="Stage2Door">
         <button onClick={() => {}}>
           <img src={Door} />
         </button>
       </div>
-      <div className="Room2Box">
+      <div className="Stage2Box">
         <button
           onClick={() => {
             handleImage();
@@ -37,4 +37,4 @@ function Room2Page() {
   );
 }
 
-export default Room2Page;
+export default Stage2Page;

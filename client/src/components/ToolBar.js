@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './ToolBar.css';
+import './ToolBar.module.css';
 
 function ToolBar() {
   return (
