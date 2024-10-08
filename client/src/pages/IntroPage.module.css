@@ -17,7 +17,7 @@
 }
 
 .FadeInOut {
-  animation: fadeInOutAnimation 5s ease-in-out 1;
+  animation: fadeInOutAnimation 7.5s ease-in-out 1;
 }
 
 @keyframes fadeInOutAnimation {
