@@ -6,18 +6,18 @@ import BoxClose from '../assets/Stage2Box.png';
 import Door from '../assets/Stage2Door.png';
 
 function Stage2Page() {
-  const [handleChangeimage, setHandleChangeImage] = useState(BoxClose);
-  const [isStage2, isSetStage2] = useState(true);
-  const handleImage = () => {
-    setHandleChangeImage(BoxOpen);
+  const [changeimage, setChangeImage] = useState(BoxClose);
+  const [isStage2Open, isSetStage2Open] = useState(true);
+  const handleChangeImage = () => {
+    setChangeImage(BoxOpen);
     setTimeout(() => {
-      setHandleChangeImage(BoxClose);
+      setChangeImage(BoxClose);
       console.log('지연완료');
     }, 1000);
   };
   return (
     <div>
-      <ToolBar isStage2Open={isStage2} />
+      <ToolBar isStage2Open={isStage2Open} />
       <div className="Stage2Door">
         <button onClick={() => {}}>
           <img src={Door} />
@@ -26,10 +26,10 @@ function Stage2Page() {
       <div className="Stage2Box">
         <button
           onClick={() => {
-            handleImage();
+            handleChangeImage();
           }}
         >
-          <img src={handleChangeimage} alt="loading" />
+          <img src={changeimage} alt="loading" />
         </button>
       </div>
       <div className="Inventory" />
