@@ -6,7 +6,7 @@ import BoxClose from '../assets/Stage2Box.png';
 import Door from '../assets/Stage2Door.png';
 
 function Stage2Page() {
-  const [changeimage, setChangeImage] = useState(BoxClose);
+  const [changeImage, setChangeImage] = useState(BoxClose);
   const [isStage2Open, isSetStage2Open] = useState(true);
   const handleChangeImage = () => {
     setChangeImage(BoxOpen);
@@ -29,7 +29,7 @@ function Stage2Page() {
             handleChangeImage();
           }}
         >
-          <img src={changeimage} alt="loading" />
+          <img src={changeImage} alt="loading" />
         </button>
       </div>
       <div className="Inventory" />
