@@ -22,7 +22,6 @@ const Modal = ({ isOpen, onClose, children, onSubmit, size = 'medium' }) => {
                 X
               </button>
             </div>
-
             {children}
             <button type="submit">확인</button>
           </form>

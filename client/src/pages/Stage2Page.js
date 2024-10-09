@@ -1,4 +1,3 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './Stage2Page.css';
 import ToolBar from '../components/ToolBar.js';
 import { useState } from 'react';
@@ -7,17 +6,18 @@ import BoxClose from '../assets/Stage2Box.png';
 import Door from '../assets/Stage2Door.png';
 
 function Stage2Page() {
-  const [image, setImage] = useState(BoxClose);
-  const handleImage = () => {
-    setImage(BoxOpen);
+  const [changeImage, setChangeImage] = useState(BoxClose);
+  const [isStage2Open, isSetStage2Open] = useState(true);
+  const handleChangeImage = () => {
+    setChangeImage(BoxOpen);
     setTimeout(() => {
-      setImage(BoxClose);
+      setChangeImage(BoxClose);
       console.log('지연완료');
     }, 1000);
   };
   return (
     <div>
-      <ToolBar> </ToolBar>
+      <ToolBar isStage2Open={isStage2Open} />
       <div className="Stage2Door">
         <button onClick={() => {}}>
           <img src={Door} />
@@ -26,10 +26,10 @@ function Stage2Page() {
       <div className="Stage2Box">
         <button
           onClick={() => {
-            handleImage();
+            handleChangeImage();
           }}
         >
-          <img src={image} alt="loading" />
+          <img src={changeImage} alt="loading" />
         </button>
       </div>
       <div className="Inventory" />

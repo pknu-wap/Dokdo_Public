@@ -1,23 +1,30 @@
 import { Link } from 'react-router-dom';
-import './ToolBar.module.css';
+import styles from './ToolBar.module.css';
 
-function ToolBar() {
+const ToolBar = ({ isStage2Open = false, isStage3Open = false } /* stage 상태(true,false) 따라 열리고 닫힘*/) => {
   return (
-    <div className="Grid">
-      <Link to="/Room1" className="ToolBar" style={{ textDecoration: 'none', gridArea: 'a' }}>
-        Room1
+    <div>
+      <div className={styles.ToolBarBackground} />
+      <Link to="/Stage1" className={styles.ToolBartrue}>
+        Stage1
       </Link>
-      <Link to="/Room2Page" className="ToolBar" style={{ textDecoration: 'none', gridArea: 'b' }}>
-        Room2
-      </Link>
-      <Link to="/Room3Page" className="ToolBar" style={{ textDecoration: 'none', gridArea: 'c' }}>
-        Room3
-      </Link>
-      <div style={{ gridArea: 'f', backgroundColor: '#ffffff' }} />
+      {isStage2Open === true ? (
+        <Link to="/Stage2Page" className={styles.ToolBartrue}>
+          Stage2
+        </Link>
+      ) : (
+        <Link className={styles.ToolBarfalse}>Stage2</Link>
+      )}
 
-      <div className="Inventory" />
+      {isStage3Open === true ? (
+        <Link to="/Stage3Page" className={styles.ToolBartrue}>
+          Stage3
+        </Link>
+      ) : (
+        <Link className={styles.ToolBarfalse}>Stage3</Link>
+      )}
     </div>
   );
-}
+};
 
 export default ToolBar;

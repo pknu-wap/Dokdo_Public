@@ -4,23 +4,10 @@
   height: 250px;
 }
 
-.Stage2Box button {
-  width: 200px;
-  height: 250px;
-  background: none;
-  border: none;
-  padding-top: 350px;
-  padding-left: 50px;
-}
-
 .Stage2Box img {
   top: 0px;
   width: 200px;
   height: 250px;
-}
-
-.background {
-  background-color: #c1a693;
 }
 
 .Stage2Door {

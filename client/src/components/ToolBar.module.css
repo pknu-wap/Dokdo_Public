@@ -6,43 +6,49 @@
     opacity: 1;
   }
 }
-
-.Grid {
-  display: grid;
-  grid-template-columns: 2fr 2fr 2fr 7fr 4fr;
-  grid-template-rows: 1fr 10fr 1fr 90fr;
-  grid-template-areas:
-    'h h h h e'
-    'a b c d e'
-    'g g g g e'
-    'f f f f e';
-  height: 100vh;
-  width: 100vw;
+.ToolBarBackground {
+  position: absolute;
   background-color: #c1a693;
+  height: 10%;
+  width: 100%;
+  z-index: -1;
 }
 
-.background {
-  background-color: #c1a693;
-}
-
-.ToolBar {
+.ToolBartrue {
+  position: relative;
+  top: 25px;
   background-color: #ddc2af;
   border-radius: 15px;
-  font-display: center;
   text-align: center;
   font-size: large;
   border-right: 5px solid #a98974;
   border-top: 3px solid #a98974;
   color: #000000;
   font-weight: bold;
-  padding: 20px;
   text-decoration: none;
-}
-.ToolBar:hover {
-  animation: fadein 1.5s;
+  padding: 20px;
+  margin-left: 5px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
-.Inventory {
-  background-color: #ddc2af;
-  grid-area: e;
+.ToolBarfalse {
+  position: relative;
+  top: 25px;
+  background-color: darkgrey;
+  border-radius: 15px;
+  text-align: center;
+  font-size: large;
+  border-right: 5px solid grey;
+  border-top: 3px solid grey;
+  color: grey;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  margin-left: 5px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.ToolBartrue:hover {
+  animation: fadein 1.5s;
 }
