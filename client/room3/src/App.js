@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import R3BoardZoom from './R3/R3BoardZoom';
