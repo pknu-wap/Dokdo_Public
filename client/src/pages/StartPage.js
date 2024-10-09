@@ -2,10 +2,13 @@ import styles from './StartPage.module.css';
 import Logo from '../assets/logo.png';
 import Modal from '../components/Modal';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function StartPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [nickname, setNickname] = useState('');
+
+  const navigate = useNavigate(); /* useNavigate 훅 사용 */
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -18,6 +21,7 @@ function StartPage() {
   const handleSubmitNickname = () => {
     console.log('닉네임:', nickname); /* 닉네임을 콘솔에 출력 */
     handleCloseModal(); /* 모달 닫기 */
+    navigate('/intro');
   };
 
   return (
