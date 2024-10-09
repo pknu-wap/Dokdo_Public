@@ -17,7 +17,7 @@ function Stage2Page() {
   };
   return (
     <div>
-      <ToolBar stage2Open={isStage2} />
+      <ToolBar isStage2Open={isStage2} />
       <div className="Stage2Door">
         <button onClick={() => {}}>
           <img src={Door} />
