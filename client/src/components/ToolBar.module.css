@@ -6,17 +6,21 @@
     opacity: 1;
   }
 }
+
+.ToolBarBtn {
+  padding: 1.7% 3.5%;
+  margin-left: 5px;
+}
+
 .ToolBarBackground {
-  position: absolute;
+  position: fixed;
   background-color: #c1a693;
-  height: 10%;
+  height: fit-content;
   width: 100%;
-  z-index: -1;
+  padding: 2.5% 0.5%;
 }
 
 .ToolBartrue {
-  position: relative;
-  top: 25px;
   background-color: #ddc2af;
   border-radius: 15px;
   text-align: center;
@@ -26,15 +30,9 @@
   color: #000000;
   font-weight: bold;
   text-decoration: none;
-  padding: 20px;
-  margin-left: 5px;
-  padding-left: 40px;
-  padding-right: 40px;
 }
 
 .ToolBarfalse {
-  position: relative;
-  top: 25px;
   background-color: darkgrey;
   border-radius: 15px;
   text-align: center;
@@ -44,11 +42,8 @@
   color: grey;
   font-weight: bold;
   text-decoration: none;
-  padding: 20px;
-  margin-left: 5px;
-  padding-left: 40px;
-  padding-right: 40px;
 }
+
 .ToolBartrue:hover {
   animation: fadein 1.5s;
 }
