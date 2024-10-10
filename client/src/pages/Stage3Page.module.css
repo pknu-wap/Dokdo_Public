@@ -1,12 +1,72 @@
+.Stage3Page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .Stage3wall {
   width: 800px;
   position: absolute;
-  transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 위쪽 및 좌우로 이동 */
-  top: 40%;
+  top: 10%;
   left: 50%;
+  transform: translateX(-50%);
 }
 
-.Modal {
-  position: absolute;
-  top: 100%;
+/* 전체 그리드 레이아웃 */
+.ImageGrid {
+  display: grid;
+  grid-template-areas:
+    "flag1 flag2 flag3 flag4 flag5"
+    "flag6 center center center flag7"
+    "flag8 center center center flag9"
+    "flag10 flag11 flag12 flag13 flag14";
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* 국기 아이템 스타일 */
+.FlagItem {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+}
+
+/* 중앙의 인물 이미지 컨테이너 */
+.CenterContainer {
+  grid-area: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+}
+
+/* 인물 이미지 스타일 */
+.ImageItem {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+}
+
+/* 선택된 이미지 스타일 */
+.Selected {
+  border: 4px solid green;
+}
+
+.CheckAnswerButton {
+  margin-top: 20px;
+}
+
+.ResultMessage {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: red;
 }
