@@ -5,3 +5,8 @@
   top: 40%;
   left: 50%;
 }
+
+.Modal {
+  position: absolute;
+  top: 100%;
+}
