@@ -1,4 +1,4 @@
 package com.example.rememberdokdo.Repository;
 
-public class StageRepository {
+public interface SessionRepository {
 }
