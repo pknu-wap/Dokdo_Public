@@ -57,6 +57,7 @@ function Stage3Page() {
     }
   };
 
+  /* 정답,오답 표시해주는 기능은 아직 구현 못했어요 */
   const handleCheckAnswer = () => {
     const selectedIds = selectedImage.map(img => img.id);
     console.log('Selected Images:', selectedImage);
@@ -77,7 +78,6 @@ function Stage3Page() {
         src={Stage3wall} 
         alt="스테이지3벽"
         onClick={handleOpenModal} />
-
 
       <div className="Stage3Modal">
         <Modal
@@ -117,8 +117,6 @@ function Stage3Page() {
               ))}
             </div>
           </div>
-
-
 
           {resultMessage && <p className={styles.ResultMessage}>{resultMessage}</p>}
         </Modal>
