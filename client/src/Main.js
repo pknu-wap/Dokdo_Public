@@ -12,10 +12,10 @@ function Main() {
       <App>
         <Routes>
           <Route path="/" element={<StartPage />} />
-          <Route path="stage2" element={<Stage2Page />} />
           <Route path="intro" element={<IntroPage />} />
           <Route path="intro/news" element={<NewsPage />} />
           <Route path="stage1" element={<Stage1Page />} />
+          <Route path="stage2" element={<Stage2Page />} />
         </Routes>
       </App>
     </BrowserRouter>

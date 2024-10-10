@@ -1,4 +1,19 @@
 .Stage1Bg {
   width: 100%;
   height: 100vh;
+  position: relative;
+}
+
+.Stage1DoorBtn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 60%;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}
+
+.Stage1DoorImg {
+  height: 500px;
 }
