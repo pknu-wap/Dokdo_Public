@@ -1,4 +1,4 @@
-package com.example.rememberdokdo.Dto;
+package com.example.rememberdokdo.Dto.Inventory;
 
 public class InventoryItemAddDto {
     private Long itemId; // 아이템 식별자

@@ -1,4 +1,4 @@
-package com.example.rememberdokdo.Dto;
+package com.example.rememberdokdo.Dto.Inventory;
 
 public class InventoryAddRequestDto {
     private Long sessionId; // 세션 식별자(넣을지 고민중)
