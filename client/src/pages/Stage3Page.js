@@ -79,7 +79,7 @@ function Stage3Page() {
         alt="스테이지3벽"
         onClick={handleOpenModal} />
 
-      <div className="Stage3Modal">
+      <div className={styles.Stage3Modal}>
         <Modal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
