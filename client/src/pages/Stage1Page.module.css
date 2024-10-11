@@ -4,16 +4,20 @@
   position: relative;
 }
 
-.Stage1DoorBtn {
+.Stage1DoorImg {
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 50%;
-  left: 60%;
-  width: fit-content;
-  height: fit-content;
   cursor: pointer;
 }
 
-.Stage1DoorImg {
-  height: 500px;
+.Stage1DoorClose {
+  height: 55%;
+  top: 50%;
+  left: 60%;
+}
+
+.Stage1DoorOpen {
+  top: 52.5%;
+  left: 60%;
+  height: 62%;
 }

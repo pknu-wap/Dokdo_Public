@@ -1,9 +1,10 @@
 import styles from './Stage1Page.module.css';
 import ToolBar from '../components/ToolBar.js';
-import { useEffect, useState } from 'react';
-import Door from '../assets/Stage2Door.png';
+import { useState } from 'react';
+import DoorClose from '../assets/stage1/Stage1DoorClose.png';
+import DoorOpen from '../assets/stage1/Stage1DoorOpen.png';
 
-function BeatButton({ bpm }) {
+function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
   const [clickTimestamps, setClickTimestamps] = useState([]); /* 클릭 타임 스탬프 저장 */
   const [timer, setTimer] = useState(null); /* 타이머 상태 */
@@ -11,7 +12,7 @@ function BeatButton({ bpm }) {
   /* 각 박자에 대한 간격 (밀리초) */
   const beatCounts = [3, 3, 7]; /* 3-3-7 박자 */
   const totalClicksRequired = 13; /* 필요한 클릭 수 */
-  const minGapBetweenBeats = 200; /* 비트 간 최소 간격 (100ms) */
+  const minGapBetweenBeats = 200; /* 비트 간 최소 간격 (200ms) */
 
   const handleClickDoor = () => {
     /* 필요 이상의 클릭 시 감지하지 않음 */
@@ -41,12 +42,6 @@ function BeatButton({ bpm }) {
   };
 
   const checkSuccess = () => {
-    // if (clickTimestamps.length !== totalClicksRequired) {
-    //   setIsCorrectTiming(false);
-    //   resetAll();
-    //   return;
-    // }
-
     /* 각 비트 간의 간격을 확인 */
     for (let i = 1; i < clickTimestamps.length; i++) {
       const gap = clickTimestamps[i] - clickTimestamps[i - 1];
@@ -58,7 +53,6 @@ function BeatButton({ bpm }) {
     }
 
     setIsCorrectTiming(true);
-    alert('성공!');
     resetAll();
   };
 
@@ -72,9 +66,15 @@ function BeatButton({ bpm }) {
 
   return (
     <>
-      <button className={styles.Stage1DoorBtn} onClick={handleClickDoor}>
-        <img className={styles.Stage1DoorImg} src={Door} />
-      </button>
+      {isCorrectTiming ? (
+        <img className={`${styles.Stage1DoorImg} ${styles.Stage1DoorOpen}`} src={DoorOpen} />
+      ) : (
+        <img
+          className={`${styles.Stage1DoorImg} ${styles.Stage1DoorClose}`}
+          src={DoorClose}
+          onClick={handleClickDoor}
+        />
+      )}
     </>
   );
 }
