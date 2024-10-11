@@ -3,6 +3,10 @@ import ToolBar from '../components/ToolBar.js';
 import { useState } from 'react';
 import DoorClose from '../assets/stage1/Stage1DoorClose.png';
 import DoorOpen from '../assets/stage1/Stage1DoorOpen.png';
+import Table from '../assets/stage1/Stage1Table.png';
+import Music from '../assets/stage1/Music.png';
+import DrawerClose from '../assets/stage1/Stage1DrawerClose.png';
+import DrawerOpen from '../assets/stage1/Stage1DrawerOpen.png';
 
 function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
@@ -81,12 +85,29 @@ function BeatButton() {
 
 function Stage1Page() {
   const [isStage1DoorOpen, setIsStage1DoorOpen] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleClickDrawer = () => {
+    setIsDrawerOpen(true);
+  };
 
   return (
     <>
       <ToolBar isStage2Open={isStage1DoorOpen} />
       <div className={styles.Stage1Bg}>
+        <div className={styles.Stage1Floor} />
         <BeatButton />
+        <img className={styles.Stage1Table} src={Table} />
+        <img className={styles.Stage1Music} src={Music} />
+        {isDrawerOpen ? (
+          <img className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen}`} src={DrawerOpen} />
+        ) : (
+          <img
+            className={`${styles.Stage1Drawer} ${styles.Stage1DrawerClose}`}
+            src={DrawerClose}
+            onClick={handleClickDrawer}
+          />
+        )}
       </div>
     </>
   );
