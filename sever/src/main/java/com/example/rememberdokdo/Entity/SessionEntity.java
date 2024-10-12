@@ -23,7 +23,7 @@ public class SessionEntity {
     @Column(name = "sessionId", nullable = false, length = 255)
     private String sessionId;  // 세션 ID
 
-    @Column(name = "userId", nullable = false, length = 255)
+    @Column(name = "userId", nullable = true, length = 255)
     private String userId;  // 사용자 ID
 
     @Column(name = "createdAt", nullable = false)

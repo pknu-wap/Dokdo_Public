@@ -1,5 +1,4 @@
 package com.example.rememberdokdo.Service;
-
 import com.example.rememberdokdo.Dto.SessionDto;
 import com.example.rememberdokdo.Entity.SessionEntity;
 import com.example.rememberdokdo.Repository.SessionRepository;
@@ -8,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,71 +17,49 @@ public class SessionService {
     @Autowired
     private SessionRepository sessionRepository;
 
-    // 브라우저 접속 시 세션 시작
+    // 브라우저 접속 또는 새로고침 시 무조건 새로운 세션 발급
     public SessionDto startSession(HttpServletRequest request, HttpServletResponse response) {
-        // 기존 세션 쿠키 확인
-        Cookie[] cookies = request.getCookies();
-        String sessionId = null;
+        // 새로운 세션 ID 생성
+        String sessionId = UUID.randomUUID().toString();
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("SESSIONID".equals(cookie.getName())) {
-                    sessionId = cookie.getValue();
-                    break;
-                }
-            }
-        }
+        // 새로운 세션 쿠키 생성
+        createSessionCookie(sessionId, response);
 
-        // 기존 세션이 없거나 유효하지 않으면 새로운 세션 생성
-        if (sessionId == null || !validateSession(sessionId)) {
-            sessionId = UUID.randomUUID().toString();  // 새로운 세션 ID 생성
-            createSessionCookie(sessionId, response);  // 쿠키에 저장
+        // 새로운 세션 엔티티 생성
+        SessionEntity sessionEntity = SessionEntity.builder()
+                .sessionId(sessionId)
+                .userId(null)  // 게임 클리어 시 저장될 예정
+                .createdAt(LocalDateTime.now())
+                .expiresAt(LocalDateTime.now().plusHours(1))  // 1시간 세션 유지
+                .isActive(true)
+                .build();
 
-            // 새로운 세션 엔티티 생성
-            SessionEntity sessionEntity = SessionEntity.builder()
-                    .sessionId(sessionId)  // 세션 ID는 null이 아닌, 새로 생성된 값
-                    .userId(null)  // 게임 클리어 시 저장될 예정
-                    .createdAt(LocalDateTime.now())
-                    .expiresAt(LocalDateTime.now().plusHours(1))  // 1시간 세션 유지
-                    .isActive(true)
-                    .build();
-
-            // 세션 정보를 DB에 저장
-            sessionRepository.save(sessionEntity);
-        }
+        // 세션 정보를 DB에 저장
+        sessionRepository.save(sessionEntity);
 
         // 세션 정보를 반환
-        SessionEntity sessionEntity = sessionRepository.findById(sessionId).orElseThrow();
         return SessionDto.fromEntity(sessionEntity);
     }
 
-    // 세션 유효성 확인
-    public boolean validateSession(String sessionId) {
-        if (sessionId == null) {
-            return false;  // 세션 ID가 없으면 false
-        }
-
-        Optional<SessionEntity> sessionOpt = sessionRepository.findBySessionidAndExpiresAtAfter(sessionId, LocalDateTime.now());
-        return sessionOpt.isPresent();  // 유효한 세션이 있으면 true, 없으면 false
-    }
-
     // 세션 갱신 또는 새로 발급
-    public SessionDto refreshSession(String sessionId, HttpServletResponse response) {
-        if (!validateSession(sessionId)) {
-            sessionId = UUID.randomUUID().toString();  // 새로운 세션 ID 생성
-            createSessionCookie(sessionId, response);  // 쿠키에 새로 저장
-            SessionEntity sessionEntity = SessionEntity.builder()
-                    .sessionId(sessionId)
-                    .userId(null)
-                    .createdAt(LocalDateTime.now())
-                    .expiresAt(LocalDateTime.now().plusHours(1))
-                    .isActive(true)
-                    .build();
+    public SessionDto refreshSession(HttpServletRequest request, HttpServletResponse response) {
+        // 새로운 세션 ID 생성
+        String sessionId = UUID.randomUUID().toString();
 
-            sessionRepository.save(sessionEntity);
-            return SessionDto.fromEntity(sessionEntity);
-        }
-        return SessionDto.fromEntity(sessionRepository.findById(sessionId).orElseThrow());
+        // 새로운 세션 쿠키 생성
+        createSessionCookie(sessionId, response);
+
+        // 새로운 세션 엔티티 생성
+        SessionEntity sessionEntity = SessionEntity.builder()
+                .sessionId(sessionId)
+                .userId(null)
+                .createdAt(LocalDateTime.now())
+                .expiresAt(LocalDateTime.now().plusHours(1))  // 세션 만료 시간 1시간 설정
+                .isActive(true)
+                .build();
+
+        sessionRepository.save(sessionEntity);
+        return SessionDto.fromEntity(sessionEntity);
     }
 
     /* 사용자 게임 클리어 시 userId 저장 (닉네임 저장)

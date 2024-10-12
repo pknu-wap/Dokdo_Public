@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface SessionRepository extends JpaRepository<SessionEntity, String> {
 
     // 세션 ID로 유효한 세션 조회 (만료되지 않은 세션)
-    Optional<SessionEntity> findBySessionidAndExpiresAtAfter(String sessionId, LocalDateTime currentTime);
+    Optional<SessionEntity> findBySessionIdAndExpiresAtAfter(String sessionId, LocalDateTime currentTime);
 }
