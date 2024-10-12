@@ -33,13 +33,14 @@ public class SessionService {
             }
         }
 
-        if (sessionId == null || !validateSession(sessionId)) {// 기존 세션이 없으면 새로운 세션 생성
+        // 기존 세션이 없거나 유효하지 않으면 새로운 세션 생성
+        if (sessionId == null || !validateSession(sessionId)) {
             sessionId = UUID.randomUUID().toString();  // 새로운 세션 ID 생성
             createSessionCookie(sessionId, response);  // 쿠키에 저장
 
             // 새로운 세션 엔티티 생성
             SessionEntity sessionEntity = SessionEntity.builder()
-                    .sessionid(null)
+                    .sessionId(sessionId)  // 세션 ID는 null이 아닌, 새로 생성된 값
                     .userId(null)  // 게임 클리어 시 저장될 예정
                     .createdAt(LocalDateTime.now())
                     .expiresAt(LocalDateTime.now().plusHours(1))  // 1시간 세션 유지
@@ -57,13 +58,12 @@ public class SessionService {
 
     // 세션 유효성 확인
     public boolean validateSession(String sessionId) {
-        Optional<SessionEntity> sessionOpt = sessionRepository.findById(sessionId);
-        if (sessionOpt.isEmpty()) {
-            return false;  // 세션이 없으면 false
+        if (sessionId == null) {
+            return false;  // 세션 ID가 없으면 false
         }
 
-        SessionEntity session = sessionOpt.get();
-        return session.getExpiresAt().isAfter(LocalDateTime.now());  // 만료 시간 확인
+        Optional<SessionEntity> sessionOpt = sessionRepository.findBySessionidAndExpiresAtAfter(sessionId, LocalDateTime.now());
+        return sessionOpt.isPresent();  // 유효한 세션이 있으면 true, 없으면 false
     }
 
     // 세션 갱신 또는 새로 발급
@@ -72,7 +72,7 @@ public class SessionService {
             sessionId = UUID.randomUUID().toString();  // 새로운 세션 ID 생성
             createSessionCookie(sessionId, response);  // 쿠키에 새로 저장
             SessionEntity sessionEntity = SessionEntity.builder()
-                    .sessionid(sessionId)
+                    .sessionId(sessionId)
                     .userId(null)
                     .createdAt(LocalDateTime.now())
                     .expiresAt(LocalDateTime.now().plusHours(1))
@@ -85,7 +85,7 @@ public class SessionService {
         return SessionDto.fromEntity(sessionRepository.findById(sessionId).orElseThrow());
     }
 
-    /*사용자 게임 클리어 시 userId 저장 (닉네임 저장)
+    /* 사용자 게임 클리어 시 userId 저장 (닉네임 저장)
     public SessionDto updateUserId(String sessionId, String userId) {
         SessionEntity session = sessionRepository.findById(sessionId).orElseThrow();
         session.setUserId(userId);  // 사용자 ID(닉네임) 업데이트

@@ -22,7 +22,7 @@ public class SessionDto {
     // Entity -> DTO 변환
     public static SessionDto fromEntity(SessionEntity sessionEntity) {
         return new SessionDto(
-                sessionEntity.getSessionid(),
+                sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 sessionEntity.getCreatedAt(),
                 sessionEntity.getExpiresAt(),
@@ -33,7 +33,7 @@ public class SessionDto {
     // DTO -> Entity 변환
     public SessionEntity toEntity() {
         return SessionEntity.builder()
-                .sessionid(this.sessionId)
+                .sessionId(this.sessionId)
                 .userId(this.userId)
                 .createdAt(this.createdAt)
                 .expiresAt(this.expiresAt)

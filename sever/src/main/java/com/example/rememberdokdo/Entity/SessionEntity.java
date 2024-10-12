@@ -21,7 +21,7 @@ public class SessionEntity {
 
     @Id
     @Column(name = "sessionId", nullable = false, length = 255)
-    private String sessionid;  // 세션 ID
+    private String sessionId;  // 세션 ID
 
     @Column(name = "userId", nullable = false, length = 255)
     private String userId;  // 사용자 ID
