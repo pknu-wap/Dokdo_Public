@@ -28,7 +28,7 @@ function StartPage() {
     <div className={styles.BackGround}>
       <img className={styles.Logo} src={Logo} alt="독도의 기억 로고" />
       <button onClick={handleOpenModal} className={styles.Button}>
-        시작
+        시 작
       </button>
       <Modal
         isOpen={isModalOpen}
