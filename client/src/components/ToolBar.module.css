@@ -33,9 +33,6 @@
   background-color: transparent;
 }
 
-.ToolBartrue {
-}
-
 .ToolBarfalse {
   color: grey;
   filter: grayscale(100%);
