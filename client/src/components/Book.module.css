@@ -5,31 +5,63 @@
   perspective: 1000px;
 }
 
-.Book {
+.RightBookWrapper {
   position: absolute;
   top: 17%;
-  left: 26%;
-  width: 45%;
+  width: 25%;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+  left: 49%;
+  transform-origin: left center;
+}
+
+.LeftBookWrapper {
+  position: absolute;
+  top: 17%;
+  width: 25%;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+  left: 24%;
+  transform-origin: right center;
+}
+
+.Page {
+  width: 100%;
+  height: 100%;
+}
+
+.PreviousFlipped {
+  transform: rotateY(-180deg);
+}
+
+.NextFlipped {
+  transform: rotateY(+180deg);
+}
+
+.Book {
+  width: 100%;
 }
 
 .PreviousButton {
   width: 3%;
   height: 8%;
   position: absolute;
-  top: 70%;
+  top: 73%;
+  background: transparent;
   left: 31%;
   border: none;
-  background: transparent;
+  cursor: pointer;
 }
 
 .NextButton {
   width: 3%;
   height: 8%;
   position: absolute;
-  top: 70%;
+  top: 73%;
+  background: transparent;
   left: 63%;
   border: none;
-  background: transparent;
+  cursor: pointer;
 }
 
 .Map {
@@ -37,9 +69,9 @@
   top: 45%;
   left: 45%;
   width: 10%;
-  height: auto;
   background: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .Map img {

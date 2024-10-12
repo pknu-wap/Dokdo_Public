@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './Book.module.css';
-import OpenBook from '../assets/OpenBook.png';
+import LeftPage from '../assets/LeftPage.png';
+import RightPage from '../assets/RightPage.png';
 import map from '../assets/Stage2Map.png';
 
 const Book = () => {
@@ -21,10 +22,27 @@ const Book = () => {
 
   return (
     <div className={styles.BackGround}>
-      <img className={styles.Book} src={OpenBook} alt="Book" />
-      <button className={styles.PreviousButton} onClick={previousPage} disabled={page === 1} />
+      <img className={styles.RightBookWrapper} src={RightPage} alt="Right Page" />
+      <img className={styles.LeftBookWrapper} src={LeftPage} alt="Left Page" />
+      <div className={`${styles.RightBookWrapper} ${page > 1 ? styles.PreviousFlipped : ''}`}>
+        <div className={styles.Page}>
+          <img className={styles.Book} src={RightPage} alt="Right Page" />
+        </div>
+      </div>
+      <div className={`${styles.LeftBookWrapper} ${page < 4 ? styles.NextFlipped : ''}`}>
+        <div className={styles.Page}>
+          <img className={styles.Book} src={LeftPage} alt="Left Page" />
+        </div>
+      </div>
+      <button
+        className={styles.PreviousButton}
+        onClick={() => {
+          previousPage();
+        }}
+        disabled={page === 1}
+      />
       <button className={styles.NextButton} onClick={nextPage} disabled={page === 4} />
-      {page === 4 && isMapFind === true ? (
+      {page === 4 && isMapFind ? (
         <button
           className={styles.Map}
           onClick={() => {
@@ -32,11 +50,9 @@ const Book = () => {
             setIsMapFind(false);
           }}
         >
-          <img src={map} />
+          <img src={map} alt="Map" />
         </button>
-      ) : (
-        <div />
-      )}
+      ) : null}
     </div>
   );
 };

@@ -13,6 +13,7 @@
   outline: none;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .Box img {
@@ -29,6 +30,7 @@
   background: none;
   border: none;
   display: block;
+  cursor: pointer;
 }
 
 .Door img {
@@ -58,4 +60,5 @@
   background-color: transparent;
   border: none;
   z-index: 1;
+  cursor: pointer;
 }
