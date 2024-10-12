@@ -84,7 +84,7 @@ function Stage3Page() {
     setGunHintImage(GunHintImage); 
 
     setNoteImage(null);
-    
+
     setTimeout(() => {
       setGunHintImage(null); 
     }, 3000);
@@ -111,7 +111,7 @@ function Stage3Page() {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           onSubmit={handleCheckAnswer} /* onSubmit으로 handleCheckAnswer 전달 */
-          size="medium"
+          size="large"
         >
           <h3 className= {styles.ModalMent}>친일파 3명을 골라주세요.</h3>
 

@@ -11,17 +11,6 @@
   background-color: #fee7d7;
 }
 
-.DoorClose{
-  cursor: pointer;
-  position: fixed; 
-  top: 57.6%;
-  left: 16%;
-  transform: translate(-50%, -50%);
-  width: 320px;
-  height: auto; /* 높이를 비율에 맞게 자동 설정 */
-  z-index: 1; /* 다른 요소 위에 배치 */
-}
-
 .Stage3Floor {
   position: fixed;
   bottom: 0;
@@ -30,11 +19,31 @@
   height: 13%;
 }
 
+.DoorClose{
+  cursor: pointer;
+  position: fixed; 
+  top: 55.2%;
+  left: 18%;
+  transform: translate(-50%, -50%);
+  width: 490px;
+  height: auto; /* 높이를 비율에 맞게 자동 설정 */
+  z-index: 1; /* 다른 요소 위에 배치 */
+}
+
+.Stage3wall {
+  width: 640px;
+  position: fixed;
+  top: 30%;
+  left: 55%;
+  cursor: pointer;
+  transform: translateX(-50%);
+}
+
 .Stage3Modal{
   position: fixed;
   transform: translate(-50%, -50%);
-  top: 46%;
-  left: 50%;
+  top: 47%;
+  left: 55%;
   z-index: 2; /* 다른 요소 위에 배치 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -44,15 +53,6 @@
   position: fixed;
   top: 0%;
   left: 30%;
-}
-
-.Stage3wall {
-  width: 600px;
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  cursor: pointer;
-  transform: translateX(-50%);
 }
 
 /* 전체 그리드 레이아웃 */
@@ -103,8 +103,8 @@
 
 .ResultBanner {
   position: fixed;
-  top: 10%;
-  left: 50%;
+  top: 20%;
+  left: 55%;
   transform: translateX(-50%);
   background-color: #C1A693;
   color: white;
@@ -122,11 +122,11 @@
 
 .KoreaFlag {
   cursor: pointer;
-  width: 90px;
+  width: 100px;
   height: 66px;
   position: fixed;
-  top: 22%;
-  left: 31%;
+  top: 32%;
+  left: 39.5%;
 }
 
 .NoteImage {
@@ -134,14 +134,14 @@
   width: 40px;
   height: auto;
   position: fixed;
-  top: 18.5%;
-  left: 32%;;
+  top: 29%;
+  left: 41%;;
 }
 
 .GunHintImage {
   position: fixed;
-  top: 40%;
-  left: 50%;
+  top: 48%;
+  left: 55%;
   transform: translate(-50%, -50%);
   width: 700px;
   height: auto;
