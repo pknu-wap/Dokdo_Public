@@ -20,18 +20,18 @@ import lombok.AllArgsConstructor;
 public class SessionEntity {
 
     @Id
-    @Column(name = "id", nullable = false, length = 255)
-    private String id;  // 세션 ID
+    @Column(name = "sessionId", nullable = false, length = 255)
+    private String sessionid;  // 세션 ID
 
-    @Column(name = "user_id", nullable = false, length = 255)
+    @Column(name = "userId", nullable = false, length = 255)
     private String userId;  // 사용자 ID
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "createdAt", nullable = false)
     private LocalDateTime createdAt;  // 세션 생성 시간
 
-    @Column(name = "expires_at", nullable = false)
+    @Column(name = "expiresAt", nullable = false)
     private LocalDateTime expiresAt;  // 세션 만료 시간
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "isActive", nullable = false)
     private Boolean isActive;  // 세션 활성화 여부
 }
