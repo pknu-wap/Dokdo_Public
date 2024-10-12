@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Modal.module.css';
+import CloseBtn from '../Dokdo_Private/CloseBtn.png';
 
 const Modal = ({ isOpen, onClose, children, onSubmit, size = 'medium' }) => {
   const handleSubmit = (event) => {
@@ -14,18 +15,15 @@ const Modal = ({ isOpen, onClose, children, onSubmit, size = 'medium' }) => {
 
   return (
     <div className={styles.ModalContainer}>
-      <div className={styles.ModalContent}>
-        <div className={`${styles.ModalContent} ${styles[size]}`} onSubmit={handleSubmit}>
-          <form onSubmit={handleSubmit}>
-            <div className={styles.CloseButtonBox}>
-              <button className={styles.CloseButton} type="button" onClick={onClose}>
-                X
-              </button>
-            </div>
-            {children}
-            <button type="submit">확인</button>
-          </form>
-        </div>
+      <div className={`${styles.ModalContent} ${styles[size]}`} onSubmit={handleSubmit}>
+        <img className={styles.CloseBtn} src={CloseBtn} onClick={onClose} />
+        <form onSubmit={handleSubmit}>
+          <div className={styles.CloseButtonBox}></div>
+          {children}
+          <button className={styles.SubmitBtn} type="submit">
+            확 인
+          </button>
+        </form>
       </div>
     </div>
   );
