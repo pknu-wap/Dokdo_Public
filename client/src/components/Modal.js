@@ -16,11 +16,13 @@ const Modal = ({ isOpen, onClose, children, onSubmit, size = 'medium' }) => {
   return (
     <div className={styles.ModalContainer}>
       <div className={`${styles.ModalContent} ${styles[size]}`} onSubmit={handleSubmit}>
-        <img className={styles.CloseButton} src={CloseBtn} onClick={onClose} />
+        <img className={styles.CloseBtn} src={CloseBtn} onClick={onClose} />
         <form onSubmit={handleSubmit}>
           <div className={styles.CloseButtonBox}></div>
           {children}
-          <button type="submit">확인</button>
+          <button className={styles.SubmitBtn} type="submit">
+            확 인
+          </button>
         </form>
       </div>
     </div>

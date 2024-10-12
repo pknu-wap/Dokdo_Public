@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
 .ModalContainer {
   background-color: rgba(0, 0, 0, 0.5); /* 모달창 띄울 시 뒷배경 어두운 효과 */
   z-index: 999;
@@ -21,7 +23,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.CloseButton {
+.CloseBtn {
   cursor: pointer;
   position: absolute;
   z-index: 1000;
@@ -31,8 +33,31 @@
   transition: transform 0.3s ease;
 }
 
-.CloseButton:hover {
+.CloseBtn:hover {
   transform: scale(1.1);
+}
+
+.SubmitBtn {
+  cursor: pointer;
+  background-color: #846b66;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #fff;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  bottom: 4%;
+  left: 50%;
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.SubmitBtn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .ModalContent.small {
@@ -46,6 +71,6 @@
 }
 
 .ModalContent.large {
-  width: 1300px; /* 큰 모달 */
+  width: 1380px; /* 큰 모달 */
   height: 900px;
 }
