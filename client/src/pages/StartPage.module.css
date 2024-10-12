@@ -9,13 +9,11 @@
   background-color: black;
   width: 100%;
   height: 100vh;
-  position: relative;
-  display: flex;
 }
 
 .Logo {
   width: 500px;
-  position: absolute;
+  position: fixed;
   transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 위쪽 및 좌우로 이동 */
   top: 42%;
   left: 50%;
@@ -23,14 +21,14 @@
 
 .Button {
   cursor: pointer;
-  position: absolute;
+  position: fixed;
   transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 위쪽 및 좌우로 이동 */
-  top: 70%;
+  top: 67%;
   left: 50%;
   font-family: 'MapoGoldenPier';
   font-size: 48px;
   color: #fff;
-  width: 23%;
+  width: 17%;
   height: 80px;
   background-color: transparent;
   border: 2px solid #fff;

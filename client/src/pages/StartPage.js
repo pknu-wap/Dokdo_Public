@@ -36,14 +36,14 @@ function StartPage() {
         onSubmit={handleSubmitNickname}
         size="small" /* 모달 크기 지정 */
       >
-        <h2>닉네임을 입력하세요.</h2>
+        {/* <h2>닉네임을 입력하세요.</h2>
         <input
           type="text"
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
           placeholder="닉네임을 입력하세요"
           required
-        />
+        /> */}
       </Modal>
     </div>
   );
