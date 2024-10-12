@@ -8,13 +8,13 @@ const Book = () => {
   const [page, setPage] = useState(1);
   const [isMapFind, setIsMapFind] = useState(true);
 
-  const nextPage = () => {
+  const handleClickNextPage = () => {
     if (page < 4) {
       setPage(page + 1);
     }
   };
 
-  const previousPage = () => {
+  const handleClickPreviousPage = () => {
     if (page > 1) {
       setPage(page - 1);
     }
@@ -34,14 +34,8 @@ const Book = () => {
           <img className={styles.Book} src={LeftPage} alt="Left Page" />
         </div>
       </div>
-      <button
-        className={styles.PreviousButton}
-        onClick={() => {
-          previousPage();
-        }}
-        disabled={page === 1}
-      />
-      <button className={styles.NextButton} onClick={nextPage} disabled={page === 4} />
+      <button className={styles.PreviousButton} onClick={handleClickPreviousPage} disabled={page === 1} />
+      <button className={styles.NextButton} onClick={handleClickNextPage} disabled={page === 4} />
       {page === 4 && isMapFind ? (
         <button
           className={styles.Map}
