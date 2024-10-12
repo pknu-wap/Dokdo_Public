@@ -1,36 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
 .ModalContainer {
-  position: relative;
+  background-color: rgba(0, 0, 0, 0.5); /* 모달창 띄울 시 뒷배경 어두운 효과 */
+  z-index: 999;
   height: 100%;
   width: 100%;
+  position: fixed; /* 브라우저 뷰포트를 기준으로 고정 */
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
 }
 
 .ModalContent {
-  background: white;
+  position: relative;
+  background-image: url(../Dokdo_Private/ModalBg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.CloseBtn {
+  cursor: pointer;
+  position: absolute;
+  z-index: 1000;
+  top: -1.5%;
+  right: -1.5%;
+  width: 50px;
+  transition: transform 0.3s ease;
+}
+
+.CloseBtn:hover {
+  transform: scale(1.1);
+}
+
+.SubmitBtn {
+  cursor: pointer;
+  background-color: #846b66;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #fff;
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 50%;
+  bottom: 4%;
   left: 50%;
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.SubmitBtn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .ModalContent.small {
-  width: 300px; /* 작은 모달 */
-  height: 200px;
+  width: 500px; /* 작은 모달 */
+  height: 300px;
 }
 
 .ModalContent.medium {
-  width: 600px; /* 중간 모달 */
-  height: 400px;
+  width: 1000px; /* 중간 모달 */
+  height: 600px;
 }
 
 .ModalContent.large {
-  width: 900px; /* 큰 모달 */
-  height: 700px;
-}
-
-.CloseButtonBox {
-  display: flex;
-  justify-content: flex-end;
+  width: 1380px; /* 큰 모달 */
+  height: 900px;
 }

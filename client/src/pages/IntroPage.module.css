@@ -1,8 +1,16 @@
+@font-face {
+  font-family: 'MapoGoldenPier';
+  src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoGoldenPierA.woff') format('woff');
+}
+
 .IntroBg {
   height: 100vh;
   background-color: black;
   color: white;
   position: relative;
+  font-family: 'MapoGoldenPier';
+  font-weight: 400;
+  font-size: 30px;
 }
 
 .Center {
