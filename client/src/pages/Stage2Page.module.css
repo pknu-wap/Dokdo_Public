@@ -1,0 +1,61 @@
+.Stage2 {
+  width: 100vw;
+  height: 100vh;
+}
+
+.Box {
+  position: absolute;
+  top: 65%;
+  left: 8%;
+  width: 13%;
+  height: auto;
+  color: transparent;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.Box img {
+  width: 100%;
+  height: 100%;
+}
+
+.Door {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  width: 15%;
+  height: auto;
+  background: none;
+  border: none;
+  display: block;
+}
+
+.Door img {
+  width: 100%;
+  height: 100%;
+}
+
+.Stage2Modal {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.BookShelf {
+  position: absolute;
+  top: 15%;
+  left: 65%;
+  width: 30%;
+}
+
+.BookButton {
+  position: absolute;
+  top: 19%;
+  left: 84.4%;
+  width: 2.7%;
+  height: 12.5%;
+  background-color: transparent;
+  border: none;
+  z-index: 1;
+}

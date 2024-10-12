@@ -11,9 +11,9 @@ function Main() {
       <App>
         <Routes>
           <Route path="/" element={<StartPage />} />
-          <Route path="Stage2Page" element={<Stage2Page />} />
           <Route path="intro" element={<IntroPage />} />
           <Route path="intro/news" element={<NewsPage />} />
+          <Route path="Stage2" element={<Stage2Page />} />
         </Routes>
       </App>
     </BrowserRouter>
