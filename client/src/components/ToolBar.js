@@ -1,9 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './ToolBar.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ToolBar = ({ isStage2Open = false, isStage3Open = false } /* stage 상태(true,false) 따라 열리고 닫힘*/) => {
   const [selectedPage, setSelectedPage] = useState('stage1');
+  const location = useLocation(); /* 현재 URL 위치 가져옴 */
+
+  useEffect(() => {
+    const path = location.pathname.replace('/', ''); /* 현재 경로에서 '/'를 제외한 값 가져옴 */
+    if (path && path !== selectedPage) {
+      setSelectedPage(path); /* 현재 경로에 따라 상태 업데이트 */
+    }
+  }, [location, selectedPage]);
 
   const navigate = useNavigate();
 
