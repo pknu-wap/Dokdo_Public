@@ -5,6 +5,8 @@ import Stage2Page from './pages/Stage2Page';
 import Stage1Page from './pages/Stage1Page';
 import IntroPage from './pages/IntroPage';
 import NewsPage from './pages/NewsPage';
+import Stage3Page from './pages/Stage3Page';
+
 
 function Main() {
   return (
@@ -16,6 +18,7 @@ function Main() {
           <Route path="intro/news" element={<NewsPage />} />
           <Route path="stage1" element={<Stage1Page />} />
           <Route path="stage2" element={<Stage2Page />} />
+          <Route path="Stage3" element={<Stage3Page />} />
         </Routes>
       </App>
     </BrowserRouter>
