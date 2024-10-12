@@ -1,12 +1,12 @@
 import styles from './Stage1Page.module.css';
 import ToolBar from '../components/ToolBar.js';
 import { useState } from 'react';
-import DoorClose from '../assets/stage1/Stage1DoorClose.png';
-import DoorOpen from '../assets/stage1/Stage1DoorOpen.png';
-import Table from '../assets/stage1/Stage1Table.png';
-import Music from '../assets/stage1/Music.png';
-import DrawerClose from '../assets/stage1/Stage1DrawerClose.png';
-import DrawerOpen from '../assets/stage1/Stage1DrawerOpen.png';
+import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
+import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
+import Table from '../Dokdo_Private/stage1/Stage1Table.png';
+import Music from '../Dokdo_Private/stage1/Music.png';
+import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
+import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
 
 function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
