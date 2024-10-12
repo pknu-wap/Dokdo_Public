@@ -1,17 +1,31 @@
 import styles from './Stage1Page.module.css';
 import ToolBar from '../components/ToolBar.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
 import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
 import Table from '../Dokdo_Private/stage1/Stage1Table.png';
 import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
+import { useNavigate } from 'react-router-dom';
 
 function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
   const [clickTimestamps, setClickTimestamps] = useState([]); /* 클릭 타임 스탬프 저장 */
   const [timer, setTimer] = useState(null); /* 타이머 상태 */
+
+  useEffect(() => {
+    const savedDoorState = sessionStorage.getItem('stage1Door');
+    if (savedDoorState === 'true') {
+      setIsCorrectTiming(true);
+    }
+  });
+
+  const navigate = useNavigate();
+
+  const handleClickOpenDoor = () => {
+    navigate('/stage2');
+  };
 
   /* 각 박자에 대한 간격 (밀리초) */
   const beatCounts = [3, 3, 7]; /* 3-3-7 박자 */
@@ -57,6 +71,7 @@ function BeatButton() {
     }
 
     setIsCorrectTiming(true);
+    sessionStorage.setItem('stage1Door', 'true');
     resetAll();
   };
 
@@ -71,7 +86,11 @@ function BeatButton() {
   return (
     <>
       {isCorrectTiming ? (
-        <img className={`${styles.Stage1DoorImg} ${styles.Stage1DoorOpen}`} src={DoorOpen} />
+        <img
+          className={`${styles.Stage1DoorImg} ${styles.Stage1DoorOpen}`}
+          src={DoorOpen}
+          onClick={handleClickOpenDoor}
+        />
       ) : (
         <img
           className={`${styles.Stage1DoorImg} ${styles.Stage1DoorClose}`}
@@ -84,11 +103,19 @@ function BeatButton() {
 }
 
 function Stage1Page() {
-  const [isStage1DoorOpen, setIsStage1DoorOpen] = useState(true);
+  const isStage1DoorOpen = true;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    const savedDrawerState = sessionStorage.getItem('stage1Drawer');
+    if (savedDrawerState === 'true') {
+      setIsDrawerOpen(true);
+    }
+  });
 
   const handleClickDrawer = () => {
     setIsDrawerOpen(true);
+    sessionStorage.setItem('stage1Drawer', 'true');
   };
 
   return (
