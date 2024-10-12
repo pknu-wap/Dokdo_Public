@@ -1,0 +1,63 @@
+.Stage1Bg {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background-color: #fee7d7;
+}
+
+.Stage1DoorImg {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.Stage1DoorClose {
+  height: 64%;
+  top: 55%;
+  left: 60%;
+}
+
+.Stage1DoorOpen {
+  top: 58%;
+  left: 60%;
+  height: 70%;
+}
+
+.Stage1Floor {
+  position: fixed;
+  bottom: 0;
+  background-color: #846b66;
+  width: 100%;
+  height: 13%;
+}
+
+.Stage1Table {
+  position: absolute;
+  top: 62%;
+  left: 30%;
+  height: 35%;
+}
+
+.Stage1Music {
+  position: absolute;
+  top: 35%;
+  left: 22%;
+  height: 18%;
+}
+
+.Stage1Drawer {
+  cursor: pointer;
+  position: absolute;
+}
+
+.Stage1DrawerClose {
+  top: 73.3%;
+  left: 5%;
+  height: 20%;
+}
+
+.Stage1DrawerOpen {
+  top: 72.5%;
+  left: 1.8%;
+  height: 23%;
+}

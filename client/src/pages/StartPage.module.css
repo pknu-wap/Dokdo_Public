@@ -6,7 +6,7 @@
 }
 
 .Logo {
-  width: 800px;
+  width: 600px;
   position: absolute;
   transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 위쪽 및 좌우로 이동 */
   top: 40%;
