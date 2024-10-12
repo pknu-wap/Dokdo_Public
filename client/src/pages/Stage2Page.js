@@ -13,6 +13,7 @@ function Stage2Page() {
   const [isStage2Open, setIsStage2Open] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBookOpen, setIsBookOpen] = useState(false);
+
   const handleChangeImage = () => {
     setChangeImage(BoxOpen);
     setTimeout(() => {

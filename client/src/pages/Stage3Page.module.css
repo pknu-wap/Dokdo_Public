@@ -40,18 +40,18 @@
 }
 
 .Stage3Modal{
-  position: fixed;
+  position: relative;
   transform: translate(-50%, -50%);
-  top: 47%;
+  top: 52%;
   left: 55%;
   z-index: 2; /* 다른 요소 위에 배치 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .ModalMent{
-  font-size: 20px;
-  position: fixed;
-  top: 0%;
+  font-size: 40px;
+  position: relative;
+  padding: 30px;
+  top: 1%;
   left: 30%;
 }
 
@@ -72,20 +72,21 @@
 
 /* 중앙의 인물 이미지 컨테이너 */
 .CenterContainer {
+  top: 100%;
   grid-area: center;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 10px;
+  gap: 20px;
   padding: 20px;
-  background-color: #f0f0f0;
-  border: 2px solid #ccc;
+  background-color: transparent;
+  border: 2px solid transparent;
 }
 
 /* 인물 이미지 스타일 */
 .ImageItem {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   cursor: pointer;
   border: 2px solid transparent;

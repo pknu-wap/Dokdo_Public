@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './Stage3Page.module.css';
 import Stage3wall from '../assets/Stage3wall.png';
 import People1 from '../assets/친일파(1).png';
@@ -13,7 +14,6 @@ import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
 import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
 import NoteImage from'../Dokdo_Private/stage3/noteImage.png';
 import Modal from '../components/Modal';
-import { useState } from 'react';
 
 const Stage3PeopleImage = [
   { id: 1, src: People1, name: '친일파1' },
@@ -34,6 +34,7 @@ function Stage3Page() {
   const [addKoreaFlagImage, setAddKoreaFlagImage] = useState(null);
   const [noteImage, setNoteImage] = useState(null); /* 쪽지 */
   const [gunhintImage, setGunHintImage] = useState(null); /* 무기힌트 */
+  const [isStage3Open, setIsStage3Open] = useState(true);
 
   const handleOpenModal = () => {
     if (isAnswered) return; 
@@ -93,7 +94,7 @@ function Stage3Page() {
   return (
     <div className={styles.Stage3Page}>
       <div className={styles.Stage3Bg}/>
-      <ToolBar  />
+      <ToolBar isStage3Open={isStage3Open} />
         <div className={styles.Stage3Floor} />
 
       <img 
