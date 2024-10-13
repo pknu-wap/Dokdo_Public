@@ -41,15 +41,10 @@ public class InventoryService {
         ItemsEntity item = itemsRepository.findById(request.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 아이템이 존재하지 않습니다.: " + request.getItemId()));
 
-        // 세션 식별자와 매핑된 인벤토리 조회
-        // 인벤토리 생성x => 인벤토리 생성
-        // 인벤토리 생성o => 매핑된 인벤토리 식별자 조회
+        // 세션 식별자에 매핑된 인벤토리에서 해당 아이템이 이미 존재하는지 확인(중복 확인)
+        // 아이템이 이미 인벤토리에 존재하면 오류 메시지 반환
 
-        // 인벤토리에 아이템 식별자 존재 확인
-        // 아이템 식별자 존재o => 오류 메시지(중복일 경우)
-        // 아이템 식별자 존재x => 아이템 추가
-
-        // 조회한 인벤토리 위치에 아이템 추가
+        // 아이템이 존재하지 않으면 인벤토리에 아이템 추가
 
         // DB 테이블 최신화
     }
