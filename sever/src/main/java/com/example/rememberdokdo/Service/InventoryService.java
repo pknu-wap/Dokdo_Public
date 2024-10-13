@@ -29,6 +29,13 @@ public class InventoryService {
 //        }
 
         // 세션 식별자로 인벤토리 조회
+        InventoryEntity inventory = inventoryRepository.findBySessionId(request.getSessionId())
+                .orElseGet(() -> {
+                    // 인벤토리 없으면 새로 생성
+                    InventoryEntity newInventory = new InventoryEntity();
+                    newInventory.setSessionId(request.getSessionId()); // 클라이언트로부터 받은 세션 식별자에 매핑된 인벤토리 생성
+                    return inventoryRepository.save(newInventory); // 새 인벤토리 저장 및 반환
+                });
 
         // 아이템 식별자로 아이템 목록에 있는 아이템인지 확인
 
