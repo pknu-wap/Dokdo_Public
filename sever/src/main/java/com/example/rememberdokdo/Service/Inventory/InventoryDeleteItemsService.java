@@ -39,5 +39,13 @@ public class InventoryDeleteItemsService {
         ItemsEntity items = itemsRepository.findById(inventoryId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 아이템이 존재하지 않습니다.: " + request.getItemId()));
 
+        // 세션 식별자에 매핑된 인벤토리에서 해당 아이템이 존재하는지 확인
+        boolean itemAlreadyInInventory = inventoryItemsRepository.existsByInventoryIdAndItemsId(inventoryId, items.getItemId());
+        if (!itemAlreadyInInventory) {
+            // 아이템이 이미 인벤토리에 존재하지 않는다면 오류 메시지 반환
+            throw new IllegalArgumentException("해당 아이템이 인벤토리에 존재하지 않습니다.");
+        }
+
+
     }
 }
