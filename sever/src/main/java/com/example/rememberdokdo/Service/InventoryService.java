@@ -2,6 +2,7 @@ package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.Inventory.ItemAddRequestDto;
 import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
+import com.example.rememberdokdo.Entity.Inventory.InventoryItemsEntity;
 import com.example.rememberdokdo.Entity.Inventory.ItemsEntity;
 import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
 import com.example.rememberdokdo.Repository.Inventory.InventoryRepository;
@@ -37,7 +38,11 @@ public class InventoryService {
                     return inventoryRepository.save(newInventory); // 새 인벤토리 저장 및 반환
                 });
 
-        // 아이템 식별자로 아이템 목록에 있는 아이템인지 확인
+        // 조회된 인벤토리 식별자 가져오기
+        Integer inventoryId = inventory.getInventoryId();
+        System.out.println("인벤토리 식별자: " + inventoryId);
+
+        // 요청에서 받은 아이템 식별자로 아이템 목록에 있는 아이템인지 확인
         ItemsEntity item = itemsRepository.findById(request.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 아이템이 존재하지 않습니다.: " + request.getItemId()));
 
@@ -45,7 +50,10 @@ public class InventoryService {
         // 아이템이 이미 인벤토리에 존재하면 오류 메시지 반환
 
         // 아이템이 존재하지 않으면 인벤토리에 아이템 추가
+        InventoryItemsEntity inventoryItem = new InventoryItemsEntity();
+        inventoryItem.setInventoryId(inventoryId);// 인벤토리 식별자
+        inventoryItem.setItemsId(request.getItemId()); // 아이템 식별자
 
-        // DB 테이블 최신화
+        // 인벤토리에 아이템을 매핑해 저장 (DB 테이블 최신화)
     }
 }
