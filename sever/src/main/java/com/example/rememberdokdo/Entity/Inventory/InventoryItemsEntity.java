@@ -1,4 +1,4 @@
-package com.example.rememberdokdo.Entity;
+package com.example.rememberdokdo.Entity.Inventory;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

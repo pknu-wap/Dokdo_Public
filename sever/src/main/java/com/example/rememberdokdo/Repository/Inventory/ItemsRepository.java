@@ -1,6 +1,6 @@
-package com.example.rememberdokdo.Repository;
+package com.example.rememberdokdo.Repository.Inventory;
 
-import com.example.rememberdokdo.Entity.ItemsEntity;
+import com.example.rememberdokdo.Entity.Inventory.ItemsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
