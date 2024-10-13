@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Entity
-@Table(name = "Session")
 @Data  // Lombok이 자동으로 getter, setter, equals, hashcode, toString 등을 생성
 @NoArgsConstructor  // 기본 생성자 생성
 @AllArgsConstructor  // 모든 필드를 사용하는 생성자 생성
 @Builder  // 빌더 패턴을 사용할 수 있도록 함
+@Table(name = "Session")
 
 public class SessionEntity {
 
