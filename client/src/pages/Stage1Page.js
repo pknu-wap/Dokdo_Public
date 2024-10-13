@@ -8,6 +8,7 @@ import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
 import { useNavigate } from 'react-router-dom';
+import Inventory from '../components/Inventory.js';
 
 function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
@@ -121,6 +122,7 @@ function Stage1Page() {
   return (
     <>
       <ToolBar isStage2Open={isStage1DoorOpen} />
+      <Inventory />
       <div className={styles.Stage1Bg}>
         <div className={styles.Stage1Floor} />
         <BeatButton />

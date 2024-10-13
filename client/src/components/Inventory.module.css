@@ -1,0 +1,11 @@
+.InventoryBox {
+  position: fixed;
+  right: 0;
+  width: 180px;
+  height: 100vh;
+  background-color: #ddceaf;
+  z-index: 1001;
+}
+
+.InventoryItemBox {
+}
