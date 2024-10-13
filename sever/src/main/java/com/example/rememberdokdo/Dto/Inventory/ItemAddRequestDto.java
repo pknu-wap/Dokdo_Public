@@ -1,8 +1,6 @@
 package com.example.rememberdokdo.Dto.Inventory;
 
 public class ItemAddRequestDto {
-    private Long sessionId; // 세션 식별자(넣을지 고민중)
-    private Long itemId; // 아이템 식별자
-    private String itemName;
-    private String itemDescription;
+    private String sessionId; // 세션 식별자(넣을지 고민중)
+    private Integer itemId; // 아이템 식별자
 }
