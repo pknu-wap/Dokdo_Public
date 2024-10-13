@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InventoryItemsRepository extends JpaRepository<InventoryItemsEntity, Integer> {
     // 인벤토리 식별자와 아이템 식별자 동시 조회
-    InventoryItemsEntity findInventoryIdAndItemsId(Integer inventoryId, Integer itemsId);
+    InventoryItemsEntity findByInventoryIdAndItemsId(Integer inventoryId, Integer itemsId);
 }
 
