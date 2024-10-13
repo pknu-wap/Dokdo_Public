@@ -38,6 +38,8 @@ public class InventoryService {
                 });
 
         // 아이템 식별자로 아이템 목록에 있는 아이템인지 확인
+        ItemsEntity item = itemsRepository.findById(request.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 아이템이 존재하지 않습니다.: " + request.getItemId()));
 
         // 세션 식별자와 매핑된 인벤토리 조회
         // 인벤토리 생성x => 인벤토리 생성
