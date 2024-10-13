@@ -2,6 +2,7 @@ package com.example.rememberdokdo.Service.Inventory;
 
 import com.example.rememberdokdo.Dto.Inventory.ItemDeleteRequestDto;
 import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
+import com.example.rememberdokdo.Entity.Inventory.InventoryItemsEntity;
 import com.example.rememberdokdo.Entity.Inventory.ItemsEntity;
 import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
 import com.example.rememberdokdo.Repository.Inventory.InventoryRepository;
@@ -36,7 +37,7 @@ public class InventoryDeleteItemsService {
         System.out.println("인벤토리 식별자 : " + inventoryId);
 
         // 요청에서 받은 아이템 식별자로 아이템 목록에 있는 아이템인지 확인
-        ItemsEntity items = itemsRepository.findById(inventoryId)
+        ItemsEntity items = itemsRepository.findById(request.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 아이템이 존재하지 않습니다.: " + request.getItemId()));
 
         // 세션 식별자에 매핑된 인벤토리에서 해당 아이템이 존재하는지 확인
@@ -46,6 +47,11 @@ public class InventoryDeleteItemsService {
             throw new IllegalArgumentException("해당 아이템이 인벤토리에 존재하지 않습니다.");
         }
 
+        // 아이템 삭제
+        InventoryItemsEntity inventoryItem = inventoryItemsRepository.findByInventoryIdAndItemsId(inventoryId, request.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이템을 인벤토리에서 찾을 수 없습니다."));
 
+        // 인벤토리에서 아이템 삭제
+        inventoryItemsRepository.delete(inventoryItem);
     }
 }
