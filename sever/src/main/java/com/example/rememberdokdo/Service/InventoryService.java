@@ -47,7 +47,11 @@ public class InventoryService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 아이템이 존재하지 않습니다.: " + request.getItemId()));
 
         // 세션 식별자에 매핑된 인벤토리에서 해당 아이템이 이미 존재하는지 확인(중복 확인)
-        // 아이템이 이미 인벤토리에 존재하면 오류 메시지 반환
+        boolean itemAlreadyInInventory = inventoryItemsRepository.existsByInventoryIdAndItemsId(inventoryId, request.getItemId());
+        if (itemAlreadyInInventory) {
+            // 아이템이 이미 인벤토리에 존재하면 오류 메시지 반환
+            throw new IllegalArgumentException("해당 아이템이 이미 인벤토리에 존재합니다.");
+        }
 
         // 아이템이 존재하지 않으면 인벤토리에 아이템 추가
         InventoryItemsEntity inventoryItem = new InventoryItemsEntity();
