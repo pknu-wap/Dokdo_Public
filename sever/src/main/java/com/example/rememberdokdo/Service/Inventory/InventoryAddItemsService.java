@@ -1,4 +1,4 @@
-package com.example.rememberdokdo.Service;
+package com.example.rememberdokdo.Service.Inventory;
 
 import com.example.rememberdokdo.Dto.Inventory.ItemAddRequestDto;
 import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InventoryService {
+public class InventoryAddItemsService {
     @Autowired
     private InventoryRepository inventoryRepository;
     @Autowired
