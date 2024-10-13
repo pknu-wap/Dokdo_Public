@@ -55,5 +55,6 @@ public class InventoryService {
         inventoryItem.setItemsId(request.getItemId()); // 아이템 식별자
 
         // 인벤토리에 아이템을 매핑해 저장 (DB 테이블 최신화)
+        inventoryItemsRepository.save(inventoryItem);
     }
 }
