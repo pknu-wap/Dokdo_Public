@@ -1,8 +1,6 @@
 package com.example.rememberdokdo.Entity.Inventory;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "InventoryItems")
 public class InventoryItemsEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT 설정
     private Integer inventoryItemsId; // 인벤토리 아이템 식별자
     private Integer inventoryId; // 인벤토리 식별자
     private Integer itemsId; // 아이템 식별자
