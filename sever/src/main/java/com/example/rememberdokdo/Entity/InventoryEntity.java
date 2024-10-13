@@ -3,14 +3,12 @@ package com.example.rememberdokdo.Entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 // 인벤토리 기능에 필요할 변수들
 @Entity
 @Table(name = "Inventory")
-@Getter
-@Setter
+@Data
 public class InventoryEntity {
     @Id
     private Integer inventoryId; // 인벤토리 식별자 (고유키)

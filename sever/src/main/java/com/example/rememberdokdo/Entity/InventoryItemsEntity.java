@@ -3,13 +3,11 @@ package com.example.rememberdokdo.Entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
 @Table(name = "InventoryItems")
-@Getter
-@Setter
+@Data
 public class InventoryItemsEntity {
     @Id
     private Integer inventoryItemsId; // 인벤토리 아이템 식별자
