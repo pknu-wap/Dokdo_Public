@@ -19,6 +19,12 @@ public class InventoryDeleteItemsService {
 
     @Transactional
     public void deleteItem(ItemDeleteRequestDto request) {
+        // 세션 만료 여부 확인
+//        boolean sessionExpired = checkSessionExpired(request.getSessionId());
+//        if (sessionExpired) {
+//            throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
+//        }
+
 
     }
 }
