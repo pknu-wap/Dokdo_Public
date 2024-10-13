@@ -1,9 +1,9 @@
 .InventoryBox {
   position: fixed;
   right: 0;
-  width: 180px;
+  width: 280px;
   height: 100vh;
-  background-color: #ddceaf;
+  background-color: #ddc2af;
   z-index: 1001;
 }
 
