@@ -10,10 +10,10 @@ import java.util.Optional;
 @Repository
 public interface InventoryItemsRepository extends JpaRepository<InventoryItemsEntity, Integer> {
     // 인벤토리 식별자와 아이템 식별자 동시 조회
-    Optional<InventoryItemsEntity> findByInventoryIdAndItemsId(Integer inventoryId, Integer itemId);
+    Optional<InventoryItemsEntity> findByInventoryIdAndItemId(Integer inventoryId, Integer itemId);
 
 
     // 인벤토리 식별자에 아이템 식별자가 존재하는지 여부를 확인하는 메서드
-    boolean existsByInventoryIdAndItemsId(Integer inventoryId, Integer itemsId);
+    boolean existsByInventoryIdAndItemId(Integer inventoryId, Integer itemId);
 }
 
