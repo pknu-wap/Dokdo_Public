@@ -17,5 +17,7 @@ public class InventoryItemsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT 설정
     private Integer inventoryItemsId; // 인벤토리 아이템 식별자
     private Integer inventoryId; // 인벤토리 식별자
-    private Integer itemsId; // 아이템 식별자
+    private Integer itemId; // 아이템 식별자
+    private String itemName; // 아이템 이름
+    private String itemDescription; // 아이템 설명
 }
