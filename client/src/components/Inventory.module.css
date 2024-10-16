@@ -8,4 +8,12 @@
 }
 
 .InventoryItemBox {
+  width: 100px;
+  height: 100px;
+  background-color: #c1a693;
+  border-radius: 8px;
+}
+
+.InventoryItem {
+  cursor: pointer;
 }
