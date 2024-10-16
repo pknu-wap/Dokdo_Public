@@ -1,17 +1,52 @@
-.InventoryBox {
+.InventoryContainer {
   position: fixed;
   right: 0;
   width: 280px;
   height: 100vh;
   background-color: #ddc2af;
   z-index: 1001;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+}
+
+.InventoryGrid {
+  padding: 20px 0;
+  height: 100vh;
+  width: fit-content;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(8, 1fr);
+  gap: 10px;
+  position: relative;
 }
 
 .InventoryItemBox {
-  width: 100px;
-  height: 100px;
+  width: 180px;
+  height: 130px;
   background-color: #c1a693;
-  border-radius: 8px;
+  border-radius: 4px;
+  overflow: scroll;
+  margin-bottom: 10px;
+}
+
+.InventoryList {
+  position: absolute;
+  /* transform: translate(0, -50%); */
+  top: 45px;
+  left: 50px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 67px;
+}
+
+.InventoryItemImage {
+  width: 80px;
+  height: fit-content;
 }
 
 .InventoryItem {
