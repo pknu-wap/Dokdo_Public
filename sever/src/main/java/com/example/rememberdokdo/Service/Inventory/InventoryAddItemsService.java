@@ -40,7 +40,6 @@ public class InventoryAddItemsService {
 
         // 조회된 인벤토리 식별자 가져오기
         Integer inventoryId = inventory.getInventoryId();
-        System.out.println("인벤토리 식별자: " + inventoryId);
 
         // 요청에서 받은 아이템 식별자로 아이템 목록에 있는 아이템인지 확인
         ItemsEntity item = itemsRepository.findById(request.getItemId())
@@ -48,7 +47,6 @@ public class InventoryAddItemsService {
 
         // 조회된 아이템 식별자 가져오기
         Integer itemId = item.getItemId();
-        System.out.println("아이템 식별자: " + itemId);
         // 아이템 식별자에 대한 아이템 이름, 아이템 설명 정보 조회
         String itemName = item.getItemName();
         String itemDescription = item.getItemDescription();
