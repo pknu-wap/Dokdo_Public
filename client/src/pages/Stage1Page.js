@@ -11,6 +11,7 @@ import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
 import RedItem from '../Dokdo_Private/stage1/RedItem.png';
+import Clover from '../assets/clover.png';
 import { useInventory } from '../context/InventoryContext.js';
 
 function BeatButton() {
@@ -34,7 +35,7 @@ function BeatButton() {
   /* 각 박자에 대한 간격 (밀리초) */
   const beatCounts = [3, 3, 7]; /* 3-3-7 박자 */
   const totalClicksRequired = 13; /* 필요한 클릭 수 */
-  const minGapBetweenBeats = 200; /* 비트 간 최소 간격 (200ms) */
+  const minGapBetweenBeats = 180; /* 비트 간 최소 간격 (200ms) */
 
   const handleClickDoor = () => {
     /* 필요 이상의 클릭 시 감지하지 않음 */
@@ -118,8 +119,8 @@ function Stage1Page() {
   };
 
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
-  const handleItemClick = () => {
-    addItem('RedItem');
+  const handleItemClick = (itemName) => {
+    addItem(itemName);
     console.log(items);
   };
 
@@ -154,6 +155,13 @@ function Stage1Page() {
             onClick={handleDrawerClick}
           />
         )}
+        <img
+          className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
+            items.includes('Clover') ? styles.hidden : ''
+          }`}
+          src={Clover}
+          onClick={() => handleItemClick('Clover')}
+        />
       </div>
     </>
   );

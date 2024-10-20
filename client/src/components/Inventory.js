@@ -1,21 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
 import CloseBtn from '../Dokdo_Private/CloseBtn.png';
+import { useInventory } from '../context/InventoryContext';
+import RedItem from '../Dokdo_Private/stage1/RedItem.png';
+import Clover from '../assets/clover.png';
+
+const itemImage = {
+  Key: CloseBtn,
+  RedItem: RedItem,
+  Clover: Clover,
+};
 
 function Inventory() {
   const [boxes, setBoxes] = useState(Array.from({ length: 8 }, (_, i) => ({ id: i + 1, items: [] })));
 
+  const { items } = useInventory(); /* itmes를 Context에서 가져옴 */
+
   const [inventoryItems, setInventoryItems] = useState([
-    { id: 1, name: 'Key', image: CloseBtn, action: () => alert('This is a key!') },
-    { id: 2, name: 'Map', image: CloseBtn, action: () => alert('This is a map!') },
-    { id: 3, name: 'Flashlight', image: CloseBtn, action: () => alert('This is a flashlight!') },
+    { id: 1, name: 'Key', image: itemImage['Key'], action: () => alert('This is a key!') },
   ]);
 
-  /* 아이템 클릭 핸들러 */
-  const handleItemClick = (item) => {
-    item.action(); /* 클릭 시 아이템의 액션 실행 */
-  };
+  useEffect(() => {
+    /* items에 따라 inventoryItems 업데이트 */
+    const newInventoryItems = items.map((item, index) => ({
+      id: index + 1,
+      name: item,
+      image: itemImage[item],
+      action: () => alert(`${item}`),
+    }));
+
+    setInventoryItems(newInventoryItems);
+  }, [items]);
 
   return (
     <div className={styles.InventoryContainer}>
@@ -26,13 +42,9 @@ function Inventory() {
           animation={200} /* 드래그 앤 드롭 애니메이션 */
           className={styles.InventoryList}
         >
-          {inventoryItems.map((item) => (
-            <div
-              key={item.id}
-              className={styles.InventoryItem}
-              onClick={() => handleItemClick(item)} /* 아이템 클릭 시 해당 아이템의 액션 실행 */
-            >
-              <img src={item.image} alt={item.name} className={styles.InventoryItemImage} />
+          {inventoryItems.map((inventoryItem) => (
+            <div key={inventoryItem.id} onClick={inventoryItem.action}>
+              <img src={inventoryItem.image} alt={inventoryItem.name} className={styles.InventoryItemImage} />
             </div>
           ))}
         </ReactSortable>

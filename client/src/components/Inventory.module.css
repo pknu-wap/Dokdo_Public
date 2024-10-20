@@ -46,7 +46,9 @@
 
 .InventoryItemImage {
   width: 80px;
+  transform: translate(-50%, -50%);
   height: fit-content;
+  cursor: pointer;
 }
 
 .InventoryItem {
