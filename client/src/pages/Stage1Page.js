@@ -11,6 +11,7 @@ import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
 import Clover from '../assets/clover.png';
+import { useInventory } from '../context/InventoryContext.js';
 
 function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
@@ -108,15 +109,8 @@ function BeatButton() {
 function Stage1Page() {
   const isStage1DoorOpen = true;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isGetRedItem, setIsGetRedItem] = useState(false);
-  const [stage1Items, setStage1Items] = useState([]);
 
-  useEffect(() => {
-    const savedRedItemState = sessionStorage.getItem('stage1Item');
-    if (savedRedItemState === 'true') {
-      isGetRedItem(true);
-    }
-  });
+  const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
 
   const handleDrawerClick = () => {
     const newDrawerState = !isDrawerOpen;
@@ -124,10 +118,9 @@ function Stage1Page() {
   };
 
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
-  const handleItemClick = (item) => {
-    setStage1Items([...stage1Items, item]);
-    sessionStorage.setItem(item, 'true');
-    console.log(stage1Items);
+  const handleItemClick = () => {
+    addItem('RedItem');
+    console.log(items);
   };
 
   return (
@@ -148,7 +141,7 @@ function Stage1Page() {
             />
             <img
               className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Item} ${
-                stage1Items.includes('RedItem') ? styles.hidden : ''
+                items.includes('RedItem') ? styles.hidden : ''
               }`}
               src={Clover}
               onClick={() => handleItemClick('RedItem')}
