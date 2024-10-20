@@ -1,14 +1,16 @@
 import styles from './Stage1Page.module.css';
 import ToolBar from '../components/ToolBar.js';
+import Inventory from '../components/Inventory.js';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
 import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
 import Table from '../Dokdo_Private/stage1/Stage1Table.png';
 import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
-import { useNavigate } from 'react-router-dom';
-import Inventory from '../components/Inventory.js';
+import Clover from '../assets/clover.png';
 
 function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
@@ -106,17 +108,23 @@ function BeatButton() {
 function Stage1Page() {
   const isStage1DoorOpen = true;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isGetRedItem, setIsGetRedItem] = useState(false);
 
   useEffect(() => {
-    const savedDrawerState = sessionStorage.getItem('stage1Drawer');
-    if (savedDrawerState === 'true') {
-      setIsDrawerOpen(true);
+    const savedRedItemState = sessionStorage.getItem('stage1Item');
+    if (savedRedItemState === 'true') {
+      isGetRedItem(true);
     }
   });
 
   const handleClickDrawer = () => {
-    setIsDrawerOpen(true);
-    sessionStorage.setItem('stage1Drawer', 'true');
+    const newDrawerState = !isDrawerOpen;
+    setIsDrawerOpen(newDrawerState);
+  };
+
+  const handleClickRedItem = () => {
+    setIsGetRedItem(true);
+    sessionStorage.setItem('stage1Item', 'true');
   };
 
   return (
@@ -129,10 +137,17 @@ function Stage1Page() {
         <img className={styles.Stage1Table} src={Table} />
         <img className={styles.Stage1Music} src={Music} />
         {isDrawerOpen ? (
-          <img className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen}`} src={DrawerOpen} />
+          <>
+            <img
+              className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen}`}
+              src={DrawerOpen}
+              onClick={handleClickDrawer}
+            />
+            <img className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Item}`} src={Clover} />
+          </>
         ) : (
           <img
-            className={`${styles.Stage1Drawer} ${styles.Stage1DrawerClose}`}
+            className={`${styles.Stage1Drawer} ${styles.Stage1DrawerClose} `}
             src={DrawerClose}
             onClick={handleClickDrawer}
           />

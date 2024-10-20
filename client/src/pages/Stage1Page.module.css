@@ -61,3 +61,10 @@
   left: 1.8%;
   height: 23%;
 }
+
+.Stage1Item {
+  width: 7%;
+  height: fit-content;
+  top: 72.5%;
+  left: 5%;
+}
