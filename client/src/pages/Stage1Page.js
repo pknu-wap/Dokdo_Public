@@ -10,7 +10,7 @@ import Table from '../Dokdo_Private/stage1/Stage1Table.png';
 import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
-import Clover from '../assets/clover.png';
+import RedItem from '../Dokdo_Private/stage1/RedItem.png';
 import { useInventory } from '../context/InventoryContext.js';
 
 function BeatButton() {
@@ -143,7 +143,7 @@ function Stage1Page() {
               className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Item} ${
                 items.includes('RedItem') ? styles.hidden : ''
               }`}
-              src={Clover}
+              src={RedItem}
               onClick={() => handleItemClick('RedItem')}
             />
           </>
