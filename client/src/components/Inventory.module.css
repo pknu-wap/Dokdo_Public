@@ -25,6 +25,13 @@
 }
 
 .InventoryItemBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  gap: 100px;
+
   width: 180px;
   height: 130px;
   background-color: #c1a693;
@@ -35,19 +42,17 @@
 
 .InventoryList {
   position: absolute;
-  /* transform: translate(0, -50%); */
-  top: 45px;
-  left: 50px;
+  top: 43px;
+  left: 48px;
 
   display: flex;
   flex-direction: column;
-  gap: 67px;
+  gap: 51px;
+  width: fit-content;
 }
 
 .InventoryItemImage {
-  width: 80px;
-  transform: translate(-50%, -50%);
-  height: fit-content;
+  width: 70%;
   cursor: pointer;
 }
 

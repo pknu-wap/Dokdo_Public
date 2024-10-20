@@ -13,7 +13,7 @@ const itemImage = {
 };
 
 function Inventory() {
-  const [boxes, setBoxes] = useState(Array.from({ length: 8 }, (_, i) => ({ id: i + 1, items: [] })));
+  const boxes = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, items: [] }));
 
   const { items } = useInventory(); /* itmes를 Context에서 가져옴 */
 
@@ -36,6 +36,12 @@ function Inventory() {
   return (
     <div className={styles.InventoryContainer}>
       <div className={styles.InventoryGrid}>
+        {boxes.map((box) => (
+          <div key={box.id} className={styles.InventoryItemBox}>
+            {/* 박스 배경 */}
+            <div className={styles.InventoryBoxBackground}></div>
+          </div>
+        ))}
         <ReactSortable
           list={inventoryItems}
           setList={setInventoryItems}
@@ -48,12 +54,6 @@ function Inventory() {
             </div>
           ))}
         </ReactSortable>
-        {boxes.map((box) => (
-          <div key={box.id} className={styles.InventoryItemBox}>
-            {/* 박스 배경 */}
-            <div className={styles.InventoryBoxBackground}></div>
-          </div>
-        ))}
       </div>
     </div>
   );
