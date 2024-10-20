@@ -62,6 +62,10 @@
   height: 23%;
 }
 
+.hidden {
+  display: none;
+}
+
 .Stage1Item {
   width: 7%;
   height: fit-content;

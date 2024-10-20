@@ -109,6 +109,7 @@ function Stage1Page() {
   const isStage1DoorOpen = true;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isGetRedItem, setIsGetRedItem] = useState(false);
+  const [stage1Items, setStage1Items] = useState([]);
 
   useEffect(() => {
     const savedRedItemState = sessionStorage.getItem('stage1Item');
@@ -117,14 +118,16 @@ function Stage1Page() {
     }
   });
 
-  const handleClickDrawer = () => {
+  const handleDrawerClick = () => {
     const newDrawerState = !isDrawerOpen;
     setIsDrawerOpen(newDrawerState);
   };
 
-  const handleClickRedItem = () => {
-    setIsGetRedItem(true);
-    sessionStorage.setItem('stage1Item', 'true');
+  /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
+  const handleItemClick = (item) => {
+    setStage1Items([...stage1Items, item]);
+    sessionStorage.setItem(item, 'true');
+    console.log(stage1Items);
   };
 
   return (
@@ -141,15 +144,21 @@ function Stage1Page() {
             <img
               className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen}`}
               src={DrawerOpen}
-              onClick={handleClickDrawer}
+              onClick={handleDrawerClick}
             />
-            <img className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Item}`} src={Clover} />
+            <img
+              className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Item} ${
+                stage1Items.includes('RedItem') ? styles.hidden : ''
+              }`}
+              src={Clover}
+              onClick={() => handleItemClick('RedItem')}
+            />
           </>
         ) : (
           <img
             className={`${styles.Stage1Drawer} ${styles.Stage1DrawerClose} `}
             src={DrawerClose}
-            onClick={handleClickDrawer}
+            onClick={handleDrawerClick}
           />
         )}
       </div>
