@@ -121,7 +121,6 @@ function Stage1Page() {
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
   const handleItemClick = (itemName) => {
     addItem(itemName);
-    console.log(items);
   };
 
   return (

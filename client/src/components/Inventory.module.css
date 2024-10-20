@@ -1,3 +1,8 @@
+.react-sortable-dragging {
+  cursor: none; /* 드래그 중 커서 숨김 */
+  opacity: 0.1; /* 투명도 조정 (선택 사항) */
+} /* 이거 적용이 안 됨 -> 해결방법 찾기 */
+
 .InventoryContainer {
   position: fixed;
   right: 0;
@@ -9,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .InventoryGrid {
@@ -36,7 +41,6 @@
   height: 130px;
   background-color: #c1a693;
   border-radius: 4px;
-  overflow: scroll;
   margin-bottom: 10px;
 }
 

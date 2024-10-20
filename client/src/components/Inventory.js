@@ -45,7 +45,7 @@ function Inventory() {
         <ReactSortable
           list={inventoryItems}
           setList={setInventoryItems}
-          animation={200} /* 드래그 앤 드롭 애니메이션 */
+          animation={150} /* 드래그 앤 드롭 애니메이션 */
           className={styles.InventoryList}
         >
           {inventoryItems.map((inventoryItem) => (
