@@ -1,0 +1,65 @@
+.react-sortable-dragging {
+  cursor: none; /* 드래그 중 커서 숨김 */
+  opacity: 0.1; /* 투명도 조정 (선택 사항) */
+} /* 이거 적용이 안 됨 -> 해결방법 찾기 */
+
+.InventoryContainer {
+  position: fixed;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background-color: #ddc2af;
+  z-index: 1001;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: scroll;
+}
+
+.InventoryGrid {
+  padding: 20px 0;
+  height: 100vh;
+  width: fit-content;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(8, 1fr);
+  gap: 10px;
+  position: relative;
+}
+
+.InventoryItemBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  gap: 100px;
+
+  width: 180px;
+  height: 130px;
+  background-color: #c1a693;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.InventoryList {
+  position: absolute;
+  top: 43px;
+  left: 48px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 51px;
+  width: fit-content;
+}
+
+.InventoryItemImage {
+  width: 70%;
+  cursor: pointer;
+}
+
+.InventoryItem {
+  cursor: pointer;
+}

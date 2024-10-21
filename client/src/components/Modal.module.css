@@ -2,7 +2,7 @@
 
 .ModalContainer {
   background-color: rgba(0, 0, 0, 0.5); /* 모달창 띄울 시 뒷배경 어두운 효과 */
-  z-index: 999;
+  z-index: 1002;
   height: 100%;
   width: 100%;
   position: fixed; /* 브라우저 뷰포트를 기준으로 고정 */
@@ -26,7 +26,7 @@
 .CloseBtn {
   cursor: pointer;
   position: absolute;
-  z-index: 1000;
+  z-index: 1003;
   top: -1.5%;
   right: -1.5%;
   width: 50px;

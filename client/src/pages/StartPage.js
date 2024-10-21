@@ -1,5 +1,5 @@
 import styles from './StartPage.module.css';
-import Logo from '../assets/logo.png';
+import Logo from '../Dokdo_Private/logo2.png';
 import Modal from '../components/Modal';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';

@@ -1,13 +1,18 @@
 import styles from './Stage1Page.module.css';
 import ToolBar from '../components/ToolBar.js';
+import Inventory from '../components/Inventory.js';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
 import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
 import Table from '../Dokdo_Private/stage1/Stage1Table.png';
 import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
-import { useNavigate } from 'react-router-dom';
+import RedItem from '../Dokdo_Private/stage1/RedItem.png';
+import Clover from '../assets/clover.png';
+import { useInventory } from '../context/InventoryContext.js';
 
 function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
@@ -30,7 +35,7 @@ function BeatButton() {
   /* 각 박자에 대한 간격 (밀리초) */
   const beatCounts = [3, 3, 7]; /* 3-3-7 박자 */
   const totalClicksRequired = 13; /* 필요한 클릭 수 */
-  const minGapBetweenBeats = 200; /* 비트 간 최소 간격 (200ms) */
+  const minGapBetweenBeats = 180; /* 비트 간 최소 간격 (200ms) */
 
   const handleClickDoor = () => {
     /* 필요 이상의 클릭 시 감지하지 않음 */
@@ -106,35 +111,56 @@ function Stage1Page() {
   const isStage1DoorOpen = true;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  useEffect(() => {
-    const savedDrawerState = sessionStorage.getItem('stage1Drawer');
-    if (savedDrawerState === 'true') {
-      setIsDrawerOpen(true);
-    }
-  });
+  const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
 
-  const handleClickDrawer = () => {
-    setIsDrawerOpen(true);
-    sessionStorage.setItem('stage1Drawer', 'true');
+  const handleDrawerClick = () => {
+    const newDrawerState = !isDrawerOpen;
+    setIsDrawerOpen(newDrawerState);
+  };
+
+  /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
+  const handleItemClick = (itemName) => {
+    addItem(itemName);
   };
 
   return (
     <>
       <ToolBar isStage2Open={isStage1DoorOpen} />
+      <Inventory />
       <div className={styles.Stage1Bg}>
         <div className={styles.Stage1Floor} />
         <BeatButton />
         <img className={styles.Stage1Table} src={Table} />
         <img className={styles.Stage1Music} src={Music} />
         {isDrawerOpen ? (
-          <img className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen}`} src={DrawerOpen} />
+          <>
+            <img
+              className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen}`}
+              src={DrawerOpen}
+              onClick={handleDrawerClick}
+            />
+            <img
+              className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Item} ${
+                items.includes('RedItem') ? styles.hidden : ''
+              }`}
+              src={RedItem}
+              onClick={() => handleItemClick('RedItem')}
+            />
+          </>
         ) : (
           <img
-            className={`${styles.Stage1Drawer} ${styles.Stage1DrawerClose}`}
+            className={`${styles.Stage1Drawer} ${styles.Stage1DrawerClose} `}
             src={DrawerClose}
-            onClick={handleClickDrawer}
+            onClick={handleDrawerClick}
           />
         )}
+        <img
+          className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
+            items.includes('Clover') ? styles.hidden : ''
+          }`}
+          src={Clover}
+          onClick={() => handleItemClick('Clover')}
+        />
       </div>
     </>
   );
