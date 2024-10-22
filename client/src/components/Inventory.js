@@ -62,6 +62,7 @@ function Inventory() {
           </ReactSortable>
         </div>
       </div>
+
       {/* 선택된 아이템이 있을 때만 오버레이를 표시 */}
       {selectedItem && (
         <div className={styles.OverlayBg} onClick={handleCloseOverlay}>

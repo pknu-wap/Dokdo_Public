@@ -12,6 +12,8 @@ import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
 import TaegeukKey from '../Dokdo_Private/stage1/RedItem.png';
+import Lamp from '../Dokdo_Private/stage1/Stage1Lamp.png';
+import Light from '../Dokdo_Private/stage1/Stage1LampLight.png';
 import Clover from '../assets/clover.png';
 
 function BeatButton() {
@@ -111,6 +113,7 @@ function Stage1Page() {
   const isStage1DoorOpen = true;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMusicExpand, setIsMusicExpand] = useState(false);
+  const [isLampOn, setIsLampOn] = useState(false);
 
   const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
 
@@ -121,6 +124,11 @@ function Stage1Page() {
 
   const handleMusicClick = () => {
     setIsMusicExpand(true);
+  };
+
+  const handleLampClick = () => {
+    const newLampState = !isLampOn;
+    setIsLampOn(newLampState);
   };
 
   const handleBgClick = () => {
@@ -140,6 +148,8 @@ function Stage1Page() {
         <div className={styles.Stage1Floor} />
         <BeatButton />
         <img className={styles.Stage1Table} src={Table} />
+        <img className={`${styles.Stage1Light} ${isLampOn ? '' : styles.hidden}`} src={Light} />
+        <img className={styles.Stage1Lamp} src={Lamp} onClick={handleLampClick} />
         <img className={styles.Stage1Music} src={Music} onClick={handleMusicClick} />
         {isDrawerOpen ? (
           <>
@@ -149,7 +159,7 @@ function Stage1Page() {
               onClick={handleDrawerClick}
             />
             <img
-              className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Item} ${
+              className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1TaegeukKey} ${
                 items.includes('TaegeukKey') ? styles.hidden : ''
               }`}
               src={TaegeukKey}
@@ -172,7 +182,7 @@ function Stage1Page() {
         />
         {isMusicExpand && (
           <div className={styles.Stage1ObjectBg} onClick={handleBgClick}>
-            <img src={Music} className={styles.Stage1MusicImg} />
+            <img src={Music} className={styles.Stage1MusicExpand} />
           </div>
         )}
       </div>
