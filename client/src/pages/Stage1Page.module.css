@@ -5,8 +5,25 @@
   background-color: #fee7d7;
 }
 
+.Stage1ObjectBg {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: inherit;
+  z-index: 1003;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Stage1MusicImg {
+  position: relative;
+  width: 70%;
+  z-index: 1004;
+}
+
 .Stage1DoorImg {
-  position: absolute;
+  position: fixed;
   transform: translate(-50%, -50%);
   cursor: pointer;
 }
@@ -32,22 +49,23 @@
 }
 
 .Stage1Table {
-  position: absolute;
+  position: fixed;
   top: 62%;
   left: 30%;
   height: 35%;
 }
 
 .Stage1Music {
-  position: absolute;
+  position: fixed;
   top: 35%;
   left: 22%;
   height: 18%;
+  cursor: pointer;
 }
 
 .Stage1Drawer {
   cursor: pointer;
-  position: absolute;
+  position: fixed;
 }
 
 .Stage1DrawerClose {
@@ -74,6 +92,7 @@
 }
 
 .Stage1Puzzle {
+  position: fixed;
   width: 7%;
   height: fit-content;
   top: 62%;

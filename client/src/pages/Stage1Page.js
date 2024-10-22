@@ -3,6 +3,7 @@ import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInventory } from '../context/InventoryContext.js';
 
 import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
 import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
@@ -12,7 +13,6 @@ import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
 import RedItem from '../Dokdo_Private/stage1/RedItem.png';
 import Clover from '../assets/clover.png';
-import { useInventory } from '../context/InventoryContext.js';
 
 function BeatButton() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
@@ -110,12 +110,21 @@ function BeatButton() {
 function Stage1Page() {
   const isStage1DoorOpen = true;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isMusicExpand, setIsMusicExpand] = useState(false);
 
   const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
 
   const handleDrawerClick = () => {
     const newDrawerState = !isDrawerOpen;
     setIsDrawerOpen(newDrawerState);
+  };
+
+  const handleMusicClick = () => {
+    setIsMusicExpand(true);
+  };
+
+  const handleBgClick = () => {
+    setIsMusicExpand(false);
   };
 
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
@@ -131,7 +140,7 @@ function Stage1Page() {
         <div className={styles.Stage1Floor} />
         <BeatButton />
         <img className={styles.Stage1Table} src={Table} />
-        <img className={styles.Stage1Music} src={Music} />
+        <img className={styles.Stage1Music} src={Music} onClick={handleMusicClick} />
         {isDrawerOpen ? (
           <>
             <img
@@ -161,6 +170,11 @@ function Stage1Page() {
           src={Clover}
           onClick={() => handleItemClick('Clover')}
         />
+        {isMusicExpand && (
+          <div className={styles.Stage1ObjectBg} onClick={handleBgClick}>
+            <img src={Music} className={styles.Stage1MusicImg} />
+          </div>
+        )}
       </div>
     </>
   );
