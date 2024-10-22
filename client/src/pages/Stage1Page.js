@@ -11,7 +11,7 @@ import Table from '../Dokdo_Private/stage1/Stage1Table.png';
 import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
-import TaegeukKey from '../Dokdo_Private/stage1/RedItem.png';
+import TaegeukKey from '../Dokdo_Private/stage1/TaegeukCut.png';
 import Lamp from '../Dokdo_Private/stage1/Stage1Lamp.png';
 import Light from '../Dokdo_Private/stage1/Stage1LampLight.png';
 import Clover from '../assets/clover.png';

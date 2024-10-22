@@ -1,7 +1,7 @@
-/*Stage1 배경 및 바닥*/
+/* Stage1 배경 및 바닥 */
 
 .Stage1Bg {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   position: relative;
   background-color: #fee7d7;
@@ -11,8 +11,8 @@
   position: fixed;
   bottom: 0;
   background-color: #846b66;
-  width: 100%;
-  height: 13%;
+  width: 100vw;
+  height: 13vh;
 }
 
 /* Stage1 물건 */
@@ -20,18 +20,18 @@
 .Stage1Lamp {
   position: fixed;
   cursor: pointer;
-  top: 15%;
-  left: 37%;
+  top: 15vh;
+  left: 37vw;
   transform: translate(-50%, -50%);
-  width: 10%;
+  width: 10vw;
 }
 
 .Stage1Light {
   position: fixed;
   transform: translate(-50%, -50%);
-  top: 52%;
-  left: 37%;
-  width: 40%;
+  top: 52vh;
+  left: 37vw;
+  width: 40vw;
 }
 
 .Stage1DoorImg {
@@ -41,9 +41,9 @@
 }
 
 .Stage1DoorClose {
-  height: 64%;
-  top: 55%;
-  left: 70%;
+  height: 64vh;
+  top: 55vh;
+  left: 70vw;
   transition: transform 0.3s ease;
 }
 
@@ -52,23 +52,23 @@
 }
 
 .Stage1DoorOpen {
-  top: 58%;
-  left: 70%;
-  height: 70%;
+  top: 58vh;
+  left: 70vw;
+  height: 70vh;
 }
 
 .Stage1Table {
   position: fixed;
-  top: 62%;
-  left: 32%;
-  height: 35%;
+  top: 62vh;
+  left: 32vw;
+  height: 35vh;
 }
 
 .Stage1Music {
   position: fixed;
-  top: 35%;
-  left: 25%;
-  height: 18%;
+  top: 35vh;
+  left: 25vw;
+  height: 18vh;
   cursor: pointer;
 }
 
@@ -78,15 +78,15 @@
 }
 
 .Stage1DrawerClose {
-  top: 73.3%;
-  left: 5%;
-  height: 20%;
+  top: 73.3vh;
+  left: 5vw;
+  height: 20vh;
 }
 
 .Stage1DrawerOpen {
-  top: 72.5%;
-  left: 1.8%;
-  height: 23%;
+  top: 72.5vh;
+  left: 1.8vw;
+  height: 23vh;
 }
 
 /* Stage1 아이템 */
@@ -96,28 +96,28 @@
 }
 
 .Stage1TaegeukKey {
-  width: 7%;
+  width: 7vw;
   height: fit-content;
-  top: 72.5%;
-  left: 5%;
+  top: 75vh;
+  left: 5vw;
 }
 
 .Stage1Puzzle {
   position: fixed;
-  width: 7%;
+  width: 7vw;
   height: fit-content;
-  top: 62%;
-  left: 35%;
+  top: 62vh;
+  left: 35vw;
 }
 
-/*Stage1 물건 확대 */
+/* Stage1 물건 확대 */
 
 .Stage1ObjectBg {
   background-color: rgba(0, 0, 0, 0.5);
   position: inherit;
   z-index: 1003;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,6 +125,6 @@
 
 .Stage1MusicExpand {
   position: relative;
-  width: 70%;
+  width: 70vw;
   z-index: 1004;
 }
