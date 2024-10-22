@@ -11,7 +11,7 @@ import Table from '../Dokdo_Private/stage1/Stage1Table.png';
 import Music from '../Dokdo_Private/stage1/Music.png';
 import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
 import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
-import RedItem from '../Dokdo_Private/stage1/RedItem.png';
+import TaegeukKey from '../Dokdo_Private/stage1/RedItem.png';
 import Clover from '../assets/clover.png';
 
 function BeatButton() {
@@ -60,7 +60,7 @@ function BeatButton() {
     /* 일정 시간 후에 타이머 리셋 */
     const newTimer = setTimeout(() => {
       resetAll(); /* 리셋 */
-    }, 2000); /* 1초 후 리셋 */
+    }, 1000); /* 1초 후 리셋 */
     setTimer(newTimer); /* 새 타이머 설정 */
   };
 
@@ -150,10 +150,10 @@ function Stage1Page() {
             />
             <img
               className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Item} ${
-                items.includes('RedItem') ? styles.hidden : ''
+                items.includes('TaegeukKey') ? styles.hidden : ''
               }`}
-              src={RedItem}
-              onClick={() => handleItemClick('RedItem')}
+              src={TaegeukKey}
+              onClick={() => handleItemClick('TaegeukKey')}
             />
           </>
         ) : (

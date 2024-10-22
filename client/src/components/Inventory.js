@@ -3,12 +3,12 @@ import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
 import CloseBtn from '../Dokdo_Private/CloseBtn.png';
 import { useInventory } from '../context/InventoryContext';
-import RedItem from '../Dokdo_Private/stage1/RedItem.png';
+import TaegeukKey from '../Dokdo_Private/stage1/RedItem.png';
 import Clover from '../assets/clover.png';
 
 const itemImage = {
   Key: CloseBtn,
-  RedItem: RedItem,
+  TaegeukKey: TaegeukKey,
   Clover: Clover,
 };
 
