@@ -80,20 +80,29 @@
   cursor: pointer;
 }
 
+.Stage1DrawerBox {
+  width: auto;
+  height: auto;
+  position: fixed;
+  top: 72.5vh;
+  left: 1.8vw;
+  display: inline-block;
+}
+
 .Stage1Drawer {
   cursor: pointer;
-  position: relative;
+  display: block;
 }
 
 .Stage1DrawerClose {
+  position: fixed;
   top: 73.3vh;
   left: 5vw;
   height: 20vh;
 }
 
 .Stage1DrawerOpen {
-  top: 72.5vh;
-  left: 1.8vw;
+  position: relative;
   height: 23vh;
 }
 
@@ -107,8 +116,8 @@
   position: absolute;
   height: 4vh;
   width: auto;
-  top: calc(72.5vh + 2.5vh);
-  left: calc(1.8vw + 5.5vw);
+  top: 4.4vh;
+  left: 6vw;
 }
 
 .Stage1Puzzle {

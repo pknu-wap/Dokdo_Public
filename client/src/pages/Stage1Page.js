@@ -155,7 +155,7 @@ function Stage1Page() {
         <img className={styles.Stage1Music} src={Music} onClick={handleMusicClick} />
 
         {isDrawerOpen ? (
-          <>
+          <div className={styles.Stage1DrawerBox}>
             <img
               className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen}`}
               src={DrawerOpen}
@@ -168,7 +168,7 @@ function Stage1Page() {
               src={TaegeukKey}
               onClick={() => handleItemClick('TaegeukKey')}
             />
-          </>
+          </div>
         ) : (
           <img
             className={`${styles.Stage1Drawer} ${styles.Stage1DrawerClose} `}
