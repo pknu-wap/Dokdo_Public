@@ -1,12 +1,15 @@
 .react-sortable-dragging {
   cursor: none; /* 드래그 중 커서 숨김 */
   opacity: 0.1; /* 투명도 조정 (선택 사항) */
-} /* 이거 적용이 안 됨 -> 해결방법 찾기 */
+}
+/* 이거 적용이 안 됨 -> 해결방법 찾기 */
+
+/* 인벤토리 배경 */
 
 .InventoryContainer {
   position: fixed;
   right: 0;
-  width: 280px;
+  width: 14.58vw;
   height: 100vh;
   background-color: #ddc2af;
   z-index: 1001;
@@ -18,14 +21,14 @@
 }
 
 .InventoryGrid {
-  padding: 20px 0;
+  padding: 2.6vh 0;
   height: 100vh;
   width: fit-content;
 
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(8, 1fr);
-  gap: 10px;
+  gap: 2vh;
   position: relative;
 }
 
@@ -35,31 +38,51 @@
   align-items: center;
   flex-direction: column;
   position: relative;
-  gap: 100px;
+  gap: 13vh;
 
-  width: 180px;
-  height: 130px;
+  width: 10vw;
+  height: 16vh;
   background-color: #c1a693;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  border-radius: 0.208vw;
+  margin-bottom: 1.04vh;
 }
 
 .InventoryList {
   position: absolute;
-  top: 43px;
-  left: 48px;
+  top: 5vh;
+  left: 2vw;
 
   display: flex;
   flex-direction: column;
-  gap: 51px;
+  gap: 8vh;
   width: fit-content;
 }
 
+/* 인벤토리 아이템 */
+
 .InventoryItemImage {
-  width: 70%;
+  width: 6vw;
   cursor: pointer;
 }
 
 .InventoryItem {
   cursor: pointer;
+}
+
+/* 인벤토리 아이템 확대 */
+
+.OverlayBg {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1003;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.OverlayImage {
+  width: 35vw;
+  height: fit-content;
 }
