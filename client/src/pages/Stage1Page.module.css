@@ -65,10 +65,18 @@
   height: 70vh;
 }
 
-.Stage1Table {
+.Stage1TableBox {
+  width: auto;
+  height: auto;
   position: fixed;
   top: 62vh;
   left: 32vw;
+  display: inline-block;
+}
+
+.Stage1Table {
+  position: relative;
+  display: block;
   height: 35vh;
 }
 
@@ -121,11 +129,11 @@
 }
 
 .Stage1Puzzle {
-  position: fixed;
-  height: 7vh;
+  position: absolute;
+  height: 8vh;
   width: fit-content;
-  top: 62vh;
-  left: 35vw;
+  top: 2vh;
+  left: 4.3vw;
 }
 
 /* Stage1 물건 확대 */

@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
-import CloseBtn from '../Dokdo_Private/CloseBtn.png';
 import { useInventory } from '../context/InventoryContext';
 import TaegeukKey from '../Dokdo_Private/stage1/RedItem.png';
-import Clover from '../assets/clover.png';
+import dokdoPuzzle1 from '../assets/clover.png';
 
 const itemImage = {
   TaegeukKey: TaegeukKey,
-  Clover: Clover,
+  dokdoPuzzle1: dokdoPuzzle1,
 };
 
 function Inventory() {

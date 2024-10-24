@@ -16,7 +16,7 @@ import Lamp from '../Dokdo_Private/stage1/Stage1Lamp.png';
 import Light from '../Dokdo_Private/stage1/Stage1LampLight.png';
 import Clover from '../assets/clover.png';
 
-function BeatButton() {
+function BeatDoor() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
   const [clickTimestamps, setClickTimestamps] = useState([]); /* 클릭 타임 스탬프 저장 */
   const [timer, setTimer] = useState(null); /* 타이머 상태 */
@@ -146,8 +146,18 @@ function Stage1Page() {
       <Inventory />
       <div className={styles.Stage1Bg}>
         <div className={styles.Stage1Floor} />
-        <BeatButton />
-        <img className={styles.Stage1Table} src={Table} />
+        <BeatDoor />
+        <div className={styles.Stage1TableBox}>
+          <img className={styles.Stage1Table} src={Table} />
+          <img
+            className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
+              items.includes('dokdoPuzzle1') ? styles.hidden : ''
+            }`}
+            src={Clover}
+            onClick={() => handleItemClick('dokdoPuzzle1')}
+          />
+        </div>
+
         <div className={styles.Stage1LampBox}>
           <img className={`${styles.Stage1Light} ${isLampOn ? '' : styles.hidden}`} src={Light} />
           <img className={styles.Stage1Lamp} src={Lamp} onClick={handleLampClick} />
@@ -176,13 +186,7 @@ function Stage1Page() {
             onClick={handleDrawerClick}
           />
         )}
-        <img
-          className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
-            items.includes('Clover') ? styles.hidden : ''
-          }`}
-          src={Clover}
-          onClick={() => handleItemClick('Clover')}
-        />
+
         {isMusicExpand && (
           <div className={styles.Stage1ObjectBg} onClick={handleBgClick}>
             <img src={Music} className={styles.Stage1MusicExpand} />
