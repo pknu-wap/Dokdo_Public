@@ -17,21 +17,29 @@
 
 /* Stage1 물건 */
 
-.Stage1Lamp {
+.Stage1LampBox {
+  width: auto;
+  height: auto;
   position: fixed;
+  top: 5vh;
+  left: 33.5vw;
+  display: inline-block;
+}
+
+.Stage1Lamp {
   cursor: pointer;
-  top: 15vh;
-  left: 37vw;
-  transform: translate(-50%, -50%);
-  width: 10vw;
+  position: relative;
+  height: 17vh;
+  display: block;
 }
 
 .Stage1Light {
-  position: fixed;
-  transform: translate(-50%, -50%);
-  top: 52vh;
-  left: 37vw;
+  position: absolute;
+  top: 12vh;
+  left: 50%;
+  transform: translate(-50%);
   width: 40vw;
+  height: fit-content;
 }
 
 .Stage1DoorImg {
@@ -74,7 +82,7 @@
 
 .Stage1Drawer {
   cursor: pointer;
-  position: fixed;
+  position: relative;
 }
 
 .Stage1DrawerClose {
@@ -96,16 +104,17 @@
 }
 
 .Stage1TaegeukKey {
-  width: 7vw;
-  height: fit-content;
-  top: 74.9vh;
-  left: 6vw;
+  position: absolute;
+  height: 4vh;
+  width: auto;
+  top: calc(72.5vh + 2.5vh);
+  left: calc(1.8vw + 5.5vw);
 }
 
 .Stage1Puzzle {
   position: fixed;
-  width: 7vw;
-  height: fit-content;
+  height: 7vh;
+  width: fit-content;
   top: 62vh;
   left: 35vw;
 }
@@ -114,10 +123,11 @@
 
 .Stage1ObjectBg {
   background-color: rgba(0, 0, 0, 0.5);
-  position: inherit;
+  position: relative;
+  top: 0;
   z-index: 1003;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

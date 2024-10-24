@@ -148,9 +148,12 @@ function Stage1Page() {
         <div className={styles.Stage1Floor} />
         <BeatButton />
         <img className={styles.Stage1Table} src={Table} />
-        <img className={`${styles.Stage1Light} ${isLampOn ? '' : styles.hidden}`} src={Light} />
-        <img className={styles.Stage1Lamp} src={Lamp} onClick={handleLampClick} />
+        <div className={styles.Stage1LampBox}>
+          <img className={`${styles.Stage1Light} ${isLampOn ? '' : styles.hidden}`} src={Light} />
+          <img className={styles.Stage1Lamp} src={Lamp} onClick={handleLampClick} />
+        </div>
         <img className={styles.Stage1Music} src={Music} onClick={handleMusicClick} />
+
         {isDrawerOpen ? (
           <>
             <img
