@@ -13,7 +13,7 @@
   background-color: #c1a693;
   height: fit-content;
   width: 100vw;
-  padding: 2.5vh 2vw;
+  padding: 3vh 2vw;
   padding-bottom: 0;
   z-index: 1000;
   display: flex;
@@ -26,7 +26,7 @@
   font-family: 'Noto Sans';
   font-size: 2vw;
   font-weight: 500;
-  padding: 1.25vh 1.25vw 0.83vh;
+  padding: 1.7vh 2vw 0.9vh;
   text-decoration: none;
   color: #fff;
   border: none;
