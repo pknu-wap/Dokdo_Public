@@ -35,7 +35,7 @@ function Inventory() {
   };
 
   const handleCloseOverlay = () => {
-    setSelectedItem(null); // 오버레이 클릭 시 닫기
+    setSelectedItem(null); /* 오버레이 클릭 시 닫기 */
   };
 
   return (
