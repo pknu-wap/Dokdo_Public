@@ -2,7 +2,6 @@ package com.example.rememberdokdo.Service;
 import com.example.rememberdokdo.Dto.SessionDto;
 import com.example.rememberdokdo.Entity.SessionEntity;
 import com.example.rememberdokdo.Repository.SessionRepository;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,6 @@ public class SessionService {
         // 새로운 세션 ID 생성
         String sessionId = UUID.randomUUID().toString();
 
-        // 새로운 세션 쿠키 생성
-        createSessionCookie(sessionId, response);
-
         // 새로운 세션 엔티티 생성
         SessionEntity sessionEntity = SessionEntity.builder()
                 .sessionId(sessionId)
@@ -37,7 +33,7 @@ public class SessionService {
         // 세션 정보를 DB에 저장
         sessionRepository.save(sessionEntity);
 
-        // 세션 정보를 반환
+        // 세션 정보를 반환 (쿠키는 생성하지 않음)
         return SessionDto.fromEntity(sessionEntity);
     }
 
@@ -45,9 +41,6 @@ public class SessionService {
     public SessionDto refreshSession(HttpServletRequest request, HttpServletResponse response) {
         // 새로운 세션 ID 생성
         String sessionId = UUID.randomUUID().toString();
-
-        // 새로운 세션 쿠키 생성
-        createSessionCookie(sessionId, response);
 
         // 새로운 세션 엔티티 생성
         SessionEntity sessionEntity = SessionEntity.builder()
@@ -58,8 +51,19 @@ public class SessionService {
                 .isActive(true)
                 .build();
 
+        // 세션 정보를 DB에 저장
         sessionRepository.save(sessionEntity);
+
+        // 세션 정보를 반환 (쿠키는 생성하지 않음)
         return SessionDto.fromEntity(sessionEntity);
+    }
+
+    // 세션 검증 로직 추가 (클라이언트에서 전달받은 세션 ID 검증)
+    public boolean validateSession(String sessionId) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        return sessionRepository.findBySessionIdAndExpiresAtAfter(sessionId, currentTime)
+                .map(SessionEntity::getIsActive)
+                .orElse(false);
     }
 
     /* 사용자 게임 클리어 시 userId 저장 (닉네임 저장)
@@ -69,13 +73,4 @@ public class SessionService {
         sessionRepository.save(session);
         return SessionDto.fromEntity(session);
     }*/
-
-    // 쿠키 생성 메서드
-    public void createSessionCookie(String sessionId, HttpServletResponse response) {
-        Cookie sessionCookie = new Cookie("SESSIONID", sessionId);
-        sessionCookie.setMaxAge(3600);  // 1시간 유효
-        sessionCookie.setHttpOnly(true);  // JavaScript로 접근 불가 (보안 강화)
-        sessionCookie.setPath("/");  // 전체 경로에서 쿠키 사용 가능
-        response.addCookie(sessionCookie);
-    }
 }
