@@ -147,6 +147,11 @@ function Stage1Page() {
       <div className={styles.Stage1Bg}>
         <div className={styles.Stage1Floor} />
         <BeatDoor />
+
+        <div className={styles.Stage1LampBox}>
+          <img className={`${styles.Stage1Light} ${isLampOn ? '' : styles.hidden}`} src={Light} />
+          <img className={styles.Stage1Lamp} src={Lamp} onClick={handleLampClick} />
+        </div>
         <div className={styles.Stage1TableBox}>
           <img className={styles.Stage1Table} src={Table} />
           <img
@@ -156,11 +161,6 @@ function Stage1Page() {
             src={Clover}
             onClick={() => handleItemClick('dokdoPuzzle1')}
           />
-        </div>
-
-        <div className={styles.Stage1LampBox}>
-          <img className={`${styles.Stage1Light} ${isLampOn ? '' : styles.hidden}`} src={Light} />
-          <img className={styles.Stage1Lamp} src={Lamp} onClick={handleLampClick} />
         </div>
         <img className={styles.Stage1Music} src={Music} onClick={handleMusicClick} />
 
