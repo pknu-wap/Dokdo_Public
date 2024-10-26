@@ -10,6 +10,7 @@ html {
 :root {
   --primary-color: #7b00ff;
   --max-width: 1440px;
+  overflow: hidden;
 }
 
 body {
