@@ -4,7 +4,7 @@ import LeftPage from '../assets/LeftPage.png';
 import RightPage from '../assets/RightPage.png';
 import map from '../assets/Stage2Map.png';
 
-const Book = () => {
+const Book = ({ closeBook }) => {
   const [page, setPage] = useState(1);
   const [isMapFind, setIsMapFind] = useState(true);
 
@@ -42,6 +42,7 @@ const Book = () => {
           onClick={() => {
             alert('인벤토리로 슈슉');
             setIsMapFind(false);
+            closeBook();
           }}
         >
           <img src={map} alt="Map" />

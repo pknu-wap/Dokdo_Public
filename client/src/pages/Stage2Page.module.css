@@ -1,8 +1,21 @@
 .Stage2 {
+  position: relative;
   width: 100vw;
   height: 100vh;
 }
-
+.BackGround {
+  position: fixed;
+  width: 100%;
+  height: 87%;
+  background-color: #fee7d7;
+}
+.Stage2Floor {
+  position: fixed;
+  background-color: #846b66;
+  width: 100%;
+  top: 87%;
+  height: 13%;
+}
 .Box {
   position: absolute;
   top: 65%;
@@ -61,4 +74,8 @@
   border: none;
   z-index: 1;
   cursor: pointer;
+}
+
+.PlaceAnswer {
+  border: none;
 }
