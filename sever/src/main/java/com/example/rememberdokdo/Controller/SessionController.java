@@ -1,6 +1,7 @@
 package com.example.rememberdokdo.Controller;
 
 import com.example.rememberdokdo.Dto.SessionDto;
+import com.example.rememberdokdo.Dto.SessionStatusDto;
 import com.example.rememberdokdo.Service.SessionService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,4 +28,9 @@ public class SessionController {
         return sessionService.validateSession(sessionId);
     }
 
+    // 세션 상태 확인 및 진행 상황 반환
+    @GetMapping("/status")
+    public SessionStatusDto getSessionStatus(@RequestParam String sessionId) {
+        return sessionService.getSessionStatus(sessionId);
+    }
 }
