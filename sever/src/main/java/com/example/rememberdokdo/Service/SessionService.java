@@ -1,8 +1,10 @@
 package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.SessionDto;
+import com.example.rememberdokdo.Dto.SessionStatusDto;
 import com.example.rememberdokdo.Entity.SessionEntity;
 import com.example.rememberdokdo.Repository.SessionRepository;
+import com.example.rememberdokdo.Repository.StageProgressRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +27,10 @@ public class SessionService {
 
     @Autowired
     private SessionRepository sessionRepository;
+    @Autowired
+    private StageProgressRepository stageProgressRepository;
+    /*@Autowired
+    private InventoryItemRepository inventoryItemRepository;*/
 
     // 브라우저 접속 시 세션 시작 (쿠키로 세션 ID 전달)
     public SessionDto startSession(HttpServletRequest request, HttpServletResponse response) {
@@ -110,6 +119,33 @@ public class SessionService {
             logger.error("만료된 세션 삭제 실패", e);
         }
     }
+
+    // 세션 상태와 진행 상황 반환
+    public SessionStatusDto getSessionStatus(String sessionId) {
+        // 세션 정보 확인
+        SessionEntity sessionEntity = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("Session not found"));
+
+        // 스테이지 진행 상황 조회
+        List<SessionStatusDto.StageStatus> stages = stageProgressRepository.findBySessionId(sessionId).stream()
+                .map(stage -> new SessionStatusDto.StageStatus(stage.getStageId(), stage.isCleared()))
+                .collect(Collectors.toList());
+
+        /*
+        // 인벤토리 아이템 목록 조회
+        List<SessionStatusDto.Item> inventoryItems = inventoryItemRepository.findBySessionId(sessionId).stream()
+                .map(item -> new SessionStatusDto.Item(item.getItemId(), item.getItemName(), item.getItemDescription()))
+                .collect(Collectors.toList());*/
+
+        // SessionStatusDto 생성하여 반환
+        return new SessionStatusDto(
+                sessionEntity.getSessionId(),
+                sessionEntity.getUserId(),
+                stages,
+                null
+        );
+    }
+
 
     /*사용자 게임 클리어 시 userId 저장 (닉네임 저장)
     public SessionDto updateUserId(String sessionId, String userId) {
