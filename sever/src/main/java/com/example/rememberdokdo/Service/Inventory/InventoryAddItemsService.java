@@ -1,6 +1,7 @@
 package com.example.rememberdokdo.Service.Inventory;
 
 import com.example.rememberdokdo.Dto.Inventory.ItemAddRequestDto;
+import com.example.rememberdokdo.Dto.Inventory.ItemAddResponseDto;
 import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
 import com.example.rememberdokdo.Entity.Inventory.InventoryItemsEntity;
 import com.example.rememberdokdo.Entity.Inventory.ItemsEntity;
@@ -45,15 +46,8 @@ public class InventoryAddItemsService {
         ItemsEntity item = itemsRepository.findById(request.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 아이템이 존재하지 않습니다.: " + request.getItemId()));
 
-        // 조회된 아이템 식별자 가져오기
-        Integer itemId = item.getItemId();
-        // 아이템 식별자에 대한 아이템 이름, 아이템 설명 정보 조회
-        String itemName = item.getItemName();
-        String itemDescription = item.getItemDescription();
-
         // 세션 식별자에 매핑된 인벤토리에서 해당 아이템이 이미 존재하는지 확인(중복 확인)
-        boolean itemAlreadyInInventory = inventoryItemsRepository.existsByInventoryIdAndItemId(inventoryId, itemId);
-        if (itemAlreadyInInventory) {
+        if(inventoryItemsRepository.existsByInventoryIdAndItemId(inventoryId, item.getItemId())){
             // 아이템이 이미 인벤토리에 존재하면 오류 메시지 반환
             throw new IllegalArgumentException("해당 아이템이 이미 인벤토리에 존재합니다.");
         }
@@ -61,9 +55,9 @@ public class InventoryAddItemsService {
         // 아이템이 존재하지 않으면 인벤토리에 아이템 추가
         InventoryItemsEntity inventoryItem = new InventoryItemsEntity();
         inventoryItem.setInventoryId(inventoryId);// 인벤토리 식별자
-        inventoryItem.setItemId(itemId); // 아이템 식별자
-        inventoryItem.setItemName(itemName); // 아이템 이름
-        inventoryItem.setItemDescription(itemDescription); // 아이템 설명
+        inventoryItem.setItemId(item.getItemId()); // 아이템 식별자
+        inventoryItem.setItemName(item.getItemName()); // 아이템 이름
+        inventoryItem.setItemDescription(item.getItemDescription()); // 아이템 설명
 
         // 인벤토리에 아이템을 매핑해 저장 (DB 테이블 최신화)
         inventoryItemsRepository.save(inventoryItem);
