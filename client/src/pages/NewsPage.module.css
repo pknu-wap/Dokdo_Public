@@ -1,25 +1,22 @@
-.NewsImg {
+.SlideContainer {
+  position: relative;
   width: 100vw;
   height: 100vh;
 }
 
-.hidden {
+.Slide {
+  width: 100%;
+  height: 100%;
+  transition: transform 1s linear;
+  /* 모든 슬라이드를 왼쪽에 쌓이게 하기 위해 왼쪽으로 이동 */
+  transform: translateX(100%);
+}
+
+.ActiveSlide {
+  transform: translateX(0); /* 현재 슬라이드를 보이도록 이동 */
+}
+
+.PreviousSlide {
+  transform: translateX(-100%); /* 이전 슬라이드를 왼쪽으로 이동 */
   display: none;
-}
-
-.FadeInOut {
-  animation: FadeInOut 8s cubic-bezier(0.6, 0, 0.4, 1);
-}
-
-.Unvisible {
-  opacity: 0;
-}
-
-@keyframes FadeInOut {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
