@@ -5,7 +5,7 @@ import Inventory from '../components/Inventory.js';
 import { useState } from 'react';
 import { useInventory } from '../context/InventoryContext';
 
-import Stage3wall from '../assets/Stage3wall.png';
+import Stage3wall from '../assets/stage3wall.png';
 import People1 from '../assets/친일파(1).png';
 import People2 from '../assets/친일파(2).png';
 import People3 from '../assets/친일파(3).png';
@@ -13,10 +13,10 @@ import People4 from '../assets/친일파(4).png';
 import People5 from '../assets/친일파(5).png';
 import People6 from '../assets/친일파(6).png';
 import KoreaFlag from '../assets/KoreaFlag.png';
-import GunHintImage from '../assets/GunHintImage.png'; 
+import GunHintImage from '../assets/GunHintImage.png';
 import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
 import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
-import NoteImage from'../Dokdo_Private/stage3/noteImage.png';
+import NoteImage from '../Dokdo_Private/stage3/noteImage.png';
 import Modal from '../components/Modal';
 
 const Stage3PeopleImage = [
@@ -25,7 +25,7 @@ const Stage3PeopleImage = [
   { id: 3, src: People3, name: '친일파3' },
   { id: 4, src: People4, name: '친일파4' },
   { id: 5, src: People5, name: '친일파5' },
-  { id: 6, src: People6, name: '친일파6' }
+  { id: 6, src: People6, name: '친일파6' },
 ];
 
 const CorrectAnswer = [1, 2, 3];
@@ -44,7 +44,7 @@ function Stage3Page() {
   const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
 
   const handleOpenModal = () => {
-    if (isAnswered) return; 
+    if (isAnswered) return;
     setIsModalOpen(true);
   };
 
@@ -55,46 +55,46 @@ function Stage3Page() {
 
   const handleImageClick = (image) => {
     if (selectedImage.includes(image)) {
-      setSelectedImage(selectedImage.filter(img => img !== image));
+      setSelectedImage(selectedImage.filter((img) => img !== image));
     } else if (selectedImage.length < 3) {
       setSelectedImage([...selectedImage, image]);
     }
   };
 
   const handleCheckAnswer = () => {
-    const selectedIds = selectedImage.map(img => img.id); /*선택된 이미지의 id를 가져옴 */
+    const selectedIds = selectedImage.map((img) => img.id); /*선택된 이미지의 id를 가져옴 */
     const isCorrect = JSON.stringify(selectedIds.slice().sort()) === JSON.stringify(CorrectAnswer.slice().sort());
-  
+
     if (isCorrect) {
-      setResultMessage('정답입니다!');  /* 정답일 때 메시지 설정 */
+      setResultMessage('정답입니다!'); /* 정답일 때 메시지 설정 */
       setIsAnswered(true); /* 정답 맞췄을 시, 상태 업데이트함 */
       setAddKoreaFlagImage(KoreaFlag); /* 정답 맞췄을 때 사진 추가 */
       setIsModalOpen(false); /* 정답 맞추면 모달 닫음 */
 
-    setTimeout(() => {
-       setResultMessage(''); 
-    }, 1000); 
+      setTimeout(() => {
+        setResultMessage('');
+      }, 1000);
     } else {
-      setResultMessage('오답입니다. 다시 시도해주세요.');  /* 오답일 때 메시지 설정 */
+      setResultMessage('오답입니다. 다시 시도해주세요.'); /* 오답일 때 메시지 설정 */
       setIsModalOpen(false); /* 오답일 때 모달 닫음 */
     }
 
     setTimeout(() => {
       setResultMessage('');
-    }, 1000); 
+    }, 1000);
   };
 
-  const handleAddKoreaFlagImageClick  = () => {
+  const handleAddKoreaFlagImageClick = () => {
     setNoteImage(NoteImage);
   };
 
   const handleNoteImageClick = () => {
-    setGunHintImage(GunHintImage); 
+    setGunHintImage(GunHintImage);
 
     setNoteImage(null);
 
     setTimeout(() => {
-      setGunHintImage(null); 
+      setGunHintImage(null);
     }, 3000);
   };
 
@@ -104,28 +104,22 @@ function Stage3Page() {
     }
   };
 
-    /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
-    const handleItemClick = (itemName) => {
-      addItem(itemName);
-    };
+  /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
+  const handleItemClick = (itemName) => {
+    addItem(itemName);
+  };
 
   return (
     <div className={styles.Stage3Page}>
-      <div className={styles.Stage3Bg}/>
+      <div className={styles.Stage3Bg} />
       <ToolBar isStage1Open={isStage1DoorOpen} />
       <ToolBar isStage2Open={isStage2DoorOpen} />
       <Inventory />
-        <div className={styles.Stage3Floor} />
+      <div className={styles.Stage3Floor} />
 
-      <img 
-        className={styles.DoorClose}
-        src={DoorClose} alt="닫힌 문" />
+      <img className={styles.DoorClose} src={DoorClose} alt="닫힌 문" />
 
-      <img 
-        className={styles.Stage3wall} 
-        src={Stage3wall} 
-        alt="스테이지3벽"
-        onClick={handleOpenModal} />
+      <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={handleOpenModal} />
 
       <div className={styles.Stage3Modal}>
         <Modal
@@ -134,7 +128,7 @@ function Stage3Page() {
           onSubmit={handleCheckAnswer} /* onSubmit으로 handleCheckAnswer 전달 */
           size="large"
         >
-          <h3 className= {styles.ModalMent}>친일파 3명을 골라주세요.</h3>
+          <h3 className={styles.ModalMent}>친일파 3명을 골라주세요.</h3>
 
           <div className={styles.ImageGrid}>
             {/* 중앙 인물 이미지 */}
@@ -160,30 +154,18 @@ function Stage3Page() {
 
       {addKoreaFlagImage && (
         <div className={styles.KoreaFlag}>
-          <img 
-          src={KoreaFlag} 
-          alt={KoreaFlag} 
-          className={styles.KoreaFlag}
-          onClick={handleAddKoreaFlagImageClick} />
+          <img src={KoreaFlag} alt={KoreaFlag} className={styles.KoreaFlag} onClick={handleAddKoreaFlagImageClick} />
         </div>
       )}
 
-      {noteImage && (
-          <img 
-            src={noteImage} 
-            alt="쪽지" 
-            className={styles.NoteImage} 
-            onClick={handleNoteImageClick}
-          />
-      )}
+      {noteImage && <img src={noteImage} alt="쪽지" className={styles.NoteImage} onClick={handleNoteImageClick} />}
 
       {gunhintImage && (
-        <img 
-          src={gunhintImage} 
-          alt="무기 힌트 이미지" 
-          className={styles.GunHintImage} 
+        <img
+          src={gunhintImage}
+          alt="무기 힌트 이미지"
+          className={styles.GunHintImage}
           onClick={() => handleItemClick('GunHintImage')}
-
         />
       )}
     </div>

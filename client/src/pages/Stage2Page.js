@@ -25,7 +25,7 @@ function Stage2Page() {
     number1: 0,
     number2: 0,
     number3: 0,
-  }); /* HandleScoreChange 숫자 받아오기 */
+  }); /* CheckNumber 숫자 받아오기 */
 
   const handleOpenBox = () => {
     setIsBoxOpen(true);
