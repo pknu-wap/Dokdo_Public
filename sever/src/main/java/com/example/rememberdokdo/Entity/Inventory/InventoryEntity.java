@@ -17,5 +17,7 @@ public class InventoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT 설정
     private Integer inventoryId; // 인벤토리 식별자 (고유키)
+
+    @Column(unique = true)
     private String sessionId; // 세션 식별자
 }
