@@ -9,8 +9,8 @@
   top: 0;
   left: 0;
   display: flex;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center;
+  align-items: center;
 }
 
 .ModalContent {
@@ -18,17 +18,17 @@
   background-image: url(../Dokdo_Private/ModalBg.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  padding: 2vh 2vw; /* 반응형 패딩 */
-  border-radius: 1vh; /* 반응형 모서리 */
+  padding: 2vh 2vw;
+  border-radius: 1vh;
 }
 
 .CloseBtn {
   cursor: pointer;
   position: absolute;
   z-index: 1003;
-  top: -1.5vh; /* 반응형 위치 */
-  right: -1.5vw; /* 반응형 위치 */
-  width: 4vw; /* 반응형 너비 */
+  top: -1.5vh;
+  right: -1.5vw;
+  width: 4vw;
   transition: transform 0.3s ease;
 }
 
@@ -40,7 +40,7 @@
   cursor: pointer;
   background-color: #846b66;
   font-family: 'Noto Sans', sans-serif;
-  font-size: 2.5vh; /* 반응형 폰트 크기 */
+  font-size: 2.5vh;
   font-weight: 500;
   color: #fff;
   position: absolute;
@@ -49,7 +49,7 @@
   left: 50%;
   width: fit-content;
   height: fit-content;
-  padding: 1vh 2vw; /* 반응형 패딩 */
+  padding: 1vh 2vw;
   border: none;
   border-radius: 0.8vh;
   transition: transform 0.3s ease;
