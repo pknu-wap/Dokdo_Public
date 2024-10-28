@@ -1,23 +1,24 @@
 import styles from './Stage3Page.module.css';
 import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
-
-import { useState } from 'react';
+import NumberInput from '../components/NumberInput.js';
+import { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
 
 import Stage3wall from '../assets/Stage3wall.png';
-import People1 from '../assets/친일파(1).png';
-import People2 from '../assets/친일파(2).png';
-import People3 from '../assets/친일파(3).png';
-import People4 from '../assets/친일파(4).png';
-import People5 from '../assets/친일파(5).png';
-import People6 from '../assets/친일파(6).png';
 import KoreaFlag from '../assets/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png'; 
 import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
 import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
 import NoteImage from'../Dokdo_Private/stage3/noteImage.png';
 import Modal from '../components/Modal';
+
+import People1 from '../assets/친일파(1).png';
+import People2 from '../assets/친일파(2).png';
+import People3 from '../assets/친일파(3).png';
+import People4 from '../assets/친일파(4).png';
+import People5 from '../assets/친일파(5).png';
+import People6 from '../assets/친일파(6).png';
 
 const Stage3PeopleImage = [
   { id: 1, src: People1, name: '친일파1' },
@@ -35,13 +36,14 @@ function Stage3Page() {
   const isStage2DoorOpen = true;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [selectedImage, setSelectedImage] = useState([]); /* 초기 상태에 선택된 이미지 없음 */
-  const [resultMessage, setResultMessage] = useState(''); /* 정답/오답 메시지 */
+  const [selectedImage, setSelectedImage] = useState([]);
+  const [resultMessage, setResultMessage] = useState('');
   const [addKoreaFlagImage, setAddKoreaFlagImage] = useState(null);
-  const [noteImage, setNoteImage] = useState(null); /* 쪽지 */
-  const [gunhintImage, setGunHintImage] = useState(null); /* 무기힌트 */
+  const [noteImage, setNoteImage] = useState(null);
+  const [gunhintImage, setGunHintImage] = useState(null);
+  const [isNumberInputModalOpen, setIsNumberInputModalOpen] = useState(false);
 
-  const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
+  const { addItem, items } = useInventory(); /* Context에서 items도 가져옴 */
 
   const handleOpenModal = () => {
     if (isAnswered) return; 
@@ -50,7 +52,7 @@ function Stage3Page() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedImage([]); /* 모달 닫을 때 선택 초기화 */
+    setSelectedImage([]);
   };
 
   const handleImageClick = (image) => {
@@ -62,26 +64,20 @@ function Stage3Page() {
   };
 
   const handleCheckAnswer = () => {
-    const selectedIds = selectedImage.map(img => img.id); /*선택된 이미지의 id를 가져옴 */
+    const selectedIds = selectedImage.map(img => img.id);
     const isCorrect = JSON.stringify(selectedIds.slice().sort()) === JSON.stringify(CorrectAnswer.slice().sort());
   
     if (isCorrect) {
-      setResultMessage('정답입니다!');  /* 정답일 때 메시지 설정 */
-      setIsAnswered(true); /* 정답 맞췄을 시, 상태 업데이트함 */
-      setAddKoreaFlagImage(KoreaFlag); /* 정답 맞췄을 때 사진 추가 */
-      setIsModalOpen(false); /* 정답 맞추면 모달 닫음 */
-
-    setTimeout(() => {
-       setResultMessage(''); 
-    }, 1000); 
+      setResultMessage('정답입니다!');
+      setIsAnswered(true);
+      setAddKoreaFlagImage(KoreaFlag);
+      setIsModalOpen(false);
+      setTimeout(() => setResultMessage(''), 1000);
     } else {
-      setResultMessage('오답입니다. 다시 시도해주세요.');  /* 오답일 때 메시지 설정 */
-      setIsModalOpen(false); /* 오답일 때 모달 닫음 */
+      setResultMessage('오답입니다. 다시 시도해주세요.');
+      setIsModalOpen(false);
+      setTimeout(() => setResultMessage(''), 1000);
     }
-
-    setTimeout(() => {
-      setResultMessage('');
-    }, 1000); 
   };
 
   const handleAddKoreaFlagImageClick  = () => {
@@ -89,25 +85,22 @@ function Stage3Page() {
   };
 
   const handleNoteImageClick = () => {
-    setGunHintImage(GunHintImage); 
-
-    setNoteImage(null);
-
-    setTimeout(() => {
-      setGunHintImage(null); 
-    }, 3000);
+    setGunHintImage(GunHintImage); /* 무기힌트 이미지를 나타내고 3초 후에 처리 */
   };
 
-  const handleGunHintImageClick = () => {
-    if (gunhintImage && !items.includes('GunHint')) {
-      addItem('GunHint'); // "GunHint"라는 이름으로 인벤토리에 추가
+  useEffect(() => {
+    if (gunhintImage) {
+      const timer = setTimeout(() => {
+        setGunHintImage(null); /* 무기힌트 이미지를 제거하여 사라지게 설정 */
+        if (!items.includes('GunHint')) { /* 인벤토리에 GunHint가 없을 때만 추가 */
+          addItem('GunHint'); /* 인벤토리에 아이템 추가 */
+        }
+        setIsNumberInputModalOpen(true); /* 모달 열기 */
+      }, 3000);
+
+      return () => clearTimeout(timer); /* 타이머 정리 */
     }
-  };
-
-    /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
-    const handleItemClick = (itemName) => {
-      addItem(itemName);
-    };
+  }, [gunhintImage, items, addItem]);
 
   return (
     <div className={styles.Stage3Page}>
@@ -115,7 +108,7 @@ function Stage3Page() {
       <ToolBar isStage1Open={isStage1DoorOpen} />
       <ToolBar isStage2Open={isStage2DoorOpen} />
       <Inventory />
-        <div className={styles.Stage3Floor} />
+      <div className={styles.Stage3Floor} />
 
       <img 
         className={styles.DoorClose}
@@ -131,13 +124,11 @@ function Stage3Page() {
         <Modal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          onSubmit={handleCheckAnswer} /* onSubmit으로 handleCheckAnswer 전달 */
+          onSubmit={handleCheckAnswer}
           size="large"
         >
           <h3 className= {styles.ModalMent}>친일파 3명을 골라주세요.</h3>
-
           <div className={styles.ImageGrid}>
-            {/* 중앙 인물 이미지 */}
             <div className={styles.CenterContainer}>
               {Stage3PeopleImage.map((peopleImage) => (
                 <img
@@ -162,7 +153,7 @@ function Stage3Page() {
         <div className={styles.KoreaFlag}>
           <img 
           src={KoreaFlag} 
-          alt={KoreaFlag} 
+          alt="KoreaFlag"
           className={styles.KoreaFlag}
           onClick={handleAddKoreaFlagImageClick} />
         </div>
@@ -178,14 +169,20 @@ function Stage3Page() {
       )}
 
       {gunhintImage && (
-        <img 
-          src={gunhintImage} 
-          alt="무기 힌트 이미지" 
-          className={styles.GunHintImage} 
-          onClick={() => handleItemClick('GunHintImage')}
-
-        />
+          <img 
+            src={GunHintImage} 
+            alt="무기힌트" 
+            className={styles.GunHintImage} 
+          />
       )}
+
+      <Modal
+        isOpen={isNumberInputModalOpen}
+        onClose={() => {}}
+        size="medium"
+      >
+        <NumberInput />
+      </Modal>
     </div>
   );
 }
