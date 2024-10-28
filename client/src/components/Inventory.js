@@ -4,10 +4,12 @@ import { ReactSortable } from 'react-sortablejs';
 import { useInventory } from '../context/InventoryContext';
 import TaegeukKey from '../Dokdo_Private/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/clover.png';
+import Stage2Map from '../Dokdo_Private/stage2/Map.png';
 
 const itemImage = {
   TaegeukKey: TaegeukKey,
   dokdoPuzzle1: dokdoPuzzle1,
+  Stage2Map: Stage2Map,
 };
 
 function Inventory() {

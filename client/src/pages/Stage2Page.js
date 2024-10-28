@@ -1,28 +1,29 @@
 import styles from './Stage2Page.module.css';
 import ToolBar from '../components/ToolBar.js';
-import { useState } from 'react';
+import Inventory from '../components/Inventory.js';
 import Modal from '../components/Modal.js';
-import BoxOpen from '../assets/Stage2BoxOpen.png';
-import BoxClose from '../assets/Stage2Box.png';
-import Door from '../assets/Stage2Door.png';
-import BookShelf from '../assets/BookShelf.jpg';
 import Book from '../components/Book.js';
 import HandleScoreChange from '../components/HandleScoreChange.js';
+import { useState } from 'react';
+
+import BoxOpen from '../Dokdo_Private/stage2/OpenBox.png';
+import BoxClose from '../Dokdo_Private/stage2/Box.png';
+import Door from '../Dokdo_Private/stage2/Door.png';
+import BookShelf from '../Dokdo_Private/stage2/BookShelf.png';
+import ContainMapBook from '../Dokdo_Private/stage2/ContainMapBook.png';
 
 function Stage2Page() {
-  const [changeImage, setChangeImage] = useState(BoxClose);
+  const [isBoxOpen, setIsBoxOpen] = useState(false);
   const [isStage2Open, setIsStage2Open] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBookOpen, setIsBookOpen] = useState(false);
   const [checkPlaceAnswer, setCheckIsPlaceAnswer] = useState(false);
   const [placeAnswer, setPlaceAnswer] = useState('');
+  const [isTaegeukKeyDropped, setIsTaegeukKeyDropped] = useState(false);
+  const [isMapFind, setIsMapFind] = useState(false);
 
-  const handleChangeImage = () => {
-    setChangeImage(BoxOpen);
-    setTimeout(() => {
-      setChangeImage(BoxClose);
-      console.log('지연완료');
-    }, 1000);
+  const handleOpenBox = () => {
+    setIsBoxOpen(true);
   };
 
   const handleOpenModal = () => {
@@ -46,7 +47,6 @@ function Stage2Page() {
   };
 
   const handleCheckPlaceAnswer = () => {
-    console.log('handleCheckPlaceAnswer 호출됨');
     if (placeAnswer === '포항시') {
       setCheckIsPlaceAnswer(true);
     } else {
@@ -62,39 +62,53 @@ function Stage2Page() {
     }
   };
 
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const draggedItem = event.dataTransfer.getData('text/plain');
+    if (draggedItem === 'TaegeukKey') {
+      setIsTaegeukKeyDropped(true);
+      handleOpenBox();
+    }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div className={styles.Stage2}>
       <div className={styles.BackGround} />
       <div className={styles.Stage2Floor} />
+      <Inventory />
       <ToolBar isStage2Open={isStage2Open} />
+      <img className={styles.BookShelf} src={BookShelf} alt="bookshelf" />
+      <button className={styles.ContainMapBook} onClick={handleOpenBook}>
+        <img src={ContainMapBook} />
+      </button>
       <button className={styles.Door} onClick={handleOpenModal}>
         <img src={Door} alt="door" />
       </button>
-      <button className={styles.Box} onClick={handleChangeImage}>
-        <img src={changeImage} alt="box" />
-      </button>
-      <img className={styles.BookShelf} src={BookShelf} alt="bookshelf" />
-      <button className={styles.BookButton} onClick={handleOpenBook}></button>
+      {isBoxOpen || isTaegeukKeyDropped ? (
+        <img className={styles.BoxOpen} src={BoxOpen} />
+      ) : (
+        <div className={styles.Box} onDragOver={handleDragOver} onDrop={handleDrop}>
+          <img src={BoxClose} alt="box" />
+        </div>
+      )}
+
       <div className={styles.Stage2Modal}>
-        <button type="button" onClick={handleCheckPlaceAnswer}>
-          정답확인
-        </button>
-        {checkPlaceAnswer === true ? (
-          <div>
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="medium">
-              <h2>시간을 맞추세요</h2>
-              <HandleScoreChange onSubmit={checkNumbers} />
-            </Modal>
-          </div>
+        {checkPlaceAnswer ? (
+          <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="medium">
+            <h2>시간을 맞추세요</h2>
+            <HandleScoreChange onSubmit={checkNumbers} />
+          </Modal>
         ) : (
-          <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleCheckPlaceAnswer} size="medium">
-            <h2>장소를 맞추세요</h2>
-            장소:
+          <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleCheckPlaceAnswer} size="small">
+            <h1>친일파들을 처단할 장소</h1>
             <input className={styles.PlaceAnswer} placeholder="oo시" onChange={handlePlaceAnswer} />
           </Modal>
         )}
-
-        {isBookOpen && <Book closeBook={closeBook} />}
+        {isBookOpen && <Book closeBook={closeBook} setIsMapFind={setIsMapFind} isMapFind={isMapFind} />}
       </div>
     </div>
   );
