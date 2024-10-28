@@ -42,8 +42,8 @@
 .Stage3Modal{
   position: relative;
   transform: translate(-50%, -50%);
-  top: 52%;
-  left: 55%;
+  top: 30vw;
+  left: 76vh;
   z-index: 2; /* 다른 요소 위에 배치 */
 }
 
@@ -147,3 +147,11 @@
   width: 700px;
   height: auto;
 }
+
+/* .Stage1GunHintTmage {
+  position: absolute;
+  height: 4vh;
+  width: auto;
+  top: 4.4vh;
+  left: 6vw;
+} */

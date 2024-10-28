@@ -1,5 +1,10 @@
-import { useState } from 'react';
 import styles from './Stage3Page.module.css';
+import ToolBar from '../components/ToolBar.js';
+import Inventory from '../components/Inventory.js';
+
+import { useState } from 'react';
+import { useInventory } from '../context/InventoryContext';
+
 import Stage3wall from '../assets/Stage3wall.png';
 import People1 from '../assets/친일파(1).png';
 import People2 from '../assets/친일파(2).png';
@@ -9,7 +14,6 @@ import People5 from '../assets/친일파(5).png';
 import People6 from '../assets/친일파(6).png';
 import KoreaFlag from '../assets/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png'; 
-import ToolBar from '../components/ToolBar.js';
 import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
 import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
 import NoteImage from'../Dokdo_Private/stage3/noteImage.png';
@@ -27,6 +31,8 @@ const Stage3PeopleImage = [
 const CorrectAnswer = [1, 2, 3];
 
 function Stage3Page() {
+  const isStage1DoorOpen = true;
+  const isStage2DoorOpen = true;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]); /* 초기 상태에 선택된 이미지 없음 */
@@ -34,7 +40,8 @@ function Stage3Page() {
   const [addKoreaFlagImage, setAddKoreaFlagImage] = useState(null);
   const [noteImage, setNoteImage] = useState(null); /* 쪽지 */
   const [gunhintImage, setGunHintImage] = useState(null); /* 무기힌트 */
-  const [isStage3Open, setIsStage3Open] = useState(true);
+
+  const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
 
   const handleOpenModal = () => {
     if (isAnswered) return; 
@@ -91,10 +98,23 @@ function Stage3Page() {
     }, 3000);
   };
 
+  const handleGunHintImageClick = () => {
+    if (gunhintImage && !items.includes('GunHint')) {
+      addItem('GunHint'); // "GunHint"라는 이름으로 인벤토리에 추가
+    }
+  };
+
+    /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
+    const handleItemClick = (itemName) => {
+      addItem(itemName);
+    };
+
   return (
     <div className={styles.Stage3Page}>
       <div className={styles.Stage3Bg}/>
-      <ToolBar isStage3Open={isStage3Open} />
+      <ToolBar isStage1Open={isStage1DoorOpen} />
+      <ToolBar isStage2Open={isStage2DoorOpen} />
+      <Inventory />
         <div className={styles.Stage3Floor} />
 
       <img 
@@ -162,6 +182,8 @@ function Stage3Page() {
           src={gunhintImage} 
           alt="무기 힌트 이미지" 
           className={styles.GunHintImage} 
+          onClick={() => handleItemClick('GunHintImage')}
+
         />
       )}
     </div>

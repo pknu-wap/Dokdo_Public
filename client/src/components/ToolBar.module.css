@@ -12,21 +12,21 @@
   top: 0;
   background-color: #c1a693;
   height: fit-content;
-  width: 100%;
-  padding: 1% 1%;
+  width: 100vw;
+  padding: 3vh 2vw;
   padding-bottom: 0;
   z-index: 1000;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 1vw;
 }
 
 .ToolBarBtn {
   cursor: pointer;
   font-family: 'Noto Sans';
-  font-size: 30px;
+  font-size: 2vw;
   font-weight: 500;
-  padding: 12px 24px 8px;
+  padding: 1.7vh 2vw 0.9vh;
   text-decoration: none;
   color: #fff;
   border: none;
