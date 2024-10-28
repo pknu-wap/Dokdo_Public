@@ -62,7 +62,7 @@ function Stage2Page() {
         }}
       ></button>
       <div className={styles.Stage2Modal}>
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="medium">
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="large">
           <h2>시간을 맞추세요</h2>
         </Modal>
         {isBookOpen === true ? <Book /> : null}
