@@ -4,7 +4,14 @@ import lombok.Data;
 
 @Data
 public class ItemAddResponseDto {
-    private Integer ItemId; // 아이템 식별자
-    private String ItemName; // 아이템 이름
-    private String ItemDescription; // 아이템 설명
+    private Integer itemId; // 아이템 식별자
+    private String itemName; // 아이템 이름
+    private String itemDescription; // 아이템 설명
+
+    // 생성자 추가
+    public ItemAddResponseDto(Integer itemId, String itemName, String itemDescription) {
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+    }
 }
