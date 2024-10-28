@@ -1,0 +1,157 @@
+.Stage3Page {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Stage3Bg {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: #fee7d7;
+}
+
+.Stage3Floor {
+  position: fixed;
+  bottom: 0;
+  background-color: #846b66;
+  width: 100%;
+  height: 13%;
+}
+
+.DoorClose{
+  cursor: pointer;
+  position: fixed; 
+  top: 55.2%;
+  left: 18%;
+  transform: translate(-50%, -50%);
+  width: 490px;
+  height: auto; /* 높이를 비율에 맞게 자동 설정 */
+  z-index: 1; /* 다른 요소 위에 배치 */
+}
+
+.Stage3wall {
+  width: 640px;
+  position: fixed;
+  top: 30%;
+  left: 55%;
+  cursor: pointer;
+  transform: translateX(-50%);
+}
+
+.Stage3Modal{
+  position: relative;
+  transform: translate(-50%, -50%);
+  top: 30vw;
+  left: 76vh;
+  z-index: 2; /* 다른 요소 위에 배치 */
+}
+
+.ModalMent{
+  font-size: 40px;
+  position: relative;
+  padding: 30px;
+  top: 1%;
+  left: 30%;
+}
+
+/* 전체 그리드 레이아웃 */
+.ImageGrid {
+  display: grid;
+  grid-template-areas:
+    "flag1 flag2 flag3 flag4 flag5"
+    "flag6 center center center flag7"
+    "flag8 center center center flag9"
+    "flag10 flag11 flag12 flag13 flag14";
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 5px;
+}
+
+/* 중앙의 인물 이미지 컨테이너 */
+.CenterContainer {
+  top: 100%;
+  grid-area: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
+  background-color: transparent;
+  border: 2px solid transparent;
+}
+
+/* 인물 이미지 스타일 */
+.ImageItem {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+}
+
+/* 선택된 이미지 스타일 */
+.Selected {
+  border: 4px solid rgb(255, 0, 0);
+}
+
+.CheckAnswerButton {
+  margin-top: 20px;
+}
+
+.ResultBanner {
+  position: fixed;
+  top: 20%;
+  left: 55%;
+  transform: translateX(-50%);
+  background-color: #C1A693;
+  color: white;
+  font: Noto Sans KR;
+  font-size: 15px;
+  font-weight: bold;
+  z-index: 1000;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+  height: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: border 0.3s ease;
+}
+
+.KoreaFlag {
+  cursor: pointer;
+  width: 100px;
+  height: 66px;
+  position: fixed;
+  top: 32%;
+  left: 39.5%;
+}
+
+.NoteImage {
+  cursor: pointer;
+  width: 40px;
+  height: auto;
+  position: fixed;
+  top: 29%;
+  left: 41%;;
+}
+
+.GunHintImage {
+  position: fixed;
+  top: 48%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: auto;
+}
+
+/* .Stage1GunHintTmage {
+  position: absolute;
+  height: 4vh;
+  width: auto;
+  top: 4.4vh;
+  left: 6vw;
+} */
