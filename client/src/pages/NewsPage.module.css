@@ -1,0 +1,25 @@
+.NewsImg {
+  width: 100vw;
+  height: 100vh;
+}
+
+.hidden {
+  display: none;
+}
+
+.FadeInOut {
+  animation: FadeInOut 8s cubic-bezier(0.6, 0, 0.4, 1);
+}
+
+.Unvisible {
+  opacity: 0;
+}
+
+@keyframes FadeInOut {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
