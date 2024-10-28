@@ -23,7 +23,7 @@ public class InventoryAddItemsService {
 
     //아이템 추가
     @Transactional
-    public void addItem(ItemAddRequestDto request) {
+    public ItemAddResponseDto addItem(ItemAddRequestDto request) {
         // 세션 만료 여부 확인
 //        boolean sessionExpired = checkSessionExpired(request.getSessionId());
 //        if (sessionExpired) {
@@ -61,5 +61,8 @@ public class InventoryAddItemsService {
 
         // 인벤토리에 아이템을 매핑해 저장 (DB 테이블 최신화)
         inventoryItemsRepository.save(inventoryItem);
+
+        // 응답 DTO 생성 후 반환
+        return new ItemAddResponseDto(item.getItemId(), item.getItemName(), item.getItemDescription());
     }
 }
