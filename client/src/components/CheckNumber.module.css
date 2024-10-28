@@ -22,26 +22,27 @@
 
 .UpButton,
 .DownButton {
-  width: 34%;
-  height: 34%;
+  width: 28%;
+  height: 28%;
   z-index: 1;
   border: none;
   background-color: transparent;
 }
 .UpButton {
-  margin-top: 3.9vh;
+  margin-top: 4.2vh;
 }
 .DownButton {
-  margin-top: 3.2vh;
+  margin-top: 2.8vh;
 }
 
 .number {
-  margin-top: 3.2vh;
+  margin-top: 2.8vh;
   font-family: 'Noto Sans KR', sans-serif;
   font-optical-sizing: auto;
   font-weight: bold;
   font-style: normal;
-  font-size: 65px;
+  font-size: 80px;
+  color: rgba(71, 33, 33, 1);
 }
 
 .UpButton img,
