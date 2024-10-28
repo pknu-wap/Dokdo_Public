@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+.CheckNumberBg {
+  position: absolute;
+  left: 2.3vw;
+  width: 48vw;
+  height: 34vh;
+}
+
+.back {
+  display: flex;
+  flex-direction: row;
+  margin: 0 9vw;
+}
+
+.Back {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.UpButton,
+.DownButton {
+  width: 34%;
+  height: 34%;
+  z-index: 1;
+  border: none;
+  background-color: transparent;
+}
+.UpButton {
+  margin-top: 3.9vh;
+}
+.DownButton {
+  margin-top: 3.2vh;
+}
+
+.number {
+  margin-top: 3.2vh;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 65px;
+}
+
+.UpButton img,
+.DownButton img {
+  width: 100%;
+  height: 100%;
+}

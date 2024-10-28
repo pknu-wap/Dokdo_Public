@@ -3,7 +3,7 @@ import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import Modal from '../components/Modal.js';
 import Book from '../components/Book.js';
-import HandleScoreChange from '../components/HandleScoreChange.js';
+import CheckNumber from '../components/CheckNumber.js';
 import { useState } from 'react';
 
 import BoxOpen from '../Dokdo_Private/stage2/OpenBox.png';
@@ -21,6 +21,11 @@ function Stage2Page() {
   const [placeAnswer, setPlaceAnswer] = useState('');
   const [isTaegeukKeyDropped, setIsTaegeukKeyDropped] = useState(false);
   const [isMapFind, setIsMapFind] = useState(false);
+  const [scoreValues, setScoreValues] = useState({
+    number1: 0,
+    number2: 0,
+    number3: 0,
+  }); /* HandleScoreChange 숫자 받아오기 */
 
   const handleOpenBox = () => {
     setIsBoxOpen(true);
@@ -54,7 +59,9 @@ function Stage2Page() {
     }
   };
 
-  const checkNumbers = ({ number1, number2, number3 }) => {
+  const checkNumbers = () => {
+    /* 숫자 확인 함수(정답 확인) */
+    const { number1, number2, number3 } = scoreValues;
     if (number1 === 1 && number2 === 3 && number3 === 5) {
       alert('정답입니다!');
     } else {
@@ -98,13 +105,13 @@ function Stage2Page() {
 
       <div className={styles.Stage2Modal}>
         {checkPlaceAnswer ? (
-          <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="medium">
-            <h2>시간을 맞추세요</h2>
-            <HandleScoreChange onSubmit={checkNumbers} />
+          <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={checkNumbers} size="medium">
+            <h1>임무 수행 시간을 맞추시오</h1>
+            <CheckNumber setScoreValues={setScoreValues} /> {/* 숫자 맞출수 있는 컴포넌트 불러오기 */}
           </Modal>
         ) : (
           <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleCheckPlaceAnswer} size="small">
-            <h1>친일파들을 처단할 장소</h1>
+            <h1>임무 수행 장소를 맞추시오</h1>
             <input className={styles.PlaceAnswer} placeholder="oo시" onChange={handlePlaceAnswer} />
           </Modal>
         )}
