@@ -3,18 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Inventory Form</title>
+    <style>
+        body {
+            background-color: #f8f2e7; /* 배경색 */
+            font-family: 'Arial', sans-serif; /* 폰트 설정 */
+            color: #4e3b30; /* 글자색 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 화면 중앙에 배치 */
+            flex-direction: column;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* 텍스트 그림자 */
+        }
+
+        form {
+            background-color: #e6d5cc; /* 폼 배경색 */
+            border-radius: 10px; /* 모서리 둥글게 */
+            padding: 20px; /* 여백 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+            width: 300px; /* 폼 너비 */
+            display: flex;
+            flex-direction: column; /* 세로 방향으로 정렬 */
+            align-items: center; /* 입력 필드와 레이블을 중앙 정렬 */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px; /* 레이블 아래 여백 */
+            font-weight: bold; /* 레이블 글씨 두껍게 */
+            text-align: center; /* 레이블 중앙 정렬 */
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%; /* 입력 필드 너비 100% */
+            padding: 10px; /* 입력 필드 안쪽 여백 */
+            margin-bottom: 15px; /* 입력 필드 아래 여백 */
+            border: 1px solid #c1a69e; /* 테두리 색상 */
+            border-radius: 5px; /* 테두리 둥글게 */
+            font-size: 1em; /* 글씨 크기 */
+            transition: border-color 0.3s; /* 테두리 색상 변경 시 부드럽게 */
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #6d4f4c; /* 포커스 시 테두리 색상 변경 */
+            outline: none; /* 포커스 시 기본 아웃라인 제거 */
+        }
+
+        button {
+            background-color: #4e3b30; /* 버튼 배경색 */
+            color: white; /* 버튼 글자색 */
+            border: none; /* 테두리 없음 */
+            padding: 10px 15px; /* 여백 */
+            border-radius: 5px; /* 버튼 모서리 둥글게 */
+            cursor: pointer; /* 커서 포인터 */
+            font-size: 1em; /* 글씨 크기 */
+            margin-top: 10px; /* 버튼 위쪽 여백 */
+            transition: background-color 0.3s; /* 배경색 변경 시 부드럽게 */
+        }
+
+        button:hover {
+            background-color: #6d4f4c; /* 버튼 호버 시 배경색 변경 */
+        }
+    </style>
 </head>
 <body>
 <h1>아이템 추가 및 삭제</h1>
 <form method="post" action="/inventory/add">
-    <label for="sessionId">세션 ID:</label>
-    <input type="text" id="sessionId" name="sessionId" required><br><br>
+    <label for="sessionId">세션 ID</label>
+    <input type="text" id="sessionId" name="sessionId" required>
 
-    <label for="itemId">아이템 ID:</label>
-    <input type="number" id="itemId" name="itemId" required><br><br>
+    <label for="itemId">아이템 ID</label>
+    <input type="number" id="itemId" name="itemId" required>
 
-    <button type="submit" formaction="/inventory/add">추가</button>
-    <button type="submit" formaction="/inventory/delete">삭제</button>
+    <div style="display: flex; justify-content: center; gap: 10px;">
+        <button type="submit" formaction="/inventory/add">추가</button>
+        <button type="submit" formaction="/inventory/delete">삭제</button>
+    </div>
 </form>
 </body>
 </html>
