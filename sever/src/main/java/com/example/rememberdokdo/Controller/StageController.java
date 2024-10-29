@@ -14,13 +14,13 @@ public class StageController {
 
     // 특정 스테이지 접근 가능 여부 확인
     @GetMapping("/{stageId}/access")
-    public StageDto checkAccess(@RequestParam String sessionId, @PathVariable("stage_id") int stageId) {
+    public StageDto checkAccess(@RequestParam String sessionId, @PathVariable("stageId") int stageId) {
         return stageService.checkStageAccess(sessionId, stageId);
     }
 
     // 스테이지 클리어 정보 저장
     @PostMapping("/{stageId}/clear")
-    public void clearStage(@RequestParam String sessionId, @PathVariable("stage_id") int stageId) {
+    public void clearStage(@RequestParam String sessionId, @PathVariable("stageId") int stageId) {
         stageService.clearStage(sessionId, stageId);
     }
 }
