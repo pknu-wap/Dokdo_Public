@@ -60,7 +60,8 @@ public class InventoryController {
         InventoryEntity inventory = inventoryRepository.findBySessionId(sessionId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 세션에 대한 인벤토리가 존재하지 않습니다."));
 
-        // 인벤토리 ID를 모델에 추가
+        // 인벤토리 ID와 세션 ID를 모델에 추가
+        model.addAttribute("sessionId", sessionId);
         model.addAttribute("inventoryId", inventory.getInventoryId());
 
         List<InventoryItemsEntity> items = inventoryItemsRepository.findByInventoryId(inventory.getInventoryId());
