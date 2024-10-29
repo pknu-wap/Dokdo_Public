@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'MapoAgape';
+  src: url('../fonts/MapoAgape.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .Stage2 {
   position: relative;
   width: 100vw;
@@ -16,11 +23,19 @@
   top: 87%;
   height: 13%;
 }
+
+.Box img,
+.Door img,
+.ContainMapBook img {
+  width: 100%;
+  height: 100%;
+}
+
 .Box {
   position: absolute;
-  top: 65%;
-  left: 8%;
-  width: 13%;
+  top: 63%;
+  left: 4%;
+  width: 27%;
   height: auto;
   color: transparent;
   outline: none;
@@ -29,26 +44,29 @@
   cursor: pointer;
 }
 
-.Box img {
-  width: 100%;
-  height: 100%;
+.BoxOpen {
+  position: absolute;
+  top: 63%;
+  left: 3.2%;
+  width: 27.5%;
+  height: auto;
+  color: transparent;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .Door {
   position: absolute;
-  top: 50%;
-  left: 40%;
-  width: 15%;
+  top: 31.1%;
+  left: 35%;
+  width: 23%;
   height: auto;
   background: none;
   border: none;
   display: block;
   cursor: pointer;
-}
-
-.Door img {
-  width: 100%;
-  height: 100%;
 }
 
 .Stage2Modal {
@@ -60,22 +78,35 @@
 .BookShelf {
   position: absolute;
   top: 15%;
-  left: 65%;
-  width: 30%;
+  left: 60%;
+  width: 25%;
 }
 
-.BookButton {
+.ContainMapBook {
   position: absolute;
-  top: 19%;
-  left: 84.4%;
-  width: 2.7%;
-  height: 12.5%;
+  top: 17.4%;
+  left: 67.75%;
+  width: 2.73%;
+  height: 14.5%;
   background-color: transparent;
   border: none;
-  z-index: 1;
+  z-index: 0;
   cursor: pointer;
 }
 
 .PlaceAnswer {
+  text-align: center;
   border: none;
+  background-color: transparent;
+  font-family: 'MapoAgape', sans-serif;
+  font-size: 20px;
+  padding: 1vh;
+}
+.PlaceAnswer:focus {
+  outline: none;
+  border-color: #ccc;
+}
+h1 {
+  font-family: 'MapoAgape', sans-serif;
+  padding-top: 2vh;
 }

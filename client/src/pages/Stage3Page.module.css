@@ -30,6 +30,17 @@
   z-index: 1; /* 다른 요소 위에 배치 */
 }
 
+.DoorOpen{
+  cursor: pointer;
+  position: fixed; 
+  top: 32.5vw;
+  left: 30vh;
+  transform: translate(-50%, -50%);
+  width: 490px;
+  height: auto; /* 높이를 비율에 맞게 자동 설정 */
+  z-index: 1; /* 다른 요소 위에 배치 */
+}
+
 .Stage3wall {
   width: 640px;
   position: fixed;
@@ -39,20 +50,20 @@
   transform: translateX(-50%);
 }
 
-.Stage3Modal{
-  position: relative;
-  transform: translate(-50%, -50%);
-  top: 30vw;
-  left: 76vh;
-  z-index: 2; /* 다른 요소 위에 배치 */
-}
-
 .ModalMent{
   font-size: 2vw;
   position: relative;
   padding: 30px;
   top: 2vw;
   left: 39vh;
+}
+
+.NumberGuessModalMent{
+  font-size: 2vw;
+  position: relative;
+  padding: 30px;
+  top: 0vw;
+  left: 30vh;
 }
 
 /* 전체 그리드 레이아웃 */
@@ -148,10 +159,10 @@
   height: auto;
 }
 
-/* .Stage1GunHintTmage {
+.Stage3Gunhint {
   position: absolute;
   height: 4vh;
   width: auto;
   top: 4.4vh;
   left: 6vw;
-} */
+}
