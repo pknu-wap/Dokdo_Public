@@ -5,12 +5,17 @@ import com.example.rememberdokdo.Dto.Inventory.ItemDeleteResponseDto;
 import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
 import com.example.rememberdokdo.Entity.Inventory.InventoryItemsEntity;
 import com.example.rememberdokdo.Entity.Inventory.ItemsEntity;
+import com.example.rememberdokdo.Entity.SessionEntity;
 import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
 import com.example.rememberdokdo.Repository.Inventory.InventoryRepository;
 import com.example.rememberdokdo.Repository.Inventory.ItemsRepository;
+import com.example.rememberdokdo.Repository.SessionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class InventoryDeleteItemsService {
@@ -20,14 +25,16 @@ public class InventoryDeleteItemsService {
     private ItemsRepository itemsRepository;
     @Autowired
     private InventoryItemsRepository inventoryItemsRepository;
+    @Autowired
+    private SessionRepository sessionRepository;
 
     @Transactional
     public ItemDeleteResponseDto deleteItem(ItemDeleteRequestDto request) {
         // 세션 만료 여부 확인
-//        boolean sessionExpired = checkSessionExpired(request.getSessionId());
-//        if (sessionExpired) {
-//            throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
-//        }
+        Optional<SessionEntity> session = sessionRepository.findBySessionIdAndExpiresAtAfter(request.getSessionId(), LocalDateTime.now());
+        if (session.isEmpty()) {
+            throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
+        }
 
         // 세션 식별자로 인벤토리 조회
         InventoryEntity inventory = inventoryRepository.findBySessionId(request.getSessionId())
