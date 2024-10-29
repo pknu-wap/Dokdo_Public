@@ -1,27 +1,90 @@
-<!-- sessionStatus.mustache -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Session Status</title>
+    <title>세션 관리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f2;
+            color: #3e2723;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, p {
+            text-align: center;
+        }
+        div {
+            background-color: #efebe9;
+            margin: auto;
+            width: 80%;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #6d4c41;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #6d4c41;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #5d4037;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px;
+            padding: 10px;
+            background-color: #d7ccc8;
+            border-radius: 5px;
+        }
+        .instruction {
+            font-size: 0.9em;
+            color: #6d4c41;
+            margin-top: 5px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<h1>세션 정보</h1>
+<h1>세션 관리</h1>
 
-<!-- 세션 ID 표시 -->
+<!-- 세션 시작 -->
 <div>
-    <label>세션 ID:</label>
-    <span id="sessionId">세션 ID가 없습니다</span>
+    <button onclick="startGame()">게임 시작</button>
+    <p>세션 ID: <span id="sessionId">세션 ID가 없습니다</span></p>
+    <p>세션 유효 여부: <span id="sessionStatus">확인되지 않음</span></p>
 </div>
 
-<!-- 세션 유효성 표시 -->
+<!-- 세션 상태 확인 -->
 <div>
-    <label>세션 유효 여부:</label>
-    <span id="sessionStatus">확인되지 않음</span>
+    <label for="inputSessionId">세션 ID 입력:</label>
+    <input type="text" id="inputSessionId" placeholder="부여받은 세션 ID를 입력하세요">
+    <button onclick="checkSessionStatus()">상태 확인</button>
+    <p class="instruction">세션 ID 입력 전에 부여받은 세션 ID를 복사해서 넣어주세요!</p>
 </div>
 
-<!-- 게임 시작 버튼 -->
-<button onclick="startGame()">게임 시작</button>
+<!-- 세션 정보 표시 -->
+<div>
+    <h2>세션 정보:</h2>
+    <p>사용자 ID: <span id="displayUserId"></span></p>
+    <p>세션 스테이지 상태:</p>
+    <ul id="stageList"></ul>
+</div>
 
 <script>
     // 게임 시작 시 세션 생성
@@ -40,6 +103,39 @@
                 .catch(error => {
                     console.error('세션 시작 중 오류 발생:', error);
                     document.getElementById('sessionStatus').innerText = "오류 발생";
+                });
+    }
+
+    // 세션 상태 확인
+    function checkSessionStatus() {
+        const sessionId = document.getElementById('inputSessionId').value;
+        if (!sessionId) {
+            alert('세션 ID를 입력해주세요.');
+            return;
+        }
+
+        fetch(`/session/status?sessionId=${sessionId}`, {
+            method: 'GET'
+        })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('displayUserId').innerText = data.userId || '데이터 없음';
+                    document.getElementById('sessionStatus').innerText = data.isActive ? '활성' : '비활성';
+                    const stages = data.stages;
+                    const stageList = document.getElementById('stageList');
+                    stageList.innerHTML = ''; // 리스트 초기화
+                    if (stages && stages.length > 0) {
+                        stages.forEach(stage => {
+                            const li = document.createElement('li');
+                            li.textContent = `스테이지 ${stage.stageId}: ${stage.isCleared ? '클리어' : '미완료'}`;
+                            stageList.appendChild(li);
+                        });
+                    } else {
+                        stageList.innerHTML = '<li>스테이지 정보 없음</li>';
+                    }
+                })
+                .catch(error => {
+                    console.error('세션 상태 확인 중 오류 발생:', error);
                 });
     }
 </script>
