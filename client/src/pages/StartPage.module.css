@@ -13,27 +13,27 @@
 }
 
 .Logo {
-  width: 500px;
+  width: 25vw;
   position: fixed;
-  transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 위쪽 및 좌우로 이동 */
-  top: 42%;
+  transform: translate(-50%, -50%);
+  top: 42vh;
   left: 50%;
 }
 
 .Button {
   cursor: pointer;
   position: fixed;
-  transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 위쪽 및 좌우로 이동 */
-  top: 67%;
+  transform: translate(-50%, -50%);
+  top: 70vh;
   left: 50%;
   font-family: 'MapoGoldenPier';
-  font-size: 48px;
+  font-size: 4vh;
   color: #fff;
-  width: 17%;
-  height: 80px;
+  width: 17vw;
+  height: 8vh;
   background-color: transparent;
-  border: 2px solid #fff;
-  border-radius: 10px;
+  border: 0.2vh solid #fff;
+  border-radius: 1vh;
   transition: transform 0.3s ease;
 }
 
