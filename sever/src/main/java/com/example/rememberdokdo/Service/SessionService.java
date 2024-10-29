@@ -1,7 +1,7 @@
 package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.SessionDto;
-import com.example.rememberdokdo.Dto.SessionStatusDto;
+import com.example.rememberdokdo.Dto.SessionProgressDto;
 import com.example.rememberdokdo.Entity.SessionEntity;
 import com.example.rememberdokdo.Repository.SessionRepository;
 import com.example.rememberdokdo.Repository.StageProgressRepository;
@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +28,7 @@ public class SessionService {
     private SessionRepository sessionRepository;
     @Autowired
     private StageProgressRepository stageProgressRepository;
+
     /*@Autowired
     private InventoryItemRepository inventoryItemRepository;*/
 
@@ -121,14 +121,14 @@ public class SessionService {
     }
 
     // 세션 상태와 진행 상황 반환
-    public SessionStatusDto getSessionStatus(String sessionId) {
+    public SessionProgressDto getSessionStatus(String sessionId) {
         // 세션 정보 확인
         SessionEntity sessionEntity = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new IllegalArgumentException("Session not found"));
 
         // 스테이지 진행 상황 조회
-        List<SessionStatusDto.StageStatus> stages = stageProgressRepository.findBySessionId(sessionId).stream()
-                .map(stage -> new SessionStatusDto.StageStatus(stage.getStageId(), stage.isCleared()))
+        List<SessionProgressDto.StageStatus> stages = stageProgressRepository.findBySessionId(sessionId).stream()
+                .map(stage -> new SessionProgressDto.StageStatus(stage.getStageId(), stage.isCleared()))
                 .collect(Collectors.toList());
 
         /*
@@ -138,7 +138,7 @@ public class SessionService {
                 .collect(Collectors.toList());*/
 
         // SessionStatusDto 생성하여 반환
-        return new SessionStatusDto(
+        return new SessionProgressDto(
                 sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 stages,
