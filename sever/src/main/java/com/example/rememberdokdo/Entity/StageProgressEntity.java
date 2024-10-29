@@ -24,6 +24,6 @@ public class StageProgressEntity {
     @Column(name = "stageId", nullable = false)
     private int stageId;
 
-    @Column(name = "isCleared", nullable = false)
+    @Column(name = "isCleared", nullable = true)
     private boolean isCleared;
 }

@@ -3,11 +3,13 @@ package com.example.rememberdokdo.Service;
 import com.example.rememberdokdo.Dto.SessionDto;
 import com.example.rememberdokdo.Dto.SessionProgressDto;
 import com.example.rememberdokdo.Entity.SessionEntity;
+import com.example.rememberdokdo.Entity.StageProgressEntity;
 import com.example.rememberdokdo.Repository.SessionRepository;
 import com.example.rememberdokdo.Repository.StageProgressRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 @Service
 public class SessionService {
@@ -29,12 +30,8 @@ public class SessionService {
     @Autowired
     private StageProgressRepository stageProgressRepository;
 
-    /*@Autowired
-    private InventoryItemRepository inventoryItemRepository;*/
-
-    // 브라우저 접속 시 세션 시작 (쿠키로 세션 ID 전달)
+    // 세션 시작 메서드
     public SessionDto startSession(HttpServletRequest request, HttpServletResponse response) {
-        // 기존 세션 쿠키 확인
         Cookie[] cookies = request.getCookies();
         String sessionId = null;
 
@@ -47,28 +44,23 @@ public class SessionService {
             }
         }
 
-        // 기존 세션이 존재하면 만료시키고 DB에서 삭제
         if (sessionId != null && validateSession(sessionId)) {
-            sessionRepository.deleteById(sessionId);  // 기존 세션 삭제
+            sessionRepository.deleteById(sessionId);
         }
 
-        // 새로운 세션 생성
-        sessionId = UUID.randomUUID().toString();  // 새로운 세션 ID 생성
-        createSessionCookie(sessionId, response);  // 쿠키에 저장
+        sessionId = UUID.randomUUID().toString();
+        createSessionCookie(sessionId, response);
 
-        // 세션 엔티티 생성
         SessionEntity sessionEntity = SessionEntity.builder()
                 .sessionId(sessionId)
-                .userId(null)  // 필요 시 저장
+                .userId(null)
                 .createdAt(LocalDateTime.now())
-                .expiresAt(LocalDateTime.now().plusHours(1))  // 1시간 세션 유지
+                .expiresAt(LocalDateTime.now().plusHours(1))
                 .isActive(true)
                 .build();
 
-        // 세션 정보를 DB에 저장
         sessionRepository.save(sessionEntity);
 
-        // 세션 정보를 반환
         return SessionDto.fromEntity(sessionEntity);
     }
 
@@ -80,37 +72,35 @@ public class SessionService {
         return sessionRepository.findBySessionIdAndExpiresAtAfter(sessionId, LocalDateTime.now()).isPresent();
     }
 
-    // 세션 갱신 또는 새로 발급
+    // 세션 갱신
     public SessionDto refreshSession(HttpServletRequest request, HttpServletResponse response) {
-        String sessionId = UUID.randomUUID().toString(); // 새로운 세션 ID 생성
-        createSessionCookie(sessionId, response);  // 새로운 쿠키 저장
+        String sessionId = UUID.randomUUID().toString();
+        createSessionCookie(sessionId, response);
 
-        // 새로운 세션 엔티티 생성
         SessionEntity sessionEntity = SessionEntity.builder()
                 .sessionId(sessionId)
-                .userId(null)  // 필요시 저장
+                .userId(null)
                 .createdAt(LocalDateTime.now())
-                .expiresAt(LocalDateTime.now().plusHours(1))  // 1시간 세션 유지
+                .expiresAt(LocalDateTime.now().plusHours(1))
                 .isActive(true)
                 .build();
 
-        // 세션 정보를 DB에 저장
         sessionRepository.save(sessionEntity);
 
         return SessionDto.fromEntity(sessionEntity);
     }
 
-    // 쿠키 생성 메서드
+    // 쿠키 생성
     private void createSessionCookie(String sessionId, HttpServletResponse response) {
         Cookie sessionCookie = new Cookie("SESSIONID", sessionId);
-        sessionCookie.setMaxAge(3600);  // 1시간 유효
-        sessionCookie.setHttpOnly(true);  // JavaScript로 접근 불가 (보안 강화)
-        sessionCookie.setPath("/");  // 전체 경로에서 쿠키 사용 가능
+        sessionCookie.setMaxAge(3600);
+        sessionCookie.setHttpOnly(true);
+        sessionCookie.setPath("/");
         response.addCookie(sessionCookie);
     }
 
-    // 매 시간마다 만료된 세션 삭제 (정기적으로 만료된 세션 정리)
-    @Scheduled(fixedRate = 3600000)  // 1시간마다 실행
+    // 만료된 세션 삭제
+    @Scheduled(fixedRate = 3600000)
     public void deleteExpiredSessions() {
         try {
             int deletedCount = sessionRepository.deleteByExpiresAtBefore(LocalDateTime.now());
@@ -131,13 +121,10 @@ public class SessionService {
                 .map(stage -> new SessionProgressDto.StageStatus(stage.getStageId(), stage.isCleared()))
                 .collect(Collectors.toList());
 
-        /*
-        // 인벤토리 아이템 목록 조회
-        List<SessionStatusDto.Item> inventoryItems = inventoryItemRepository.findBySessionId(sessionId).stream()
-                .map(item -> new SessionStatusDto.Item(item.getItemId(), item.getItemName(), item.getItemDescription()))
-                .collect(Collectors.toList());*/
+        // 인벤토리 아이템을 조회하여 List<Item> 형태로 만듭니다.
+        List<SessionProgressDto.Item> inventoryItems = null; // 필요 시 DB에서 아이템 목록을 가져와 설정합니다.
 
-        // SessionStatusDto 생성하여 반환
+        // SessionProgressDto 생성하여 반환
         return new SessionProgressDto(
                 sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
@@ -146,6 +133,22 @@ public class SessionService {
         );
     }
 
+
+    // 스테이지 완료 처리
+    @Transactional
+    public void completeStage(String sessionId, int stageId) {
+        // sessionId와 stageId로 스테이지 진행 상태 조회
+        StageProgressEntity stageProgress = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
+                .orElse(StageProgressEntity.builder()
+                        .sessionId(sessionId)
+                        .stageId(stageId)
+                        .isCleared(false)  // 기본값은 false로 설정
+                        .build());
+
+        /// 상태를 true로 변경하고 저장
+        stageProgress.setCleared(true);
+        stageProgressRepository.save(stageProgress); // 저장
+    }
 
     /*사용자 게임 클리어 시 userId 저장 (닉네임 저장)
     public SessionDto updateUserId(String sessionId, String userId) {
