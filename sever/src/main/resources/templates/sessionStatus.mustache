@@ -1,0 +1,47 @@
+<!-- sessionStatus.mustache -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Session Status</title>
+</head>
+<body>
+<h1>세션 정보</h1>
+
+<!-- 세션 ID 표시 -->
+<div>
+    <label>세션 ID:</label>
+    <span id="sessionId">세션 ID가 없습니다</span>
+</div>
+
+<!-- 세션 유효성 표시 -->
+<div>
+    <label>세션 유효 여부:</label>
+    <span id="sessionStatus">확인되지 않음</span>
+</div>
+
+<!-- 게임 시작 버튼 -->
+<button onclick="startGame()">게임 시작</button>
+
+<script>
+    // 게임 시작 시 세션 생성
+    function startGame() {
+        fetch('/session/start', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('sessionId').innerText = data.sessionId;  // 세션 ID 표시
+                    document.getElementById('sessionStatus').innerText = data.isActive ? "유효" : "만료됨";
+                })
+                .catch(error => {
+                    console.error('세션 시작 중 오류 발생:', error);
+                    document.getElementById('sessionStatus').innerText = "오류 발생";
+                });
+    }
+</script>
+</body>
+</html>
