@@ -77,6 +77,13 @@
 </head>
 <body>
 <h1>아이템 추가 및 삭제</h1>
+
+{{#errorMessage}}
+    <div style="color: red; text-align: center; margin-bottom: 10px;">
+        {{errorMessage}}
+    </div>
+{{/errorMessage}}
+
 <form method="post" action="/inventory/add">
     <label for="sessionId">세션 ID</label>
     <input type="text" id="sessionId" name="sessionId" required>

@@ -1,9 +1,7 @@
 package com.example.rememberdokdo.Controller;
 
 import com.example.rememberdokdo.Dto.Inventory.ItemAddRequestDto;
-import com.example.rememberdokdo.Dto.Inventory.ItemAddResponseDto;
 import com.example.rememberdokdo.Dto.Inventory.ItemDeleteRequestDto;
-import com.example.rememberdokdo.Dto.Inventory.ItemDeleteResponseDto;
 import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
 import com.example.rememberdokdo.Entity.Inventory.InventoryItemsEntity;
 import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
@@ -37,21 +35,31 @@ public class InventoryController {
     }
 
     @PostMapping("/add")
-    public String addItem (@RequestParam("sessionId") String sessionId,
+    public String addItem(@RequestParam("sessionId") String sessionId,
                           @RequestParam("itemId") Integer itemId,
                           Model model) {
-        ItemAddRequestDto addRequest = new ItemAddRequestDto(sessionId, itemId);
-        inventoryAddItemsService.addItem(addRequest);
-        return "redirect:/inventory/items?sessionId=" + sessionId;  // 전체 아이템 조회로 리다이렉트
+        try {
+            ItemAddRequestDto addRequest = new ItemAddRequestDto(sessionId, itemId);
+            inventoryAddItemsService.addItem(addRequest);
+            return "redirect:/inventory/items?sessionId=" + sessionId;
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "inventoryForm"; // Return to form with error message
+        }
     }
 
     @PostMapping("/delete")
     public String deleteItem(@RequestParam("sessionId") String sessionId,
                              @RequestParam("itemId") Integer itemId,
                              Model model) {
-        ItemDeleteRequestDto deleteRequest = new ItemDeleteRequestDto(sessionId, itemId);
-        inventoryDeleteItemsService.deleteItem(deleteRequest);
-        return "redirect:/inventory/items?sessionId=" + sessionId; // 전체 아이템 조회로 리다이렉트
+        try {
+            ItemDeleteRequestDto deleteRequest = new ItemDeleteRequestDto(sessionId, itemId);
+            inventoryDeleteItemsService.deleteItem(deleteRequest);
+            return "redirect:/inventory/items?sessionId=" + sessionId;
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "inventoryForm"; // Return to form with error message
+        }
     }
 
     // 인벤토리 ID별 아이템 목록
