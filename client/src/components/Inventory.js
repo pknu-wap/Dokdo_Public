@@ -6,12 +6,14 @@ import TaegeukKey from '../Dokdo_Private/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/clover.png';
 import map from '../Dokdo_Private/stage2/Map.png';
 import CodeNote from '../Dokdo_Private/stage2/CodeNote.png';
+import GunHintImage from '../assets/GunHintImage.png';
 
 const itemImage = {
   TaegeukKey: TaegeukKey,
   dokdoPuzzle1: dokdoPuzzle1,
   map: map,
   CodeNote: CodeNote,
+  GunHintImage: GunHintImage,
 };
 
 function Inventory() {
