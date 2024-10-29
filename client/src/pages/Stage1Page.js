@@ -142,7 +142,7 @@ function Stage1Page() {
 
   return (
     <>
-      <ToolBar isStage2Open={isStage1DoorOpen} />
+      <ToolBar isStage2Open={isStage1DoorOpen} isStage3Open={true} />
       <Inventory />
       <div className={styles.Stage1Bg}>
         <div className={styles.Stage1Floor} />

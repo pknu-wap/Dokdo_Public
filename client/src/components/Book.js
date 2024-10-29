@@ -31,6 +31,7 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
     <div className={styles.BackGround}>
       <img className={styles.RightBookWrapper} src={RightPage} alt="Right Page" />
       <img className={styles.LeftBookWrapper} src={LeftPage} alt="Left Page" />
+
       <div className={`${styles.RightBookWrapper} ${page > 1 ? styles.PreviousFlipped : ''}`}>
         <div className={styles.Page}>
           <img className={styles.Book} src={RightPage} alt="Right Page" />
@@ -41,13 +42,15 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
           <img className={styles.Book} src={LeftPage} alt="Left Page" />
         </div>
       </div>
+
       <button className={styles.PreviousButton} onClick={handleClickPreviousPage} disabled={page === 1} />
       <button className={styles.NextButton} onClick={handleClickNextPage} disabled={page === 4} />
+
       {page === 4 && !isMapFind ? (
         <button
           className={styles.Map}
           onClick={() => {
-            handleItemClick('Stage2Map');
+            handleItemClick('map');
             setIsMapFind(true);
             closeBook();
           }}

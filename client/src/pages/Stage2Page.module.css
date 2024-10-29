@@ -12,56 +12,111 @@
 }
 .BackGround {
   position: fixed;
-  width: 100%;
-  height: 87%;
+  width: 100vw;
+  height: 87vh;
   background-color: #fee7d7;
 }
 .Stage2Floor {
   position: fixed;
   background-color: #846b66;
-  width: 100%;
-  top: 87%;
-  height: 13%;
+  width: 100vw;
+  top: 87vh;
+  height: 13vh;
 }
 
+.Lamp {
+  position: fixed;
+  top: 10vh;
+  width: 15vh;
+  left: 13vw;
+}
 .Box img,
+.BoxOpen img,
 .Door img,
+.DoorOpen img,
+.CodeNote img,
 .ContainMapBook img {
   width: 100%;
   height: 100%;
 }
+.CodeNote {
+  position: fixed;
+  border: none;
+  background: transparent;
+  position: fixed;
+  top: 66.35vh;
+  left: 6vw;
+  width: 6.5vw;
+  z-index: 1;
+}
 
 .Box {
-  position: absolute;
-  top: 63%;
-  left: 4%;
-  width: 27%;
+  position: fixed;
+  top: 63vh;
+  left: 4vw;
+  width: 27vw;
   height: auto;
   color: transparent;
   outline: none;
   border: none;
   background-color: transparent;
+  cursor: pointer;
+}
+
+.BoxButton {
+  position: fixed;
+  top: 63vh;
+  left: 4vw;
+  width: 15vw;
+  height: 16vh;
+  color: transparent;
+  outline: none;
+  border: none;
+  background: transparent;
   cursor: pointer;
 }
 
 .BoxOpen {
-  position: absolute;
-  top: 63%;
-  left: 3.2%;
-  width: 27.5%;
+  position: fixed;
+  top: 62.95vh;
+  left: 3vw;
+  width: 28vw;
   height: auto;
   color: transparent;
   outline: none;
   border: none;
   background-color: transparent;
+}
+.BoxOpenButton {
+  position: fixed;
+  top: 63vh;
+  left: 3vw;
+  width: 16vw;
+  height: 17.5vh;
+  color: transparent;
+  outline: none;
+  border: none;
+  background: transparent;
   cursor: pointer;
 }
 
 .Door {
-  position: absolute;
-  top: 31.1%;
-  left: 35%;
-  width: 23%;
+  position: fixed;
+  top: 31.1vh;
+  left: 35vw;
+  width: 23vw;
+  height: auto;
+  background: none;
+  border: none;
+  display: block;
+  cursor: pointer;
+}
+
+.DoorOpen {
+  position: fixed;
+  top: 29vh;
+  left: 35vw;
+  width: 24vw;
   height: auto;
   background: none;
   border: none;
@@ -76,18 +131,18 @@
 }
 
 .BookShelf {
-  position: absolute;
-  top: 15%;
-  left: 60%;
-  width: 25%;
+  position: fixed;
+  top: 15vh;
+  left: 60vw;
+  width: 25vw;
 }
 
 .ContainMapBook {
-  position: absolute;
-  top: 17.4%;
-  left: 67.75%;
-  width: 2.73%;
-  height: 14.5%;
+  position: fixed;
+  top: 17.4vh;
+  left: 67.75vw;
+  width: 2.73vw;
+  height: 17vh;
   background-color: transparent;
   border: none;
   z-index: 0;
@@ -99,7 +154,7 @@
   border: none;
   background-color: transparent;
   font-family: 'MapoAgape', sans-serif;
-  font-size: 20px;
+  font-size: 27px;
   padding: 1vh;
 }
 .PlaceAnswer:focus {

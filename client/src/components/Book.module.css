@@ -7,21 +7,21 @@
 
 .RightBookWrapper {
   position: absolute;
-  top: 25%;
-  width: 25%;
+  top: 25vh;
+  width: 25vw;
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
-  left: 49%;
+  left: 49vw;
   transform-origin: left center;
 }
 
 .LeftBookWrapper {
   position: absolute;
-  top: 25%;
-  width: 25%;
+  top: 25vh;
+  width: 25vw;
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
-  left: 24%;
+  left: 24vw;
   transform-origin: right center;
 }
 
