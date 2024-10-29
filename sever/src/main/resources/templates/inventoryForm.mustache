@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Form</title>
+</head>
+<body>
+<h1>아이템 추가 및 삭제</h1>
+<form method="post" action="/inventory/add">
+    <label for="sessionId">세션 ID:</label>
+    <input type="text" id="sessionId" name="sessionId" required><br><br>
+
+    <label for="itemId">아이템 ID:</label>
+    <input type="number" id="itemId" name="itemId" required><br><br>
+
+    <button type="submit" formaction="/inventory/add">추가</button>
+    <button type="submit" formaction="/inventory/delete">삭제</button>
+</form>
+</body>
+</html>
