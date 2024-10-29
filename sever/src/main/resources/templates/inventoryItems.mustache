@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Items</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>아이템 목록</h1>
+
+<!-- 인벤토리 ID 출력 -->
+<p>인벤토리 ID: {{inventoryId}}</p>
+
+<table>
+    <tr>
+        <th>아이템 ID</th>
+        <th>아이템 이름</th>
+        <th>아이템 설명</th>
+    </tr>
+    {{#items}}
+        <tr>
+            <td>{{itemId}}</td>
+            <td>{{itemName}}</td>
+            <td>{{itemDescription}}</td>
+        </tr>
+    {{/items}}
+</table>
+
+<a href="/inventory/form">다시 추가 또는 삭제하기</a>
+</body>
+</html>
