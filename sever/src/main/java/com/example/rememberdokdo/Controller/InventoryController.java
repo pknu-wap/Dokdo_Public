@@ -44,7 +44,7 @@ public class InventoryController {
             return "redirect:/inventory/items?sessionId=" + sessionId;
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "inventoryForm"; // Return to form with error message
+            return "inventoryForm";
         }
     }
 
@@ -58,7 +58,7 @@ public class InventoryController {
             return "redirect:/inventory/items?sessionId=" + sessionId;
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "inventoryForm"; // Return to form with error message
+            return "inventoryForm";
         }
     }
 
