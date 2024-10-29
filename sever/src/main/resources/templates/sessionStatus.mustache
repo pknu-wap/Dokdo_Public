@@ -23,21 +23,22 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
-        input[type="text"] {
+        input[type="text"], button {
             width: 70%;
             padding: 10px;
             margin-top: 10px;
             border: 2px solid #6d4c41;
             border-radius: 5px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         button {
             background-color: #6d4c41;
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
         }
         button:hover {
             background-color: #5d4037;
@@ -65,9 +66,14 @@
 
 <!-- 세션 시작 -->
 <div>
-    <button onclick="startGame()">게임 시작</button>
-    <p>세션 ID: <span id="sessionId">세션 ID가 없습니다</span></p>
-    <p>세션 유효 여부: <span id="sessionStatus">확인되지 않음</span></p>
+    <button onclick="startSession()">게임 시작</button>
+    <p>세션 ID: <span id="sessionId">{{sessionId}}</span></p>
+    <p>세션 유효 여부: <span id="sessionStatus">{{sessionStatus}}</span></p>
+</div>
+
+<!-- 스테이지 완료 -->
+<div>
+    <button onclick="completeStage(1)">스테이지 1 성공</button>
 </div>
 
 <!-- 세션 상태 확인 -->
@@ -81,29 +87,52 @@
 <!-- 세션 정보 표시 -->
 <div>
     <h2>세션 정보:</h2>
-    <p>사용자 ID: <span id="displayUserId"></span></p>
+    <p>사용자 ID: <span id="displayUserId">{{userId}}</span></p>
     <p>세션 스테이지 상태:</p>
-    <ul id="stageList"></ul>
+    <ul id="stageList">
+        {{#stages}}
+            <li>스테이지 {{stageId}}: {{#isCleared}}클리어{{/isCleared}}{{^isCleared}}미완료{{/isCleared}}</li>
+        {{/stages}}
+    </ul>
 </div>
 
 <script>
-    // 게임 시작 시 세션 생성
-    function startGame() {
+    // 세션 시작
+    function startSession() {
         fetch('/session/start', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: { 'Content-Type': 'application/json' }
         })
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('sessionId').innerText = data.sessionId;  // 세션 ID 표시
+                    document.getElementById('sessionId').innerText = data.sessionId;
                     document.getElementById('sessionStatus').innerText = data.isActive ? "유효" : "만료됨";
                 })
                 .catch(error => {
                     console.error('세션 시작 중 오류 발생:', error);
                     document.getElementById('sessionStatus').innerText = "오류 발생";
                 });
+    }
+
+    // 스테이지 완료
+    function completeStage(stageId) {
+        const sessionId = document.getElementById('sessionId').innerText;
+        if (!sessionId || sessionId === "세션 ID가 없습니다") {
+            alert("게임을 먼저 시작해 주세요.");
+            return;
+        }
+
+        fetch('/session/completeStage', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId: sessionId, stageId: stageId })
+        })
+                .then(response => response.text())
+                .then(message => {
+                    alert(message);
+                    checkSessionStatus(); // 스테이지 완료 후 상태 자동 갱신
+                })
+                .catch(error => console.error('스테이지 완료 처리 중 오류 발생:', error));
     }
 
     // 세션 상태 확인
@@ -134,9 +163,7 @@
                         stageList.innerHTML = '<li>스테이지 정보 없음</li>';
                     }
                 })
-                .catch(error => {
-                    console.error('세션 상태 확인 중 오류 발생:', error);
-                });
+                .catch(error => console.error('세션 상태 확인 중 오류 발생:', error));
     }
 </script>
 </body>
