@@ -2,15 +2,15 @@
 
 .CheckNumberBg {
   position: absolute;
-  left: 2.3vw;
-  width: 48vw;
-  height: 34vh;
+  left: 3%;
+  width: 94%;
+  height: 62%;
 }
 
 .back {
   display: flex;
   flex-direction: row;
-  margin: 0 9vw;
+  margin: 0 18%;
 }
 
 .Back {
@@ -22,21 +22,23 @@
 
 .UpButton,
 .DownButton {
-  width: 28%;
-  height: 28%;
+  width: 30%;
+  height: 30%;
   z-index: 1;
   border: none;
   background-color: transparent;
+  margin-right: 6%;
 }
 .UpButton {
-  margin-top: 4.2vh;
+  margin-top: 21%;
 }
 .DownButton {
-  margin-top: 2.8vh;
+  margin-top: 15%;
 }
 
 .number {
-  margin-top: 2.8vh;
+  margin-top: 15%;
+  margin-right: 6%;
   font-family: 'Noto Sans KR', sans-serif;
   font-optical-sizing: auto;
   font-weight: bold;
