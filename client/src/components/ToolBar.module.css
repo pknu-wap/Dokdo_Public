@@ -43,11 +43,11 @@
 }
 
 .ToolBarUnselected {
-  background-image: url('assets/ToolBar1.png');
+  background-image: url('../assets/ToolBar1.png');
   background-size: 100% 100%;
 }
 
 .ToolBarSelected {
-  background-image: url('assets/ToolBar2.png');
+  background-image: url('../assets/ToolBar2.png');
   background-size: 100% 100%;
 }

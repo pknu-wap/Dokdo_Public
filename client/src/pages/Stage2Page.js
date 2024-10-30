@@ -8,15 +8,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInventory } from '../context/InventoryContext.js';
 
-import BoxOpen from 'assets/stage2/OpenBox.png';
-import BoxClose from 'assets/stage2/Box.png';
-import Door from 'assets/stage2/Door.png';
-import BookShelf from 'assets/stage2/BookShelf.png';
-import ContainMapBook from 'assets/stage2/ContainMapBook.png';
-import Lamp from 'assets/stage2/Lamp.png';
-import DoorOpen from 'assets/stage2/DoorOpen.png';
-import CodeNote from 'assets/stage2/CodeNoteCut.png';
-import BoxOpenAfter from 'assets/stage2/BoxOpenAfter.png';
+import BoxOpen from '../assets/stage2/OpenBox.png';
+import BoxClose from '../assets/stage2/Box.png';
+import Door from '../assets/stage2/Door.png';
+import BookShelf from '../assets/stage2/BookShelf.png';
+import ContainMapBook from '../assets/stage2/ContainMapBook.png';
+import Lamp from '../assets/stage2/Lamp.png';
+import DoorOpen from '../assets/stage2/DoorOpen.png';
+import CodeNote from '../assets/stage2/CodeNoteCut.png';
+import BoxOpenAfter from '../assets/stage2/BoxOpenAfter.png';
 
 function Stage2Page() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function Stage2Page() {
     addItem(itemName);
   };
 
-  const [isBoxOpen, setIsBoxOpen] = useState(false); /* 드래그 되고 나서의 상태를 보고싶다면 이걸 true로 바꿔주세요 */
+  const [isBoxOpen, setIsBoxOpen] = useState(true); /* 드래그 되고 나서의 상태를 보고싶다면 이걸 true로 바꿔주세요 */
   const [isHandleBoxOpen, setIsHandleBoxOpen] = useState(false);
   const [isStage2Open, setIsStage2Open] = useState(true);
   const [isStage3Open, setIsStage3Open] = useState(true);
