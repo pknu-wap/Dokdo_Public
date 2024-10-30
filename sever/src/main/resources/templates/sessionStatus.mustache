@@ -140,6 +140,10 @@
     <button id="clearStageButton" onclick="clearStage()" style="display: none;">스테이지 클리어하기</button>
 </div>
 
+<div class="card">
+    <button onclick="redirectInventoryForm()">인벤토리 관리</button>
+</div>
+
 <script>
     // 세션 시작
     function startSession() {
@@ -223,6 +227,11 @@
                 .catch(error => {
                     console.error('스테이지 클리어 중 오류 발생:', error);
                 });
+
+    }
+
+    function redirectInventoryForm() {
+        window.location.href = 'http://localhost:8080/inventory/form';
     }
 </script>
 </body>
