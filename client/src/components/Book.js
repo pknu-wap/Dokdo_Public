@@ -2,9 +2,9 @@ import { useState } from 'react';
 import styles from './Book.module.css';
 import { useInventory } from '../context/InventoryContext.js';
 
-import LeftPage from '../Dokdo_Private/stage2/LeftPage.png';
-import RightPage from '../Dokdo_Private/stage2/RightPage.png';
-import map from '../Dokdo_Private/stage2/Map.png';
+import LeftPage from '/Dokdo/client/src/Dokdo_Private/stage2/LeftPage.png';
+import RightPage from '/Dokdo/client/src/Dokdo_Private/stage2/RightPage.png';
+import map from '/Dokdo/client/src/Dokdo_Private/stage2/Map.png';
 
 const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
   const [page, setPage] = useState(1);

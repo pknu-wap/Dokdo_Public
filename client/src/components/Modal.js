@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Modal.module.css';
-import CloseBtn from '../Dokdo_Private/CloseBtn.png';
+import CloseBtn from '/Dokdo/client/src/Dokdo_Private/CloseBtn.png';
 
 const Modal = ({ isOpen, onClose, children, onSubmit, size = 'medium' }) => {
   const handleSubmit = (event) => {

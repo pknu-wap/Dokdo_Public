@@ -8,14 +8,14 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInventory } from '../context/InventoryContext.js';
 
-import BoxOpen from '../Dokdo_Private/stage2/OpenBox.png';
-import BoxClose from '../Dokdo_Private/stage2/Box.png';
-import Door from '../Dokdo_Private/stage2/Door.png';
-import BookShelf from '../Dokdo_Private/stage2/BookShelf.png';
-import ContainMapBook from '../Dokdo_Private/stage2/ContainMapBook.png';
-import Lamp from '../Dokdo_Private/stage2/Lamp.png';
-import DoorOpen from '../Dokdo_Private/stage2/DoorOpen.png';
-import CodeNote from '../Dokdo_Private/stage2/CodeNoteCut.png';
+import BoxOpen from '/Dokdo/client/src/Dokdo_Private/stage2/OpenBox.png';
+import BoxClose from '/Dokdo/client/src/Dokdo_Private/stage2/Box.png';
+import Door from '/Dokdo/client/src/Dokdo_Private/stage2/Door.png';
+import BookShelf from '/Dokdo/client/src/Dokdo_Private/stage2/BookShelf.png';
+import ContainMapBook from '/Dokdo/client/src/Dokdo_Private/stage2/ContainMapBook.png';
+import Lamp from '/Dokdo/client/src/Dokdo_Private/stage2/Lamp.png';
+import DoorOpen from '/Dokdo/client/src/Dokdo_Private/stage2/DoorOpen.png';
+import CodeNote from '/Dokdo/client/src/Dokdo_Private/stage2/CodeNoteCut.png';
 
 function Stage2Page() {
   const navigate = useNavigate();

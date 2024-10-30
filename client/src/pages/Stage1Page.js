@@ -5,15 +5,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInventory } from '../context/InventoryContext.js';
 
-import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
-import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
-import Table from '../Dokdo_Private/stage1/Stage1Table.png';
-import Music from '../Dokdo_Private/stage1/Music.png';
-import DrawerClose from '../Dokdo_Private/stage1/Stage1DrawerClose.png';
-import DrawerOpen from '../Dokdo_Private/stage1/Stage1DrawerOpen.png';
-import TaegeukKey from '../Dokdo_Private/stage1/TaegeukCut.png';
-import Lamp from '../Dokdo_Private/stage1/Stage1Lamp.png';
-import Light from '../Dokdo_Private/stage1/Stage1LampLight.png';
+import DoorClose from '/Dokdo/client/src/Dokdo_Private/stage1/Stage1DoorClose.png';
+import DoorOpen from '/Dokdo/client/src/Dokdo_Private/stage1/Stage1DoorOpen.png';
+import Table from '/Dokdo/client/src/Dokdo_Private/stage1/Stage1Table.png';
+import Music from '/Dokdo/client/src/Dokdo_Private/stage1/Music.png';
+import DrawerClose from '/Dokdo/client/src/Dokdo_Private/stage1/Stage1DrawerClose.png';
+import DrawerOpen from '/Dokdo/client/src/Dokdo_Private/stage1/Stage1DrawerOpen.png';
+import TaegeukKey from '/Dokdo/client/src/Dokdo_Private/stage1/TaegeukCut.png';
+import Lamp from '/Dokdo/client/src/Dokdo_Private/stage1/Stage1Lamp.png';
+import Light from '/Dokdo/client/src/Dokdo_Private/stage1/Stage1LampLight.png';
 import Clover from '../assets/clover.png';
 
 function BeatDoor() {
