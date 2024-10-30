@@ -12,7 +12,7 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
   const [zIndex, setZIndex] = useState({ left: 2, right: 1 });
 
   const handleClickNextPage = () => {
-    if (page < 4) {
+    if (page < 5) {
       setPage(page + 1);
     }
   };
@@ -55,6 +55,8 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
       if (page === 4 && !isMapFind) {
         await delay(300);
         setShowMapButton(true);
+      } else if (page === 5) {
+        closeBook();
       } else {
         setShowMapButton(false);
       }
@@ -92,7 +94,7 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
         disabled={page === 1}
         style={{ zIndex: 3 }}
       />
-      <button className={styles.NextButton} onClick={handleClickNextPage} disabled={page === 4} style={{ zIndex: 3 }} />
+      <button className={styles.NextButton} onClick={handleClickNextPage} disabled={page === 5} style={{ zIndex: 3 }} />
 
       {showMapButton && !isMapFind ? (
         <button

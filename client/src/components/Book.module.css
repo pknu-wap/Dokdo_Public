@@ -101,7 +101,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  animation: fadeIn 1s ease-in;
+  animation: fadeIn 0.5s ease-in;
 }
 
 .Map img {
