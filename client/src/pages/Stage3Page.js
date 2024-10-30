@@ -32,7 +32,6 @@ const Stage3PeopleImage = [
 const CorrectAnswer = [1, 2, 3];
 
 function Stage3Page() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]);
   const [resultMessage, setResultMessage] = useState('');
   const [addKoreaFlagImage, setAddKoreaFlagImage] = useState(null);
@@ -42,6 +41,7 @@ function Stage3Page() {
   const [gunHintVisible, setGunHintVisible] = useState(false); /* 무기 힌트가 보이는 상태 */
   const [isDoorOpen, setIsDoorOpen] = useState(false); /* 문이 열렸는지 알아봄 */
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
+  const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
   const { items, addItem } = useInventory(); /* Context에서 items도 가져옴 */
   
   /* CheckNumber 숫자 받아오기 */
@@ -108,6 +108,7 @@ function Stage3Page() {
       setGunHintVisible(false); /* 3초 후 무기 힌트 이미지를 숨김 */
       if (!items.includes('GunHint')) {
         addItem('GunHintImage'); /* 인벤토리에 무기 힌트 추가 */
+        setIsGunHintCollected(true); /* GunHintImage 수집 상태 true */
       }
     }, 3000);
   };
@@ -127,7 +128,7 @@ function Stage3Page() {
   };
 
   const handleDoorClick = () => {
-    if (!isDoorOpen) {
+    if (!isDoorOpen && isGunHintCollected) {
       setIsNumberGuessModalOpen(true);
     }
   };
