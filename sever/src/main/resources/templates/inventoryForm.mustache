@@ -84,7 +84,7 @@
     </div>
 {{/errorMessage}}
 
-<form method="post" action="/inventory/add">
+<form method="post" action="http://ec2-3-35-139-117.ap-northeast-2.compute.amazonaws.com:8080/inventory/add">
     <label for="sessionId">세션 ID</label>
     <input type="text" id="sessionId" name="sessionId" required>
 
@@ -92,8 +92,8 @@
     <input type="number" id="itemId" name="itemId" required>
 
     <div style="display: flex; justify-content: center; gap: 10px;">
-        <button type="submit" formaction="/inventory/add">추가</button>
-        <button type="submit" formaction="/inventory/delete">삭제</button>
+        <button type="submit" formaction="http://ec2-3-35-139-117.ap-northeast-2.compute.amazonaws.com:8080/inventory/add">추가</button>
+        <button type="submit" formaction="http://ec2-3-35-139-117.ap-northeast-2.compute.amazonaws.com:8080/inventory/delete">삭제</button>
     </div>
 </form>
 </body>
