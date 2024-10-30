@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Book.module.css';
 import { useInventory } from '../context/InventoryContext.js';
 
@@ -8,6 +8,7 @@ import map from '../Dokdo_Private/stage2/Map.png';
 
 const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
   const [page, setPage] = useState(1);
+  const [showMapButton, setShowMapButton] = useState(false);
 
   const handleClickNextPage = () => {
     if (page < 4) {
@@ -26,6 +27,21 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
   const handleItemClick = (itemName) => {
     addItem(itemName);
   };
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  useEffect(() => {
+    const showMapButtonAfterDelay = async () => {
+      if (page === 4 && !isMapFind) {
+        await delay(300);
+        setShowMapButton(true);
+      } else {
+        setShowMapButton(false);
+      }
+    };
+
+    showMapButtonAfterDelay();
+  }, [page, isMapFind]);
 
   return (
     <div className={styles.BackGround}>
@@ -58,7 +74,7 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
       />
       <button className={styles.NextButton} onClick={handleClickNextPage} disabled={page === 4} style={{ zIndex: 3 }} />
 
-      {page === 4 && !isMapFind ? (
+      {showMapButton && !isMapFind ? ( // 상태에 따라 버튼 표시
         <button
           className={styles.Map}
           onClick={() => {
