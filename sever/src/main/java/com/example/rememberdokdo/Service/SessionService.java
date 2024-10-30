@@ -66,11 +66,14 @@ public class SessionService {
 
     // 세션 유효성 확인
     public boolean validateSession(String sessionId) {
-        if (sessionId == null) {
+        SessionEntity session = sessionRepository.findById(sessionId).orElse(null);
+        if (session == null) {
             return false;
         }
-        return sessionRepository.findBySessionIdAndExpiresAtAfter(sessionId, LocalDateTime.now()).isPresent();
+        // 세션이 만료되지 않았고 isActive가 true인 경우에만 활성화 상태로 설정
+        return session.getExpiresAt().isAfter(LocalDateTime.now()) && session.getIsActive();
     }
+
 
     // 세션 갱신
     public SessionDto refreshSession(HttpServletRequest request, HttpServletResponse response) {
