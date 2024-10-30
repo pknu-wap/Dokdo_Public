@@ -12,7 +12,6 @@ public class StageService {
     @Autowired
     private StageProgressRepository stageProgressRepository;
 
-    // 특정 스테이지에 접근할 수 있는지 확인
     public StageDto checkStageAccess(String sessionId, int stageId) {
         // 스테이지 ID가 1부터 4 사이일 경우 접근 가능
         boolean isAccessible = stageId >= 1 && stageId <= 4;

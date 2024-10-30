@@ -110,29 +110,23 @@ public class SessionService {
         }
     }
 
-    // 세션 상태와 진행 상황 반환
     public SessionProgressDto getSessionStatus(String sessionId) {
         // 세션 정보 확인
         SessionEntity sessionEntity = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new IllegalArgumentException("Session not found"));
 
-        // 스테이지 진행 상황 조회
+        // 최신 스테이지 진행 상황 조회
         List<SessionProgressDto.StageStatus> stages = stageProgressRepository.findBySessionId(sessionId).stream()
                 .map(stage -> new SessionProgressDto.StageStatus(stage.getStageId(), stage.isCleared()))
                 .collect(Collectors.toList());
 
-        // 인벤토리 아이템을 조회하여 List<Item> 형태로 만듭니다.
-        List<SessionProgressDto.Item> inventoryItems = null; // 필요 시 DB에서 아이템 목록을 가져와 설정합니다.
-
-        // SessionProgressDto 생성하여 반환
         return new SessionProgressDto(
                 sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 stages,
-                null
+                null // 인벤토리 아이템은 필요 시 설정
         );
     }
-
 
     // 스테이지 완료 처리
     @Transactional
