@@ -32,19 +32,31 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
       <img className={styles.RightBookWrapper} src={RightPage} alt="Right Page" />
       <img className={styles.LeftBookWrapper} src={LeftPage} alt="Left Page" />
 
-      <div className={`${styles.RightBookWrapper} ${page > 1 ? styles.PreviousFlipped : ''}`}>
+      <div
+        className={`${styles.RightBookWrapper} ${page > 1 ? styles.PreviousFlipped : ''}`}
+        style={{ zIndex: page === 2 ? 2 : 1 }}
+      >
         <div className={styles.Page}>
           <img className={styles.Book} src={RightPage} alt="Right Page" />
         </div>
       </div>
-      <div className={`${styles.LeftBookWrapper} ${page < 4 ? styles.NextFlipped : ''}`}>
+
+      <div
+        className={`${styles.LeftBookWrapper} ${page < 4 ? styles.NextFlipped : ''}`}
+        style={{ zIndex: page === 3 ? 2 : 1 }}
+      >
         <div className={styles.Page}>
           <img className={styles.Book} src={LeftPage} alt="Left Page" />
         </div>
       </div>
 
-      <button className={styles.PreviousButton} onClick={handleClickPreviousPage} disabled={page === 1} />
-      <button className={styles.NextButton} onClick={handleClickNextPage} disabled={page === 4} />
+      <button
+        className={styles.PreviousButton}
+        onClick={handleClickPreviousPage}
+        disabled={page === 1}
+        style={{ zIndex: 3 }}
+      />
+      <button className={styles.NextButton} onClick={handleClickNextPage} disabled={page === 4} style={{ zIndex: 3 }} />
 
       {page === 4 && !isMapFind ? (
         <button
@@ -54,6 +66,7 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
             setIsMapFind(true);
             closeBook();
           }}
+          style={{ zIndex: 3 }}
         >
           <img src={map} alt="Map" />
         </button>
