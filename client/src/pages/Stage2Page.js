@@ -16,6 +16,7 @@ import ContainMapBook from '../Dokdo_Private/stage2/ContainMapBook.png';
 import Lamp from '../Dokdo_Private/stage2/Lamp.png';
 import DoorOpen from '../Dokdo_Private/stage2/DoorOpen.png';
 import CodeNote from '../Dokdo_Private/stage2/CodeNoteCut.png';
+import BoxOpenAfter from '../stage2/BoxOpenAfter.png';
 
 function Stage2Page() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Stage2Page() {
     addItem(itemName);
   };
 
-  const [isBoxOpen, setIsBoxOpen] = useState(true); /* 드래그 되고 나서의 상태를 보고싶다면 이걸 true로 바꿔주세요 */
+  const [isBoxOpen, setIsBoxOpen] = useState(false); /* 드래그 되고 나서의 상태를 보고싶다면 이걸 true로 바꿔주세요 */
   const [isHandleBoxOpen, setIsHandleBoxOpen] = useState(false);
   const [isStage2Open, setIsStage2Open] = useState(true);
   const [isStage3Open, setIsStage3Open] = useState(true);
@@ -108,12 +109,17 @@ function Stage2Page() {
       setDoorOpen(true);
     }
   };
-
+  const handleDrop = (event) => {
+    // 드랍된 아이템의 이름이 태극기일 때
+    if (event.detail[0].item.name === 'TaegeukKey') {
+      setIsBoxOpen(true); // 박스 열기
+    }
+  };
   return (
     <div className={styles.Stage2}>
       <div className={styles.BackGround} />
       <div className={styles.Stage2Floor} />
-      <Inventory />
+      <Inventory onDrop={handleDrop} />
       <ToolBar isStage2Open={isStage2Open} isStage3Open={isStage3Open} />
       <img className={styles.Lamp} src={Lamp} />
       <img className={styles.BookShelf} src={BookShelf} alt="bookshelf" />
@@ -154,7 +160,7 @@ function Stage2Page() {
             </div>
           ) : (
             <div>
-              <img className={styles.Box} src={BoxClose} alt="BoxClose" />
+              <img className={styles.Box} src={BoxOpenAfter} alt="BoxClose" />
               <button className={styles.BoxButton} onClick={handleBoxOpen} />
             </div>
           )}
