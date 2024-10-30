@@ -174,8 +174,17 @@
         fetch(`/session/status?sessionId=${sessionId}`, { method: 'GET' })
                 .then(response => response.json())
                 .then(data => {
+                    // 올바르게 데이터를 가져오는지 확인
+                    console.log("세션 상태 확인 응답 데이터:", data);
+
+                    // 세션 상태 설정 (isActive 필드와 expiresAt만으로 판단)
+                    const isSessionActive = data.isActive && new Date(data.expiresAt) > new Date();
+                    document.getElementById('sessionStatus').innerText = isSessionActive ? '활성' : '비활성';
+
+                    // 사용자 ID 및 세션 정보 설정
                     document.getElementById('displayUserId').innerText = data.userId || '데이터 없음';
-                    document.getElementById('sessionStatus').innerText = data.isActive ? '활성' : '비활성';
+
+                    // 스테이지 목록 설정
                     const stageList = document.getElementById('stageList');
                     stageList.innerHTML = '';
                     if (data.stages && data.stages.length > 0) {
@@ -190,6 +199,7 @@
                 })
                 .catch(error => console.error('세션 상태 확인 중 오류 발생:', error));
     }
+
 
     // 스테이지 접근 및 클리어 상태 확인
     function checkStageAccess() {
