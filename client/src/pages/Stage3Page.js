@@ -56,11 +56,6 @@ function Stage3Page() {
     addItem(itemName);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedImage([]);
-  };
-
   /* 정답, 오답 3개로 제한 */
   const handleImageClick = (image) => {
     if (selectedImage.includes(image)) {
