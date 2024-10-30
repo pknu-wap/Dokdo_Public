@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
 import { useInventory } from '../context/InventoryContext';
-import TaegeukKey from '../Dokdo_Private/stage1/RedItem.png';
+import TaegeukKey from 'assets/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/clover.png';
-import map from '../Dokdo_Private/stage2/Map.png';
-import CodeNote from '../Dokdo_Private/stage2/CodeNote.png';
+import map from 'assets/stage2/Map.png';
+import CodeNote from 'assets/stage2/CodeNote.png';
 import GunHintImage from '../assets/GunHintImage.png';
 
 const itemImage = {
