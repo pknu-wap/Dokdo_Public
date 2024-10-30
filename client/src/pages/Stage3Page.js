@@ -2,7 +2,7 @@ import styles from './Stage3Page.module.css';
 import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import CheckNumber from '../components/CheckNumber.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
 
 import Stage3wall from '../assets/Stage3wall.png';
@@ -74,7 +74,7 @@ function Stage3Page() {
 
   /* 친일파 찾기 모달 열기 */
   const openFindSpyModal = () => {
-    if (!isAnswerCorrect) { /* 정답을 맞추지 않은 경우에만 열림 */
+    if (!isAnswerCorrect && !isDoorOpen) { /* 정답을 맞추지 않은 경우에만 열림 */
       setIsFindSpyModalOpen(true);
     }
   };
@@ -117,24 +117,33 @@ function Stage3Page() {
     }, 3000);
   };
 
-  const handleDoorClick = () => {
-    if (!isDoorOpen) {
-      setIsNumberGuessModalOpen(true);
-    }
-  };
-
   /* 숫자 확인 함수 */
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
     if (number1 === 2 && number2 === 8 && number3 === 6) {
       alert('정답입니다!');
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
+      sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
     } else {
       alert('오답입니다. 다시 시도하세요.');
       setScoreValues({ number1: 0, number2: 0, number3: 0 }); /* 오답일 경우 입력 필드 초기화 */
     }
   };
+
+  const handleDoorClick = () => {
+    if (!isDoorOpen) {
+      setIsNumberGuessModalOpen(true);
+    }
+  };
+
+    /* 새로고침 시 문이 열린 상태 유지 */
+  useEffect(() => {
+    const savedDoorState = sessionStorage.getItem('stage3DoorOpen');
+      if (savedDoorState === 'true') {
+        setIsDoorOpen(true);
+      }
+  }, []);
 
   return (
     <div className={styles.Stage3Page}>
