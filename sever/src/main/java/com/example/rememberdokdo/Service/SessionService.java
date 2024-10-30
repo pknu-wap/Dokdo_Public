@@ -71,14 +71,9 @@ public class SessionService {
             return false;
         }
 
-        // 세션이 만료되지 않았고 활성화된 상태로 고정
-        session.setIsActive(true);  // 항상 활성 상태로 유지
-        session.setExpiresAt(LocalDateTime.now().plusHours(1));  // 만료 시간 갱신 (1시간 연장)
-        sessionRepository.save(session);  // 변경사항 저장
-
-        return true;
+        // 세션의 유효성은 expiresAt과 isActive로만 판단
+        return session.getExpiresAt().isAfter(LocalDateTime.now()) && session.getIsActive();
     }
-
 
     // 세션 갱신
     public SessionDto refreshSession(HttpServletRequest request, HttpServletResponse response) {
