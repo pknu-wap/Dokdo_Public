@@ -1,7 +1,8 @@
 # 독도의 기억
 
 
-![image](https://github.com/user-attachments/assets/b318257d-88fc-4cf0-857b-327d0e2268ae)
+![방탈출 게임 표지(배경) + 로고+ 시작 버튼](https://github.com/user-attachments/assets/81aad692-4d97-4ea7-a6f6-65fdc723209f)
+
 
 <br>
 
