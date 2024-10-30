@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>세션과 스테이지 기능</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 전체 배경과 폰트 설정 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F5EFE6; /* 따뜻한 연한 베이지 배경 */
+            color: #3E2723; /* 진한 브라운 */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1 {
+            font-family: 'Noto Sans KR', sans-serif;
+            text-align: center;
+            color: #6D4C41; /* 중간 톤의 브라운 */
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+        .card {
+            background-color: #FFF7E0; /* 밝은 베이지 카드 배경 */
+            width: 90%;
+            max-width: 600px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+            border-radius: 15px;
+            color: #3E2723;
+            border: 1px solid #E0C8A1; /* 연한 브라운 테두리 */
+            text-align: center;
+        }
+        .card h2 {
+            font-size: 1.5em;
+            color: #5D4037;
+            margin-bottom: 15px;
+        }
+        label, .instruction {
+            color: #5D4037; /* 진한 브라운 */
+            font-size: 0.95em;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1.5px solid #BCAAA4; /* 연한 브라운 */
+            border-radius: 8px;
+            background-color: #FBF8F3; /* 밝은 베이지 */
+            color: #3E2723;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #8D6E63; /* 진한 브라운 버튼 */
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 80%;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #6D4C41; /* 버튼 hover 색상 */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        li {
+            margin: 5px;
+            padding: 12px;
+            background-color: #FFF1E6; /* 밝은 베이지 */
+            color: #3E2723;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+        }
+        #clearStageButton {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 200px;
+            background-color: #A1887F; /* 중간 톤의 브라운 */
+            font-size: 1em;
+            font-weight: bold;
+        }
+        /* 카드 간 간격 조절 */
+        .card:not(:last-child) {
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+<h1>세션과 스테이지 관리</h1>
+
+<div class="card">
+    <button onclick="startSession()">게임 시작</button>
+    <p>세션 ID: <span id="sessionId">세션 ID가 없습니다</span></p>
+    <p>세션 유효 여부: <span id="sessionStatus">확인되지 않음</span></p>
+</div>
+
+<div class="card">
+    <label for="inputSessionId">세션 ID 입력:</label>
+    <input type="text" id="inputSessionId" placeholder="부여받은 세션 ID를 입력하세요">
+    <button onclick="checkSessionStatus()">상태 확인</button>
+    <p class="instruction">버튼을 눌러 세션 상태 확인을 해보세요!</p>
+</div>
+
+<div class="card">
+    <h2>세션 정보:</h2>
+    <p>사용자 ID: <span id="displayUserId">데이터 없음</span></p>
+    <p>세션 스테이지 상태:</p>
+    <ul id="stageList">
+        <li>스테이지 정보 없음</li>
+    </ul>
+</div>
+
+<div class="card">
+    <label for="inputStageId">스테이지 ID 입력:</label>
+    <input type="text" id="inputStageId" placeholder="확인할 스테이지 ID를 입력하세요">
+    <button onclick="checkStageAccess()">접근 및 클리어 상태 확인</button>
+    <p class="instruction">독도의 기억은 총 4개의 스테이지로 이루어져 있습니다.</p>
+    <p class="instruction">스테이지 번호(1,2,3,4)를 입력하여 접근 가능 여부와 클리어 상태를 확인하세요.</p>
+    <p>접근 가능 여부: <span id="accessibilityStatus">확인되지 않음</span></p>
+    <p>클리어 상태: <span id="clearStatus">확인되지 않음</span></p>
+</div>
+
+<div class="card">
+    <button id="clearStageButton" onclick="clearStage()" style="display: none;">스테이지 클리어하기</button>
+</div>
+
+<script>
+    // 세션 시작
+    function startSession() {
+        fetch('/session/start', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('sessionId').innerText = data.sessionId;
+                    document.getElementById('sessionStatus').innerText = data.isActive ? "유효" : "만료됨";
+                    document.getElementById('inputSessionId').value = data.sessionId;
+                })
+                .catch(error => {
+                    console.error('세션 시작 중 오류 발생:', error);
+                    document.getElementById('sessionStatus').innerText = "오류 발생";
+                });
+    }
+
+    // 세션 상태 확인
+    function checkSessionStatus() {
+        const sessionId = document.getElementById('inputSessionId').value;
+        if (!sessionId) {
+            alert('세션 ID를 입력해주세요.');
+            return;
+        }
+
+        fetch(`/session/status?sessionId=${sessionId}`, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('displayUserId').innerText = data.userId || '데이터 없음';
+                    document.getElementById('sessionStatus').innerText = data.isActive ? '활성' : '비활성';
+                    const stageList = document.getElementById('stageList');
+                    stageList.innerHTML = '';
+                    if (data.stages && data.stages.length > 0) {
+                        data.stages.forEach(stage => {
+                            const li = document.createElement('li');
+                            li.textContent = `스테이지 ${stage.stageId}: ${stage.cleared ? '클리어' : '미완료'}`;
+                            stageList.appendChild(li);
+                        });
+                    } else {
+                        stageList.innerHTML = '<li>스테이지 정보 없음</li>';
+                    }
+                })
+                .catch(error => console.error('세션 상태 확인 중 오류 발생:', error));
+    }
+
+    // 스테이지 접근 및 클리어 상태 확인
+    function checkStageAccess() {
+        const sessionId = document.getElementById('inputSessionId').value;
+        const stageId = document.getElementById('inputStageId').value;
+
+        if (!sessionId || !stageId) {
+            alert('세션 ID와 스테이지 ID를 모두 입력해주세요.');
+            return;
+        }
+
+        fetch(`/stage/${stageId}/access?sessionId=${sessionId}`, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('accessibilityStatus').innerText = data.accessible ? "가능" : "불가능";
+                    document.getElementById('clearStatus').innerText = data.cleared ? "클리어됨" : "미완료";
+                    document.getElementById('clearStageButton').style.display = data.cleared ? "none" : "inline-block";
+                })
+                .catch(error => {
+                    console.error('스테이지 상태 확인 중 오류 발생:', error);
+                });
+    }
+
+    // 스테이지 클리어하기
+    function clearStage() {
+        const sessionId = document.getElementById('inputSessionId').value;
+        const stageId = document.getElementById('inputStageId').value;
+
+        fetch(`/stage/${stageId}/clear?sessionId=${sessionId}`, { method: 'POST' })
+                .then(() => {
+                    alert("스테이지가 클리어되었습니다.");
+                    document.getElementById('clearStatus').innerText = "클리어됨";
+                    document.getElementById('clearStageButton').style.display = "none";
+                })
+                .catch(error => {
+                    console.error('스테이지 클리어 중 오류 발생:', error);
+                });
+    }
+</script>
+</body>
+</html>
