@@ -21,6 +21,12 @@ public class SessionController {
     @Autowired
     private SessionService sessionService;
 
+    // 루트 경로를 /session/statusPage로 리다이렉트하는 메서드 추가
+    @GetMapping("/")
+    public String redirectToStatusPage() {
+        return "redirect:/session/statusPage";
+    }
+
     @GetMapping("/statusPage")
     public String showSessionStatusPage(Model model) {
         model.addAttribute("sessionId", "세션 ID가 없습니다");     // 기본값 설정
@@ -28,7 +34,6 @@ public class SessionController {
         model.addAttribute("userId", "사용자 ID 없음");          // userId 추가
         return "sessionStatus";
     }
-
 
     // 세션 시작 엔드포인트
     @PostMapping("/start")
