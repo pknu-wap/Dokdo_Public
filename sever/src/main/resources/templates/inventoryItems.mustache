@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Items</title>
+    <style>
+        body {
+            background-color: #f8f2e7; /* 배경색 */
+            font-family: 'Arial', sans-serif; /* 폰트 설정 */
+            color: #4e3b30; /* 글자색 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* 세로 방향으로 정렬 */
+            height: 100vh; /* 화면 전체 높이 */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* 텍스트 그림자 */
+        }
+
+        p {
+            font-size: 1.2em; /* 인벤토리 ID 크기 */
+            margin-bottom: 20px; /* 아래 여백 */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%; /* 테이블 너비 */
+            margin: 0 auto; /* 중앙 정렬 */
+            background-color: #e6d5cc; /* 테이블 배경색 */
+            border-radius: 10px; /* 모서리 둥글게 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+        }
+
+        th, td {
+            border: 1px solid #c1a69e; /* 테두리 색상 */
+            padding: 12px; /* 여백 */
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2; /* 헤더 배경색 */
+            font-weight: bold; /* 글씨 두껍게 */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* 짝수 행 배경색 */
+        }
+
+        tr:hover {
+            background-color: #e0d6d0; /* 행 호버 시 색상 변경 */
+        }
+
+        a {
+            margin-top: 20px; /* 위쪽 여백 */
+            text-decoration: none; /* 밑줄 제거 */
+            color: #4e3b30; /* 링크 색상 */
+            font-size: 1em; /* 링크 글씨 크기 */
+            border: 1px solid #4e3b30; /* 링크 테두리 */
+            padding: 10px 15px; /* 여백 */
+            border-radius: 5px; /* 모서리 둥글게 */
+            transition: background-color 0.3s; /* 배경색 변경 시 부드럽게 */
+        }
+
+        a:hover {
+            background-color: #4e3b30; /* 링크 호버 시 배경색 변경 */
+            color: white; /* 링크 호버 시 글자색 변경 */
+        }
+    </style>
+</head>
+<body>
+<h1>아이템 목록</h1>
+
+<p>세션 ID: {{sessionId}}</p> <!-- 세션 ID 출력 -->
+<p>인벤토리 ID: {{inventoryId}}</p> <!-- 인벤토리 ID 출력 -->
+
+<table>
+    <tr>
+        <th>아이템 ID</th>
+        <th>아이템 이름</th>
+        <th>아이템 설명</th>
+    </tr>
+    {{#items}}
+        <tr>
+            <td>{{itemId}}</td>
+            <td>{{itemName}}</td>
+            <td>{{itemDescription}}</td>
+        </tr>
+    {{/items}}
+</table>
+
+<a href="/inventory/form">다시 추가 또는 삭제하기</a>
+</body>
+</html>
