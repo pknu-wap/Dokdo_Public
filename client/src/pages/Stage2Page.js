@@ -26,7 +26,7 @@ function Stage2Page() {
     addItem(itemName);
   };
 
-  const [isBoxOpen, setIsBoxOpen] = useState(false); /* 드래그 되고 나서의 상태를 보고싶다면 이걸 true로 바꿔주세요 */
+  const [isBoxOpen, setIsBoxOpen] = useState(true); /* 드래그 되고 나서의 상태를 보고싶다면 이걸 true로 바꿔주세요 */
   const [isHandleBoxOpen, setIsHandleBoxOpen] = useState(false);
   const [isStage2Open, setIsStage2Open] = useState(true);
   const [isStage3Open, setIsStage3Open] = useState(true);

@@ -9,6 +9,7 @@ import map from '../Dokdo_Private/stage2/Map.png';
 const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
   const [page, setPage] = useState(1);
   const [showMapButton, setShowMapButton] = useState(false);
+  const [zIndex, setZIndex] = useState({ left: 2, right: 1 });
 
   const handleClickNextPage = () => {
     if (page < 4) {
@@ -22,13 +23,32 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
     }
   };
 
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  useEffect(() => {
+    const updateZIndex = async () => {
+      console.log('Page changed:', page);
+      await delay(500);
+
+      if (page === 2) {
+        setZIndex({ left: 2, right: 1 });
+      } else if (page === 3) {
+        setZIndex({ left: 2, right: 1 });
+      } else if (page === 4) {
+        setZIndex({ left: 2, right: 1 });
+      } else {
+        setZIndex({ left: 1, right: 2 });
+      }
+    };
+
+    updateZIndex();
+  }, [page]);
+
   const { addItem } = useInventory();
 
   const handleItemClick = (itemName) => {
     addItem(itemName);
   };
-
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
     const showMapButtonAfterDelay = async () => {
@@ -45,12 +65,12 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
 
   return (
     <div className={styles.BackGround}>
-      <img className={styles.RightBookWrapper} src={RightPage} alt="Right Page" />
-      <img className={styles.LeftBookWrapper} src={LeftPage} alt="Left Page" />
+      <img className={styles.RightBookWrapper1} src={RightPage} alt="Right Page" />
+      <img className={styles.LeftBookWrapper1} src={LeftPage} alt="Left Page" />
 
       <div
         className={`${styles.RightBookWrapper} ${page > 1 ? styles.PreviousFlipped : ''}`}
-        style={{ zIndex: page === 2 ? 2 : 1 }}
+        style={{ zIndex: zIndex.right }}
       >
         <div className={styles.Page}>
           <img className={styles.Book} src={RightPage} alt="Right Page" />
@@ -59,7 +79,7 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
 
       <div
         className={`${styles.LeftBookWrapper} ${page < 4 ? styles.NextFlipped : ''}`}
-        style={{ zIndex: page === 3 ? 2 : 1 }}
+        style={{ zIndex: zIndex.left }}
       >
         <div className={styles.Page}>
           <img className={styles.Book} src={LeftPage} alt="Left Page" />
@@ -74,7 +94,7 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
       />
       <button className={styles.NextButton} onClick={handleClickNextPage} disabled={page === 4} style={{ zIndex: 3 }} />
 
-      {showMapButton && !isMapFind ? ( // 상태에 따라 버튼 표시
+      {showMapButton && !isMapFind ? (
         <button
           className={styles.Map}
           onClick={() => {
