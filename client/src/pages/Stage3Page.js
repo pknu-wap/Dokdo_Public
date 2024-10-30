@@ -97,7 +97,9 @@ function Stage3Page() {
   };
 
   const handleAddKoreaFlagImageClick = () => {
-    setNoteImage(NoteImage);
+    if (!isGunHintCollected) { /* GunHintImage가 수집되지 않은 경우에만 동작 */
+      setNoteImage(NoteImage);
+    }
   };
 
   /* 무기 힌트 이미지 클릭 */
