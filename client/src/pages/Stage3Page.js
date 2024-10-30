@@ -8,9 +8,9 @@ import { useInventory } from '../context/InventoryContext';
 import Stage3wall from '../assets/Stage3wall.png';
 import KoreaFlag from '../assets/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png';
-import DoorClose from 'Dokdo_Private/stage1/Stage1DoorClose.png';
-import DoorOpen from 'Dokdo_Private/stage1/Stage1DoorOpen.png';
-import NoteImage from 'Dokdo_Private/stage3/noteImage.png';
+import DoorClose from 'assets/stage1/Stage1DoorClose.png';
+import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
+import NoteImage from 'assets/stage3/noteImage.png';
 import Modal from '../components/Modal.js';
 
 import People1 from '../assets/친일파(1).png';

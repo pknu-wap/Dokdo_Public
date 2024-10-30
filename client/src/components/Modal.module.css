@@ -15,7 +15,7 @@
 
 .ModalContent {
   position: relative;
-  background-image: url(../Dokdo_Private/ModalBg.png);
+  background-image: url(assets/ModalBg.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 2vh 2vw;
