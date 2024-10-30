@@ -1,8 +1,8 @@
 import styles from './CheckNumber.module.css';
 import { useState, useEffect } from 'react';
-import UpButton from '/Dokdo/client/src/Dokdo_Private/Up.png';
-import DownButton from '/Dokdo/client/src/Dokdo_Private/Down.png';
-import CheckNumberBg from '/Dokdo/client/src/Dokdo_Private/CheckNumberBg.png';
+import UpButton from 'Dokdo_Private/Up.png';
+import DownButton from 'Dokdo_Private/Down.png';
+import CheckNumberBg from 'Dokdo_Private/CheckNumberBg.png';
 
 const CheckNumber = ({ setScoreValues }) => {
   const [number1, setNumber1] = useState(0);

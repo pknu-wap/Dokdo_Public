@@ -1,5 +1,5 @@
 import styles from './StartPage.module.css';
-import Logo from '/Dokdo/client/src/Dokdo_Private/logo2.png';
+import Logo from 'Dokdo_Private/logo2.png';
 import { useNavigate } from 'react-router-dom';
 
 function StartPage() {
