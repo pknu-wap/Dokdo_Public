@@ -6,8 +6,6 @@ import com.example.rememberdokdo.Repository.StageProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class StageService {
 
@@ -16,20 +14,13 @@ public class StageService {
 
     // 특정 스테이지에 접근할 수 있는지 확인
     public StageDto checkStageAccess(String sessionId, int stageId) {
-        List<StageProgressEntity> progressList = stageProgressRepository.findBySessionId(sessionId);
-
-        // 이전 스테이지들이 모두 클리어되었는지 확인
-        boolean isAccessible = true;
-        for (StageProgressEntity progress : progressList) {
-            if (progress.getStageId() < stageId && !progress.isCleared()) {
-                isAccessible = false;
-                break;
-            }
-        }
+        // 스테이지 ID가 1부터 4 사이일 경우 접근 가능
+        boolean isAccessible = stageId >= 1 && stageId <= 4;
 
         // 현재 스테이지 클리어 여부 확인
-        boolean isCleared = progressList.stream()
-                .anyMatch(progress -> progress.getStageId() == stageId && progress.isCleared());
+        boolean isCleared = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
+                .map(StageProgressEntity::isCleared)
+                .orElse(false);
 
         return new StageDto(stageId, isAccessible, isCleared);
     }
@@ -55,3 +46,4 @@ public class StageService {
         stageProgressRepository.save(stageProgress);
     }
 }
+

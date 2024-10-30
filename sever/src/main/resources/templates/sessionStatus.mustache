@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>세션 관리</title>
+    <title>세션과 스테이지 기능</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -67,13 +67,8 @@
 <!-- 세션 시작 -->
 <div>
     <button onclick="startSession()">게임 시작</button>
-    <p>세션 ID: <span id="sessionId">{{sessionId}}</span></p>
-    <p>세션 유효 여부: <span id="sessionStatus">{{sessionStatus}}</span></p>
-</div>
-
-<!-- 스테이지 완료 -->
-<div>
-    <button onclick="completeStage(1)">스테이지 1 성공</button>
+    <p>세션 ID: <span id="sessionId">세션 ID가 없습니다</span></p>
+    <p>세션 유효 여부: <span id="sessionStatus">확인되지 않음</span></p>
 </div>
 
 <!-- 세션 상태 확인 -->
@@ -87,13 +82,24 @@
 <!-- 세션 정보 표시 -->
 <div>
     <h2>세션 정보:</h2>
-    <p>사용자 ID: <span id="displayUserId">{{userId}}</span></p>
+    <p>사용자 ID: <span id="displayUserId"></span></p>
     <p>세션 스테이지 상태:</p>
-    <ul id="stageList">
-        {{#stages}}
-            <li>스테이지 {{stageId}}: {{#isCleared}}클리어{{/isCleared}}{{^isCleared}}미완료{{/isCleared}}</li>
-        {{/stages}}
-    </ul>
+    <ul id="stageList"></ul>
+</div>
+
+<!-- 스테이지 접근 및 클리어 상태 확인 -->
+<div>
+    <label for="inputStageId">스테이지 ID 입력:</label>
+    <input type="text" id="inputStageId" placeholder="확인할 스테이지 ID를 입력하세요">
+    <button onclick="checkStageAccess()">접근 및 클리어 상태 확인</button>
+    <p class="instruction">세션 ID와 스테이지 ID를 입력하여 접근 가능 여부와 클리어 상태를 확인하세요.</p>
+    <p>접근 가능 여부: <span id="accessibilityStatus">확인되지 않음</span></p>
+    <p>클리어 상태: <span id="clearStatus">확인되지 않음</span></p>
+</div>
+
+<!-- 스테이지 클리어 -->
+<div>
+    <button id="clearStageButton" onclick="clearStage()" style="display: none;">스테이지 클리어하기</button>
 </div>
 
 <script>
@@ -112,27 +118,6 @@
                     console.error('세션 시작 중 오류 발생:', error);
                     document.getElementById('sessionStatus').innerText = "오류 발생";
                 });
-    }
-
-    // 스테이지 완료
-    function completeStage(stageId) {
-        const sessionId = document.getElementById('sessionId').innerText;
-        if (!sessionId || sessionId === "세션 ID가 없습니다") {
-            alert("게임을 먼저 시작해 주세요.");
-            return;
-        }
-
-        fetch('/session/completeStage', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sessionId: sessionId, stageId: stageId })
-        })
-                .then(response => response.text())
-                .then(message => {
-                    alert(message);
-                    checkSessionStatus(); // 스테이지 완료 후 상태 자동 갱신
-                })
-                .catch(error => console.error('스테이지 완료 처리 중 오류 발생:', error));
     }
 
     // 세션 상태 확인
@@ -164,6 +149,50 @@
                     }
                 })
                 .catch(error => console.error('세션 상태 확인 중 오류 발생:', error));
+    }
+
+    // 스테이지 접근 및 클리어 상태 확인
+    function checkStageAccess() {
+        const sessionId = document.getElementById('inputSessionId').value;
+        const stageId = document.getElementById('inputStageId').value;
+
+        if (!sessionId || !stageId) {
+            alert('세션 ID와 스테이지 ID를 모두 입력해주세요.');
+            return;
+        }
+
+        fetch(`/stage/${stageId}/access?sessionId=${sessionId}`, {
+            method: 'GET'
+        })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('accessibilityStatus').innerText = data.isAccessible ? "가능" : "불가능";
+                    document.getElementById('clearStatus').innerText = data.isCleared ? "클리어됨" : "미완료";
+
+                    // 클리어 버튼 표시 여부 설정
+                    document.getElementById('clearStageButton').style.display = data.isCleared ? "none" : "inline-block";
+                })
+                .catch(error => {
+                    console.error('스테이지 상태 확인 중 오류 발생:', error);
+                });
+    }
+
+    // 스테이지 클리어하기
+    function clearStage() {
+        const sessionId = document.getElementById('inputSessionId').value;
+        const stageId = document.getElementById('inputStageId').value;
+
+        fetch(`/stage/${stageId}/clear?sessionId=${sessionId}`, {
+            method: 'POST'
+        })
+                .then(() => {
+                    alert("스테이지가 클리어되었습니다.");
+                    document.getElementById('clearStatus').innerText = "클리어됨";
+                    document.getElementById('clearStageButton').style.display = "none";
+                })
+                .catch(error => {
+                    console.error('스테이지 클리어 중 오류 발생:', error);
+                });
     }
 </script>
 </body>
