@@ -8,10 +8,10 @@ import { useInventory } from '../context/InventoryContext';
 import Stage3wall from '../assets/Stage3wall.png';
 import KoreaFlag from '../assets/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png';
-import DoorClose from '../Dokdo_Private/stage1/Stage1DoorClose.png';
-import DoorOpen from '../Dokdo_Private/stage1/Stage1DoorOpen.png';
-import NoteImage from '../Dokdo_Private/stage3/noteImage.png';
-import Modal from '../components/Modal';
+import DoorClose from 'assets/stage1/Stage1DoorClose.png';
+import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
+import NoteImage from 'assets/stage3/noteImage.png';
+import Modal from '../components/Modal.js';
 
 import People1 from '../assets/친일파(1).png';
 import People2 from '../assets/친일파(2).png';
@@ -32,8 +32,8 @@ const Stage3PeopleImage = [
 const CorrectAnswer = [1, 2, 3];
 
 function Stage3Page() {
-  const [isStage2Open, setIsStage2Open] = useState(true);
-  const [isStage3Open, setIsStage3Open] = useState(true);
+  const [isStage2Open] = useState(true);
+  const [isStage3Open] = useState(true);
   const [selectedImage, setSelectedImage] = useState([]);
   const [resultMessage, setResultMessage] = useState('');
   const [addKoreaFlagImage, setAddKoreaFlagImage] = useState(null);
@@ -46,17 +46,15 @@ function Stage3Page() {
   const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
   const { items, addItem } = useInventory(); /* Context에서 items도 가져옴 */
   
-  /* CheckNumber 숫자 받아오기 */
   const [scoreValues, setScoreValues] = useState({
     number1: 0,
     number2: 0,
     number3: 0,
-  }); 
+  });   /* CheckNumber 숫자 받아오기 */
 
-  /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
   const handleItemClick = (itemName) => {
     addItem(itemName);
-  };
+  };   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
 
   /* 정답, 오답 3개로 제한 */
   const handleImageClick = (image) => {
@@ -71,7 +69,8 @@ function Stage3Page() {
 
   /* 친일파 찾기 모달 열기 */
   const openFindSpyModal = () => {
-    if (!isAnswerCorrect && !isDoorOpen) { /* 정답을 맞추지 않은 경우에만 열림 */
+    if (!isAnswerCorrect && !isDoorOpen) { 
+      /* 정답을 맞추지 않은 경우에만 열림 */
       setIsFindSpyModalOpen(true);
     }
   };
@@ -121,12 +120,14 @@ function Stage3Page() {
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
     if (number1 === 2 && number2 === 8 && number3 === 6) {
-      alert('정답입니다!');
+      setResultMessage('정답입니다!');
+      setTimeout(() => setResultMessage(''), 1000);
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
       sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
     } else {
-      alert('오답입니다. 다시 시도하세요.');
+      setResultMessage('오답입니다. 다시 시도해주세요.');
+      setTimeout(() => setResultMessage(''), 1000);
       setScoreValues({ number1: 0, number2: 0, number3: 0 }); /* 오답일 경우 입력 필드 초기화 */
     }
   };
@@ -137,7 +138,7 @@ function Stage3Page() {
     }
   };
 
-    /* 새로고침 시 문이 열린 상태 유지 */
+  /* 새로고침 시 문이 열린 상태 유지 */
   useEffect(() => {
     const savedDoorState = sessionStorage.getItem('stage3DoorOpen');
       if (savedDoorState === 'true') {
@@ -163,8 +164,10 @@ function Stage3Page() {
 
       <img
         className={`${styles.Stage3Gunhint} ${styles.Stage3Gunhint} ${styles.Stage3Gunhint} ${
-          items.includes('Stage3Gunhint') ? styles.hidden : ''}`}
+          items.includes('Stage3Gunhint') ? styles.hidden : ''
+        }`}
         src={GunHintImage}
+        alt={GunHintImage}
         onClick={() => handleItemClick('Stage3Gunhint')}
       />
 
@@ -194,24 +197,15 @@ function Stage3Page() {
       {/* KoreaFlag 이미지 - 친일파 찾기 모달 이후 표시 */}
       {addKoreaFlagImage && (
         <div className={styles.KoreaFlag}>
-          <img 
-            src={KoreaFlag} 
-            alt="KoreaFlag"
-            className={styles.KoreaFlag}
-            onClick={handleAddKoreaFlagImageClick} 
-          />
+          <img src={KoreaFlag} alt="KoreaFlag" className={styles.KoreaFlag} onClick={handleAddKoreaFlagImageClick} />
         </div>
       )}
 
       {/* noteImage - KoreaFlag 클릭 후 표시 */}
-      {noteImage && (
-        <img src={noteImage} alt="쪽지" className={styles.NoteImage} onClick={handleNoteImageClick} />
-      )}
+      {noteImage && <img src={noteImage} alt="쪽지" className={styles.NoteImage} onClick={handleNoteImageClick} />}
 
       {/* 무기 힌트 이미지 */}
-      {gunHintVisible && (
-        <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />
-      )}
+      {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
 
       {/* 숫자 맞추기 모달 - 닫힌 문 클릭시 열림 */}
       <Modal
@@ -220,7 +214,7 @@ function Stage3Page() {
         onSubmit={checkNumbers}
         size="medium"
       >
-        <h1 className= {styles.NumberGuessModalMent} >자물쇠를 푸시오</h1>
+        <h1 className={styles.NumberGuessModalMent}>자물쇠를 푸시오</h1>
         <CheckNumber setScoreValues={setScoreValues} />
       </Modal>
 
