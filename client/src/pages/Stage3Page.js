@@ -32,6 +32,8 @@ const Stage3PeopleImage = [
 const CorrectAnswer = [1, 2, 3];
 
 function Stage3Page() {
+  const [isStage2Open, setIsStage2Open] = useState(true);
+  const [isStage3Open, setIsStage3Open] = useState(true);
   const [selectedImage, setSelectedImage] = useState([]);
   const [resultMessage, setResultMessage] = useState('');
   const [addKoreaFlagImage, setAddKoreaFlagImage] = useState(null);
@@ -144,7 +146,7 @@ function Stage3Page() {
   return (
     <div className={styles.Stage3Page}>
       <div className={styles.Stage3Bg} />
-      <ToolBar isStage3Open={true} isStage2Open={true} />
+      <ToolBar isStage3Open={isStage3Open} isStage2Open={isStage2Open} />
       <Inventory />
       <div className={styles.Stage3Floor} />
 
