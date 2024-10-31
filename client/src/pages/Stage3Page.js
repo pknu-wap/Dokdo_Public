@@ -2,15 +2,15 @@ import styles from './Stage3Page.module.css';
 import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import CheckNumber from '../components/CheckNumber.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
 
 import Stage3wall from '../assets/Stage3wall.png';
 import KoreaFlag from '../assets/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png';
-import DoorClose from '../assets/stage1/Stage1DoorClose.png';
-import DoorOpen from '../assets/stage1/Stage1DoorOpen.png';
-import NoteImage from '../assets/stage3/noteImage.png';
+import DoorClose from 'assets/stage1/Stage1DoorClose.png';
+import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
+import NoteImage from 'assets/stage3/noteImage.png';
 import Modal from '../components/Modal.js';
 
 import People1 from '../assets/친일파(1).png';
@@ -32,18 +32,18 @@ const Stage3PeopleImage = [
 const CorrectAnswer = [1, 2, 3];
 
 function Stage3Page() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  /* const [isAnswered, setIsAnswered] = useState(false); */
+  const [isStage2Open] = useState(true);
+  const [isStage3Open] = useState(true);
   const [selectedImage, setSelectedImage] = useState([]);
   const [resultMessage, setResultMessage] = useState('');
   const [addKoreaFlagImage, setAddKoreaFlagImage] = useState(null);
   const [noteImage, setNoteImage] = useState(null);
-  const [gunhintImage, setGunHintImage] = useState(null);
   const [isFindSpyModalOpen, setIsFindSpyModalOpen] = useState(false); /* 친일파 찾기 모달 상태 */
   const [isNumberGuessModalOpen, setIsNumberGuessModalOpen] = useState(false); /* 숫자 맞추기 모달 상태 */
   const [gunHintVisible, setGunHintVisible] = useState(false); /* 무기 힌트가 보이는 상태 */
   const [isDoorOpen, setIsDoorOpen] = useState(false); /* 문이 열렸는지 알아봄 */
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
+  const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
   const { items, addItem } = useInventory(); /* Context에서 items도 가져옴 */
 
   const [scoreValues, setScoreValues] = useState({
@@ -52,15 +52,9 @@ function Stage3Page() {
     number3: 0,
   }); /* CheckNumber 숫자 받아오기 */
 
-  /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
   const handleItemClick = (itemName) => {
     addItem(itemName);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedImage([]);
-  };
+  }; /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
 
   /* 정답, 오답 3개로 제한 */
   const handleImageClick = (image) => {
@@ -75,7 +69,7 @@ function Stage3Page() {
 
   /* 친일파 찾기 모달 열기 */
   const openFindSpyModal = () => {
-    if (!isAnswerCorrect) {
+    if (!isAnswerCorrect && !isDoorOpen) {
       /* 정답을 맞추지 않은 경우에만 열림 */
       setIsFindSpyModalOpen(true);
     }
@@ -102,28 +96,24 @@ function Stage3Page() {
   };
 
   const handleAddKoreaFlagImageClick = () => {
-    setNoteImage(NoteImage);
+    if (!isGunHintCollected) {
+      /* GunHintImage가 수집되지 않은 경우에만 동작 */
+      setNoteImage(NoteImage);
+    }
   };
 
   /* 무기 힌트 이미지 클릭 */
   const handleNoteImageClick = () => {
-    /* 숫자 맞추기 모달이 이미 정답으로 닫힌 상태일 경우 다시 열리지 않음 */
-    if (isDoorOpen) return;
-
-    // /* 오답일 경우 힌트 이미지 없이 숫자 맞추기 모달 바로 열기 */
-    // if (!isDoorOpen) {
-    //   setIsNumberGuessModalOpen(true);
-    //   return;
-    // }
-
-    /* 정답도 오답도 아닌 경우 힌트 이미지를 3초 동안 표시 후 모달 열기 */
+    /* 정답도 오답도 아닌 경우 힌트 이미지를 3초 동안 표시 */
     setGunHintVisible(true); /* 무기 힌트 이미지를 표시 */
+    setNoteImage(null);
+
     setTimeout(() => {
       setGunHintVisible(false); /* 3초 후 무기 힌트 이미지를 숨김 */
       if (!items.includes('GunHint')) {
         addItem('GunHintImage'); /* 인벤토리에 무기 힌트 추가 */
+        setIsGunHintCollected(true); /* GunHintImage 수집 상태 true */
       }
-      setIsNumberGuessModalOpen(true); /* 숫자 맞추기 모달 열기 */
     }, 3000);
   };
 
@@ -131,19 +121,36 @@ function Stage3Page() {
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
     if (number1 === 2 && number2 === 8 && number3 === 6) {
-      alert('정답입니다!');
+      setResultMessage('정답입니다!');
+      setTimeout(() => setResultMessage(''), 1000);
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
+      sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
     } else {
-      alert('오답입니다. 다시 시도하세요.');
+      setResultMessage('오답입니다. 다시 시도해주세요.');
+      setTimeout(() => setResultMessage(''), 1000);
       setScoreValues({ number1: 0, number2: 0, number3: 0 }); /* 오답일 경우 입력 필드 초기화 */
     }
   };
 
+  const handleDoorClick = () => {
+    if (!isDoorOpen && isGunHintCollected) {
+      setIsNumberGuessModalOpen(true);
+    }
+  };
+
+  /* 새로고침 시 문이 열린 상태 유지 */
+  useEffect(() => {
+    const savedDoorState = sessionStorage.getItem('stage3DoorOpen');
+    if (savedDoorState === 'true') {
+      setIsDoorOpen(true);
+    }
+  }, []);
+
   return (
     <div className={styles.Stage3Page}>
       <div className={styles.Stage3Bg} />
-      <ToolBar isStage3Open={true} isStage2Open={true} />
+      <ToolBar isStage3Open={isStage3Open} isStage2Open={isStage2Open} />
       <Inventory />
       <div className={styles.Stage3Floor} />
 
@@ -151,7 +158,12 @@ function Stage3Page() {
       {isDoorOpen ? (
         <img className={`${styles.DoorOpen} ${styles.DoorOpen}`} src={DoorOpen} alt="열린 문" />
       ) : (
-        <img className={`${styles.DoorClose} ${styles.DoorClose}`} src={DoorClose} alt="닫힌 문" />
+        <img
+          className={`${styles.DoorClose} ${styles.DoorClose}`}
+          src={DoorClose}
+          alt="닫힌 문"
+          onClick={handleDoorClick}
+        />
       )}
 
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
@@ -161,16 +173,9 @@ function Stage3Page() {
           items.includes('Stage3Gunhint') ? styles.hidden : ''
         }`}
         src={GunHintImage}
+        alt={GunHintImage}
         onClick={() => handleItemClick('Stage3Gunhint')}
       />
-
-      {/* <img
-            className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
-              items.includes('dokdoPuzzle1') ? styles.hidden : ''
-            }`}
-            src={Clover}
-            onClick={() => handleItemClick('dokdoPuzzle1')}
-          /> */}
 
       {/* 친일파 찾기 모달 */}
       <Modal
@@ -208,7 +213,7 @@ function Stage3Page() {
       {/* 무기 힌트 이미지 */}
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
 
-      {/* 숫자 맞추기 모달 - 무기 힌트 이미지가 사라진 후 열림 */}
+      {/* 숫자 맞추기 모달 - 닫힌 문 클릭시 열림 */}
       <Modal
         isOpen={isNumberGuessModalOpen}
         onClose={() => setIsNumberGuessModalOpen(false)}
