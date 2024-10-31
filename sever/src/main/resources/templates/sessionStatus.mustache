@@ -162,6 +162,21 @@
                 });
     }
 
+    // 새로운 함수 추가: 상태 확인 버튼 클릭 시 실행
+    function checkSessionStageStatus() {
+        const sessionId = document.getElementById('inputSessionId').value;
+        const stageId = parseInt(document.getElementById('inputStageId').value);
+
+        if (!sessionId || !stageId) {
+            alert('세션 ID와 스테이지 ID를 모두 입력해주세요.');
+            return;
+        }
+
+        // 세션 ID와 스테이지 ID에 따라 현재 스테이지 상태를 가져옵니다.
+        fetchStageStatus(stageId, sessionId);
+    }
+
+
     // 세션 상태 확인
     function checkStageAccess() {
         const sessionId = document.getElementById('inputSessionId').value;
