@@ -163,70 +163,32 @@
     }
 
     // 세션 상태 확인
-    function checkSessionStatus() {
-        const sessionId = document.getElementById('inputSessionId').value;
-        if (!sessionId) {
-            alert('세션 ID를 입력해주세요.');
-            return;
-        }
-
-        fetch(`/session/validate?sessionId=${sessionId}`, { method: 'GET' })
-                .then(response => response.json())
-                .then(isValid => {
-                    if (isValid) {
-                        document.getElementById('sessionStatus').innerText = '유효';
-                        return fetch(`/session/status?sessionId=${sessionId}`, { method: 'GET' });
-                    } else {
-                        document.getElementById('sessionStatus').innerText = '비활성';
-                        throw new Error('세션이 유효하지 않습니다.');
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('displayUserId').innerText = data.userId || '데이터 없음';
-                    const stageList = document.getElementById('stageList');
-                    stageList.innerHTML = '';
-                    if (data.stages && data.stages.length > 0) {
-                        data.stages.forEach(stage => {
-                            const li = document.createElement('li');
-                            li.textContent = `스테이지 ${stage.stageId}: ${stage.cleared ? '클리어' : '미완료'}`;
-                            stageList.appendChild(li);
-                        });
-                    } else {
-                        stageList.innerHTML = '<li>스테이지 정보 없음</li>';
-                    }
-                })
-                .catch(error => {
-                    console.error('세션 상태 확인 중 오류 발생:', error);
-                });
-    }
-
     function checkStageAccess() {
         const sessionId = document.getElementById('inputSessionId').value;
         const stageId = parseInt(document.getElementById('inputStageId').value);
 
         if (!sessionId || !stageId) {
-            alert('스테이지 ID를 모두 입력해주세요.');
+            alert('세션 ID와 스테이지 ID를 모두 입력해주세요.');
             return;
         }
 
-        if (stageId > 1) {
-            const previousStageId = stageId - 1;
-            fetch(`/stage/${previousStageId}/access?sessionId=${sessionId}`, { method: 'GET' })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.cleared) {
-                            alert(`스테이지 ${previousStageId}를 먼저 클리어하고 오세요.`);
-                            return;
-                        }
+        // 스테이지 1의 클리어 여부 확인
+        fetch(`/stage/1/access?sessionId=${sessionId}`, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    const isStage1Cleared = data.cleared;
+
+                    if (isStage1Cleared || stageId === 1) {
+                        // 스테이지 1이 클리어되었거나 스테이지 1에 접근하려는 경우
                         fetchStageStatus(stageId, sessionId);
-                    })
-                    .catch(error => {
-                        console.error('이전 스테이지 상태 확인 중 오류 발생:', error);
-                    });
-        } else {
-            fetchStageStatus(stageId, sessionId);
-        }
+                    } else if (stageId > 1) {
+                        // 스테이지 1을 클리어하지 않았고, 다른 스테이지에 접근하려는 경우
+                        alert('스테이지 1을 먼저 클리어해야 다른 스테이지에 접근할 수 있습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('스테이지 1의 클리어 상태 확인 중 오류 발생:', error);
+                });
     }
 
     function fetchStageStatus(stageId, sessionId) {
@@ -241,6 +203,7 @@
                     console.error('스테이지 상태 확인 중 오류 발생:', error);
                 });
     }
+
 
     function clearStage() {
         const sessionId = document.getElementById('inputSessionId').value;
