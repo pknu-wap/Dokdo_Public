@@ -13,7 +13,7 @@ public class StageService {
     private StageProgressRepository stageProgressRepository;
 
     public StageDto checkStageAccess(String sessionId, int stageId) {
-        // 스테이지 ID가 1부터 4 사이일 경우 접근 가능
+        // 기본적으로 스테이지 ID가 1부터 4 사이일 경우 접근 가능 설정
         boolean isAccessible = stageId >= 1 && stageId <= 4;
 
         // 스테이지 1의 클리어 여부 확인
@@ -21,8 +21,11 @@ public class StageService {
                 .map(StageProgressEntity::isCleared)
                 .orElse(false);
 
-        // 스테이지 1을 클리어하지 않은 경우 다른 스테이지는 접근 불가
-        if (stageId > 1 && !isStage1Cleared) {
+        // 스테이지 1을 클리어한 경우 2, 3, 4 스테이지도 접근 가능
+        if (isStage1Cleared) {
+            isAccessible = true;
+        } else if (stageId > 1) {
+            // 스테이지 1을 클리어하지 않았고 현재 요청 스테이지가 1보다 큰 경우 접근 불가
             isAccessible = false;
         }
 
@@ -33,6 +36,7 @@ public class StageService {
 
         return new StageDto(stageId, isAccessible, isCleared);
     }
+
     // 스테이지 클리어 상태 저장
     public void clearStage(String sessionId, int stageId) {
         StageProgressEntity stageProgress = stageProgressRepository
