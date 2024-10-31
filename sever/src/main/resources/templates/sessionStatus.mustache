@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>세션과 스테이지 기능</title>
+    <title>'독도의 기억' 백엔드 기능</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* 전체 배경과 폰트 설정 */
@@ -174,10 +174,9 @@
         fetch(`/session/status?sessionId=${sessionId}`, { method: 'GET' })
                 .then(response => response.json())
                 .then(data => {
-                    // 올바르게 데이터를 가져오는지 확인
                     console.log("세션 상태 확인 응답 데이터:", data);
 
-                    // 세션 상태 설정 (isActive 필드와 expiresAt만으로 판단)
+                    // 세션 유효 여부 판단 수정
                     const isSessionActive = data.isActive && new Date(data.expiresAt) > new Date();
                     document.getElementById('sessionStatus').innerText = isSessionActive ? '활성' : '비활성';
 
