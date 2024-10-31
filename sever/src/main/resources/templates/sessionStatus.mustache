@@ -8,8 +8,8 @@
         /* 전체 배경과 폰트 설정 */
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #F5EFE6; /* 따뜻한 연한 베이지 배경 */
-            color: #3E2723; /* 진한 브라운 */
+            background-color: #F5EFE6;
+            color: #3E2723;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -20,20 +20,20 @@
         h1 {
             font-family: 'Noto Sans KR', sans-serif;
             text-align: center;
-            color: #6D4C41; /* 중간 톤의 브라운 */
+            color: #6D4C41;
             margin-bottom: 20px;
             font-size: 2.2em;
         }
         .card {
-            background-color: #FFF7E0; /* 밝은 베이지 카드 배경 */
+            background-color: #FFF7E0;
             width: 90%;
             max-width: 600px;
             padding: 25px;
             margin-bottom: 20px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             border-radius: 15px;
             color: #3E2723;
-            border: 1px solid #E0C8A1; /* 연한 브라운 테두리 */
+            border: 1px solid #E0C8A1;
             text-align: center;
         }
         .card h2 {
@@ -42,7 +42,7 @@
             margin-bottom: 15px;
         }
         label, .instruction {
-            color: #5D4037; /* 진한 브라운 */
+            color: #5D4037;
             font-size: 0.95em;
             display: block;
             margin-top: 10px;
@@ -51,15 +51,15 @@
             width: 90%;
             padding: 12px;
             margin-top: 10px;
-            border: 1.5px solid #BCAAA4; /* 연한 브라운 */
+            border: 1.5px solid #BCAAA4;
             border-radius: 8px;
-            background-color: #FBF8F3; /* 밝은 베이지 */
+            background-color: #FBF8F3;
             color: #3E2723;
             font-size: 1em;
             box-sizing: border-box;
         }
         button {
-            background-color: #8D6E63; /* 진한 브라운 버튼 */
+            background-color: #8D6E63;
             color: #fff;
             padding: 12px 25px;
             border: none;
@@ -72,7 +72,7 @@
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #6D4C41; /* 버튼 hover 색상 */
+            background-color: #6D4C41;
         }
         ul {
             list-style-type: none;
@@ -82,20 +82,19 @@
         li {
             margin: 5px;
             padding: 12px;
-            background-color: #FFF1E6; /* 밝은 베이지 */
+            background-color: #FFF1E6;
             color: #3E2723;
             border-radius: 8px;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
         }
         #clearStageButton {
             margin: 20px auto;
             width: 80%;
             max-width: 200px;
-            background-color: #A1887F; /* 중간 톤의 브라운 */
+            background-color: #A1887F;
             font-size: 1em;
             font-weight: bold;
         }
-        /* 카드 간 간격 조절 */
         .card:not(:last-child) {
             margin-bottom: 25px;
         }
@@ -171,23 +170,19 @@
             return;
         }
 
-        // 1. 세션 유효성 확인
         fetch(`/session/validate?sessionId=${sessionId}`, { method: 'GET' })
                 .then(response => response.json())
                 .then(isValid => {
-                    // 2. 유효한 경우에만 상태 확인
                     if (isValid) {
                         document.getElementById('sessionStatus').innerText = '유효';
                         return fetch(`/session/status?sessionId=${sessionId}`, { method: 'GET' });
                     } else {
-                        // 유효하지 않으면 비활성 표시
                         document.getElementById('sessionStatus').innerText = '비활성';
                         throw new Error('세션이 유효하지 않습니다.');
                     }
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // 3. 세션 상태를 업데이트
                     document.getElementById('displayUserId').innerText = data.userId || '데이터 없음';
                     const stageList = document.getElementById('stageList');
                     stageList.innerHTML = '';
@@ -208,14 +203,13 @@
 
     function checkStageAccess() {
         const sessionId = document.getElementById('inputSessionId').value;
-        const stageId = parseInt(document.getElementById('inputStageId').value); // stageId를 정수로 변환
+        const stageId = parseInt(document.getElementById('inputStageId').value);
 
         if (!sessionId || !stageId) {
             alert('스테이지 ID를 모두 입력해주세요.');
             return;
         }
 
-        // 이전 스테이지가 클리어되지 않은 경우 메시지 띄우기
         if (stageId > 1) {
             const previousStageId = stageId - 1;
             fetch(`/stage/${previousStageId}/access?sessionId=${sessionId}`, { method: 'GET' })
@@ -225,14 +219,12 @@
                             alert(`스테이지 ${previousStageId}를 먼저 클리어하고 오세요.`);
                             return;
                         }
-                        // 이전 스테이지가 클리어된 경우에만 현재 스테이지 상태 확인
                         fetchStageStatus(stageId, sessionId);
                     })
                     .catch(error => {
                         console.error('이전 스테이지 상태 확인 중 오류 발생:', error);
                     });
         } else {
-            // 스테이지 1의 경우 바로 상태 확인
             fetchStageStatus(stageId, sessionId);
         }
     }
@@ -250,6 +242,31 @@
                 });
     }
 
+    function clearStage() {
+        const sessionId = document.getElementById('inputSessionId').value;
+        const stageId = parseInt(document.getElementById('inputStageId').value);
+
+        if (!sessionId || !stageId) {
+            alert('세션 ID와 스테이지 ID를 입력해주세요.');
+            return;
+        }
+
+        fetch(`/stage/${stageId}/clear?sessionId=${sessionId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+                .then(response => {
+                    if (response.ok) {
+                        alert(`스테이지 ${stageId}가 클리어되었습니다.`);
+                        checkStageAccess();
+                    } else {
+                        alert('스테이지 클리어 중 오류가 발생했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('스테이지 클리어 중 오류 발생:', error);
+                });
+    }
 
     function redirectInventoryForm() {
         window.location.href = 'http://ec2-3-35-139-117.ap-northeast-2.compute.amazonaws.com:8080/inventory/form';
