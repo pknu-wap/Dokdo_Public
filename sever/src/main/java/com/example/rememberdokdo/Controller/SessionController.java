@@ -24,7 +24,7 @@ public class SessionController {
     // 루트 경로를 /session/statusPage로 리다이렉트하는 메서드 추가
     @GetMapping("/")
     public String redirectToStatusPage() {
-        return "redirect:/session/dokdoBackend";
+        return "redirect:/session/statusPage";
     }
 
     @GetMapping("/statusPage")
