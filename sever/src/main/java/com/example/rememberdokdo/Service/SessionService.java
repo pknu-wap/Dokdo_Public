@@ -123,13 +123,17 @@ public class SessionService {
                 .map(stage -> new SessionProgressDto.StageStatus(stage.getStageId(), stage.isCleared()))
                 .collect(Collectors.toList());
 
+        // 세션 유효성 및 만료 시간 정보 추가
         return new SessionProgressDto(
                 sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 stages,
-                null // 인벤토리 아이템은 필요 시 설정
+                null, // 인벤토리 아이템은 필요 시 설정
+                sessionEntity.getExpiresAt(),
+                sessionEntity.getIsActive()
         );
     }
+
 
     // 스테이지 완료 처리
     @Transactional
