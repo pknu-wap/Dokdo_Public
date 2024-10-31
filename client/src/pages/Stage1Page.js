@@ -5,15 +5,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInventory } from '../context/InventoryContext.js';
 
-import DoorClose from '../assets/stage1/Stage1DoorClose.png';
-import DoorOpen from '../assets/stage1/Stage1DoorOpen.png';
-import Table from '../assets/stage1/Stage1Table.png';
-import Music from '../assets/stage1/Music.png';
-import DrawerClose from '../assets/stage1/Stage1DrawerClose.png';
-import DrawerOpen from '../assets/stage1/Stage1DrawerOpen.png';
-import TaegeukKey from '../assets/stage1/TaegeukCut.png';
-import Lamp from '../assets/stage1/Stage1Lamp.png';
-import Light from '../assets/stage1/Stage1LampLight.png';
+import DoorClose from 'assets/stage1/Stage1DoorClose.png';
+import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
+import Table from 'assets/stage1/Stage1Table.png';
+import Music from 'assets/stage1/Music.png';
+import DrawerClose from 'assets/stage1/Stage1DrawerClose.png';
+import DrawerOpen from 'assets/stage1/Stage1DrawerOpen.png';
+import TaegeukKey from 'assets/stage1/TaegeukCut.png';
+import Lamp from 'assets/stage1/Stage1Lamp.png';
+import Light from 'assets/stage1/Stage1LampLight.png';
 import Clover from '../assets/clover.png';
 
 function BeatDoor() {

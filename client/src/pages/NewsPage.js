@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import News1 from '../assets/News1.png';
-import News2 from '../assets/News2.png';
+import News1 from 'assets/News1.png';
+import News2 from 'assets/News2.png';
 import styles from '../pages/NewsPage.module.css';
 
 function NewsPage() {
