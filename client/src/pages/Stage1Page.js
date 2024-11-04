@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInventory } from '../context/InventoryContext.js';
 
+import Stage1Memo from 'assets/stage1/Stage1Memo.png';
 import DoorClose from 'assets/stage1/Stage1DoorClose.png';
 import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
 import Table from 'assets/stage1/Stage1Table.png';
@@ -111,11 +112,16 @@ function BeatDoor() {
 
 function Stage1Page() {
   const isStage1DoorOpen = true;
+  const [isMemoShow, setIsMemoShow] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMusicExpand, setIsMusicExpand] = useState(false);
   const [isLampOn, setIsLampOn] = useState(false);
 
   const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
+
+  useEffect(() => {
+    setIsMemoShow(true);
+  }, []);
 
   const handleDrawerClick = () => {
     const newDrawerState = !isDrawerOpen;
@@ -133,6 +139,7 @@ function Stage1Page() {
 
   const handleBgClick = () => {
     setIsMusicExpand(false);
+    setIsMemoShow(false);
   };
 
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
@@ -190,6 +197,11 @@ function Stage1Page() {
         {isMusicExpand && (
           <div className={styles.Stage1ObjectBg} onClick={handleBgClick}>
             <img src={Music} className={styles.Stage1MusicExpand} />
+          </div>
+        )}
+        {isMemoShow && (
+          <div className={styles.Stage1ObjectBg} onClick={handleBgClick}>
+            <img src={Stage1Memo} className={styles.Stage1Memo} />
           </div>
         )}
       </div>
