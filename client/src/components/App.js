@@ -1,7 +1,12 @@
+import { UserProvider } from 'context/UserContext';
 import { InventoryProvider } from '../context/InventoryContext';
 
 function App({ children }) {
-  return <InventoryProvider>{children}</InventoryProvider>;
+  return (
+    <UserProvider>
+      <InventoryProvider>{children}</InventoryProvider>;
+    </UserProvider>
+  );
 }
 
 export default App;
