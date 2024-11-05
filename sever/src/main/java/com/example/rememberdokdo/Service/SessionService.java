@@ -3,11 +3,13 @@ package com.example.rememberdokdo.Service;
 import com.example.rememberdokdo.Dto.SessionDto;
 import com.example.rememberdokdo.Dto.SessionProgressDto;
 import com.example.rememberdokdo.Entity.SessionEntity;
+import com.example.rememberdokdo.Entity.StageProgressEntity;
 import com.example.rememberdokdo.Repository.SessionRepository;
 import com.example.rememberdokdo.Repository.StageProgressRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -142,8 +144,26 @@ public class SessionService {
                 sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 stages,
-                null
+                null,
+                sessionEntity.getExpiresAt(),
+                sessionEntity.getIsActive()
         );
+    }
+
+    // 스테이지 완료 처리
+    @Transactional
+    public void completeStage(String sessionId, int stageId) {
+        // sessionId와 stageId로 스테이지 진행 상태 조회
+        StageProgressEntity stageProgress = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
+                .orElse(StageProgressEntity.builder()
+                        .sessionId(sessionId)
+                        .stageId(stageId)
+                        .isCleared(false)  // 기본값은 false로 설정
+                        .build());
+
+        /// 상태를 true로 변경하고 저장
+        stageProgress.setCleared(true);
+        stageProgressRepository.save(stageProgress); // 저장
     }
 
 

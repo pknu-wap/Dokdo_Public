@@ -1,9 +1,11 @@
 package com.example.rememberdokdo.Controller;
 
+import com.example.rememberdokdo.Dto.SessionProgressDto;
 import com.example.rememberdokdo.Dto.StageDto;
 import com.example.rememberdokdo.Service.StageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/stage")
@@ -20,7 +22,9 @@ public class StageController {
 
     // 스테이지 클리어 정보 저장
     @PostMapping("/{stageId}/clear")
-    public void clearStage(@RequestParam String sessionId, @PathVariable("stageId") int stageId) {
-        stageService.clearStage(sessionId, stageId);
+    public SessionProgressDto clearStage(@RequestParam String sessionId, @PathVariable("stageId") int stageId) {
+        return stageService.clearStage(sessionId, stageId);
     }
+
+
 }

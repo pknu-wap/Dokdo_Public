@@ -3,7 +3,7 @@ package com.example.rememberdokdo.Dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,6 +14,8 @@ public class SessionProgressDto {
     private String userId;
     private List<StageStatus> stages;  // 진행 중인 스테이지 정보 목록
     private List<Item> inventory;      // 인벤토리에 있는 아이템 목록
+    private LocalDateTime expiresAt; // 만료 시간 필드 추가
+    private Boolean isActive;        // 활성화 여부 필드 추가
 
     @Data
     @NoArgsConstructor
