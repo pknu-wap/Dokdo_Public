@@ -122,10 +122,15 @@ function Stage3Page() {
     if (number1 === 2 && number2 === 8 && number3 === 6) {
       setResultMessage('정답입니다!');
       setTimeout(() => setResultMessage(''), 1000);
+      setResultMessage('정답입니다!');
+      setTimeout(() => setResultMessage(''), 1000);
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
+      sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
     } else {
+      setResultMessage('오답입니다. 다시 시도해주세요.');
+      setTimeout(() => setResultMessage(''), 1000);
       setResultMessage('오답입니다. 다시 시도해주세요.');
       setTimeout(() => setResultMessage(''), 1000);
       setScoreValues({ number1: 0, number2: 0, number3: 0 }); /* 오답일 경우 입력 필드 초기화 */
@@ -163,7 +168,7 @@ function Stage3Page() {
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
 
       <img
-        className={`${styles.Stage3Gunhint} ${styles.Stage3Gunhint} ${styles.Stage3Gunhint} ${
+        className={`${styles.Stage3Gunhint} ${
           items.includes('Stage3Gunhint') ? styles.hidden : ''
         }`}
         src={GunHintImage}
@@ -212,10 +217,12 @@ function Stage3Page() {
         isOpen={isNumberGuessModalOpen}
         onClose={() => setIsNumberGuessModalOpen(false)}
         onSubmit={checkNumbers}
-        size="medium"
+        size="large"
       >
         <h1 className={styles.NumberGuessModalMent}>자물쇠를 푸시오</h1>
-        <CheckNumber setScoreValues={setScoreValues} />
+          <div className={styles.SetScore}>
+            <CheckNumber setScoreValues={setScoreValues} /> 
+          </div>
       </Modal>
 
       {/* 결과 메시지 */}

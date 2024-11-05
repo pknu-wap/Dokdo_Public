@@ -1,3 +1,12 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .BackGround {
   position: relative;
   width: 100%;
@@ -7,7 +16,7 @@
 
 .RightBookWrapper {
   position: absolute;
-  top: 25vh;
+  top: 24vh;
   width: 25vw;
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
@@ -16,6 +25,26 @@
 }
 
 .LeftBookWrapper {
+  position: absolute;
+  top: 25.5vh;
+  width: 25.5vw;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+  left: 23.5vw;
+  transform-origin: right center;
+}
+
+.RightBookWrapper1 {
+  position: absolute;
+  top: 24vh;
+  width: 25vw;
+  transform-style: preserve-3d;
+  transition: transform 1s ease-in-out;
+  left: 49vw;
+  transform-origin: left center;
+}
+
+.LeftBookWrapper1 {
   position: absolute;
   top: 25vh;
   width: 25vw;
@@ -43,23 +72,23 @@
 }
 
 .PreviousButton {
-  width: 3%;
-  height: 8%;
+  top: 25vh;
+  width: 25vw;
+  height: 60vh;
+  left: 24vw;
   position: absolute;
-  top: 73%;
   background: transparent;
-  left: 31%;
   border: none;
   cursor: pointer;
 }
 
 .NextButton {
-  width: 3%;
-  height: 8%;
+  top: 25vh;
+  width: 25vw;
+  height: 60vh;
+  left: 49vw;
   position: absolute;
-  top: 73%;
   background: transparent;
-  left: 63%;
   border: none;
   cursor: pointer;
 }
@@ -72,6 +101,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
+  animation: fadeIn 0.5s ease-in;
 }
 
 .Map img {

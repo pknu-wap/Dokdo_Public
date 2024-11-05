@@ -19,104 +19,109 @@
   height: 13vh;
 }
 
-.DoorClose{
+.DoorClose {
   cursor: pointer;
-  position: fixed; 
-  top: 31vw;
-  left: 30vh;
+  position: fixed;
+  top: 28.7vw;
+  left: 18vw;
   transform: translate(-50%, -50%);
-  width: 490px;
+  width: 25vw;
   height: auto; /* 높이를 비율에 맞게 자동 설정 */
-  z-index: 1; /* 다른 요소 위에 배치 */
+  z-index: 1;
 }
 
-.DoorOpen{
+.DoorOpen {
   cursor: pointer;
-  position: fixed; 
-  top: 32.5vw;
-  left: 30vh;
+  position: fixed;
+  top: 30vw;
+  left: 18vw;
   transform: translate(-50%, -50%);
-  width: 490px;
+  width: 25vw;
   height: auto; /* 높이를 비율에 맞게 자동 설정 */
-  z-index: 1; /* 다른 요소 위에 배치 */
+  z-index: 1;
 }
 
 .Stage3wall {
-  width: 640px;
+  width: 33vw;
   position: fixed;
   top: 17vw;
-  left: 98vh;
+  left: 50vw;
   cursor: pointer;
   transform: translateX(-50%);
 }
 
-.ModalMent{
+.ModalMent {
   font-size: 2vw;
   position: relative;
-  padding: 30px;
-  top: 2vw;
-  left: 39vh;
-}
-
-.NumberGuessModalMent{
-  font-size: 2vw;
-  position: relative;
-  padding: 30px;
+  padding: 2vw;
   top: 0vw;
-  left: 30vh;
+  left: 20vw;
 }
 
-/* 전체 그리드 레이아웃 */
+.NumberGuessModalMent {
+  font-size: 2vw;
+  position: relative;
+  padding: 2vw;
+  top: 0vw;
+  left: 20vw;
+}
+
+.SetScore{
+  position: fixed;
+  top: 30vh;
+  left: 24vw;
+  width: 100vh;
+  height: 37vw;
+}
+
 .ImageGrid {
   display: grid;
   grid-template-areas:
-    "flag1 flag2 flag3 flag4 flag5"
     "flag6 center center center flag7"
-    "flag8 center center center flag9"
-    "flag10 flag11 flag12 flag13 flag14";
-  gap: 10px;
+    "flag8 center center center flag9";
+  gap: 1vw;
   justify-items: center;
   align-items: center;
-  padding: 20px;
-  margin-bottom: 5px;
+  /* padding: 1vw;
+  margin-bottom: 1vw; */
+  position: fixed;
+  top: 26vh;
+  left: 30vw;
 }
 
-/* 중앙의 인물 이미지 컨테이너 */
 .CenterContainer {
   top: 100vw;
   grid-area: center;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 20px;
-  padding: 20px;
+  gap: 2vw;
+  padding: 2vw;
   background-color: transparent;
-  border: 2px solid transparent;
+  border: 0.1vw solid transparent;
 }
 
-/* 인물 이미지 스타일 */
-.ImageItem {
-  width: 11vw;
+.ImageItem { /* 친일파사진(각각) */
+  width: 10vw;
   height: 19vh;
   object-fit: cover;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 0.2vw solid transparent;
   transition: border 0.3s ease;
 }
 
-/* 선택된 이미지 스타일 */
 .Selected {
-  border: 4px solid rgb(255, 0, 0);
+  border: 0.4vw solid rgb(255, 0, 0);
 }
 
 .CheckAnswerButton {
-  margin-top: 20px;
+  margin-top: 2vw;
 }
 
 .ResultBanner {
   position: fixed;
   top: 9vw;
-  left: 97vh;
+  left: 50vw;
   transform: translateX(-50%);
   background-color: #C1A693;
   color: white;
@@ -124,21 +129,21 @@
   font-size: 1.5vw;
   font-weight: bold;
   z-index: 100;
-  border-radius: 10px;
+  border-radius: 1vw;
   text-align: center;
   width: 30vw;
   height: 9vh;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.2);
   transition: border 0.3s ease;
 }
 
 .KoreaFlag {
   cursor: pointer;
   width: 5.5vw;
-  height: 6.6vh;
+  height: 7vh;
   position: fixed;
   top: 17.8vw;
-  left: 70.5vh;
+  left: 34.5vw;
 }
 
 .NoteImage {
@@ -147,22 +152,22 @@
   height: auto;
   position: fixed;
   top: 15.9vw;
-  left: 73vh;;
+  left: 35.7vw;
 }
 
 .GunHintImage {
   position: fixed;
   top: 27vw;
-  left: 97vh;
+  left: 53vw;
   transform: translate(-50%, -50%);
   width: 50vw;
   height: auto;
 }
 
-.Stage3Gunhint {
-  position: absolute;
+/* .Stage3Gunhint {
+  position: fixed;
   height: 4vh;
   width: auto;
-  top: 4.4vh;
+  top: 10vh;
   left: 6vw;
-}
+} */
