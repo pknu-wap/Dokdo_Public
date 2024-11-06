@@ -13,12 +13,18 @@ import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
 import NoteImage from 'assets/stage3/noteImage.png';
 import Modal from '../components/Modal.js';
 
-import People1 from '../assets/친일파(1).png';
-import People2 from '../assets/친일파(2).png';
-import People3 from '../assets/친일파(3).png';
-import People4 from '../assets/친일파(4).png';
-import People5 from '../assets/친일파(5).png';
-import People6 from '../assets/친일파(6).png';
+import People1 from 'assets/stage3/친일파(1).png';
+import People2 from 'assets/stage3/친일파(2).png';
+import People3 from 'assets/stage3/친일파(3).png';
+import People4 from 'assets/stage3/친일파(4).png';
+import People5 from 'assets/stage3/친일파(5).png';
+import People6 from 'assets/stage3/친일파(6).png';
+import People7 from 'assets/stage3/친일파(7).png';
+import People8 from 'assets/stage3/친일파(8).png';
+import People9 from 'assets/stage3/친일파(9).png';
+import People10 from 'assets/stage3/친일파(10).png';
+import People11 from 'assets/stage3/친일파(11).png';
+import People12 from 'assets/stage3/친일파(12).png';
 
 const Stage3PeopleImage = [
   { id: 1, src: People1, name: '친일파1' },
