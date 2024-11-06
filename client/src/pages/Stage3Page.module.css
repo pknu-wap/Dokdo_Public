@@ -22,7 +22,7 @@
 .DoorClose {
   cursor: pointer;
   position: fixed;
-  top: 28.7vw;
+  top: 26.7vw;
   left: 18vw;
   transform: translate(-50%, -50%);
   width: 25vw;
@@ -42,10 +42,10 @@
 }
 
 .Stage3wall {
-  width: 33vw;
+  width: 45vw;
   position: fixed;
-  top: 17vw;
-  left: 50vw;
+  top: 10vw;
+  left: 58vw;
   cursor: pointer;
   transform: translateX(-50%);
 }

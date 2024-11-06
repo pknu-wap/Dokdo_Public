@@ -5,7 +5,7 @@ import CheckNumber from '../components/CheckNumber.js';
 import { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
 
-import Stage3wall from '../assets/Stage3wall.png';
+import Stage3wall from 'assets/stage3/Stage3wall.png';
 import KoreaFlag from '../assets/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png';
 import DoorClose from 'assets/stage1/Stage1DoorClose.png';
