@@ -33,9 +33,16 @@ const Stage3PeopleImage = [
   { id: 4, src: People4, name: '친일파4' },
   { id: 5, src: People5, name: '친일파5' },
   { id: 6, src: People6, name: '친일파6' },
+  { id: 7, src: People7, name: '친일파7' },
+  { id: 8, src: People8, name: '친일파8' },
+  { id: 9, src: People9, name: '친일파9' },
+  { id: 10, src: People10, name: '친일파10' },
+  { id: 11, src: People11, name: '친일파11' },
+  { id: 12, src: People12, name: '친일파12' },
+
 ];
 
-const CorrectAnswer = [1, 2, 3];
+const CorrectAnswer = [1, 7, 12];
 
 function Stage3Page() {
   const [isStage2Open] = useState(true);

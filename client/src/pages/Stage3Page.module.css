@@ -51,11 +51,11 @@
 }
 
 .ModalMent {
-  font-size: 2vw;
+  font-size: 1.3vw;
   position: relative;
   padding: 2vw;
-  top: 0vw;
-  left: 20vw;
+  top: -1vw;
+  left: 25vw;
 }
 
 .NumberGuessModalMent {
@@ -74,36 +74,26 @@
   height: 37vw;
 }
 
-.ImageGrid {
-  display: grid;
-  grid-template-areas:
-    "flag6 center center center flag7"
-    "flag8 center center center flag9";
-  gap: 1vw;
-  justify-items: center;
-  align-items: center;
-  /* padding: 1vw;
-  margin-bottom: 1vw; */
+.ImageGrid { /* 모달 속 전체 친일파사진 위치  */
   position: fixed;
-  top: 26vh;
-  left: 30vw;
+  top: 23vh;
+  left: 32.5vw;
 }
 
-.CenterContainer {
-  top: 100vw;
+.CenterContainer { /* 모달 속 친일파 사진 그리드 설정 */
   grid-area: center;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 2vw;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1vw;
   padding: 2vw;
   background-color: transparent;
   border: 0.1vw solid transparent;
 }
 
 .ImageItem { /* 친일파사진(각각) */
-  width: 10vw;
-  height: 19vh;
+  width: 7vw;
+  height: 14vh;
   object-fit: cover;
   cursor: pointer;
   border: 0.2vw solid transparent;
@@ -163,11 +153,3 @@
   width: 50vw;
   height: auto;
 }
-
-/* .Stage3Gunhint {
-  position: fixed;
-  height: 4vh;
-  width: auto;
-  top: 10vh;
-  left: 6vw;
-} */
