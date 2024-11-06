@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
 
 import Stage3wall from 'assets/stage3/Stage3wall.png';
-import KoreaFlag from '../assets/KoreaFlag.png';
+import KoreaFlag from 'assets/stage3/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png';
 import DoorClose from 'assets/stage1/Stage1DoorClose.png';
 import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';

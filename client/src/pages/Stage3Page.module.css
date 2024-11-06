@@ -33,7 +33,7 @@
 .DoorOpen {
   cursor: pointer;
   position: fixed;
-  top: 30vw;
+  top: 28vw;
   left: 18vw;
   transform: translate(-50%, -50%);
   width: 25vw;
@@ -128,13 +128,13 @@
   transition: border 0.3s ease;
 }
 
-.KoreaFlag {
+.KoreaFlag { 
   cursor: pointer;
-  width: 5.5vw;
-  height: 7vh;
+  width: 6.4vw;
+  height: 8.4vh;
   position: fixed;
-  top: 17.8vw;
-  left: 34.5vw;
+  top: 11.3vw;
+  left: 61.4vw;
 }
 
 .NoteImage {
@@ -142,8 +142,8 @@
   width: 3vw;
   height: auto;
   position: fixed;
-  top: 15.9vw;
-  left: 35.7vw;
+  top: 9.5vw;
+  left: 63vw;
 }
 
 .GunHintImage {
@@ -151,6 +151,6 @@
   top: 27vw;
   left: 53vw;
   transform: translate(-50%, -50%);
-  width: 50vw;
+  width: 40vw;
   height: auto;
 }
