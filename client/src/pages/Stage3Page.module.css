@@ -51,11 +51,12 @@
 }
 
 .ModalMent {
-  font-size: 1.3vw;
+  font-family: 'MapoAgape', sans-serif;
+  font-size: 1.5vw;
   position: relative;
   padding: 2vw;
-  top: -1vw;
-  left: 25vw;
+  top: 0vw;
+  left: 23.5vw;
 }
 
 .NumberGuessModalMent {
