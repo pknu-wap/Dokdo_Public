@@ -2,8 +2,11 @@ package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.SessionDto;
 import com.example.rememberdokdo.Dto.SessionProgressDto;
+import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
 import com.example.rememberdokdo.Entity.SessionEntity;
 import com.example.rememberdokdo.Entity.StageProgressEntity;
+import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
+import com.example.rememberdokdo.Repository.Inventory.InventoryRepository;
 import com.example.rememberdokdo.Repository.SessionRepository;
 import com.example.rememberdokdo.Repository.StageProgressRepository;
 import jakarta.servlet.http.Cookie;
@@ -30,6 +33,10 @@ public class SessionService {
     private SessionRepository sessionRepository;
     @Autowired
     private StageProgressRepository stageProgressRepository;
+    @Autowired
+    private InventoryRepository inventoryRepository;
+    @Autowired
+    private InventoryItemsRepository inventoryItemsRepository;
 
     /*@Autowired
     private InventoryItemRepository inventoryItemRepository;*/
@@ -133,18 +140,20 @@ public class SessionService {
                 .map(stage -> new SessionProgressDto.StageStatus(stage.getStageId(), stage.isCleared()))
                 .collect(Collectors.toList());
 
-        /*
-        // 인벤토리 아이템 목록 조회
-        List<SessionStatusDto.Item> inventoryItems = inventoryItemRepository.findBySessionId(sessionId).stream()
-                .map(item -> new SessionStatusDto.Item(item.getItemId(), item.getItemName(), item.getItemDescription()))
-                .collect(Collectors.toList());*/
+        // 인벤토리 조회
+        InventoryEntity inventory = inventoryRepository.findBySessionId(sessionId)
+                .orElse(null);
+
+        List<SessionProgressDto.Item> inventoryItems = inventory != null ? inventoryItemsRepository.findByInventoryId(inventory.getInventoryId()).stream()
+                .map(item -> new SessionProgressDto.Item(item.getItemId(), item.getItemName(), item.getItemDescription()))
+                .collect(Collectors.toList()) : null;
 
         // SessionStatusDto 생성하여 반환
         return new SessionProgressDto(
                 sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 stages,
-                null,
+                inventoryItems,
                 sessionEntity.getExpiresAt(),
                 sessionEntity.getIsActive()
         );
