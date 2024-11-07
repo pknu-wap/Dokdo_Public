@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
-import { useInventory } from '../context/InventoryContext';
+import { useInventory2 } from '../context/InventoryContext2';
 import TaegeukKey from '../assets/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/clover.png';
 import map from '../assets/stage2/Map.png';
@@ -9,7 +9,7 @@ import CodeNote from '../assets/stage2/CodeNote.png';
 import GunHintImage from '../assets/GunHintImage.png';
 
 const itemImage = {
-  TaegeukKey: TaegeukKey,
+  TaegeukKey: TaegeukKey, // 이거 백엔드 서버에 q라고 되어있는데 확인해봐야함
   dokdoPuzzle1: dokdoPuzzle1,
   map: map,
   CodeNote: CodeNote,
@@ -19,21 +19,22 @@ const itemImage = {
 function Inventory() {
   const boxes = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, items: [] }));
 
-  const { items } = useInventory(); /* itmes를 Context에서 가져옴 */
+  // const { items } = useInventory(); -> 프론트 세션 코드
+  const { items2 } = useInventory2();
 
   const [inventoryItems, setInventoryItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     /* items에 따라 inventoryItems 업데이트 */
-    const newInventoryItems = items.map((item, index) => ({
-      id: index + 1,
-      name: item,
-      image: itemImage[item],
+    const newInventoryItems = items2.map((item) => ({
+      id: item.itemId,
+      name: item.itemName,
+      image: itemImage[item.itemName],
     }));
 
     setInventoryItems(newInventoryItems);
-  }, [items]);
+  }, [items2]);
 
   const handleItemClick = (item) => {
     setSelectedItem(item);

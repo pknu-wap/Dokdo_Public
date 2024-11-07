@@ -6,14 +6,14 @@ const InventoryContext2 = createContext();
 export const useInventory2 = () => useContext(InventoryContext2);
 
 export const InventoryProvider2 = ({ children }) => {
-  const [items, setItems] = useState([]);
+  const [items2, setItems2] = useState([]);
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  /* 여기 useEffect로 변경해야하나 test 팔요 */
+  /* 여기 useEffect로 변경해야하나 test 필요 */
   const fetchItems = async () => {
     try {
       const response = await axios.get(`${apiUrl}/session/status`);
-      setItems(response.data.inventory);
+      setItems2(response.data.inventory);
     } catch (error) {
       console.error('아이템을 불러오는 중 오류가 발생했습니다:', error);
     }
@@ -26,7 +26,7 @@ export const InventoryProvider2 = ({ children }) => {
   const addItem = async (item) => {
     try {
       const response = await axios.post(`${apiUrl}/inventory/add`, item);
-      setItems((prevItems) => [...prevItems, response.data.itemName]);
+      setItems2((prevItems) => [...prevItems, response.data]);
     } catch (error) {
       console.error('아이템 추가 중 오류가 발생했습니다:', error);
     }
@@ -39,14 +39,14 @@ export const InventoryProvider2 = ({ children }) => {
         sessionId: sessionId,
         itemId: itemId,
       });
-      setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+      setItems2((prevItems) => prevItems.filter((item) => item.id !== itemId));
     } catch (error) {
       console.error('아이템 삭제 중 오류가 발생했습니다:', error);
     }
   };
 
   return (
-    <InventoryContext2.Provider value={{ items, addItem, deleteItem, fetchItems }}>
+    <InventoryContext2.Provider value={{ items: items2, addItem, deleteItem, fetchItems }}>
       {children}
     </InventoryContext2.Provider>
   );
