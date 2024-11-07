@@ -113,7 +113,7 @@ public class SessionService {
     private void createSessionCookie(String sessionId, HttpServletResponse response) {
         Cookie sessionCookie = new Cookie("SESSIONID", sessionId);
         sessionCookie.setMaxAge(3600);  // 1시간 유효
-        sessionCookie.setHttpOnly(true);  // JavaScript로 접근 불가 (보안 강화)
+        //sessionCookie.setHttpOnly(true);  // JavaScript로 접근 불가 (보안 강화)
         sessionCookie.setPath("/");  // 전체 경로에서 쿠키 사용 가능
         response.addCookie(sessionCookie);
     }
