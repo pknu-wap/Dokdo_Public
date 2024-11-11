@@ -38,9 +38,6 @@ public class SessionService {
     @Autowired
     private InventoryItemsRepository inventoryItemsRepository;
 
-    /*@Autowired
-    private InventoryItemRepository inventoryItemRepository;*/
-
     // 브라우저 접속 시 세션 시작 (쿠키로 세션 ID 전달)
     public SessionDto startSession(HttpServletRequest request, HttpServletResponse response) {
         // 기존 세션 쿠키 확인
@@ -144,9 +141,11 @@ public class SessionService {
         InventoryEntity inventory = inventoryRepository.findBySessionId(sessionId)
                 .orElse(null);
 
-        List<SessionProgressDto.Item> inventoryItems = inventory != null ? inventoryItemsRepository.findByInventoryId(inventory.getInventoryId()).stream()
+        // 인벤토리 아이템 조회 및 빈 배열로 초기화
+        List<SessionProgressDto.Item> inventoryItems = (inventory != null)
+                ? inventoryItemsRepository.findByInventoryId(inventory.getInventoryId()).stream()
                 .map(item -> new SessionProgressDto.Item(item.getItemId(), item.getItemName(), item.getItemDescription()))
-                .collect(Collectors.toList()) : null;
+                .collect(Collectors.toList()) : List.of();  // 빈 배열로 설정
 
         // SessionStatusDto 생성하여 반환
         return new SessionProgressDto(
