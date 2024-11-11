@@ -26,26 +26,26 @@ export const UserProvider = ({ children }) => {
   };
 
   /* Session에서 사용자 정보 가져오기 */
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${apiUrl}/session/status`,
-  //         {},
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       if (response.data.user) {
-  //         setUser(response.data.user);
-  //       }
-  //     } catch (error) {
-  //       console.log('세션 api 에러', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          `${apiUrl}/session/status`,
+          {},
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.user) {
+          setUser(response.data.user);
+        }
+      } catch (error) {
+        console.log('세션 api 에러', error);
+      }
+    };
 
-  //   fetchUser();
-  // }, []);
+    fetchUser();
+  }, []);
 
   return <UserContext.Provider value={{ user, setUser, createSession }}>{children}</UserContext.Provider>;
 };

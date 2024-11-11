@@ -1,9 +1,10 @@
 import styles from './Stage1Page.module.css';
 import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useInventory } from '../context/InventoryContext.js';
+import { useInventory2 } from 'context/InventoryContext2';
+import { UserContext } from 'context/UserContext';
 
 import Stage1Memo from 'assets/stage1/Stage1Memo.png';
 import DoorClose from 'assets/stage1/Stage1DoorClose.png';
@@ -117,7 +118,8 @@ function Stage1Page() {
   const [isMusicExpand, setIsMusicExpand] = useState(false);
   const [isLampOn, setIsLampOn] = useState(false);
 
-  const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
+  const { user } = useContext(UserContext);
+  const { items, addItem } = useInventory2(); /* Context에서 items와 addItem 함수 가져옴 */
 
   useEffect(() => {
     setIsMemoShow(true);
@@ -143,8 +145,8 @@ function Stage1Page() {
   };
 
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
-  const handleItemClick = (itemName) => {
-    addItem(itemName);
+  const handleItemClick = (itemId) => {
+    addItem({ sessionId: user.sessionId, itemId: itemId });
   };
 
   return (
@@ -163,10 +165,10 @@ function Stage1Page() {
           <img className={styles.Stage1Table} src={Table} />
           <img
             className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
-              items.includes('dokdoPuzzle1') ? styles.hidden : ''
+              items.some((item) => item.itemName === 'dokdoPuzzle1') ? styles.hidden : ''
             }`}
             src={Clover}
-            onClick={() => handleItemClick('dokdoPuzzle1')}
+            onClick={() => handleItemClick(1)}
           />
         </div>
         <img className={styles.Stage1Music} src={Music} onClick={handleMusicClick} />
@@ -180,10 +182,10 @@ function Stage1Page() {
             />
             <img
               className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1TaegeukKey} ${
-                items.includes('TaegeukKey') ? styles.hidden : ''
+                items.some((item) => item.itemName === 'TaegeukKey') ? styles.hidden : ''
               }`}
               src={TaegeukKey}
-              onClick={() => handleItemClick('TaegeukKey')}
+              onClick={() => handleItemClick(5)}
             />
           </div>
         ) : (

@@ -3,8 +3,6 @@ import axios from 'axios';
 
 const InventoryContext2 = createContext();
 
-export const useInventory2 = () => useContext(InventoryContext2);
-
 export const InventoryProvider2 = ({ children }) => {
   const [items2, setItems2] = useState([]);
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -46,8 +44,16 @@ export const InventoryProvider2 = ({ children }) => {
   };
 
   return (
-    <InventoryContext2.Provider value={{ items: items2, addItem, deleteItem, fetchItems }}>
+    <InventoryContext2.Provider value={{ items2, setItems2, addItem, deleteItem, fetchItems }}>
       {children}
     </InventoryContext2.Provider>
   );
+};
+
+export const useInventory2 = () => {
+  const context = useContext(InventoryContext2);
+  if (!context) {
+    throw new Error('useInventory must be used within an InventoryProvider');
+  }
+  return context;
 };
