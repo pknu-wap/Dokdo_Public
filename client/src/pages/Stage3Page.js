@@ -71,7 +71,7 @@ function Stage3Page() {
   });   /* CheckNumber 숫자 받아오기 */
 
   /* 친일파 힌트 이미지 상태 */
-  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false);
+  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState([false, false, false]);
 
   const handleItemClick = (itemName) => {
     addItem(itemName);
@@ -110,7 +110,7 @@ function Stage3Page() {
       setTimeout(() => setResultMessage(''), 1000);
 
       /* Spy 힌트 이미지를 표시하고 2초 후 사라짐과 동시에 인벤토리에 추가 */ 
-      setSpyHintImagesVisible(true);
+      setSpyHintImagesVisible([true, true, true]);
       setTimeout(() => {
         setSpyHintImagesVisible(false);
         addItem('SpyHintImage1');
@@ -263,17 +263,19 @@ function Stage3Page() {
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
 
       {/* 친일파 힌트 이미지 - 정답 후 2초 동안 표시 */}
-      {spyHintImagesVisible && (
+      {spyHintImagesVisible[0] && (
         <div className={styles.SpyHintImage1}>
-          <img src={SpyHintImage1} alt="SpyHint1"  />
+          <img src={SpyHintImage1} alt="Spy Hint 1" />
         </div>
-      ) && (
+      )}
+      {spyHintImagesVisible[1] && (
         <div className={styles.SpyHintImage2}>
-          <img src={SpyHintImage2} alt="SpyHint1"  />
+          <img src={SpyHintImage2} alt="Spy Hint 2" />
         </div>
-      ) && (
+      )}
+      {spyHintImagesVisible[2] && (
         <div className={styles.SpyHintImage3}>
-          <img src={SpyHintImage3} alt="SpyHint1"  />
+          <img src={SpyHintImage3} alt="Spy Hint 3" />
         </div>
       )}
 
