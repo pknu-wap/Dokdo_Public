@@ -22,7 +22,7 @@
 .DoorClose {
   cursor: pointer;
   position: fixed;
-  top: 28.7vw;
+  top: 31.4vw;
   left: 18vw;
   transform: translate(-50%, -50%);
   width: 25vw;
@@ -33,7 +33,7 @@
 .DoorOpen {
   cursor: pointer;
   position: fixed;
-  top: 30.1vw;
+  top: 32.8vw;
   left: 18vw;
   transform: translate(-50%, -50%);
   width: 25vw;
@@ -45,7 +45,7 @@
   width: 45vw;
   position: fixed;
   top: 10vw;
-  left: 58vw;
+  left: 59vw;
   cursor: pointer;
   transform: translateX(-50%);
 }
@@ -72,7 +72,7 @@
   top: 30vh;
   left: 24vw;
   width: 100vh;
-  height: 37vw;
+  height: 34vw;
 }
 
 .ImageGrid { /* 모달 속 전체 친일파사진 위치  */
@@ -131,10 +131,10 @@
 .KoreaFlag { 
   cursor: pointer;
   width: 6.4vw;
-  height: 8.4vh;
+  height: 7.42vh;
   position: fixed;
-  top: 11.3vw;
-  left: 61.4vw;
+  top: 11.33vw;
+  left: 62.4vw;
 }
 
 .NoteImage {
@@ -143,7 +143,7 @@
   height: auto;
   position: fixed;
   top: 9.5vw;
-  left: 63vw;
+  left: 64vw;
 }
 
 .GunHintImage {
