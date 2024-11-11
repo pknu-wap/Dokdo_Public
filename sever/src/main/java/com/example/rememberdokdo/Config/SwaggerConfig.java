@@ -17,8 +17,8 @@ public class SwaggerConfig {
     }
     private Info apiInfo(){
         return new Info()
-                .title("SpringBoot Rest API Documentation")
-                .description("독도의 기억 API")
+                .title("Remember Dokdo API TEST")
+                .description("독도의 기억 Swagger")
                 .version("1.0.0");
     }
 }
