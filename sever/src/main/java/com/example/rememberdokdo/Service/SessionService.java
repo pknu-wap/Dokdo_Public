@@ -130,7 +130,7 @@ public class SessionService {
     public SessionProgressDto getSessionStatus(String sessionId) {
         // 세션 정보 확인
         SessionEntity sessionEntity = sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new IllegalArgumentException("Session not found"));
+                .orElseThrow(() -> new IllegalArgumentException("세션을 찾을 수 없습니다"));
 
         // 스테이지 진행 상황 조회
         List<SessionProgressDto.StageStatus> stages = stageProgressRepository.findBySessionId(sessionId).stream()
@@ -139,13 +139,12 @@ public class SessionService {
 
         // 인벤토리 조회
         InventoryEntity inventory = inventoryRepository.findBySessionId(sessionId)
-                .orElse(null);
+                .orElse(new InventoryEntity());
 
         // 인벤토리 아이템 조회 및 빈 배열로 초기화
-        List<SessionProgressDto.Item> inventoryItems = (inventory != null)
-                ? inventoryItemsRepository.findByInventoryId(inventory.getInventoryId()).stream()
+        List<SessionProgressDto.Item> inventoryItems = inventoryItemsRepository.findByInventoryId(inventory.getInventoryId()).stream()
                 .map(item -> new SessionProgressDto.Item(item.getItemId(), item.getItemName(), item.getItemDescription()))
-                .collect(Collectors.toList()) : List.of();  // 빈 배열로 설정
+                .collect(Collectors.toList());
 
         // SessionStatusDto 생성하여 반환
         return new SessionProgressDto(
