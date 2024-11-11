@@ -7,9 +7,7 @@ import dokdoPuzzle1 from '../assets/clover.png';
 import map from '../assets/stage2/Map.png';
 import CodeNote from '../assets/stage2/CodeNote.png';
 import GunHintImage from '../assets/GunHintImage.png';
-import SpyHintImage1 from 'assets/stage3/SpyHintImage1.png';
-import SpyHintImage2 from 'assets/stage3/SpyHintImage2.png';
-import SpyHintImage3 from 'assets/stage3/SpyHintImage3.png';
+import SpyHintImage from 'assets/stage3/SpyHintImage.png';
 
 const itemImage = {
   TaegeukKey: TaegeukKey,
@@ -17,9 +15,7 @@ const itemImage = {
   map: map,
   CodeNote: CodeNote,
   GunHintImage: GunHintImage,
-  SpyHintImage1: SpyHintImage1,
-  SpyHintImage2: SpyHintImage2,
-  SpyHintImage3: SpyHintImage3
+  SpyHintImage: SpyHintImage,
 };
 
 function Inventory() {

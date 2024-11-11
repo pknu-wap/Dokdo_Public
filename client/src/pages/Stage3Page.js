@@ -13,9 +13,7 @@ import DoorOpen from 'assets/stage3/Stage3DoorOpen.png';
 import NoteImage from 'assets/stage3/noteImage.png';
 import Modal from '../components/Modal.js';
 
-import SpyHintImage1 from 'assets/stage3/SpyHintImage1.png';
-import SpyHintImage2 from 'assets/stage3/SpyHintImage2.png';
-import SpyHintImage3 from 'assets/stage3/SpyHintImage3.png';
+import SpyHintImage from 'assets/stage3/SpyHintImage.png';
 
 import People1 from 'assets/stage3/친일파(1).png';
 import People2 from 'assets/stage3/친일파(2).png';
@@ -71,7 +69,7 @@ function Stage3Page() {
   });   /* CheckNumber 숫자 받아오기 */
 
   /* 친일파 힌트 이미지 상태 */
-  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState([false, false, false]);
+  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false);
 
   const handleItemClick = (itemName) => {
     addItem(itemName);
@@ -110,37 +108,11 @@ function Stage3Page() {
       setTimeout(() => setResultMessage(''), 1000);
 
       /* Spy 힌트 이미지를 표시하고 2초 후 사라짐과 동시에 인벤토리에 추가 */ 
-      setSpyHintImagesVisible([true, true, true]);
+      setSpyHintImagesVisible(true);
       setTimeout(() => {
         setSpyHintImagesVisible(false);
-        addItem('SpyHintImage1');
-        addItem('SpyHintImage2');
-        addItem('SpyHintImage3');
-      }, 2000);
-
-
-    //       // 각 힌트 이미지를 순차적으로 보여주고 인벤토리에 추가
-    // setTimeout(() => {
-    //   setSpyHintImagesVisible(true); // 첫 번째 이미지 표시
-    //   addItem("SpyHintImage1");
-    //   setTimeout(() => {
-    //     setSpyHintImagesVisible(false); // 첫 번째 이미지 숨김
-    //     setTimeout(() => {
-    //       setSpyHintImagesVisible(true); // 두 번째 이미지 표시
-    //       addItem("SpyHintImage2");
-    //       setTimeout(() => {
-    //         setSpyHintImagesVisible(false); // 두 번째 이미지 숨김
-    //         setTimeout(() => {
-    //           setSpyHintImagesVisible(true); // 세 번째 이미지 표시
-    //           addItem("SpyHintImage3");
-    //           setTimeout(() => {
-    //             setSpyHintImagesVisible(false); // 세 번째 이미지 숨김
-    //           }, 500);
-    //         }, 500);
-    //       }, 500);
-    //     }, 500);
-    //   }, 500);
-    // }, 500);
+        addItem('SpyHintImage');
+      }, 1000);
 
     } else {
       setResultMessage('오답입니다. 다시 시도해주세요.');
@@ -263,12 +235,13 @@ function Stage3Page() {
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
 
       {/* 친일파 힌트 이미지 - 정답 후 2초 동안 표시 */}
-      {spyHintImagesVisible[0] && (
-        <div className={styles.SpyHintImage1}>
-          <img src={SpyHintImage1} alt="Spy Hint 1" />
+      {spyHintImagesVisible && (
+        <div className={styles.SpyHintImage}>
+          <img src={SpyHintImage} alt="Spy Hint" />
         </div>
       )}
-      {spyHintImagesVisible[1] && (
+
+      {/* {spyHintImagesVisible[1] && (
         <div className={styles.SpyHintImage2}>
           <img src={SpyHintImage2} alt="Spy Hint 2" />
         </div>
@@ -277,7 +250,7 @@ function Stage3Page() {
         <div className={styles.SpyHintImage3}>
           <img src={SpyHintImage3} alt="Spy Hint 3" />
         </div>
-      )}
+      )} */}
 
       {/* 숫자 맞추기 모달 - 닫힌 문 클릭시 열림 */}
       <Modal

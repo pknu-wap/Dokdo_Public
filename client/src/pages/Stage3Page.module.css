@@ -155,59 +155,16 @@
   height: auto;
 }
 
-/* .SpyHintContainer {
-  position: absolute;
-  top: 30vh;
-  left: 5vw;
-  width: 20vw;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.SpyHintImage {
+  position: fixed;
+  top: 27vh;
+  left: 17vw;
+  width: 60vw;
   z-index: 1000;
-} */
-
-.SpyHintImage1 {
-  position: absolute;
-  top: 30vh;
-  left: 5vw;
-  width: 20vw;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1000;
-  height: auto;
-  /* max-height: 30vh; */
-  transition: opacity 0.3s ease;
-  opacity: 1;
 }
 
-.SpyHintImage2 {
-  position: absolute;
-  top: 30vh;
-  left: 30vw;
-  width: 80vw;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1000;
-  width: 20vw;
+.SpyHintImage img {
+  width: 100%; /* 컨테이너 크기에 맞추어 이미지가 조정되도록 설정 */
   height: auto;
-  max-height: 30vh;
-  transition: opacity 0.3s ease;
-  opacity: 1;
-}
-
-.SpyHintImage3 {
-  position: absolute;
-  top: 30vh;
-  left: 50vw;
-  width: 20vw;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1000;
-  height: auto;
-  max-height: 30vh;
-  transition: opacity 0.3s ease;
-  opacity: 1;
+  object-fit: contain; /* 비율을 유지하며 크기 조정 */
 }
