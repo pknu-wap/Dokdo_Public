@@ -158,8 +158,8 @@
 .SpyHintImage {
   position: fixed;
   top: 27vh;
-  left: 17vw;
-  width: 60vw;
+  left: 35vw;
+  width: 30vw;
   z-index: 1000;
 }
 
