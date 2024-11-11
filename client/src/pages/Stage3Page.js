@@ -60,7 +60,6 @@ function Stage3Page() {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
   const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
   const { items, addItem } = useInventory(); /* Context에서 items도 가져옴 */
-  const [showSpyHints, setShowSpyHints] = useState(false); /* stage4를 위한 친일파 힌트 이미지를 보여줌 */
 
   const [scoreValues, setScoreValues] = useState({
     number1: 0,
