@@ -22,7 +22,7 @@
 .DoorClose {
   cursor: pointer;
   position: fixed;
-  top: 26.7vw;
+  top: 28.7vw;
   left: 18vw;
   transform: translate(-50%, -50%);
   width: 25vw;
@@ -33,7 +33,7 @@
 .DoorOpen {
   cursor: pointer;
   position: fixed;
-  top: 28vw;
+  top: 30.1vw;
   left: 18vw;
   transform: translate(-50%, -50%);
   width: 25vw;
@@ -153,4 +153,61 @@
   transform: translate(-50%, -50%);
   width: 40vw;
   height: auto;
+}
+
+/* .SpyHintContainer {
+  position: absolute;
+  top: 30vh;
+  left: 5vw;
+  width: 20vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+} */
+
+.SpyHintImage1 {
+  position: absolute;
+  top: 30vh;
+  left: 5vw;
+  width: 20vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  height: auto;
+  /* max-height: 30vh; */
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.SpyHintImage2 {
+  position: absolute;
+  top: 30vh;
+  left: 30vw;
+  width: 80vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  width: 20vw;
+  height: auto;
+  max-height: 30vh;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.SpyHintImage3 {
+  position: absolute;
+  top: 30vh;
+  left: 50vw;
+  width: 20vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  height: auto;
+  max-height: 30vh;
+  transition: opacity 0.3s ease;
+  opacity: 1;
 }

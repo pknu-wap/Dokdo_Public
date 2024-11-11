@@ -8,10 +8,14 @@ import { useInventory } from '../context/InventoryContext';
 import Stage3wall from 'assets/stage3/Stage3wall.png';
 import KoreaFlag from 'assets/stage3/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png';
-import DoorClose from 'assets/stage1/Stage1DoorClose.png';
-import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
+import DoorClose from 'assets/stage3/Stage3DoorClose.png';
+import DoorOpen from 'assets/stage3/Stage3DoorOpen.png';
 import NoteImage from 'assets/stage3/noteImage.png';
 import Modal from '../components/Modal.js';
+
+import SpyHintImage1 from 'assets/stage3/SpyHintImage1.png';
+import SpyHintImage2 from 'assets/stage3/SpyHintImage2.png';
+import SpyHintImage3 from 'assets/stage3/SpyHintImage3.png';
 
 import People1 from 'assets/stage3/친일파(1).png';
 import People2 from 'assets/stage3/친일파(2).png';
@@ -58,12 +62,16 @@ function Stage3Page() {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
   const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
   const { items, addItem } = useInventory(); /* Context에서 items도 가져옴 */
-  
+  const [showSpyHints, setShowSpyHints] = useState(false); /* stage4를 위한 친일파 힌트 이미지를 보여줌 */
+
   const [scoreValues, setScoreValues] = useState({
     number1: 0,
     number2: 0,
     number3: 0,
   });   /* CheckNumber 숫자 받아오기 */
+
+  /* 친일파 힌트 이미지 상태 */
+  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false);
 
   const handleItemClick = (itemName) => {
     addItem(itemName);
@@ -100,6 +108,40 @@ function Stage3Page() {
       setIsFindSpyModalOpen(false); /* 모달 닫기 */
       setSelectedImage([]);
       setTimeout(() => setResultMessage(''), 1000);
+
+      /* Spy 힌트 이미지를 표시하고 2초 후 사라짐과 동시에 인벤토리에 추가 */ 
+      setSpyHintImagesVisible(true);
+      setTimeout(() => {
+        setSpyHintImagesVisible(false);
+        addItem('SpyHintImage1');
+        addItem('SpyHintImage2');
+        addItem('SpyHintImage3');
+      }, 2000);
+
+
+    //       // 각 힌트 이미지를 순차적으로 보여주고 인벤토리에 추가
+    // setTimeout(() => {
+    //   setSpyHintImagesVisible(true); // 첫 번째 이미지 표시
+    //   addItem("SpyHintImage1");
+    //   setTimeout(() => {
+    //     setSpyHintImagesVisible(false); // 첫 번째 이미지 숨김
+    //     setTimeout(() => {
+    //       setSpyHintImagesVisible(true); // 두 번째 이미지 표시
+    //       addItem("SpyHintImage2");
+    //       setTimeout(() => {
+    //         setSpyHintImagesVisible(false); // 두 번째 이미지 숨김
+    //         setTimeout(() => {
+    //           setSpyHintImagesVisible(true); // 세 번째 이미지 표시
+    //           addItem("SpyHintImage3");
+    //           setTimeout(() => {
+    //             setSpyHintImagesVisible(false); // 세 번째 이미지 숨김
+    //           }, 500);
+    //         }, 500);
+    //       }, 500);
+    //     }, 500);
+    //   }, 500);
+    // }, 500);
+
     } else {
       setResultMessage('오답입니다. 다시 시도해주세요.');
       setTimeout(() => setResultMessage(''), 1000);
@@ -135,15 +177,10 @@ function Stage3Page() {
     if (number1 === 2 && number2 === 8 && number3 === 6) {
       setResultMessage('정답입니다!');
       setTimeout(() => setResultMessage(''), 1000);
-      setResultMessage('정답입니다!');
-      setTimeout(() => setResultMessage(''), 1000);
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
-      sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
     } else {
-      setResultMessage('오답입니다. 다시 시도해주세요.');
-      setTimeout(() => setResultMessage(''), 1000);
       setResultMessage('오답입니다. 다시 시도해주세요.');
       setTimeout(() => setResultMessage(''), 1000);
       setScoreValues({ number1: 0, number2: 0, number3: 0 }); /* 오답일 경우 입력 필드 초기화 */
@@ -224,6 +261,21 @@ function Stage3Page() {
 
       {/* 무기 힌트 이미지 */}
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
+
+      {/* 친일파 힌트 이미지 - 정답 후 2초 동안 표시 */}
+      {spyHintImagesVisible && (
+        <div className={styles.SpyHintImage1}>
+          <img src={SpyHintImage1} alt="SpyHint1"  />
+        </div>
+      ) && (
+        <div className={styles.SpyHintImage2}>
+          <img src={SpyHintImage2} alt="SpyHint1"  />
+        </div>
+      ) && (
+        <div className={styles.SpyHintImage3}>
+          <img src={SpyHintImage3} alt="SpyHint1"  />
+        </div>
+      )}
 
       {/* 숫자 맞추기 모달 - 닫힌 문 클릭시 열림 */}
       <Modal
