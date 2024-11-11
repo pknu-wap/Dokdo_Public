@@ -23,8 +23,8 @@ export const InventoryProvider2 = ({ children }) => {
    */
   const addItem = async (item) => {
     try {
-      const response = await axios.post(`${apiUrl}/inventory/add`, item);
-      setItems2((prevItems) => [...prevItems, response.data]);
+      await axios.post(`${apiUrl}/inventory/add`, item);
+      // setItems2((prevItems) => [...prevItems, response.data]);
     } catch (error) {
       console.error('아이템 추가 중 오류가 발생했습니다:', error);
     }
@@ -37,7 +37,7 @@ export const InventoryProvider2 = ({ children }) => {
         sessionId: sessionId,
         itemId: itemId,
       });
-      setItems2((prevItems) => prevItems.filter((item) => item.id !== itemId));
+      // setItems2((prevItems) => prevItems.filter((item) => item.id !== itemId));
     } catch (error) {
       console.error('아이템 삭제 중 오류가 발생했습니다:', error);
     }

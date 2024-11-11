@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
 import { useInventory2 } from '../context/InventoryContext2';
@@ -19,22 +19,22 @@ const itemImage = {
 function Inventory() {
   const boxes = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, items2: [] }));
 
-  // const { items } = useInventory(); -> 프론트 세션 코드
-  const { items2 } = useInventory2();
+  const { user } = useContext();
+  const items = user.inventory;
 
   const [inventoryItems, setInventoryItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     /* items에 따라 inventoryItems 업데이트 */
-    const newInventoryItems = items2.map((item) => ({
+    const newInventoryItems = items.map((item) => ({
       id: item.itemId,
       name: item.itemName,
       image: itemImage[item.itemName],
     }));
 
     setInventoryItems(newInventoryItems);
-  }, [items2]);
+  }, [items]);
 
   const handleItemClick = (item) => {
     setSelectedItem(item);

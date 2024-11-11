@@ -119,7 +119,8 @@ function Stage1Page() {
   const [isLampOn, setIsLampOn] = useState(false);
 
   const { user } = useContext(UserContext);
-  const { items, addItem } = useInventory2(); /* Context에서 items와 addItem 함수 가져옴 */
+  const items = user.inventory;
+  const { addItem } = useInventory2(); /* Context에서 addItem 함수 가져옴 */
 
   useEffect(() => {
     setIsMemoShow(true);
