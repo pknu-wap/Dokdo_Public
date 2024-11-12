@@ -135,7 +135,7 @@ function Stage3Page() {
   /* 숫자 확인 함수 */
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
-    if (number1 === 2 && number2 === 8 && number3 === 6) {
+    if (number1 === 3 && number2 === 0 && number3 === 8) {
       setResultMessage('정답입니다!');
       setTimeout(() => setResultMessage(''), 1000);
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
@@ -223,6 +223,7 @@ function Stage3Page() {
       {/* 무기 힌트 이미지 */}
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
 
+      {/* 친일파 힌트 이미지 - 정답 후 2초 동안 표시 */}
       {spyHintImagesVisible && (
         <div className={styles.SpyHintImage}>
           <img src={SpyHintImage} alt="Spy Hint" />
