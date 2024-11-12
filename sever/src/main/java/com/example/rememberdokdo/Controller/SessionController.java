@@ -30,7 +30,8 @@ public class SessionController {
 
     // 세션 상태 확인 및 진행 상황 반환 엔드포인트
     @GetMapping("/status")
-    public SessionProgressDto getSessionStatus(@RequestParam String sessionId) {
+    public SessionProgressDto getSessionStatus(@RequestParam("sessionId") String sessionId) {
         return sessionService.getSessionStatus(sessionId);
     }
+
 }
