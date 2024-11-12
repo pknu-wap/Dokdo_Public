@@ -22,10 +22,6 @@ import People5 from 'assets/stage3/친일파(5).png';
 import People6 from 'assets/stage3/친일파(6).png';
 import People7 from 'assets/stage3/친일파(7).png';
 import People8 from 'assets/stage3/친일파(8).png';
-// import People9 from 'assets/stage3/친일파(9).png';
-// import People10 from 'assets/stage3/친일파(10).png';
-// import People11 from 'assets/stage3/친일파(11).png';
-// import People12 from 'assets/stage3/친일파(12).png';
 
 const Stage3PeopleImage = [
   { id: 1, src: People1, name: '친일파1' },
@@ -36,11 +32,6 @@ const Stage3PeopleImage = [
   { id: 6, src: People6, name: '친일파6' },
   { id: 7, src: People7, name: '친일파7' },
   { id: 8, src: People8, name: '친일파8' },
-  // { id: 9, src: People9, name: '친일파9' },
-  // { id: 10, src: People10, name: '친일파10' },
-  // { id: 11, src: People11, name: '친일파11' },
-  // { id: 12, src: People12, name: '친일파12' },
-
 ];
 
 const CorrectAnswer = [1, 6, 8];
@@ -138,7 +129,7 @@ function Stage3Page() {
         addItem('GunHintImage'); /* 인벤토리에 무기 힌트 추가 */
         setIsGunHintCollected(true); /* GunHintImage 수집 상태 true */
       }
-    }, 3000);
+    }, 2000);
   };
 
   /* 숫자 확인 함수 */
@@ -232,23 +223,11 @@ function Stage3Page() {
       {/* 무기 힌트 이미지 */}
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
 
-      {/* 친일파 힌트 이미지 - 정답 후 2초 동안 표시 */}
       {spyHintImagesVisible && (
         <div className={styles.SpyHintImage}>
           <img src={SpyHintImage} alt="Spy Hint" />
         </div>
       )}
-
-      {/* {spyHintImagesVisible[1] && (
-        <div className={styles.SpyHintImage2}>
-          <img src={SpyHintImage2} alt="Spy Hint 2" />
-        </div>
-      )}
-      {spyHintImagesVisible[2] && (
-        <div className={styles.SpyHintImage3}>
-          <img src={SpyHintImage3} alt="Spy Hint 3" />
-        </div>
-      )} */}
 
       {/* 숫자 맞추기 모달 - 닫힌 문 클릭시 열림 */}
       <Modal

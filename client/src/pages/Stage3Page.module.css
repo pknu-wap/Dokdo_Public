@@ -22,7 +22,7 @@
 .DoorClose {
   cursor: pointer;
   position: fixed;
-  top: 31.4vw;
+  top: 56vh;
   left: 18vw;
   transform: translate(-50%, -50%);
   width: 25vw;
@@ -33,7 +33,7 @@
 .DoorOpen {
   cursor: pointer;
   position: fixed;
-  top: 32.8vw;
+  top: 58.3vh;
   left: 18vw;
   transform: translate(-50%, -50%);
   width: 25vw;
@@ -44,7 +44,7 @@
 .Stage3wall {
   width: 45vw;
   position: fixed;
-  top: 10vw;
+  top: 18.8vh;
   left: 59vw;
   cursor: pointer;
   transform: translateX(-50%);
@@ -55,7 +55,7 @@
   font-size: 1.5vw;
   position: relative;
   padding: 2vw;
-  top: 0vw;
+  top: 0vh;
   left: 23.5vw;
 }
 
@@ -63,8 +63,8 @@
   font-size: 2vw;
   position: relative;
   padding: 2vw;
-  top: 0vw;
-  left: 20vw;
+  top: 0vh;
+  left: 24vw;
 }
 
 .SetScore{
@@ -111,7 +111,7 @@
 
 .ResultBanner {
   position: fixed;
-  top: 9vw;
+  top: 11vh;
   left: 50vw;
   transform: translateX(-50%);
   background-color: #C1A693;
@@ -130,11 +130,11 @@
 
 .KoreaFlag { 
   cursor: pointer;
-  width: 7.8vw;
+  width: 7.9vw;
   height: 9.5vh;
   position: fixed;
-  top: 10.2vw;
-  left: 64.4vw;
+  top: 19.2vh;
+  left: 64.3vw;
 }
 
 .NoteImage {
@@ -142,16 +142,16 @@
   width: 3vw;
   height: auto;
   position: fixed;
-  top: 8.4vw;
+  top: 16vh;
   left: 66.6vw;
 }
 
 .GunHintImage {
   position: fixed;
-  top: 27vw;
+  top: 50vh;
   left: 53vw;
   transform: translate(-50%, -50%);
-  width: 40vw;
+  width: 30vw;
   height: auto;
 }
 
