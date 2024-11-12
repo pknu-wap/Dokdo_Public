@@ -8,11 +8,10 @@ import { useInventory } from '../context/InventoryContext';
 
 import Stage3wall from 'assets/stage3/Stage3wall.png';
 import KoreaFlag from 'assets/stage3/KoreaFlag.png';
-import GunHintImage from '../assets/GunHintImage.png';
+import GunHintImage from 'assets/stage3/GunHintImage.png';
 import DoorClose from 'assets/stage3/Stage3DoorClose.png';
 import DoorOpen from 'assets/stage3/Stage3DoorOpen.png';
 import NoteImage from 'assets/stage3/noteImage.png';
-
 import SpyHintImage from 'assets/stage3/SpyHintImage.png';
 
 import People1 from 'assets/stage3/친일파(1).png';
