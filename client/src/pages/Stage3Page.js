@@ -2,23 +2,31 @@ import styles from './Stage3Page.module.css';
 import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import CheckNumber from '../components/CheckNumber.js';
+import Modal from '../components/Modal.js';
 import { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
 
-import Stage3wall from '../assets/Stage3wall.png';
-import KoreaFlag from '../assets/KoreaFlag.png';
+import Stage3wall from 'assets/stage3/Stage3wall.png';
+import KoreaFlag from 'assets/stage3/KoreaFlag.png';
 import GunHintImage from '../assets/GunHintImage.png';
-import DoorClose from 'assets/stage1/Stage1DoorClose.png';
-import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
+import DoorClose from 'assets/stage3/Stage3DoorClose.png';
+import DoorOpen from 'assets/stage3/Stage3DoorOpen.png';
 import NoteImage from 'assets/stage3/noteImage.png';
-import Modal from '../components/Modal.js';
 
-import People1 from '../assets/친일파(1).png';
-import People2 from '../assets/친일파(2).png';
-import People3 from '../assets/친일파(3).png';
-import People4 from '../assets/친일파(4).png';
-import People5 from '../assets/친일파(5).png';
-import People6 from '../assets/친일파(6).png';
+import SpyHintImage from 'assets/stage3/SpyHintImage.png';
+
+import People1 from 'assets/stage3/친일파(1).png';
+import People2 from 'assets/stage3/친일파(2).png';
+import People3 from 'assets/stage3/친일파(3).png';
+import People4 from 'assets/stage3/친일파(4).png';
+import People5 from 'assets/stage3/친일파(5).png';
+import People6 from 'assets/stage3/친일파(6).png';
+import People7 from 'assets/stage3/친일파(7).png';
+import People8 from 'assets/stage3/친일파(8).png';
+// import People9 from 'assets/stage3/친일파(9).png';
+// import People10 from 'assets/stage3/친일파(10).png';
+// import People11 from 'assets/stage3/친일파(11).png';
+// import People12 from 'assets/stage3/친일파(12).png';
 
 const Stage3PeopleImage = [
   { id: 1, src: People1, name: '친일파1' },
@@ -27,9 +35,16 @@ const Stage3PeopleImage = [
   { id: 4, src: People4, name: '친일파4' },
   { id: 5, src: People5, name: '친일파5' },
   { id: 6, src: People6, name: '친일파6' },
+  { id: 7, src: People7, name: '친일파7' },
+  { id: 8, src: People8, name: '친일파8' },
+  // { id: 9, src: People9, name: '친일파9' },
+  // { id: 10, src: People10, name: '친일파10' },
+  // { id: 11, src: People11, name: '친일파11' },
+  // { id: 12, src: People12, name: '친일파12' },
+
 ];
 
-const CorrectAnswer = [1, 2, 3];
+const CorrectAnswer = [1, 6, 8];
 
 function Stage3Page() {
   const [isStage2Open] = useState(true);
@@ -50,11 +65,14 @@ function Stage3Page() {
     number1: 0,
     number2: 0,
     number3: 0,
-  }); /* CheckNumber 숫자 받아오기 */
+  });   /* CheckNumber 숫자 받아오기 */
+
+  /* 친일파 힌트 이미지 상태 */
+  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false);
 
   const handleItemClick = (itemName) => {
     addItem(itemName);
-  }; /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
+  };   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
 
   /* 정답, 오답 3개로 제한 */
   const handleImageClick = (image) => {
@@ -69,15 +87,15 @@ function Stage3Page() {
 
   /* 친일파 찾기 모달 열기 */
   const openFindSpyModal = () => {
-    if (!isAnswerCorrect && !isDoorOpen) {
+    if (!isAnswerCorrect && !isDoorOpen) { 
       /* 정답을 맞추지 않은 경우에만 열림 */
       setIsFindSpyModalOpen(true);
     }
   };
-
+  
   /* 친일파 찾기 정답 확인 */
   const handleCheckAnswer = () => {
-    const selectedIds = selectedImage.map((img) => img.id);
+    const selectedIds = selectedImage.map(img => img.id);
     const isCorrect = JSON.stringify(selectedIds.slice().sort()) === JSON.stringify(CorrectAnswer.slice().sort());
 
     if (isCorrect) {
@@ -87,6 +105,14 @@ function Stage3Page() {
       setIsFindSpyModalOpen(false); /* 모달 닫기 */
       setSelectedImage([]);
       setTimeout(() => setResultMessage(''), 1000);
+
+      /* Spy 힌트 이미지를 표시하고 2초 후 사라짐과 동시에 인벤토리에 추가 */ 
+      setSpyHintImagesVisible(true);
+      setTimeout(() => {
+        setSpyHintImagesVisible(false);
+        addItem('SpyHintImage');
+      }, 1000);
+
     } else {
       setResultMessage('오답입니다. 다시 시도해주세요.');
       setTimeout(() => setResultMessage(''), 1000);
@@ -96,8 +122,7 @@ function Stage3Page() {
   };
 
   const handleAddKoreaFlagImageClick = () => {
-    if (!isGunHintCollected) {
-      /* GunHintImage가 수집되지 않은 경우에만 동작 */
+    if (!isGunHintCollected) { /* GunHintImage가 수집되지 않은 경우에만 동작 */
       setNoteImage(NoteImage);
     }
   };
@@ -142,9 +167,9 @@ function Stage3Page() {
   /* 새로고침 시 문이 열린 상태 유지 */
   useEffect(() => {
     const savedDoorState = sessionStorage.getItem('stage3DoorOpen');
-    if (savedDoorState === 'true') {
-      setIsDoorOpen(true);
-    }
+      if (savedDoorState === 'true') {
+        setIsDoorOpen(true);
+      }
   }, []);
 
   return (
@@ -158,18 +183,13 @@ function Stage3Page() {
       {isDoorOpen ? (
         <img className={`${styles.DoorOpen} ${styles.DoorOpen}`} src={DoorOpen} alt="열린 문" />
       ) : (
-        <img
-          className={`${styles.DoorClose} ${styles.DoorClose}`}
-          src={DoorClose}
-          alt="닫힌 문"
-          onClick={handleDoorClick}
-        />
+        <img className={`${styles.DoorClose} ${styles.DoorClose}`} src={DoorClose} alt="닫힌 문" onClick={handleDoorClick} />
       )}
 
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
 
       <img
-        className={`${styles.Stage3Gunhint} ${styles.Stage3Gunhint} ${styles.Stage3Gunhint} ${
+        className={`${styles.Stage3Gunhint} ${
           items.includes('Stage3Gunhint') ? styles.hidden : ''
         }`}
         src={GunHintImage}
@@ -213,15 +233,35 @@ function Stage3Page() {
       {/* 무기 힌트 이미지 */}
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
 
+      {/* 친일파 힌트 이미지 - 정답 후 2초 동안 표시 */}
+      {spyHintImagesVisible && (
+        <div className={styles.SpyHintImage}>
+          <img src={SpyHintImage} alt="Spy Hint" />
+        </div>
+      )}
+
+      {/* {spyHintImagesVisible[1] && (
+        <div className={styles.SpyHintImage2}>
+          <img src={SpyHintImage2} alt="Spy Hint 2" />
+        </div>
+      )}
+      {spyHintImagesVisible[2] && (
+        <div className={styles.SpyHintImage3}>
+          <img src={SpyHintImage3} alt="Spy Hint 3" />
+        </div>
+      )} */}
+
       {/* 숫자 맞추기 모달 - 닫힌 문 클릭시 열림 */}
       <Modal
         isOpen={isNumberGuessModalOpen}
         onClose={() => setIsNumberGuessModalOpen(false)}
         onSubmit={checkNumbers}
-        size="medium"
+        size="large"
       >
         <h1 className={styles.NumberGuessModalMent}>자물쇠를 푸시오</h1>
-        <CheckNumber setScoreValues={setScoreValues} />
+          <div className={styles.SetScore}>
+            <CheckNumber setScoreValues={setScoreValues} /> 
+          </div>
       </Modal>
 
       {/* 결과 메시지 */}
