@@ -31,6 +31,10 @@ public class SessionController {
     // 세션 상태 확인 및 진행 상황 반환 엔드포인트
     @GetMapping("/status")
     public SessionProgressDto getSessionStatus(@RequestParam("sessionId") String sessionId) {
+        if (sessionId == null) {
+            // sessionId가 없을 때의 처리
+            throw new IllegalArgumentException("Session ID가 유효하지 않습니다");
+        }
         return sessionService.getSessionStatus(sessionId);
     }
 
