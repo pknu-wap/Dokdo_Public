@@ -112,12 +112,7 @@ public class SessionService {
         sessionCookie.setMaxAge(3600);  // 1시간 유효
         //sessionCookie.setHttpOnly(true);  // JavaScript로 접근 불가 (보안 강화)
         sessionCookie.setPath("/");  // 전체 경로에서 쿠키 사용 가능
-        // 기본적으로 쿠키 추가
         response.addCookie(sessionCookie);
-
-        // SameSite 속성을 추가하기 위해 Set-Cookie 헤더 수정
-        response.addHeader("Set-Cookie",
-                String.format("SESSIONID=%s; Path=/; Max-Age=3600; SameSite=None", sessionId));
     }
 
     // 매 시간마다 만료된 세션 삭제 (정기적으로 만료된 세션 정리)
