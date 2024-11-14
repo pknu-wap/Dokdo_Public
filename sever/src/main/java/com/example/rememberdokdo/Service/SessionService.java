@@ -110,8 +110,7 @@ public class SessionService {
     private void createSessionCookie(String sessionId, HttpServletResponse response) {
         // SameSite=None 설정을 위해 Set-Cookie 헤더를 수동으로 추가 (Secure 없이 설정)
         String cookieHeader = String.format(
-                "SESSIONID=%s; Path=/; Max-Age=3600; SameSite=None", sessionId
-        );
+                "SESSIONID=%s; Path=/; Max-Age=3600; SameSite=None", sessionId);
 
         // Set-Cookie 헤더에 수동으로 추가
         response.addHeader("Set-Cookie", cookieHeader);
@@ -150,7 +149,8 @@ public class SessionService {
 
         // SessionStatusDto 생성하여 반환
         return new SessionProgressDto(
-                sessionEntity.getSessionId(),
+                null,
+                //sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 stages,
                 inventoryItems,
