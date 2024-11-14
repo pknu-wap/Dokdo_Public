@@ -114,10 +114,9 @@ public class SessionService {
         sessionCookie.setPath("/");  // 전체 경로에서 쿠키 사용 가능
         response.addCookie(sessionCookie);
 
-        // SameSite=None 설정을 위해 Set-Cookie 헤더를 수동으로 추가
+        // SameSite=None 설정을 위해 Set-Cookie 헤더를 수동으로 추가 (Secure 없이 설정)
         response.addHeader("Set-Cookie",
-                String.format("SESSIONID=%s; Path=/; Max-Age=3600; SameSite=None; Secure=%s",
-                        sessionId, sessionCookie.getSecure() ? "true" : "false"));
+                String.format("SESSIONID=%s; Path=/; Max-Age=3600; SameSite=None", sessionId));
     }
 
     // 매 시간마다 만료된 세션 삭제 (정기적으로 만료된 세션 정리)
