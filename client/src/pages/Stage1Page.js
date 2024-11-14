@@ -119,7 +119,8 @@ function Stage1Page() {
   const [isLampOn, setIsLampOn] = useState(false);
 
   const { user, fetchUser } = useUser();
-  const items = user?.inventory ?? [];
+  const [items, setItems] = useState([]);
+
   const { addItem } = useInventory2();
 
   useEffect(() => {
@@ -149,12 +150,24 @@ function Stage1Page() {
   };
 
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
-  const handleItemClick = (itemId) => {
+  const handleItemClick = async (itemId) => {
     if (!user?.sessionId) {
       console.log('Session ID가 없습니다.');
       return;
     }
-    addItem({ sessionId: user.sessionId, itemId: itemId });
+
+    try {
+      await addItem({ sessionId: user.sessionId, itemId });
+      /* 유저 정보 업데이트 */
+      const updatedUser = await fetchUser();
+
+      if (updatedUser?.inventory) {
+        setItems(updatedUser.inventory);
+      }
+      console.log(updatedUser.inventory);
+    } catch (error) {
+      console.error('아이템 추가 중 오류 발생', error);
+    }
   };
 
   return (
@@ -190,7 +203,7 @@ function Stage1Page() {
             />
             <img
               className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1TaegeukKey} ${
-                items.some((item) => item.itemName === 'TaegeukKey') ? styles.hidden : ''
+                items.some((item) => item.itemName === 'taegeukKey') ? styles.hidden : ''
               }`}
               src={TaegeukKey}
               onClick={() => handleItemClick(5)}

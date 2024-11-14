@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext(null);
@@ -10,6 +10,12 @@ export const UserProvider = ({ children }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   if (user) {
+  //     fetchUser();
+  //   }
+  // }, [user.inventory]);
+
   /* 유저 정보 가져오기 */
   const fetchUser = async () => {
     try {
@@ -19,8 +25,10 @@ export const UserProvider = ({ children }) => {
 
       if (response.data) {
         setUser(response.data);
+        return response.data;
       } else {
         console.log('유저 데이터가 없습니다.');
+        return null;
       }
     } catch (error) {
       console.log('유저 정보 GET API 에러', error);
