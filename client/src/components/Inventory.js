@@ -4,7 +4,7 @@ import { ReactSortable } from 'react-sortablejs';
 import taegeukKey from '../assets/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/clover.png';
 import map from '../assets/stage2/Map.png';
-import CodeNote from '../assets/stage2/CodeNote.png';
+import codeNote from '../assets/stage2/CodeNote.png';
 import GunHintImage from '../assets/GunHintImage.png';
 import { useUser } from 'context/UserContext';
 
@@ -12,7 +12,7 @@ const itemImage = {
   taegeukKey: taegeukKey,
   dokdoPuzzle1: dokdoPuzzle1,
   map: map,
-  CodeNote: CodeNote,
+  codeNote: codeNote,
   GunHintImage: GunHintImage,
 };
 
@@ -49,6 +49,9 @@ function Inventory() {
     setSelectedItem(null); /* 오버레이 클릭 시 닫기 */
   };
 
+  const handleDragStart = (e, item) => {
+    e.dataTransfer.setData('text/plain', item.name);
+  };
   return (
     <>
       <div className={styles.InventoryContainer}>
@@ -66,7 +69,12 @@ function Inventory() {
             className={styles.InventoryList}
           >
             {inventoryItems.map((inventoryItem) => (
-              <div key={inventoryItem.id} onClick={() => handleItemClick(inventoryItem)}>
+              <div
+                key={inventoryItem.id}
+                onClick={() => handleItemClick(inventoryItem)}
+                draggable
+                onDragStart={(e) => handleDragStart(e, inventoryItem)}
+              >
                 <img src={inventoryItem.image} alt={inventoryItem.name} className={styles.InventoryItemImage} />
               </div>
             ))}
