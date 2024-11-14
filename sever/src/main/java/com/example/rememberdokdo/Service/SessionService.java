@@ -106,15 +106,15 @@ public class SessionService {
         return SessionDto.fromEntity(sessionEntity);
     }
 
-    // 쿠키 생성 메서드
+    //쿠키 생성 메서드
     private void createSessionCookie(String sessionId, HttpServletResponse response) {
-        // SameSite=None 설정을 위해 Set-Cookie 헤더를 수동으로 추가 (Secure 없이 설정)
-        String cookieHeader = String.format(
-                "SESSIONID=%s; Path=/; Max-Age=3600; SameSite=None", sessionId);
-
-        // Set-Cookie 헤더에 수동으로 추가
-        response.addHeader("Set-Cookie", cookieHeader);
+        Cookie sessionCookie = new Cookie("SESSIONID", sessionId);
+        sessionCookie.setMaxAge(3600); // 1시간 유효
+        //sessionCookie.setHttpOnly(true); // 보안 강화
+        sessionCookie.setPath("/"); // 전체 경로에서 쿠키 사용 가능
+        response.addCookie(sessionCookie);
     }
+
 
     // 매 시간마다 만료된 세션 삭제 (정기적으로 만료된 세션 정리)
     @Scheduled(fixedRate = 3600000)  // 1시간마다 실행
@@ -149,8 +149,7 @@ public class SessionService {
 
         // SessionStatusDto 생성하여 반환
         return new SessionProgressDto(
-                null,
-                //sessionEntity.getSessionId(),
+                sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 stages,
                 inventoryItems,
