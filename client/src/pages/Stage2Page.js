@@ -104,7 +104,7 @@ function Stage2Page() {
 
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
-    if (number1 === 1 && number2 === 3 && number3 === 5) {
+    if (number1 === 1 && number2 === 3 && number3 === 6) {
       sessionStorage.setItem('stage2Door', 'true');
       setDoorOpen(true);
     }
