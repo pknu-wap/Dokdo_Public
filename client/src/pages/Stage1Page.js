@@ -22,11 +22,14 @@ function BeatDoor() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
   const [clickTimestamps, setClickTimestamps] = useState([]); /* 클릭 타임 스탬프 저장 */
   const [timer, setTimer] = useState(null); /* 타이머 상태 */
+  const { stageClear, user } = useUser();
 
   useEffect(() => {
-    const savedDoorState = sessionStorage.getItem('stage1Door');
-    if (savedDoorState === 'true') {
-      setIsCorrectTiming(true);
+    if (user?.stages[0]) {
+      const savedDoorState = user.stages[0].cleared;
+      if (savedDoorState === true) {
+        setIsCorrectTiming(true);
+      }
     }
   }, []);
 
@@ -80,7 +83,8 @@ function BeatDoor() {
     }
 
     setIsCorrectTiming(true);
-    sessionStorage.setItem('stage1Door', 'true');
+    stageClear(1);
+    // sessionStorage.setItem('stage1Door', 'true');
     resetAll();
   };
 

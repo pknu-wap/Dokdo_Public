@@ -55,7 +55,25 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  return <UserContext.Provider value={{ user, setUser, fetchUser, createSession }}>{children}</UserContext.Provider>;
+  /* Stage Clear 함수 */
+  const stageClear = async (stageId) => {
+    try {
+      const response = await axios.post(`${apiUrl}/stage/${stageId}/clear?sessionId=${sessionId}`, null, {
+        withCredentials: true,
+      });
+
+      const clearedStage = response.data.stages;
+      return clearedStage;
+    } catch (error) {
+      console.log('Stage Clear POST 요청 실패', error);
+    }
+  };
+
+  return (
+    <UserContext.Provider value={{ user, setUser, fetchUser, createSession, stageClear }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
 
 export const useUser = () => {
