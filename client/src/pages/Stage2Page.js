@@ -4,7 +4,7 @@ import Inventory from '../components/Inventory.js';
 import Modal from '../components/Modal.js';
 import Book from '../components/Book.js';
 import CheckNumber from '../components/CheckNumber.js';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInventory } from '../context/InventoryContext.js';
 
@@ -22,7 +22,6 @@ function Stage2Page() {
   const navigate = useNavigate();
   const { items } = useInventory();
   const { addItem } = useInventory();
-  const moverRef = useRef(null); // mover 요소에 접근하기 위한 useRef
 
   const handleItemClick = (itemName) => {
     addItem(itemName);
@@ -109,45 +108,6 @@ function Stage2Page() {
       setDoorOpen(true);
     }
   };
-
-  const draggable = ($target) => {
-    let isPress = false;
-    let prevPosX = 0,
-      prevPosY = 0;
-
-    const start = (e) => {
-      prevPosX = e.clientX;
-      prevPosY = e.clientY;
-      isPress = true;
-    };
-
-    const move = (e) => {
-      if (!isPress) return;
-
-      const posX = prevPosX - e.clientX;
-      const posY = prevPosY - e.clientY;
-
-      prevPosX = e.clientX;
-      prevPosY = e.clientY;
-
-      $target.style.left = `${$target.offsetLeft - posX}px`;
-      $target.style.top = `${$target.offsetTop - posY}px`;
-    };
-
-    const end = () => {
-      isPress = false;
-    };
-
-    $target.onmousedown = start;
-    window.onmousemove = move;
-    $target.onmouseup = end;
-  };
-
-  useEffect(() => {
-    if (moverRef.current) {
-      draggable(moverRef.current);
-    }
-  }, []);
 
   const handleDropOnBox = (e) => {
     e.preventDefault();
