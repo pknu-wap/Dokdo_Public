@@ -8,9 +8,12 @@ function StartPage() {
   const navigate = useNavigate(); /* useNavigate 훅 사용 */
   const { createSession } = useContext(UserContext);
 
-  const handleStartBtnClick = () => {
-    createSession();
-    navigate('/intro');
+  const handleStartBtnClick = async () => {
+    try {
+      await createSession();
+    } catch (error) {
+      console.error('세션 생성 중 오류 발생: ', error);
+    }
   };
 
   return (

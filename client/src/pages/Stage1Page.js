@@ -1,10 +1,10 @@
 import styles from './Stage1Page.module.css';
 import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInventory2 } from 'context/InventoryContext2';
-import { UserContext } from 'context/UserContext';
+import { useUser } from 'context/UserContext';
 
 import Stage1Memo from 'assets/stage1/Stage1Memo.png';
 import DoorClose from 'assets/stage1/Stage1DoorClose.png';
@@ -28,7 +28,7 @@ function BeatDoor() {
     if (savedDoorState === 'true') {
       setIsCorrectTiming(true);
     }
-  });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -118,12 +118,15 @@ function Stage1Page() {
   const [isMusicExpand, setIsMusicExpand] = useState(false);
   const [isLampOn, setIsLampOn] = useState(false);
 
-  const { user } = useContext(UserContext);
-  const items = user.inventory;
-  const { addItem } = useInventory2(); /* Context에서 addItem 함수 가져옴 */
+  const { user, fetchUser } = useUser();
+  const items = user?.inventory ?? [];
+  const { addItem } = useInventory2();
 
   useEffect(() => {
-    setIsMemoShow(true);
+    fetchUser();
+    if (!user) {
+      setIsMemoShow(true);
+    }
   }, []);
 
   const handleDrawerClick = () => {
@@ -147,6 +150,10 @@ function Stage1Page() {
 
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
   const handleItemClick = (itemId) => {
+    if (!user?.sessionId) {
+      console.log('Session ID가 없습니다.');
+      return;
+    }
     addItem({ sessionId: user.sessionId, itemId: itemId });
   };
 
@@ -166,7 +173,7 @@ function Stage1Page() {
           <img className={styles.Stage1Table} src={Table} />
           <img
             className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
-              items.some((item) => item.itemName === 'dokdoPuzzle1') ? styles.hidden : ''
+              items && items.some((item) => item.itemName === 'dokdoPuzzle1') ? styles.hidden : ''
             }`}
             src={Clover}
             onClick={() => handleItemClick(1)}
