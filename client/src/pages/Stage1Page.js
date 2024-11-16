@@ -84,7 +84,7 @@ function BeatDoor() {
 
     setIsCorrectTiming(true);
     stageClear(1);
-    // sessionStorage.setItem('stage1Door', 'true');
+
     resetAll();
   };
 
@@ -116,11 +116,12 @@ function BeatDoor() {
 }
 
 function Stage1Page() {
-  const isStage1DoorOpen = true;
   const [isMemoShow, setIsMemoShow] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMusicExpand, setIsMusicExpand] = useState(false);
   const [isLampOn, setIsLampOn] = useState(false);
+  const [isStage2Open, setIsStage2Open] = useState(false);
+  const [isStage3Open, setIsStage3Open] = useState(false);
 
   const { user, fetchUser } = useUser();
   const [items, setItems] = useState([]);
@@ -129,6 +130,14 @@ function Stage1Page() {
 
   useEffect(() => {
     fetchUser();
+    if (user?.stages) {
+      if (user.stages[0]) {
+        setIsStage2Open(true);
+      }
+      if (user.stages[1]) {
+        setIsStage3Open(true);
+      }
+    }
     if (!user) {
       setIsMemoShow(true);
     }
@@ -176,7 +185,7 @@ function Stage1Page() {
 
   return (
     <>
-      <ToolBar isStage2Open={isStage1DoorOpen} isStage3Open={true} />
+      <ToolBar isStage2Open={isStage2Open} isStage3Open={isStage3Open} />
       <Inventory />
       <div className={styles.Stage1Bg}>
         <div className={styles.Stage1Floor} />
