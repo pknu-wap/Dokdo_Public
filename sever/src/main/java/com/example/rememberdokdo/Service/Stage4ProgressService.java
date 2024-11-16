@@ -49,4 +49,12 @@ public class Stage4ProgressService {
         // 남은 하트 수가 0이 되면 게임오버 상태로 변경
         // DB에 변경된 Progress 정보 저장
     }
+
+    // 초기화(게임 오버) 기능
+    public Stage4ProgressDto resetGame(Stage4ProgressDto stage4ProgressDto) {
+        // 기존 데이터 삭제?
+        // 기존 스테이지 4상태 초기화
+        // DB에 새로운 Progress 정보 저장
+        // 응답 Dto 반환
+    }
 }
