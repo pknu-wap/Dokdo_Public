@@ -30,4 +30,11 @@ public class Stage4ProgressService {
         // DB에 변경된 Progress 정보 저장
         // 응답 Dto 반환
     }
+
+    // 상태 조회 기능
+    public Stage4ProgressDto getStatus(Stage4ProgressDto stage4ProgressDto) {
+        // 세션 ID 유효성 검사
+        // 세션 ID에 대한 Stage4Progress 조회
+        // Entity에서 Dto로 변환
+    }
 }
