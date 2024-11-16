@@ -21,12 +21,13 @@ public class Stage4ProgressService {
 
     // 미션 도전 기능
     public Stage4ProgressDto attemptMission(Stage4ProgressDto stage4ProgressDto) {
+        // 세션 ID 유효성 검사
         // 현재 미션 번호 유효성 검사 => 1,2,3만 가능
         // 미션 성공/실패 여부에 따른 처리
         // 성공 -> 미션 번호 증가 : 다음 미션으로 이동
         //=> 미션 번호가 3일때, 성공하면 그대로 3으로 유지하고, 증가x(퍼즐 게임하게됨)
         // 실패 -> 하트 개수 감소
-        // 게임 오버 확인(하트 개수 = 0)
+        // 하트 개수 = 0 이라면, 게임 오버 상태로 변경
         // DB에 변경된 Progress 정보 저장
         // 응답 Dto 반환
     }
@@ -36,5 +37,15 @@ public class Stage4ProgressService {
         // 세션 ID 유효성 검사
         // 세션 ID에 대한 Stage4Progress 조회
         // Entity에서 Dto로 변환
+    }
+
+    // 미션 재도전 기능
+    public Stage4ProgressDto retryMission(Stage4ProgressDto stage4ProgressDto) {
+        // 세션 ID 유효성 검사
+        // 실패한 미션 재도전할 수 있는지 확인(하트 개수 > 0)
+        // 하트 감소(재도전 할때마다)
+        // 재도전 성공 시, 미션 번호 증가(3이상 불가능)
+        // 남은 하트 수가 0이 되면 게임오버 상태로 변경
+        // DB에 변경된 Progress 정보 저장
     }
 }
