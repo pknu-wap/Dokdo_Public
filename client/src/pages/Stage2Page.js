@@ -15,7 +15,7 @@ import BookShelf from 'assets/stage2/BookShelf.png';
 import ContainMapBook from 'assets/stage2/ContainMapBook.png';
 import Lamp from 'assets/stage2/Lamp.png';
 import DoorOpen from 'assets/stage2/DoorOpen.png';
-import CodeNote from 'assets/stage2/CodeNoteCut.png';
+import codeNote from 'assets/stage2/CodeNoteCut.png';
 import BoxOpenAfter from 'assets/stage2/BoxOpenAfter.png';
 
 function Stage2Page() {
@@ -27,7 +27,7 @@ function Stage2Page() {
     addItem(itemName);
   };
 
-  const [isBoxOpen, setIsBoxOpen] = useState(true); /* 드래그 되고 나서의 상태를 보고싶다면 이걸 true로 바꿔주세요 */
+  const [isBoxOpen, setIsBoxOpen] = useState(false);
   const [isHandleBoxOpen, setIsHandleBoxOpen] = useState(false);
   const [isStage2Open, setIsStage2Open] = useState(true);
   const [isStage3Open, setIsStage3Open] = useState(true);
@@ -42,7 +42,6 @@ function Stage2Page() {
     number2: 0,
     number3: 0,
   });
-
   const [doorOpen, setDoorOpen] = useState(false);
 
   useEffect(() => {
@@ -104,22 +103,28 @@ function Stage2Page() {
 
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
-    if (number1 === 1 && number2 === 3 && number3 === 5) {
+    if (number1 === 1 && number2 === 3 && number3 === 6) {
       sessionStorage.setItem('stage2Door', 'true');
       setDoorOpen(true);
     }
   };
-  const handleDrop = (event) => {
-    // 드랍된 아이템의 이름이 태극기일 때
-    if (event.detail[0].item.name === 'TaegeukKey') {
-      setIsBoxOpen(true); // 박스 열기
+
+  const handleDropOnBox = (e) => {
+    e.preventDefault();
+    const draggedItem = e.dataTransfer.getData('text/plain');
+
+    console.log('드래그된 아이템:', draggedItem);
+
+    if (draggedItem === 'TaegeukKey') {
+      setIsBoxOpen(true);
     }
   };
+
   return (
     <div className={styles.Stage2}>
       <div className={styles.BackGround} />
       <div className={styles.Stage2Floor} />
-      <Inventory onDrop={handleDrop} />
+      <Inventory />
       <ToolBar isStage2Open={isStage2Open} isStage3Open={isStage3Open} />
       <img className={styles.Lamp} src={Lamp} />
       <img className={styles.BookShelf} src={BookShelf} alt="bookshelf" />
@@ -149,11 +154,11 @@ function Stage2Page() {
                   <button
                     className={styles.CodeNote}
                     onClick={() => {
-                      handleItemClick('CodeNote');
+                      handleItemClick('codeNote');
                       setIsCodeNoteFind(true);
                     }}
                   >
-                    <img src={CodeNote} alt="CodeNote" />
+                    <img src={codeNote} alt="codeNote" />
                   </button>
                 </div>
               ) : null}
@@ -166,7 +171,7 @@ function Stage2Page() {
           )}
         </div>
       ) : (
-        <div className={styles.Box}>
+        <div className={styles.Box} onDragOver={(e) => e.preventDefault()} onDrop={handleDropOnBox}>
           <img src={BoxClose} alt="box" />
         </div>
       )}

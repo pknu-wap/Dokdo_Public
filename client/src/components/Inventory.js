@@ -13,7 +13,7 @@ const itemImage = {
   TaegeukKey: TaegeukKey,
   dokdoPuzzle1: dokdoPuzzle1,
   map: map,
-  CodeNote: CodeNote,
+  codeNote: codeNote,
   GunHintImage: GunHintImage,
   SpyHintImage: SpyHintImage,
 };
@@ -45,6 +45,9 @@ function Inventory() {
     setSelectedItem(null); /* 오버레이 클릭 시 닫기 */
   };
 
+  const handleDragStart = (e, item) => {
+    e.dataTransfer.setData('text/plain', item.name);
+  };
   return (
     <>
       <div className={styles.InventoryContainer}>
@@ -62,7 +65,12 @@ function Inventory() {
             className={styles.InventoryList}
           >
             {inventoryItems.map((inventoryItem) => (
-              <div key={inventoryItem.id} onClick={() => handleItemClick(inventoryItem)}>
+              <div
+                key={inventoryItem.id}
+                onClick={() => handleItemClick(inventoryItem)}
+                draggable
+                onDragStart={(e) => handleDragStart(e, inventoryItem)}
+              >
                 <img src={inventoryItem.image} alt={inventoryItem.name} className={styles.InventoryItemImage} />
               </div>
             ))}
