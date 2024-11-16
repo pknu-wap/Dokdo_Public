@@ -12,14 +12,14 @@
 }
 .BackGround {
   position: fixed;
-  width: 100vw;
+  width: 180vh;
   height: 87vh;
   background-color: #fee7d7;
 }
 .Stage2Floor {
   position: fixed;
   background-color: #846b66;
-  width: 100vw;
+  width: 180vh;
   top: 87vh;
   height: 13vh;
 }
@@ -28,7 +28,7 @@
   position: fixed;
   top: 10vh;
   width: 15vh;
-  left: 13vw;
+  left: 28vh;
 }
 .Box img,
 .BoxOpen img,
@@ -44,30 +44,29 @@
   border: none;
   background: transparent;
   position: fixed;
-  top: 66.35vh;
-  left: 6vw;
-  width: 6.5vw;
+  top: 64vh;
+  left: 11vh;
+  width: 13vh;
   z-index: 1;
 }
 
 .Box {
   position: fixed;
-  top: 63vh;
-  left: 4vw;
-  width: 27vw;
+  top: 60.5vh;
+  left: 8vh;
+  width: 52.3vh;
   height: auto;
   color: transparent;
   outline: none;
   border: none;
   background-color: transparent;
-  cursor: pointer;
 }
 
 .BoxButton {
   position: fixed;
   top: 63vh;
-  left: 4vw;
-  width: 15vw;
+  left: 10vh;
+  width: 28vh;
   height: 16vh;
   color: transparent;
   outline: none;
@@ -78,9 +77,9 @@
 
 .BoxOpen {
   position: fixed;
-  top: 62.95vh;
-  left: 3vw;
-  width: 28vw;
+  top: 60.4vh;
+  left: 6.2vh;
+  width: 54vh;
   height: auto;
   color: transparent;
   outline: none;
@@ -90,8 +89,8 @@
 .BoxOpenButton {
   position: fixed;
   top: 63vh;
-  left: 3vw;
-  width: 16vw;
+  left: 5vh;
+  width: 35vh;
   height: 17.5vh;
   color: transparent;
   outline: none;
@@ -102,9 +101,9 @@
 
 .Door {
   position: fixed;
-  top: 31.1vh;
-  left: 35vw;
-  width: 23vw;
+  top: 26vh;
+  left: 72vh;
+  width: 45vh;
   height: auto;
   background: none;
   border: none;
@@ -114,9 +113,9 @@
 
 .DoorOpen {
   position: fixed;
-  top: 29vh;
-  left: 35vw;
-  width: 24vw;
+  top: 26vh;
+  left: 72vh;
+  width: 45vh;
   height: auto;
   background: none;
   border: none;
@@ -133,15 +132,15 @@
 .BookShelf {
   position: fixed;
   top: 15vh;
-  left: 60vw;
-  width: 25vw;
+  left: 125vh;
+  width: 50vh;
 }
 
 .ContainMapBook {
   position: fixed;
   top: 17.4vh;
-  left: 67.75vw;
-  width: 2.73vw;
+  left: 140vh;
+  width: 5vh;
   height: 17vh;
   background-color: transparent;
   border: none;
