@@ -1,10 +1,12 @@
 package com.example.rememberdokdo.Dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor // 생성자
 public class MissionStartDto {
     private int progressId;
     private String sessionId;
@@ -12,14 +14,5 @@ public class MissionStartDto {
     private int remainingHearts;
     private boolean isCurrentMissionCleared;
     private boolean isGameOver;
-
-    public MissionStartDto(int progressId, String sessionId, int currentMissionId, int remainingHearts, boolean isCurrentMissionCleared, boolean isGameOver) {
-        this.progressId = progressId;
-        this.sessionId = sessionId;
-        this.currentMissionId = currentMissionId;
-        this.remainingHearts = remainingHearts;
-        this.isCurrentMissionCleared = isCurrentMissionCleared;
-        this.isGameOver = isGameOver;
-    }
 }
 
