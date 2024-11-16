@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor // 생성자
-public class MissionStartDto {
+public class Stage4ProgressDto {
     private int progressId;
     private String sessionId;
     private int currentMissionId;
