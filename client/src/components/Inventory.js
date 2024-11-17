@@ -4,6 +4,9 @@ import { ReactSortable } from 'react-sortablejs';
 import { useInventory } from '../context/InventoryContext';
 import TaegeukKey from '../assets/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/clover.png';
+import dokdoPuzzle2 from '../assets/dokdoPuzzle2.png';
+import dokdoPuzzle3 from '../assets/dokdoPuzzle3.png';
+import dokdoPuzzle4 from '../assets/dokdoPuzzle4.png';
 import map from '../assets/stage2/Map.png';
 import codeNote from '../assets/stage2/CodeNote.png';
 import GunHintImage from '../assets/GunHintImage.png';
@@ -11,6 +14,9 @@ import GunHintImage from '../assets/GunHintImage.png';
 const itemImage = {
   TaegeukKey: TaegeukKey,
   dokdoPuzzle1: dokdoPuzzle1,
+  dokdoPuzzle2: dokdoPuzzle2,
+  dokdoPuzzle3: dokdoPuzzle3,
+  dokdoPuzzle4: dokdoPuzzle4,
   map: map,
   codeNote: codeNote,
   GunHintImage: GunHintImage,

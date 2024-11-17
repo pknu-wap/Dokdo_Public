@@ -6,7 +6,8 @@ import Stage1Page from './pages/Stage1Page';
 import IntroPage from './pages/IntroPage';
 import NewsPage from './pages/NewsPage';
 import Stage3Page from './pages/Stage3Page';
-
+import Stage4PuzzleGame from 'pages/Stage4PuzzleGame';
+import EndFailPage from 'pages/EndFailPage';
 
 function Main() {
   return (
@@ -19,6 +20,8 @@ function Main() {
           <Route path="stage1" element={<Stage1Page />} />
           <Route path="stage2" element={<Stage2Page />} />
           <Route path="Stage3" element={<Stage3Page />} />
+          <Route path="stage4PuzzleGame" element={<Stage4PuzzleGame />} />
+          <Route path="EndFail" element={<EndFailPage />} />
         </Routes>
       </App>
     </BrowserRouter>
