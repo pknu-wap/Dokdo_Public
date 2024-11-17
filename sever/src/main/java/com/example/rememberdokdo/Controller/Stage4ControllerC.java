@@ -18,4 +18,10 @@ public class Stage4ControllerC {
         return ResponseEntity.ok(stage4ProgressServiceC.startStage4(sessionId));
     }
 
+    @PostMapping("/mission/attempt/{sessionId}/{currentMissionId}")
+    public ResponseEntity<Stage4ProgressDto> attemptMission(
+            @PathVariable String sessionId,
+            @PathVariable int currentMissionId) {
+        return ResponseEntity.ok(stage4ProgressServiceC.attemptMission(sessionId, currentMissionId));
+    }
 }
