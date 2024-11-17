@@ -120,6 +120,9 @@ public class Stage4ProgressService {
                 .findBySessionId(sessionId)
                 .orElseThrow(() -> new IllegalArgumentException("세션 ID에 대한 스테이지4 진행 정보가 없습니다."));
 
+        // 기존 데이터 삭제(진행 상태 삭제)
+        stage4ProgressRepository.delete(stage4ProgressEntity);
+
         // 기존 스테이지 4 상태 초기화
         stage4ProgressEntity.setCurrentMissionId(1); // 첫 번째 미션부터 시작
         stage4ProgressEntity.setRemainingHearts(3); // 초기 하트 개수 = 3
@@ -127,7 +130,17 @@ public class Stage4ProgressService {
         stage4ProgressEntity.setGameOver(false); // 게임 오버 상태 초기화
 
         // DB에 새로운 Progress 정보 저장
+        stage4ProgressRepository.save(stage4ProgressEntity);
+
         // 응답 Dto 반환
-        return null;
+        Stage4ProgressDto stage4ProgressResponseDto = new Stage4ProgressDto();
+        stage4ProgressResponseDto.setProgressId(stage4ProgressEntity.getProgressId());
+        stage4ProgressResponseDto.setSessionId(stage4ProgressEntity.getSessionId());
+        stage4ProgressResponseDto.setCurrentMissionId(stage4ProgressEntity.getCurrentMissionId());
+        stage4ProgressResponseDto.setRemainingHearts(stage4ProgressEntity.getRemainingHearts());
+        stage4ProgressResponseDto.setCurrentMissionCleared(stage4ProgressEntity.isCurrentMissionCleared());
+        stage4ProgressResponseDto.setGameOver(stage4ProgressEntity.isGameOver());
+
+        return stage4ProgressResponseDto;
     }
 }
