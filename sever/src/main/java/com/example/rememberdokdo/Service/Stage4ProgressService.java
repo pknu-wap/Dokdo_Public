@@ -45,12 +45,16 @@ public class Stage4ProgressService {
     // 미션 재도전 기능
     public Stage4ProgressDto retryMission(Stage4ProgressDto stage4ProgressDto) {
         // 세션 ID 유효성 검사
+        if (stage4ProgressDto.getSessionId() == null){
+            throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
+        }
         // 현재 미션 ID 3인지 검사 => 3이면 진행 불가능
         // 실패한 미션 재도전할 수 있는지 확인(하트 개수 > 0)
         // 재도전 할때마다 하트 감소
         // 재도전 성공 시, 미션 번호 증가(3이상 불가능)
         // 남은 하트 수가 0이 되면 게임오버 상태로 변경
         // DB에 변경된 Progress 정보 저장
+        // 응답 Dto 반환
         return null;
     }
 
