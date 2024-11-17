@@ -17,7 +17,7 @@ public class Stage4ProgressServiceC {
     public Stage4ProgressDto startStage4(String sessionId) {
         // 데이터베이스에서 세션 ID로 진행 상태를 검색
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
-                .orElseThrow(() -> new IllegalArgumentException("Session ID not found or invalid: " + sessionId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid session ID"));
 
         // Stage 3 클리어 여부 확인
         if (!progress.isStage3Cleared()) {
@@ -31,7 +31,11 @@ public class Stage4ProgressServiceC {
         progress.setGameOver(false); // 게임 오버 상태 해제
 
         // 변경된 진행 상태를 데이터베이스에 저장
-        stage4ProgressRepository.save(progress);
+        try {
+            stage4ProgressRepository.save(progress);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save progress", e);
+        }
 
         // 변경된 엔티티를 DTO로 변환하여 반환
         return mapToDto(progress);
@@ -40,7 +44,7 @@ public class Stage4ProgressServiceC {
     public Stage4ProgressDto attemptMission(String sessionId, int currentMissionId) {
         // 데이터베이스에서 세션 ID로 진행 상태를 검색
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
-                .orElseThrow(() -> new IllegalArgumentException("세션ID가 유효하지 않습니다: " + sessionId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid session ID"));
 
         // 게임 오버 상태 확인
         if (progress.isGameOver()) {
@@ -49,7 +53,7 @@ public class Stage4ProgressServiceC {
 
         // 현재 진행 중인 미션 번호와 요청된 미션 번호 비교
         if (progress.getCurrentMissionId() != currentMissionId) {
-            throw new IllegalArgumentException("Invalid mission ID. Current mission ID is: " + progress.getCurrentMissionId());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid mission ID");
         }
 
         // 미션 성공 여부 결정 (50% 확률로 성공 처리)
@@ -72,7 +76,11 @@ public class Stage4ProgressServiceC {
         }
 
         // 변경된 진행 상태를 데이터베이스에 저장
-        stage4ProgressRepository.save(progress);
+        try {
+            stage4ProgressRepository.save(progress);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save progress", e);
+        }
 
         // 변경된 엔티티를 DTO로 변환하여 반환
         return mapToDto(progress);
@@ -83,12 +91,15 @@ public class Stage4ProgressServiceC {
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid session ID"));
 
-
         // 진행 상태를 DTO로 변환하여 반환
         return mapToDto(progress);
     }
 
     private Stage4ProgressDto mapToDto(Stage4ProgressEntity entity) {
+        if (entity == null) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Entity mapping failed: progress entity is null.");
+        }
+
         return Stage4ProgressDto.builder()
                 .progressId(entity.getProgressId()) // 진행 ID
                 .sessionId(entity.getSessionId()) // 세션 ID
