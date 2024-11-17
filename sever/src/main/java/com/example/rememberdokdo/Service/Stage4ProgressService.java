@@ -84,7 +84,7 @@ public class Stage4ProgressService {
                 // 재도전한 현재 미션 성공한 경우
                 if (stage4ProgressEntity.getCurrentMissionId() < 3){ // 미션 1, 2
                     stage4ProgressEntity.setCurrentMissionId(stage4ProgressEntity.getCurrentMissionId() + 1); // 성공한 미션에 대해 다음 미션으로 이동
-                    stage4ProgressEntity.setCurrentMissionCleared(true);
+                    stage4ProgressEntity.setCurrentMissionCleared(true); // 미션 클리어 true로 변환
                 } else { // 미션 3
                     stage4ProgressEntity.setCurrentMissionCleared(true); // 미션 클리어 true로 변환
                 }
@@ -94,8 +94,18 @@ public class Stage4ProgressService {
         }
 
         // DB에 변경된 Progress 정보 저장
+        stage4ProgressRepository.save(stage4ProgressEntity);
+
         // 응답 Dto 반환
-        return null;
+        Stage4ProgressDto stage4ProgressResponseDto = new Stage4ProgressDto();
+        stage4ProgressResponseDto.setProgressId(stage4ProgressEntity.getProgressId());
+        stage4ProgressResponseDto.setSessionId(stage4ProgressEntity.getSessionId());
+        stage4ProgressResponseDto.setCurrentMissionId(stage4ProgressEntity.getCurrentMissionId());
+        stage4ProgressResponseDto.setRemainingHearts(stage4ProgressEntity.getRemainingHearts());
+        stage4ProgressResponseDto.setCurrentMissionCleared(stage4ProgressEntity.isCurrentMissionCleared());
+        stage4ProgressResponseDto.setGameOver(stage4ProgressEntity.isGameOver());
+
+        return stage4ProgressResponseDto;
     }
 
     // 초기화(게임 오버) 기능
