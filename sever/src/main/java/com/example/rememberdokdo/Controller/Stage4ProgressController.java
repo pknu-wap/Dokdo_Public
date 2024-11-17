@@ -23,4 +23,10 @@ public class Stage4ProgressController {
             @PathVariable boolean isCurrentMissionCleared) {
         return ResponseEntity.ok(stage4ProgressService.retryMission(sessionId, currentMissionId, isCurrentMissionCleared));
     }
+
+    @PostMapping("/reset/{sessionId}")
+    public ResponseEntity<Stage4ProgressDto> resetStage4(
+            @PathVariable String sessionId){
+        return ResponseEntity.ok(stage4ProgressService.resetStage4(sessionId));
+    }
 }
