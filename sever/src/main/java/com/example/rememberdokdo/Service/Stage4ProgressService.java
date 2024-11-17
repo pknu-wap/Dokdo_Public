@@ -109,7 +109,12 @@ public class Stage4ProgressService {
     }
 
     // 초기화(게임 오버) 기능
-    public Stage4ProgressDto resetGame(Stage4ProgressDto stage4ProgressDto) {
+    public Stage4ProgressDto resetGame(String sessionId) {
+        // 세션 ID 유효성 검사
+        if (sessionId == null || sessionId.isEmpty()){
+            throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
+        }
+
         // 기존 데이터 삭제?
         // 기존 스테이지 4상태 초기화
         // DB에 새로운 Progress 정보 저장
