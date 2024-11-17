@@ -115,8 +115,12 @@ public class Stage4ProgressService {
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
 
-        // 기존 데이터 삭제?
-        // 기존 스테이지 4상태 초기화
+        // DB에서 세션 ID로 진행 상황 조회
+        Stage4ProgressEntity stage4ProgressEntity = stage4ProgressRepository
+                .findBySessionId(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("세션 ID에 대한 스테이지4 진행 정보가 없습니다."));
+
+        // 기존 스테이지 4 상태 초기화
         // DB에 새로운 Progress 정보 저장
         // 응답 Dto 반환
         return null;
