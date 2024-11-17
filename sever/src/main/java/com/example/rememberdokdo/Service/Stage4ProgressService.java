@@ -109,7 +109,7 @@ public class Stage4ProgressService {
     }
 
     // 초기화(게임 오버) 기능
-    public Stage4ProgressDto resetGame(String sessionId) {
+    public Stage4ProgressDto resetStage4(String sessionId) {
         // 세션 ID 유효성 검사
         if (sessionId == null || sessionId.isEmpty()){
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
