@@ -48,7 +48,12 @@ public class Stage4ProgressService {
         if (stage4ProgressDto.getSessionId() == null){
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
-        // 현재 미션 ID 3인지 검사 => 3이면 진행 불가능
+
+        // 현재 미션 ID 검사 => 3이면 진행 불가능
+        if (stage4ProgressDto.getCurrentMissionId() == 3) {
+            throw new IllegalArgumentException("현재 미션이 3단계이므로, 미션 진행이 불가능합니다.");
+        }
+
         // 실패한 미션 재도전할 수 있는지 확인(하트 개수 > 0)
         // 재도전 할때마다 하트 감소
         // 재도전 성공 시, 미션 번호 증가(3이상 불가능)
