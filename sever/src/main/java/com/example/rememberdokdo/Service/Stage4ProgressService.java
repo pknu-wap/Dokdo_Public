@@ -1,14 +1,18 @@
 package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
+import com.example.rememberdokdo.Entity.Stage4ProgressEntity;
 import com.example.rememberdokdo.Repository.Stage4ProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class Stage4ProgressService {
     @Autowired
     private Stage4ProgressRepository stage4ProgressRepository;
+    private Stage4ProgressEntity stage4ProgressEntity;
 
     // 초기화(시작) 기능
     public Stage4ProgressDto startMission(Stage4ProgressDto stage4ProgressDto) {
@@ -43,18 +47,24 @@ public class Stage4ProgressService {
     }
 
     // 미션 재도전 기능
-    public Stage4ProgressDto retryMission(Stage4ProgressDto stage4ProgressDto) {
+    public Stage4ProgressDto retryMission(String sessionId, int currentMissionId) {
         // 세션 ID 유효성 검사
-        if (stage4ProgressDto.getSessionId() == null){
+        if (sessionId == null || sessionId.isEmpty()){
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
 
+        // DB에서 세션 ID로 진행 상황 조회
+        Stage4ProgressEntity stage4ProgressEntity = stage4ProgressRepository
+                .findBySessionId(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("세션 ID에 대한 스테이지4 진행 정보가 없습니다."));
+
         // 현재 미션 ID 검사 => 3이면 진행 불가능
-        if (stage4ProgressDto.getCurrentMissionId() == 3) {
+        if (stage4ProgressEntity.getCurrentMissionId() == 3) {
             throw new IllegalArgumentException("현재 미션이 3단계이므로, 미션 진행이 불가능합니다.");
         }
 
-        // 실패한 미션 재도전할 수 있는지 확인(하트 개수 > 0)
+        // 하트 개수 확인 => 실패한 미션 재도전 가능 여부(하트 개수 > 0)
+
         // 재도전 할때마다 하트 감소
         // 재도전 성공 시, 미션 번호 증가(3이상 불가능)
         // 남은 하트 수가 0이 되면 게임오버 상태로 변경
