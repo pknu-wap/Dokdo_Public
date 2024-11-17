@@ -4,7 +4,9 @@ import com.example.rememberdokdo.Dto.Stage4ProgressDto;
 import com.example.rememberdokdo.Entity.Stage4ProgressEntity;
 import com.example.rememberdokdo.Repository.Stage4ProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class Stage4ProgressServiceC {
@@ -19,7 +21,7 @@ public class Stage4ProgressServiceC {
 
         // Stage 3 클리어 여부 확인
         if (!progress.isStage3Cleared()) {
-            throw new IllegalArgumentException("Stage 3 not cleared");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Stage 3 not cleared");
         }
 
         // Stage 4 진행 상태 초기화
@@ -42,7 +44,7 @@ public class Stage4ProgressServiceC {
 
         // 게임 오버 상태 확인
         if (progress.isGameOver()) {
-            throw new IllegalStateException("Game over. 미션을 시도할 수 없습니다.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Game over");
         }
 
         // 현재 진행 중인 미션 번호와 요청된 미션 번호 비교
@@ -79,7 +81,8 @@ public class Stage4ProgressServiceC {
     public Stage4ProgressDto getStatus(String sessionId) {
         // 세션 ID를 사용하여 진행 상태를 데이터베이스에서 검색
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
-                .orElseThrow(() -> new IllegalArgumentException("세션ID가 유효하지 않습니다: " + sessionId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid session ID"));
+
 
         // 진행 상태를 DTO로 변환하여 반환
         return mapToDto(progress);
