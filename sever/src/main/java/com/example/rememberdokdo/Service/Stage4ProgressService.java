@@ -82,17 +82,17 @@ public class Stage4ProgressService {
                 }
             } else {
                 // 재도전한 현재 미션 성공한 경우
-                stage4ProgressEntity.setCurrentMissionId(stage4ProgressEntity.getCurrentMissionId() + 1); // 성공한 미션에 대해 다음 미션으로 이동
-                stage4ProgressEntity.setCurrentMissionCleared(true); // 미션 클리어 true로 변환
+                if (stage4ProgressEntity.getCurrentMissionId() < 3){ // 미션 1, 2
+                    stage4ProgressEntity.setCurrentMissionId(stage4ProgressEntity.getCurrentMissionId() + 1); // 성공한 미션에 대해 다음 미션으로 이동
+                    stage4ProgressEntity.setCurrentMissionCleared(true);
+                } else { // 미션 3
+                    stage4ProgressEntity.setCurrentMissionCleared(true); // 미션 클리어 true로 변환
+                }
             }
         } else { // 처음 시도한 미션이 성공한 미션인 경우 => 미션 재도전 불가능
             throw new IllegalArgumentException("현재 미션을 이미 클리어하여 재도전이 불가능합니다.");
-
         }
 
-        // 재도전 할때마다 하트 감소
-        // 재도전 성공 시, 미션 번호 증가(3이상 불가능)
-        // 남은 하트 수가 0이 되면 게임오버 상태로 변경
         // DB에 변경된 Progress 정보 저장
         // 응답 Dto 반환
         return null;
