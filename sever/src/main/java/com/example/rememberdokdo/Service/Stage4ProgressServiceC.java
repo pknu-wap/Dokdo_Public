@@ -14,10 +14,21 @@ public class Stage4ProgressServiceC {
     @Autowired
     private Stage4ProgressRepository stage4ProgressRepository;
 
+    private void validateSessionId(String sessionId) {
+        if (sessionId == null || sessionId.trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Session ID cannot be null or empty");
+        }
+    }
     public Stage4ProgressDto startStage4(String sessionId) {
+        validateSessionId(sessionId);
         // 데이터베이스에서 세션 ID로 진행 상태를 검색
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid session ID"));
+
+        // 이미 Stage 4가 진행 중인지 확인
+        if (progress.getCurrentMissionId() > 1 || progress.isGameOver()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stage 4 is already in progress or game over");
+        }
 
         // Stage 3 클리어 여부 확인
         if (!progress.isStage3Cleared()) {
@@ -36,12 +47,17 @@ public class Stage4ProgressServiceC {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save progress", e);
         }
-
         // 변경된 엔티티를 DTO로 변환하여 반환
         return mapToDto(progress);
     }
-
+    
     public Stage4ProgressDto attemptMission(String sessionId, int currentMissionId) {
+        validateSessionId(sessionId);
+        // 미션 ID 검증
+        if (currentMissionId <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Mission ID must be greater than 0");
+        }
+
         // 데이터베이스에서 세션 ID로 진행 상태를 검색
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid session ID"));
@@ -87,6 +103,7 @@ public class Stage4ProgressServiceC {
     }
 
     public Stage4ProgressDto getStatus(String sessionId) {
+        validateSessionId(sessionId);
         // 세션 ID를 사용하여 진행 상태를 데이터베이스에서 검색
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid session ID"));
