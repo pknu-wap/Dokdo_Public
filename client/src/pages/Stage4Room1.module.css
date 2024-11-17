@@ -1,0 +1,23 @@
+.Stage4Bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fee7d7;
+}
+
+.TopBar {
+  position: fixed;
+  width: 40vw;
+  height: 10vh;
+  top: 3vh;
+  left: 2vw;
+  background-color: #C1A693; 
+}
+
+.KimChunsam{
+  position: fixed;
+  width: 20vw;
+  height: 50vh;
+  top: 15vh;
+  left: 35vw;
+}

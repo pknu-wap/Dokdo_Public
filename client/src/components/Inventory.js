@@ -13,7 +13,7 @@ const itemImage = {
   TaegeukKey: TaegeukKey,
   dokdoPuzzle1: dokdoPuzzle1,
   map: map,
-  codeNote: codeNote,
+  codeNote: CodeNote,
   GunHintImage: GunHintImage,
   SpyHintImage: SpyHintImage,
 };
