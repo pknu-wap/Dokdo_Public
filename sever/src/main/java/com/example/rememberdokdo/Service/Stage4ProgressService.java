@@ -17,6 +17,7 @@ public class Stage4ProgressService {
         // Stage4 초기화 진행
         // DB에 새로운 Progress 정보 저장
         // 응답 Dto 반환
+        return null;
     }
 
     // 미션 도전 기능
@@ -30,6 +31,7 @@ public class Stage4ProgressService {
         // 하트 개수 = 0 이라면, 게임 오버 상태로 변경
         // DB에 변경된 Progress 정보 저장
         // 응답 Dto 반환
+        return null;
     }
 
     // 상태 조회 기능
@@ -37,6 +39,7 @@ public class Stage4ProgressService {
         // 세션 ID 유효성 검사
         // 세션 ID에 대한 Stage4Progress 조회
         // Entity에서 Dto로 변환
+        return null;
     }
 
     // 미션 재도전 기능
@@ -48,6 +51,7 @@ public class Stage4ProgressService {
         // 재도전 성공 시, 미션 번호 증가(3이상 불가능)
         // 남은 하트 수가 0이 되면 게임오버 상태로 변경
         // DB에 변경된 Progress 정보 저장
+        return null;
     }
 
     // 초기화(게임 오버) 기능
@@ -56,5 +60,6 @@ public class Stage4ProgressService {
         // 기존 스테이지 4상태 초기화
         // DB에 새로운 Progress 정보 저장
         // 응답 Dto 반환
+        return null;
     }
 }
