@@ -64,6 +64,11 @@ public class Stage4ProgressService {
         }
 
         // 하트 개수 확인 => 실패한 미션 재도전 가능 여부(하트 개수 > 0)
+        if (stage4ProgressEntity.getRemainingHearts() <= 0){
+            stage4ProgressEntity.setGameOver(true); // 게임 오버 상태로 변경(하트가 없으므로)
+            stage4ProgressRepository.save(stage4ProgressEntity); // 변경된 상태 저장
+            throw new IllegalArgumentException("남은 하트가 없으므로 게임 오버되었습니다.");
+        }
 
         // 재도전 할때마다 하트 감소
         // 재도전 성공 시, 미션 번호 증가(3이상 불가능)
