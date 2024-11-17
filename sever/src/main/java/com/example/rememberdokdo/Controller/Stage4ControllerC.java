@@ -24,4 +24,8 @@ public class Stage4ControllerC {
             @PathVariable int currentMissionId) {
         return ResponseEntity.ok(stage4ProgressServiceC.attemptMission(sessionId, currentMissionId));
     }
+    @GetMapping("/status/{sessionId}")
+    public ResponseEntity<Stage4ProgressDto> getStatus(@PathVariable String sessionId) {
+        return ResponseEntity.ok(stage4ProgressServiceC.getStatus(sessionId));
+    }
 }

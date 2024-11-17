@@ -11,6 +11,7 @@ public class Stage4ProgressServiceC {
 
     @Autowired
     private Stage4ProgressRepository stage4ProgressRepository;
+
     public Stage4ProgressDto startStage4(String sessionId) {
         // 데이터베이스에서 세션 ID로 진행 상태를 검색
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
@@ -32,16 +33,6 @@ public class Stage4ProgressServiceC {
 
         // 변경된 엔티티를 DTO로 변환하여 반환
         return mapToDto(progress);
-    }
-    private Stage4ProgressDto mapToDto(Stage4ProgressEntity entity) {
-        return Stage4ProgressDto.builder()
-                .progressId(entity.getProgressId()) // 진행 ID
-                .sessionId(entity.getSessionId()) // 세션 ID
-                .currentMissionId(entity.getCurrentMissionId()) // 현재 미션 ID
-                .remainingHearts(entity.getRemainingHearts()) // 남은 하트 개수
-                .isCurrentMissionCleared(entity.isCurrentMissionCleared()) // 현재 미션 클리어 여부
-                .isGameOver(entity.isGameOver()) // 게임 오버 여부
-                .build();
     }
 
     public Stage4ProgressDto attemptMission(String sessionId, int currentMissionId) {
@@ -83,5 +74,25 @@ public class Stage4ProgressServiceC {
 
         // 변경된 엔티티를 DTO로 변환하여 반환
         return mapToDto(progress);
+    }
+
+    public Stage4ProgressDto getStatus(String sessionId) {
+        // 세션 ID를 사용하여 진행 상태를 데이터베이스에서 검색
+        Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("세션ID가 유효하지 않습니다: " + sessionId));
+
+        // 진행 상태를 DTO로 변환하여 반환
+        return mapToDto(progress);
+    }
+
+    private Stage4ProgressDto mapToDto(Stage4ProgressEntity entity) {
+        return Stage4ProgressDto.builder()
+                .progressId(entity.getProgressId()) // 진행 ID
+                .sessionId(entity.getSessionId()) // 세션 ID
+                .currentMissionId(entity.getCurrentMissionId()) // 현재 미션 ID
+                .remainingHearts(entity.getRemainingHearts()) // 남은 하트 수
+                .isCurrentMissionCleared(entity.isCurrentMissionCleared()) // 현재 미션 클리어 여부
+                .isGameOver(entity.isGameOver()) // 게임 오버 여부
+                .build();
     }
 }
