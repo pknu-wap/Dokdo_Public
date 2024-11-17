@@ -14,7 +14,7 @@
   height: 8vh;
   background-color: beige;
   border-radius: 3vh;
-  transition: background 1s ease; /* 부드러운 색 변화 효과 */
+  transition: background 1s ease;
 }
 
 .PuzzleBack {
