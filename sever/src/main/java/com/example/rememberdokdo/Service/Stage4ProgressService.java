@@ -121,6 +121,11 @@ public class Stage4ProgressService {
                 .orElseThrow(() -> new IllegalArgumentException("세션 ID에 대한 스테이지4 진행 정보가 없습니다."));
 
         // 기존 스테이지 4 상태 초기화
+        stage4ProgressEntity.setCurrentMissionId(1); // 첫 번째 미션부터 시작
+        stage4ProgressEntity.setRemainingHearts(3); // 초기 하트 개수 = 3
+        stage4ProgressEntity.setCurrentMissionCleared(false); // 현재 미션 클리어 여부
+        stage4ProgressEntity.setGameOver(false); // 게임 오버 상태 초기화
+
         // DB에 새로운 Progress 정보 저장
         // 응답 Dto 반환
         return null;
