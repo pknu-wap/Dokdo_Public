@@ -56,7 +56,7 @@ function Stage4Room2() {
   return (
     <div className={styles.Stage4Bg}>
       <div className={styles.TopBar}>
-        박완영을 죽일 수 있는 독이 든 음식을 선택하라
+        박찬영을 죽일 수 있는 독이 든 음식을 선택하라
       </div>
       <Inventory />
 
