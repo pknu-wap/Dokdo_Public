@@ -41,7 +41,9 @@ const ToolBar = ({ isStage2Open = false, isStage3Open = false } /* stage 상태(
           STAGE2
         </button>
       ) : (
-        <span className={`${styles.ToolBarfalse} ${styles.ToolBarBtn}`}>STAGE2</span> /* Link 대신 span 사용 */
+        <span className={`${styles.ToolBarfalse} ${styles.ToolBarBtn} ${styles.ToolBarUnselected}`}>
+          STAGE2
+        </span> /* Link 대신 span 사용 */
       )}
 
       {isStage3Open === true ? (

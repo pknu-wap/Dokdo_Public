@@ -1,12 +1,17 @@
 import styles from './StartPage.module.css';
 import Logo from 'assets/logo2.png';
-import { useNavigate } from 'react-router-dom';
+import { UserContext } from 'context/UserContext';
+import { useContext } from 'react';
 
 function StartPage() {
-  const navigate = useNavigate(); /* useNavigate 훅 사용 */
+  const { createSession } = useContext(UserContext);
 
-  const handleStartBtnClick = () => {
-    navigate('/intro');
+  const handleStartBtnClick = async () => {
+    try {
+      await createSession();
+    } catch (error) {
+      console.error('세션 생성 중 오류 발생: ', error);
+    }
   };
 
   return (
