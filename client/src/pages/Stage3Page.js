@@ -132,7 +132,7 @@ function Stage3Page() {
         addItem('GunHintImage'); /* 인벤토리에 무기 힌트 추가 */
         setIsGunHintCollected(true); /* GunHintImage 수집 상태 true */
       }
-    }, 2000);
+    }, 1000);
   };
 
   /* 숫자 확인 함수 */

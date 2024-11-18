@@ -148,10 +148,10 @@
 
 .GunHintImage {
   position: fixed;
-  top: 50vh;
-  left: 53vw;
+  top: 48vh;
+  left: 59vw;
   transform: translate(-50%, -50%);
-  width: 30vw;
+  width: 42vw;
   height: auto;
 }
 

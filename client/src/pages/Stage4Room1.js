@@ -78,13 +78,13 @@ function Stage4Room1() {
       <div className={styles.Guns}>
         <img
           draggable="true"
-          onDragStart={handleDragStart('wrongGun1')}
+          onDragStart={handleDragStart('correctGun')}
           src={Gun_Black}
           alt="Gun_Black"
         />
         <img
           draggable="true"
-          onDragStart={handleDragStart('correctGun')}
+          onDragStart={handleDragStart('wrongGun1')}
           src={Gun_Gray}
           alt="Gun_Gray"
         />
