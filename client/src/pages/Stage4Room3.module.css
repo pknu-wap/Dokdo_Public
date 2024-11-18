@@ -20,7 +20,7 @@
   box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 }
 
-.ParkHwanyoungWrapper {
+.SonJeongpalWrapper {
   position: fixed;
   top: 19vh;
   left: 34vw;
@@ -30,7 +30,7 @@
   border-radius: 0.8vw; /* 드롭 영역 둥글게 */
 }
 
-.ParkHwanyoung {
+.SonJeongpal {
   width: auto;
   height: 45vh;
   object-fit: contain; /* 이미지 비율 유지 */
@@ -42,7 +42,7 @@
   height: 10vh; /* 배경색의 세로 크기 */
   top: 3vh;
   left: 66vw;
-  display: flex;
+  display: flex; /* 하트 나열 */
   gap: 1vw; /* 하트 간의 간격 */
   background-color: #C1A693; /* 배경 색상 */
   border-radius: 1vw; /* 둥근 모서리 */
@@ -57,23 +57,23 @@
   object-fit: contain; /* 이미지 비율 유지 */
 }
 
-.Food {
+.Weapon {
   position: fixed;
   top: 73vh;
-  left: 23vw;
+  left: 28vw;
   display: flex;
   gap: 5vw; /* 이미지 간의 간격 */
 }
 
-.Food img {
-  width: 20vh;
+.Weapon img {
+  width: 15vh;
   height: auto;
   cursor: grab;
   border-radius: 0.8vw; /* 이미지 둥글게 */
   transition: transform 0.2s ease; /* 드래그 효과 */
 }
 
-.Food img:active {
+.Weapon img:active {
   cursor: grabbing;
   transform: scale(1.1); /* 드래그 중 확대 효과 */
 }
