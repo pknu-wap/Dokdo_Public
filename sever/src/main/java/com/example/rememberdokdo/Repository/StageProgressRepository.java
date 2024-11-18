@@ -18,5 +18,5 @@ public interface StageProgressRepository extends JpaRepository<StageProgressEnti
 
     // sessionId가 같은 모든 레코드 삭제하는 메서드
     @Modifying
-    @Query("DELETE FROM Stage4ProgressEntity p WHERE p.sessionId = :sessionId")
+    @Query("DELETE FROM StageProgressEntity p WHERE p.sessionId = :sessionId")
     void deleteAllBySessionId(@Param("sessionId") String sessionId);}
