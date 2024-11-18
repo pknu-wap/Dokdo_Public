@@ -23,9 +23,9 @@ public interface InventoryItemsRepository extends JpaRepository<InventoryItemsEn
     // 인벤토리 ID로 인벤토리 아이템 목록 조회
     List<InventoryItemsEntity> findByInventoryId(Integer inventoryId);
 
-    // sessionId가 같은 모든 레코드 삭제하는 메서드
+    // inventoryId가 같은 모든 레코드 삭제하는 메서드
     @Modifying
-    @Query("DELETE FROM Stage4ProgressEntity p WHERE p.sessionId = :sessionId")
-    void deleteAllBySessionId(@Param("sessionId") String sessionId);
+    @Query("DELETE FROM InventoryItemsEntity p WHERE p.inventoryId = :inventoryId")
+    void deleteAllByInventoryId(@Param("inventoryId") int inventoryId);
 }
 
