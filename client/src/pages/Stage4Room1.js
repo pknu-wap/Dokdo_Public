@@ -23,7 +23,7 @@ function Stage4Room1() {
     const draggedItem = e.dataTransfer.getData('text/plain');
 
     if (draggedItem === 'correctGun') {
-      navigate('/stage4room2'); /* 정답일 경우 다음 방으로 이동 */
+      navigate('/stage4room2', { state: { hearts } }); /* 정답일 경우 다음 방으로 이동 */
     } else {
       setHearts((prevHearts) => {
         const updatedHearts = Math.max(prevHearts - 1, 0); /* 하트 감소 */
