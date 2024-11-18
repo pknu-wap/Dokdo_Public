@@ -26,7 +26,7 @@ function Main() {
           <Route path="stage4room1" element={<Stage4Room1 />} />
           <Route path="stage4room2" element={<Stage4Room2 />} />
           <Route path="stage4room3" element={<Stage4Room3 />} />
-          <Route path="GameOver" element={<GameOver />} />
+          <Route path="gameOver" element={<GameOver />} />
         </Routes>
       </App>
     </BrowserRouter>

@@ -5,6 +5,7 @@ import CheckNumber from '../components/CheckNumber.js';
 import Modal from '../components/Modal.js';
 import { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
+import { useNavigate } from 'react-router-dom';
 
 import Stage3wall from 'assets/stage3/Stage3wall.png';
 import KoreaFlag from 'assets/stage3/KoreaFlag.png';
@@ -59,6 +60,8 @@ function Stage3Page() {
 
   /* 친일파 힌트 이미지 상태 */
   const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false);
+
+  const navigate = useNavigate(); 
 
   const handleItemClick = (itemName) => {
     addItem(itemName);
@@ -136,9 +139,9 @@ function Stage3Page() {
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
     if (number1 === 3 && number2 === 0 && number3 === 8) {
+      setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
       setResultMessage('정답입니다!');
       setTimeout(() => setResultMessage(''), 1000);
-      setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
       sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
     } else {
@@ -149,7 +152,9 @@ function Stage3Page() {
   };
 
   const handleDoorClick = () => {
-    if (!isDoorOpen && isGunHintCollected) {
+    if (isDoorOpen) {
+      navigate('/Stage4Room1');
+    } else if (!isDoorOpen && isGunHintCollected) {
       setIsNumberGuessModalOpen(true);
     }
   };
@@ -171,7 +176,7 @@ function Stage3Page() {
 
       {/* 문 이미지 - 정답 시 열린 문으로 변경 */}
       {isDoorOpen ? (
-        <img className={`${styles.DoorOpen} ${styles.DoorOpen}`} src={DoorOpen} alt="열린 문" />
+        <img className={`${styles.DoorOpen} ${styles.DoorOpen}`} src={DoorOpen} alt="열린 문" onClick={handleDoorClick} />
       ) : (
         <img className={`${styles.DoorClose} ${styles.DoorClose}`} src={DoorClose} alt="닫힌 문" onClick={handleDoorClick} />
       )}
