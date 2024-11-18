@@ -2,6 +2,7 @@ package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.PuzzleGameResultDto;
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
+import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
 import com.example.rememberdokdo.Entity.Stage4ProgressEntity;
 import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
 import com.example.rememberdokdo.Repository.Inventory.InventoryRepository;
@@ -170,16 +171,21 @@ public class Stage4ProgressService {
         PuzzleGameResultDto responseDto = new PuzzleGameResultDto();
         responseDto.setSessionId(sessionId); // sessionId에 따라 한 번 생성
 
+        // 인벤토리에서 세션 ID 조회
+        InventoryEntity inventory = inventoryRepository.findBySessionId(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("인벤토리가 존재하지 않습니다."));
+        int inventoryId = inventory.getInventoryId();
+
         // 퍼즐 게임 클리어 여부 처리
         if (isPuzzleCleared) {
             // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
-            deleteAllSessionData(sessionId); // 모든 관련 데이터 삭제
+            deleteAllSessionData(sessionId, inventoryId); // 모든 관련 데이터 삭제
             // 새로운 Dto에 방탈출 성공 메시지 추가
             responseDto.setPuzzleCleared(true);
             responseDto.setMessage("방탈출에 성공하였습니다.");
         } else {
             // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화(세션 ID 유지)
-            deleteAllSessionDataExceptSession(sessionId); // 세션 제외한 모든 관련 데이터 삭제
+            deleteAllSessionDataExceptSession(sessionId, inventoryId); // 세션 제외한 모든 관련 데이터 삭제
             // 새로운 초기화된 스테이지 4 상태 생성
             resetStage4Progress(sessionId);
             // 새로운 Dto에 방탈출 실패 메시지 추가
@@ -190,20 +196,20 @@ public class Stage4ProgressService {
     }
 
     // 모든 세션 관련 데이터 삭제하는 메서드
-    private void deleteAllSessionData(String sessionId) {
+    private void deleteAllSessionData(String sessionId, int inventoryId) {
         sessionRepository.deleteBySessionId(sessionId); // 세션 삭제
         stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
         stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
         inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
-        inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
+        inventoryItemsRepository.deleteAllByInventoryId(inventoryId); // 인벤토리 아이템 삭제
     }
 
     // 세션 제외한 관련 데이터 삭제하는 메서드
-    private void deleteAllSessionDataExceptSession(String sessionId) {
+    private void deleteAllSessionDataExceptSession(String sessionId, int inventoryId) {
         stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
         stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
         inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
-        inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
+        inventoryItemsRepository.deleteAllByInventoryId(inventoryId); // 인벤토리 아이템 삭제
     }
 
     // 스테이지 4 진행 상황 초기화
