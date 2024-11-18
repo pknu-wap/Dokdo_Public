@@ -168,43 +168,52 @@ public class Stage4ProgressService {
 
         // 새로운 Dto 생성
         PuzzleGameResultDto responseDto = new PuzzleGameResultDto();
-        responseDto.setSessionId(sessionId); // sessionId에 따라 1번 생성
+        responseDto.setSessionId(sessionId); // sessionId에 따라 한 번 생성
 
         // 퍼즐 게임 클리어 여부 처리
         if (isPuzzleCleared) {
             // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
-            sessionRepository.deleteBySessionId(sessionId); // 세션 삭제
-            stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
-            stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
-            inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
-            inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
-
+            deleteAllSessionData(sessionId); // 모든 관련 데이터 삭제
             // 새로운 Dto에 방탈출 성공 메시지 추가
             responseDto.setPuzzleCleared(true);
             responseDto.setMessage("방탈출에 성공하였습니다.");
         } else {
             // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화(세션 ID 유지)
-            stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
-            stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
-            inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
-            inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
-
+            deleteAllSessionDataExceptSession(sessionId); // 세션 제외한 모든 관련 데이터 삭제
             // 새로운 초기화된 스테이지 4 상태 생성
-            Stage4ProgressEntity newProgress = new Stage4ProgressEntity();
-            newProgress.setSessionId(sessionId); // 기존 세션 ID
-            newProgress.setStage3Cleared(true); // 스테이지3 클리어
-            newProgress.setCurrentMissionId(1); // 첫 번째 미션부터 시작
-            newProgress.setRemainingHearts(3); // 초기 하트 개수 = 3
-            newProgress.setCurrentMissionCleared(false); // 현재 미션 클리어 여부
-            newProgress.setGameOver(false); // 게임 오버 상태 초기화
-
-            // DB에 새로운 Progress 정보 저장
-            stage4ProgressRepository.save(newProgress);
-
+            resetStage4Progress(sessionId);
             // 새로운 Dto에 방탈출 실패 메시지 추가
             responseDto.setPuzzleCleared(false);
             responseDto.setMessage("방탈출에 실패하였습니다. 게임을 다시 시작해주세요.");
         }
         return responseDto;
+    }
+
+    // 모든 세션 관련 데이터 삭제하는 메서드
+    private void deleteAllSessionData(String sessionId) {
+        sessionRepository.deleteBySessionId(sessionId); // 세션 삭제
+        stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
+        stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
+        inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
+        inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
+    }
+
+    // 세션 제외한 관련 데이터 삭제하는 메서드
+    private void deleteAllSessionDataExceptSession(String sessionId) {
+        stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
+        stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
+        inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
+        inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
+    }
+
+    // 스테이지 4 진행 상황 초기화
+    private void resetStage4Progress(String sessionId) {
+        Stage4ProgressEntity newProgress = new Stage4ProgressEntity();
+        newProgress.setSessionId(sessionId); // 기존 세션 ID
+        newProgress.setStage3Cleared(true); // 스테이지3 클리어
+        newProgress.setCurrentMissionId(1); // 첫 번째 미션부터 시작
+        newProgress.setRemainingHearts(3); // 초기 하트 개수 = 3
+        newProgress.setCurrentMissionCleared(false); // 현재 미션 클리어 여부
+        newProgress.setGameOver(false); // 게임 오버 상태 초기화
     }
 }
