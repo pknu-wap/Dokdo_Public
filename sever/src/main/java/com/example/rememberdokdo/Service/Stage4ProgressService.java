@@ -144,4 +144,18 @@ public class Stage4ProgressService {
 
         return responseDto;
     }
+
+    // 퍼즐 게임 결과 처리 기능
+    @Transactional
+    public Stage4ProgressDto PuzzleResult(String sessionId, boolean isPuzzleCleared) {
+        // 세션 ID 유효성 검사
+        // 퍼즐 게임 클리어 여부 처리
+        // 퍼즐 게임 클리어 = true => 세션 ID를 포함한 데이터 삭제
+        // 퍼즐 게임 클리어 = false => 세션 ID에 대한 데이터 초기화 => sessionId에 대한 StageProgress도 삭제
+        // 스테이지 4진행 상황 초기화
+        // 스테이지 진행 상황 초기화
+        // 인벤토리 및 인벤토리 아이템 초기화
+        // 세션 정보만 유지
+        return null;
+    }
 }
