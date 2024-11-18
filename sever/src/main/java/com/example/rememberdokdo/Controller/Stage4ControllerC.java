@@ -21,8 +21,9 @@ public class Stage4ControllerC {
     @PostMapping("/mission/attempt/{sessionId}/{currentMissionId}")
     public ResponseEntity<Stage4ProgressDto> attemptMission(
             @PathVariable String sessionId,
-            @PathVariable int currentMissionId) {
-        return ResponseEntity.ok(stage4ProgressServiceC.attemptMission(sessionId, currentMissionId));
+            @PathVariable int currentMissionId,
+            @RequestParam String selectedItemName) { // 사용자가 선택한 아이템 이름
+        return ResponseEntity.ok(stage4ProgressServiceC.attemptMission(sessionId, currentMissionId, selectedItemName));
     }
     @GetMapping("/status/{sessionId}")
     public ResponseEntity<Stage4ProgressDto> getStatus(@PathVariable String sessionId) {

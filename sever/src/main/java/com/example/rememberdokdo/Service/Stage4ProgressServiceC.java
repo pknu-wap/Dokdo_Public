@@ -1,7 +1,9 @@
 package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
+import com.example.rememberdokdo.Entity.Stage4ItemEntity;
 import com.example.rememberdokdo.Entity.Stage4ProgressEntity;
+import com.example.rememberdokdo.Repository.Stage4ItemRepository;
 import com.example.rememberdokdo.Repository.Stage4ProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class Stage4ProgressServiceC {
 
     @Autowired
-    private Stage4ProgressRepository stage4ProgressRepository;
+    private final Stage4ProgressRepository stage4ProgressRepository;
+    private final Stage4ItemRepository stage4ItemRepository;
+
+    // 생성자를 통해 의존성 주입
+    public Stage4ProgressServiceC(Stage4ProgressRepository stage4ProgressRepository, Stage4ItemRepository stage4ItemRepository) {
+        this.stage4ProgressRepository = stage4ProgressRepository;
+        this.stage4ItemRepository = stage4ItemRepository;
+    }
 
     private void validateSessionId(String sessionId) {
         if (sessionId == null || sessionId.trim().isEmpty()) {
@@ -63,8 +72,9 @@ public class Stage4ProgressServiceC {
         return mapToDto(progress);
     }
 
-    public Stage4ProgressDto attemptMission(String sessionId, int currentMissionId) {
+    public Stage4ProgressDto attemptMission(String sessionId, int currentMissionId, String selectedItemName) {
         validateSessionId(sessionId);
+
         // 미션 ID 검증
         if (currentMissionId <= 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Mission ID must be greater than 0");
@@ -84,12 +94,14 @@ public class Stage4ProgressServiceC {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid mission ID");
         }
 
-        // 미션 성공 여부 결정 (50% 확률로 성공 처리)
-        boolean missionCleared = Math.random() < 0.5;
+        // 아이템 검증 로직: 사용자가 선택한 아이템이 올바른지 확인
+        boolean missionCleared = stage4ItemRepository.findByRelatedMissionIdAndItemName(currentMissionId, selectedItemName)
+                .map(Stage4ItemEntity::isCorrectItem) // 선택된 아이템이 정답인지 확인
+                .orElse(false); // 아이템이 없으면 실패 처리
 
         if (missionCleared) {
             // 미션 성공 처리
-            if (progress.getCurrentMissionId() < 3) { // 현재 미션이 마지막 미션이 아니라면
+            if (progress.getCurrentMissionId() < 3) {
                 progress.setCurrentMissionId(progress.getCurrentMissionId() + 1); // 다음 미션으로 이동
             } else {
                 // 마지막 미션 성공 시 미션 클리어 상태로 설정
