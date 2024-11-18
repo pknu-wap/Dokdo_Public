@@ -1,0 +1,71 @@
+.Stage4Bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fee7d7;
+}
+
+.TopBar {
+  position: fixed;
+  width: 65vw;
+  height: 10vh;
+  top: 3vh;
+  left: 2vw;
+  background-color: #C1A693; 
+  font-family: 'MapoAgape', sans-serif;
+  font-size: 2vw;
+  text-align: center; /* 텍스트 정렬 */
+}
+
+.ParkHwanyoungWrapper {
+  position: fixed;
+  width: 30vw;
+  height: auto;
+  top: 17vh;
+  left: 30vw;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  /* border: 2px dashed #c1a693; */ /* 드롭 영역 테두리 */
+  /* background-color: rgba(255, 255, 255, 0.5); */ /* 배경색 투명도 */
+  /* border-radius: 8px; */ /* 드롭 영역 둥글게 */
+}
+
+.ParkHwanyoung {
+  width: 100%;
+  height: auto;
+  max-width: 25vw; 
+  object-fit: contain; /* 이미지 비율 유지 */
+}
+
+.Heart {
+  position: fixed;
+  width: auto;
+  height: 7vh;
+  top: 5vh;
+  left: 70vw;
+  /* transform: translateX(-50%); */
+  display: flex;
+  gap: 10px;
+}
+
+.Guns {
+  position: fixed;
+  top: 73vh;
+  left: 29vw;
+  display: flex;
+  gap: 5vw; /* 총 이미지 간의 간격 */
+}
+
+.Guns img {
+  width: 14vh;
+  height: auto;
+  cursor: grab;
+  border-radius: 8px; /* 총 이미지 둥글게 */
+  transition: transform 0.2s ease; /* 드래그 효과 */
+}
+
+.Guns img:active {
+  cursor: grabbing;
+  transform: scale(1.1); /* 드래그 중 확대 효과 */
+}
