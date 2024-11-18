@@ -42,7 +42,7 @@ function Stage4Room1() {
         김춘삼을 죽일 수 있는 총을 선택하라 
       </div>
       <Inventory />
-      {/* 하트 표시 */}
+
       <div className={styles.Heart}>
         {Array.from({ length: hearts }, (_, i) => (
           <img key={i} src={Heart} alt="Heart" />
