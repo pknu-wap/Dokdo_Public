@@ -167,6 +167,9 @@ public class Stage4ProgressService {
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
 
+        // 현재 미션 상태 확인
+        validatePuzzleGameEligiblity(sessionId);
+
         // 새로운 Dto 생성
         PuzzleGameResultDto responseDto = new PuzzleGameResultDto();
         responseDto.setSessionId(sessionId); // sessionId에 따라 한 번 생성
@@ -197,6 +200,17 @@ public class Stage4ProgressService {
         }
         responseDto.setProgressId(progressEntity.getProgressId());
         return responseDto;
+    }
+
+    // 퍼즐 게임 진행 조건 확인
+    private void validatePuzzleGameEligiblity(String sessionId) {
+        Stage4ProgressEntity progress = stage4ProgressRepository.findLatestBySessionId(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("진행 상태를 찾을 수 없습니다."));
+
+        // 현재 미션 ID가 3이고 현재 미션이 클리어 상태인지 확인
+        if (progress.getCurrentMissionId() != 3 || !progress.isCurrentMissionCleared()) {
+            throw new IllegalArgumentException("미션 3을 클리어하지 않았기 때문에 퍼즐 게임을 진행할 수 없습니다.");
+        }
     }
 
     // 모든 세션 관련 데이터 삭제하는 메서드
