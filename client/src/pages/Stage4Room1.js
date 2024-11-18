@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Stage4Room1.module.css';
 import Inventory from '../components/Inventory.js';
 import Heart from 'assets/stage4/Heart.png';
+
 import KimChunsam from 'assets/stage4/KimChunsam.png';
 import Gun_Black from 'assets/stage4/Gun_Black.png';
 import Gun_Gray from 'assets/stage4/Gun_Gray.png';
@@ -22,7 +23,7 @@ function Stage4Room1() {
 
     /* 하트가 0이면 gameover 페이지로 이동 */
     if (hearts === 0) {
-      alert('게임 오버!');
+      /* alert('실패'); */ 
       navigate('/gameover');
     }
   }, [hearts, navigate]);

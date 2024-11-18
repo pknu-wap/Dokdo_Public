@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import styles from './Stage4Room2.module.css';
 import Inventory from '../components/Inventory.js';
 import Heart from 'assets/stage4/Heart.png';
+
 import ParkHwanyoung from 'assets/stage4/ParkHwanyoung.png';
 import Bibimbap from 'assets/stage4/Bibimbap.png';
 import Hallabong from 'assets/stage4/Hallabong.png';
@@ -24,7 +25,7 @@ function Stage4Room2() {
 
     /* 하트가 0이면 gameover 페이지로 이동 */
     if (hearts === 0) {
-      alert('게임 오버!');
+      /* alert('실패'); */ 
       navigate('/gameover');
     }
   }, [hearts, navigate]);
@@ -85,13 +86,13 @@ function Stage4Room2() {
         />
         <img
           draggable="true"
-          onDragStart={handleDragStart('wrongFood1')}
+          onDragStart={handleDragStart('wrongfood1')}
           src={Hallabong}
           alt="Hallabong"
         />
         <img
           draggable="true"
-          onDragStart={handleDragStart('wrongFood2')}
+          onDragStart={handleDragStart('wrongfood2')}
           src={Eomuk}
           alt="Eomuk"
         />
