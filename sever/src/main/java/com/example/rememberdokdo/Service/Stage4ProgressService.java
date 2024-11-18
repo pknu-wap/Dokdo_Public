@@ -1,11 +1,15 @@
 package com.example.rememberdokdo.Service;
 
+import ch.qos.logback.core.pattern.parser.OptionTokenizer;
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
 import com.example.rememberdokdo.Entity.Stage4ProgressEntity;
 import com.example.rememberdokdo.Repository.Stage4ProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.util.Comparator;
+import java.util.ListIterator;
 import java.util.Optional;
 
 @Service
@@ -49,64 +53,66 @@ public class Stage4ProgressService {
     // 미션 재도전 기능
     public Stage4ProgressDto retryMission(String sessionId, int currentMissionId, boolean isCurrentMissionCleared) {
         // 세션 ID 유효성 검사
-        if (sessionId == null || sessionId.isEmpty()){
+        if (sessionId == null || sessionId.isEmpty()) {
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
 
-        // DB에서 세션 ID로 진행 상황 조회
-        Stage4ProgressEntity stage4ProgressEntity = stage4ProgressRepository
-                .findBySessionId(sessionId)
-                .orElseThrow(() -> new IllegalArgumentException("세션 ID에 대한 스테이지4 진행 정보가 없습니다."));
-
-        // 현재 미션 ID 검사 => 3이면 진행 불가능
-        if (stage4ProgressEntity.getCurrentMissionId() == 3) {
-            throw new IllegalArgumentException("현재 미션이 3단계이므로, 미션 진행이 불가능합니다.");
+        // DB에서 세션 ID로 최신 진행 상황 조회
+        Optional<Stage4ProgressEntity> latestProgressOptional = stage4ProgressRepository.findLatestBySessionId(sessionId);
+        if (latestProgressOptional.isEmpty()) {
+            throw new IllegalArgumentException("세션 ID에 대한 스테이지4 진행 정보가 없습니다.");
         }
 
-        // 하트 개수 확인 => 실패한 미션 재도전 가능 여부(하트 개수 > 0)
-        if (stage4ProgressEntity.getRemainingHearts() <= 0){ // 미션 재도전 불가능
-            stage4ProgressEntity.setGameOver(true); // 게임 오버 상태로 변경(하트가 없으므로)
-            stage4ProgressRepository.save(stage4ProgressEntity); // 변경된 상태 저장
+        // 최신 진행 상황 엔티티 저장
+        Stage4ProgressEntity latestProgress = latestProgressOptional.get();
+
+        // 남은 하트 검사 => 게임 오버
+        if (latestProgress.getRemainingHearts() <= 0) {
             throw new IllegalArgumentException("남은 하트가 없으므로 게임 오버되었습니다.");
         }
 
-        // 처음 시도한 미션이 실패했는지 확인
-        if (!stage4ProgressEntity.isCurrentMissionCleared()){
-            // 재도전한 현재 미션 실패한 경우
-            if (!isCurrentMissionCleared){
-                stage4ProgressEntity.setRemainingHearts(stage4ProgressEntity.getRemainingHearts() - 1); // 실패한 미션에 대해 하트 차감
-
-                // 하트가 0인 경우
-                if (stage4ProgressEntity.getRemainingHearts() == 0){
-                    stage4ProgressEntity.setGameOver(true); // 게임 오버 상태로 변경
-                }
-            } else {
-                // 재도전한 현재 미션 성공한 경우
-                if (stage4ProgressEntity.getCurrentMissionId() < 3){ // 미션 1, 2
-                    stage4ProgressEntity.setCurrentMissionId(stage4ProgressEntity.getCurrentMissionId() + 1); // 성공한 미션에 대해 다음 미션으로 이동
-                    stage4ProgressEntity.setCurrentMissionCleared(true); // 미션 클리어 true로 변환
-                } else { // 미션 3
-                    stage4ProgressEntity.setCurrentMissionCleared(true); // 미션 클리어 true로 변환
-                }
-            }
-        } else { // 처음 시도한 미션이 성공한 미션인 경우 => 미션 재도전 불가능
-            throw new IllegalArgumentException("현재 미션을 이미 클리어하여 재도전이 불가능합니다.");
+        // 현재 미션 진행 가능 여부 확인
+        if (latestProgress.isCurrentMissionCleared()) {
+            throw new IllegalArgumentException("현재 미션을 이미 클리어했으므로 미션 진행이 불가능합니다.");
         }
 
-        // DB에 변경된 Progress 정보 저장
-        stage4ProgressRepository.save(stage4ProgressEntity);
+        // 미션 재도전
+        int remainingHearts = latestProgress.getRemainingHearts();
+        boolean gameOver = false;
+
+        if (!isCurrentMissionCleared) {
+            remainingHearts--;
+            if (remainingHearts <= 0) {
+                gameOver = true;
+            }
+        } else {
+            isCurrentMissionCleared = true;
+        }
+
+        // 새로운 진행 상황 데이터 생성
+        Stage4ProgressEntity newProgress = new Stage4ProgressEntity();
+        newProgress.setSessionId(sessionId);
+        newProgress.setStage3Cleared(true);
+        newProgress.setCurrentMissionId(currentMissionId); // 현재 미션 번호
+        newProgress.setRemainingHearts(remainingHearts); // 감소된 하트 반영
+        newProgress.setCurrentMissionCleared(isCurrentMissionCleared); // 현재 미션 성공 여부
+        newProgress.setGameOver(gameOver); // 게임 오버 상태 반영
+
+        // 새로운 진행 상태를 저장
+        stage4ProgressRepository.save(newProgress);
 
         // 응답 Dto 반환
-        Stage4ProgressDto stage4ProgressResponseDto = new Stage4ProgressDto();
-        stage4ProgressResponseDto.setProgressId(stage4ProgressEntity.getProgressId());
-        stage4ProgressResponseDto.setSessionId(stage4ProgressEntity.getSessionId());
-        stage4ProgressResponseDto.setCurrentMissionId(stage4ProgressEntity.getCurrentMissionId());
-        stage4ProgressResponseDto.setRemainingHearts(stage4ProgressEntity.getRemainingHearts());
-        stage4ProgressResponseDto.setCurrentMissionCleared(stage4ProgressEntity.isCurrentMissionCleared());
-        stage4ProgressResponseDto.setGameOver(stage4ProgressEntity.isGameOver());
+        Stage4ProgressDto responseDto = new Stage4ProgressDto();
+        responseDto.setProgressId(newProgress.getProgressId());
+        responseDto.setSessionId(newProgress.getSessionId());
+        responseDto.setCurrentMissionId(newProgress.getCurrentMissionId());
+        responseDto.setRemainingHearts(newProgress.getRemainingHearts());
+        responseDto.setCurrentMissionCleared(newProgress.isCurrentMissionCleared());
+        responseDto.setGameOver(newProgress.isGameOver());
 
-        return stage4ProgressResponseDto;
+        return responseDto;
     }
+
 
     // 초기화(게임 오버) 기능
     public Stage4ProgressDto resetStage4(String sessionId) {
