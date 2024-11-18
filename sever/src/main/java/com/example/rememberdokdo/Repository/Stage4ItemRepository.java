@@ -1,12 +1,13 @@
 package com.example.rememberdokdo.Repository;
 
 import com.example.rememberdokdo.Entity.Stage4ItemEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface Stage4ItemRepository {
+public interface Stage4ItemRepository extends JpaRepository<Stage4ItemEntity, Integer> {
     // 특정 미션 ID에 관련된 아이템 검색
     List<Stage4ItemEntity> findByRelatedMissionId(int relatedMissionId);
 
