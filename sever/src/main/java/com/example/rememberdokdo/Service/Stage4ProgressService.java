@@ -166,6 +166,10 @@ public class Stage4ProgressService {
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
 
+        // 새로운 Dto 생성
+        PuzzleGameResultDto resultDto = new PuzzleGameResultDto();
+        resultDto.setSessionId(sessionId); // sessionId에 따라 1번 생성
+
         // 퍼즐 게임 클리어 여부 처리
         if (isPuzzleCleared) {
             // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
