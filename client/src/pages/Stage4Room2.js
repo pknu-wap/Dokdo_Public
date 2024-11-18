@@ -4,11 +4,11 @@ import { useLocation } from 'react-router-dom';
 import styles from './Stage4Room2.module.css';
 import Inventory from '../components/Inventory.js';
 import Heart from 'assets/stage4/Heart.png';
-
 import ParkHwanyoung from 'assets/stage4/ParkHwanyoung.png';
 import Bibimbap from 'assets/stage4/Bibimbap.png';
 import Hallabong from 'assets/stage4/Hallabong.png';
 import Eomuk from 'assets/stage4/Eomuk.png';
+import Table from 'assets/stage4/Table.png';
 
 function Stage4Room2() {
   const location = useLocation();
@@ -29,18 +29,18 @@ function Stage4Room2() {
     }
   }, [hearts, navigate]);
 
-  // 드래그 시작 처리
+  /* 드래그 시작 처리 */
   const handleDragStart = (foodType) => (e) => {
     e.dataTransfer.setData('text/plain', foodType); // 드래그 데이터를 설정
   };
 
-  // 드롭 처리
+  /* 드롭 처리 */
   const handleDrop = (e) => {
     e.preventDefault();
     const draggedItem = e.dataTransfer.getData('text/plain');
 
     if (draggedItem === 'correctfood') {
-      navigate('/stage4room3', { state: { hearts } }); // 정답일 경우 다음 방으로 이동
+      navigate('/Stage4room3', { state: { hearts } }); // 정답일 경우 다음 방으로 이동
     } else {
       setHearts((prevHearts) => Math.max(prevHearts - 1, 0)); // 하트 감소
     }
@@ -48,8 +48,8 @@ function Stage4Room2() {
 
   /* room2에서 게임 재시작 시 하트 초기화 */
   const resetHearts = () => {
-    localStorage.removeItem('hearts'); // 로컬 스토리지 초기화
-    setHearts(3); // 하트 초기화
+    localStorage.removeItem('hearts'); /* 로컬 스토리지 초기화 */
+    setHearts(3); /* 하트 초기화 */ 
   };
 
   return (
@@ -96,6 +96,7 @@ function Stage4Room2() {
           alt="Eomuk"
         />
       </div>
+      <img className={styles.Table} src={Table} alt="Table" />
     </div>
   );
 }
