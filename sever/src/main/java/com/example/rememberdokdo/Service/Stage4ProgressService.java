@@ -215,11 +215,11 @@ public class Stage4ProgressService {
 
     // 모든 세션 관련 데이터 삭제하는 메서드
     private void deleteAllSessionData(String sessionId, int inventoryId) {
-        sessionRepository.deleteBySessionId(sessionId); // 세션 삭제
         stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
         stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
         inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
         inventoryItemsRepository.deleteAllByInventoryId(inventoryId); // 인벤토리 아이템 삭제
+        sessionRepository.deleteBySessionId(sessionId); // 세션 삭제
     }
 
     // 세션 제외한 관련 데이터 삭제하는 메서드
