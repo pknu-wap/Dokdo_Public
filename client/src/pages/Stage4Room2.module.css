@@ -19,10 +19,8 @@
 
 .ParkHwanyoungWrapper {
   position: fixed;
-  width: 30vw;
-  height: auto;
   top: 17vh;
-  left: 30vw;
+  left: 33vw;
   display: flex;
   justify-content: center;
   /* align-items: center; */
@@ -32,9 +30,8 @@
 }
 
 .ParkHwanyoung {
-  width: 100%;
-  height: auto;
-  max-width: 25vw; 
+  width: auto;
+  height: 50vh;
   object-fit: contain; /* 이미지 비율 유지 */
 }
 
@@ -49,7 +46,7 @@
   gap: 10px;
 }
 
-.Guns {
+.Food {
   position: fixed;
   top: 73vh;
   left: 29vw;
@@ -57,7 +54,7 @@
   gap: 5vw; /* 총 이미지 간의 간격 */
 }
 
-.Guns img {
+.Food img {
   width: 14vh;
   height: auto;
   cursor: grab;
@@ -65,7 +62,7 @@
   transition: transform 0.2s ease; /* 드래그 효과 */
 }
 
-.Guns img:active {
+.Food img:active {
   cursor: grabbing;
   transform: scale(1.1); /* 드래그 중 확대 효과 */
 }
