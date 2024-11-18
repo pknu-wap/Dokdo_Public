@@ -67,17 +67,17 @@
   left: 24vw;
 }
 
-.SetScore{
+/* .SetScore{
   position: fixed;
   top: 30vh;
   left: 24vw;
   width: 105vh;
   height: 34vw;
-}
+} */
 
 .ImageGrid { /* 모달 속 전체 친일파사진 위치  */
   position: fixed;
-  top: 23vh;
+  top: 23vh; 
   left: 25vw;
 }
 

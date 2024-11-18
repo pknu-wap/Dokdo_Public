@@ -254,12 +254,12 @@ function Stage3Page() {
         isOpen={isNumberGuessModalOpen}
         onClose={() => setIsNumberGuessModalOpen(false)}
         onSubmit={checkNumbers}
-        size="large"
+        size="medium"
       >
         <h1 className={styles.NumberGuessModalMent}>자물쇠를 푸시오</h1>
-          <div className={styles.SetScore}>
+          {/* <div className={styles.SetScore}> */}
             <CheckNumber setScoreValues={setScoreValues} /> 
-          </div>
+          {/* </div> */}
       </Modal>
 
       {/* 결과 메시지 */}
