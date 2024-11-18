@@ -7,10 +7,9 @@ function GameOver() {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h1>게임 종료</h1>
-      <p>목숨을 모두 잃었습니다.</p>
-      <button onClick={() => navigate('/Stage4room1')}>다시 시작하기</button>
+    <div className={styles.GameOver}>
+      <p>친일파를 제거하지 못했습니다</p>
+      <button className={styles.RestartButton} onClick={() => navigate('/Stage4room1')}>다시 시작</button>
     </div>
   );
 }
