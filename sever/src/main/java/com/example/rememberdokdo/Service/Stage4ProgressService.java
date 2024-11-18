@@ -167,8 +167,8 @@ public class Stage4ProgressService {
         }
 
         // 새로운 Dto 생성
-        PuzzleGameResultDto resultDto = new PuzzleGameResultDto();
-        resultDto.setSessionId(sessionId); // sessionId에 따라 1번 생성
+        PuzzleGameResultDto responseDto = new PuzzleGameResultDto();
+        responseDto.setSessionId(sessionId); // sessionId에 따라 1번 생성
 
         // 퍼즐 게임 클리어 여부 처리
         if (isPuzzleCleared) {
@@ -180,8 +180,8 @@ public class Stage4ProgressService {
             inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
 
             // 새로운 Dto에 방탈출 성공 메시지 추가
-            resultDto.setPuzzleCleared(true);
-            resultDto.setMessage("방탈출에 성공하였습니다.");
+            responseDto.setPuzzleCleared(true);
+            responseDto.setMessage("방탈출에 성공하였습니다.");
         } else {
             // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화(세션 ID 유지)
             stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
@@ -202,19 +202,9 @@ public class Stage4ProgressService {
             stage4ProgressRepository.save(newProgress);
 
             // 새로운 Dto에 방탈출 실패 메시지 추가
-            resultDto.setPuzzleCleared(false);
-            resultDto.setMessage("방탈출에 실패하였습니다. 게임을 다시 시작해주세요.");
-
-            // 응답 Dto 반환
-            Stage4ProgressDto responseDto = new Stage4ProgressDto();
-            responseDto.setProgressId(newProgress.getProgressId());
-            responseDto.setSessionId(newProgress.getSessionId());
-            responseDto.setCurrentMissionId(newProgress.getCurrentMissionId());
-            responseDto.setRemainingHearts(newProgress.getRemainingHearts());
-            responseDto.setCurrentMissionCleared(newProgress.isCurrentMissionCleared());
-            responseDto.setGameOver(newProgress.isGameOver());
-
-            return responseDto;
+            responseDto.setPuzzleCleared(false);
+            responseDto.setMessage("방탈출에 실패하였습니다. 게임을 다시 시작해주세요.");
         }
+        return responseDto;
     }
 }
