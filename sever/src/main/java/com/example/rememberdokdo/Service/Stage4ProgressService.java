@@ -189,6 +189,9 @@ public class Stage4ProgressService {
             // 새로운 Dto에 방탈출 성공 메시지 추가
             responseDto.setPuzzleCleared(true);
             responseDto.setMessage("방탈출에 성공하였습니다.");
+
+            // Stage4Progress 데이터 삭제
+            stage4ProgressRepository.delete(progressEntity);
         } else {
             // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화(세션 ID 유지)
             deleteAllSessionDataExceptSession(sessionId, inventoryId); // 세션 제외한 모든 관련 데이터 삭제
@@ -197,6 +200,9 @@ public class Stage4ProgressService {
             // 새로운 Dto에 방탈출 실패 메시지 추가
             responseDto.setPuzzleCleared(false);
             responseDto.setMessage("방탈출에 실패하였습니다. 게임을 다시 시작해주세요.");
+
+            // Stage4Progress 데이터 삭제
+            stage4ProgressRepository.delete(progressEntity);
         }
         responseDto.setProgressId(progressEntity.getProgressId());
         return responseDto;
