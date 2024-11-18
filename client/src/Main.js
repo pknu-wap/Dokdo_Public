@@ -7,6 +7,10 @@ import IntroPage from './pages/IntroPage';
 import NewsPage from './pages/NewsPage';
 import Stage3Page from './pages/Stage3Page';
 import Stage4Room1 from './pages/Stage4Room1';
+import Stage4Room2 from './pages/Stage4Room2';
+import Stage4Room3 from './pages/Stage4Room3';
+import GameOver from './components/GameOver';
+import Hearts from './components/Hearts';
 
 
 function Main() {
