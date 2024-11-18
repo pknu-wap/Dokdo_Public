@@ -26,6 +26,6 @@ public interface InventoryItemsRepository extends JpaRepository<InventoryItemsEn
     // sessionId가 같은 모든 레코드 삭제하는 메서드
     @Modifying
     @Query("DELETE FROM Stage4ProgressEntity p WHERE p.sessionId = :sessionId")
-    void deleteAllByInventoryItemsId(@Param("sessionId") String sessionId);
+    void deleteAllBySessionId(@Param("sessionId") String sessionId);
 }
 
