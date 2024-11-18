@@ -1,15 +1,12 @@
 package com.example.rememberdokdo.Service;
 
-import ch.qos.logback.core.pattern.parser.OptionTokenizer;
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
 import com.example.rememberdokdo.Entity.Stage4ProgressEntity;
 import com.example.rememberdokdo.Repository.Stage4ProgressRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
-import java.util.Comparator;
-import java.util.ListIterator;
 import java.util.Optional;
 
 @Service
@@ -51,6 +48,7 @@ public class Stage4ProgressService {
     }
 
     // 미션 재도전 기능
+    @Transactional
     public Stage4ProgressDto retryMission(String sessionId, int currentMissionId, boolean isCurrentMissionCleared) {
         // 세션 ID 유효성 검사
         if (sessionId == null || sessionId.isEmpty()) {
@@ -113,38 +111,37 @@ public class Stage4ProgressService {
 
 
     // 초기화(게임 오버) 기능
+    @Transactional
     public Stage4ProgressDto resetStage4(String sessionId) {
         // 세션 ID 유효성 검사
         if (sessionId == null || sessionId.isEmpty()){
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
 
-        // DB에서 세션 ID로 진행 상황 조회
-        Stage4ProgressEntity stage4ProgressEntity = stage4ProgressRepository
-                .findBySessionId(sessionId)
-                .orElseThrow(() -> new IllegalArgumentException("세션 ID에 대한 스테이지4 진행 정보가 없습니다."));
+        // DB에서 기존 데이터 삭제(진행 상태 삭제)
+        stage4ProgressRepository.deleteAllBySessionId(sessionId);
 
-        // 기존 데이터 삭제(진행 상태 삭제)
-        stage4ProgressRepository.delete(stage4ProgressEntity);
-
-        // 기존 스테이지 4 상태 초기화
-        stage4ProgressEntity.setCurrentMissionId(1); // 첫 번째 미션부터 시작
-        stage4ProgressEntity.setRemainingHearts(3); // 초기 하트 개수 = 3
-        stage4ProgressEntity.setCurrentMissionCleared(false); // 현재 미션 클리어 여부
-        stage4ProgressEntity.setGameOver(false); // 게임 오버 상태 초기화
+        // 새로운 초기화된 스테이지 4 상태 생성
+        Stage4ProgressEntity newProgress = new Stage4ProgressEntity();
+        newProgress.setSessionId(sessionId); // 기존 세션 ID
+        newProgress.setStage3Cleared(true); // 스테이지3 클리어
+        newProgress.setCurrentMissionId(1); // 첫 번째 미션부터 시작
+        newProgress.setRemainingHearts(3); // 초기 하트 개수 = 3
+        newProgress.setCurrentMissionCleared(false); // 현재 미션 클리어 여부
+        newProgress.setGameOver(false); // 게임 오버 상태 초기화
 
         // DB에 새로운 Progress 정보 저장
-        stage4ProgressRepository.save(stage4ProgressEntity);
+        stage4ProgressRepository.save(newProgress);
 
         // 응답 Dto 반환
-        Stage4ProgressDto stage4ProgressResponseDto = new Stage4ProgressDto();
-        stage4ProgressResponseDto.setProgressId(stage4ProgressEntity.getProgressId());
-        stage4ProgressResponseDto.setSessionId(stage4ProgressEntity.getSessionId());
-        stage4ProgressResponseDto.setCurrentMissionId(stage4ProgressEntity.getCurrentMissionId());
-        stage4ProgressResponseDto.setRemainingHearts(stage4ProgressEntity.getRemainingHearts());
-        stage4ProgressResponseDto.setCurrentMissionCleared(stage4ProgressEntity.isCurrentMissionCleared());
-        stage4ProgressResponseDto.setGameOver(stage4ProgressEntity.isGameOver());
+        Stage4ProgressDto responseDto = new Stage4ProgressDto();
+        responseDto.setProgressId(newProgress.getProgressId());
+        responseDto.setSessionId(newProgress.getSessionId());
+        responseDto.setCurrentMissionId(newProgress.getCurrentMissionId());
+        responseDto.setRemainingHearts(newProgress.getRemainingHearts());
+        responseDto.setCurrentMissionCleared(newProgress.isCurrentMissionCleared());
+        responseDto.setGameOver(newProgress.isGameOver());
 
-        return stage4ProgressResponseDto;
+        return responseDto;
     }
 }
