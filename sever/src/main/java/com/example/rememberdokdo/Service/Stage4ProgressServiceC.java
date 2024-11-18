@@ -100,7 +100,7 @@ public class Stage4ProgressServiceC {
                 .orElse(false); // 아이템이 없으면 실패 처리
 
         if (missionCleared) {
-            // 미션 성공 처리
+            // **정답일 경우: 하트 감소 X**
             if (progress.getCurrentMissionId() < 3) {
                 progress.setCurrentMissionId(progress.getCurrentMissionId() + 1); // 다음 미션으로 이동
             } else {
@@ -108,7 +108,7 @@ public class Stage4ProgressServiceC {
                 progress.setCurrentMissionCleared(true);
             }
         } else {
-            // 미션 실패 처리
+            // **오답일 경우: 하트 감소 O**
             progress.setRemainingHearts(progress.getRemainingHearts() - 1); // 남은 하트 감소
             if (progress.getRemainingHearts() <= 0) {
                 progress.setGameOver(true); // 하트가 0개 이하로 감소하면 게임 오버
