@@ -2,10 +2,8 @@ import styles from './StartPage.module.css';
 import Logo from 'assets/logo2.png';
 import { UserContext } from 'context/UserContext';
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function StartPage() {
-  const navigate = useNavigate(); /* useNavigate 훅 사용 */
   const { createSession } = useContext(UserContext);
 
   const handleStartBtnClick = async () => {
