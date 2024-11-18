@@ -21,9 +21,20 @@ public class Stage4ProgressServiceC {
     }
     public Stage4ProgressDto startStage4(String sessionId) {
         validateSessionId(sessionId);
-        // 데이터베이스에서 세션 ID로 진행 상태를 검색
+        // 데이터베이스에서 세션 ID로 진행 상태를 검색하거나 초기값으로 새로 생성
         Stage4ProgressEntity progress = stage4ProgressRepository.findBySessionId(sessionId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid session ID"));
+                .orElseGet(() -> {
+                    // Stage4ProgressEntity 초기화 및 저장
+                    Stage4ProgressEntity newProgress = Stage4ProgressEntity.builder()
+                            .sessionId(sessionId)
+                            .isStage3Cleared(true) // Stage 3이 클리어되었다고 가정 (로직에 따라 변경 가능)
+                            .currentMissionId(1)   // 첫 번째 미션으로 초기화
+                            .remainingHearts(3)    // 기본 하트 수
+                            .isCurrentMissionCleared(false)
+                            .isGameOver(false)
+                            .build();
+                    return stage4ProgressRepository.save(newProgress); // 저장 후 반환
+                });
 
         // 이미 Stage 4가 진행 중인지 확인
         if (progress.getCurrentMissionId() > 1 || progress.isGameOver()) {
@@ -47,10 +58,11 @@ public class Stage4ProgressServiceC {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save progress", e);
         }
+
         // 변경된 엔티티를 DTO로 변환하여 반환
         return mapToDto(progress);
     }
-    
+
     public Stage4ProgressDto attemptMission(String sessionId, int currentMissionId) {
         validateSessionId(sessionId);
         // 미션 ID 검증
