@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Stage4Room1.module.css';
 import Inventory from '../components/Inventory.js';
-import KimChunsam from 'assets/stage4/KimChunsam.png';
 import Heart from 'assets/stage4/Heart.png';
+import KimChunsam from 'assets/stage4/KimChunsam.png';
 import Gun_Black from 'assets/stage4/Gun_Black.png';
 import Gun_Gray from 'assets/stage4/Gun_Gray.png';
 import Gun_White from 'assets/stage4/Gun_White.png';
+import Table from 'assets/stage4/Table.png';
 
 function Stage4Room1() {
   const navigate = useNavigate();
@@ -93,6 +94,7 @@ function Stage4Room1() {
           alt="Gun_White"
         />
       </div>
+      <img className={styles.Table} src={Table} alt="Table" />
     </div>
   );
 }

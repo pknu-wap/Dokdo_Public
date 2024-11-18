@@ -13,7 +13,7 @@
   left: 2vw;
   background-color: #C1A693; 
   font-family: 'MapoAgape', sans-serif;
-  font-size: 2vw;
+  font-size: 2.5vw;
   text-align: center; /* 텍스트 정렬 */
   border-radius: 10px; /* 둥근 모서리 */
   padding: 1.5vw; /* 내부 여백 */
@@ -22,19 +22,19 @@
 
 .KimChunsamWrapper {
   position: fixed;
-  top: 17vh;
-  left: 32vw;
+  top: 19vh;
+  left: 34vw;
   display: flex;
   justify-content: center;
   /* align-items: center; */
-  border: 2px dashed #c1a693; /* 드롭 영역 테두리  */
+  /* border: 2px dashed #c1a693; 드롭 영역 테두리  */
   background-color: rgba(255, 255, 255, 0.5); /* 배경색 투명도 */
   border-radius: 8px; /* 드롭 영역 둥글게 */
 }
 
 .KimChunsam {
   width: auto;
-  height: 40vh;
+  height: 45vh;
   object-fit: contain; /* 이미지 비율 유지 */
 }
 
@@ -59,17 +59,16 @@
   object-fit: contain; /* 이미지 비율 유지 */
 }
 
-
 .Guns {
   position: fixed;
   top: 73vh;
-  left: 29vw;
+  left: 20vw;
   display: flex;
   gap: 5vw; /* 총 이미지 간의 간격 */
 }
 
 .Guns img {
-  width: 14vh;
+  width: 25vh;
   height: auto;
   cursor: grab;
   border-radius: 8px; /* 총 이미지 둥글게 */
@@ -79,4 +78,13 @@
 .Guns img:active {
   cursor: grabbing;
   transform: scale(1.1); /* 드래그 중 확대 효과 */
+}
+
+.Table{
+  position: fixed;
+  top: 80vh;
+  left: 8vw;
+  width: 70vw;
+  height: auto;
+  z-index: -1;
 }
