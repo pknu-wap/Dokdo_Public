@@ -85,8 +85,6 @@ public class Stage4ProgressService {
             if (remainingHearts <= 0) {
                 gameOver = true;
             }
-        } else {
-            isCurrentMissionCleared = true;
         }
 
         // 새로운 진행 상황 데이터 생성
