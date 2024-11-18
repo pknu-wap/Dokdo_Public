@@ -177,23 +177,25 @@ public class Stage4ProgressService {
         int inventoryId = inventory.getInventoryId();
 
         // 퍼즐 게임 클리어 여부 처리
+        Stage4ProgressEntity progressEntity;
         if (isPuzzleCleared) {
             // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
             deleteAllSessionData(sessionId, inventoryId); // 모든 관련 데이터 삭제
+            // 성공 데이터 저장
+            progressEntity = resetStage4Progress(sessionId, true, "방탈출에 성공하였습니다.");
             // 새로운 Dto에 방탈출 성공 메시지 추가
             responseDto.setPuzzleCleared(true);
             responseDto.setMessage("방탈출에 성공하였습니다.");
-            // 성공 데이터 저장
-            resetStage4Progress(sessionId, true, "방탈출에 성공하였습니다.");
         } else {
             // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화(세션 ID 유지)
             deleteAllSessionDataExceptSession(sessionId, inventoryId); // 세션 제외한 모든 관련 데이터 삭제
+            // 실패 데이터 저장
+            progressEntity = resetStage4Progress(sessionId, false, "방탈출에 실패하였습니다.");
             // 새로운 Dto에 방탈출 실패 메시지 추가
             responseDto.setPuzzleCleared(false);
             responseDto.setMessage("방탈출에 실패하였습니다. 게임을 다시 시작해주세요.");
-            // 실패 데이터 저장
-            resetStage4Progress(sessionId, false, "방탈출에 실패하였습니다.");
         }
+        responseDto.setProgressId(progressEntity.getProgressId());
         return responseDto;
     }
 
@@ -217,7 +219,6 @@ public class Stage4ProgressService {
     // 스테이지 4 진행 상황 초기화
     private Stage4ProgressEntity resetStage4Progress(String sessionId, boolean isPuzzleCleared, String message) {
         Stage4ProgressEntity newProgress = new Stage4ProgressEntity();
-        newProgress.setProgressId(newProgress.getProgressId());
         newProgress.setSessionId(sessionId); // 기존 세션 ID
         newProgress.setStage3Cleared(true); // 스테이지3 클리어
         newProgress.setCurrentMissionId(1); // 첫 번째 미션부터 시작
