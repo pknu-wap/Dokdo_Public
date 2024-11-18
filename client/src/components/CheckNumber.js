@@ -14,10 +14,11 @@ const CheckNumber = ({ setScoreValues }) => {
   }, [number1, number2, number3, setScoreValues]);
 
   return (
-    <div>
-      <img className={styles.CheckNumberBg} src={CheckNumberBg} />
+    <div className={styles.CheckNumberBg}>
+      <img className={styles.CheckNumberBgimg} src={CheckNumberBg} />
 
       <div className={styles.back}>
+        <div className={styles.left} />
         {[
           { number: number1, set: setNumber1 },
           { number: number2, set: setNumber2 },

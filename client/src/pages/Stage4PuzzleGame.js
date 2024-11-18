@@ -126,6 +126,39 @@ function Stage4PuzzleGame() {
     }
   }, [count, navigate]);
 
+  const [animatePuzzle1, setAnimatePuzzle1] = useState(false);
+  const [animatePuzzle2, setAnimatePuzzle2] = useState(false);
+  const [animatePuzzle3, setAnimatePuzzle3] = useState(false);
+  const [animatePuzzle4, setAnimatePuzzle4] = useState(false);
+
+  useEffect(() => {
+    if (puzzle1 !== dokdoPuzzleNone) {
+      setAnimatePuzzle1(true);
+      setTimeout(() => setAnimatePuzzle1(false), 500);
+    }
+  }, [puzzle1]);
+
+  useEffect(() => {
+    if (puzzle2 !== dokdoPuzzleNone) {
+      setAnimatePuzzle2(true);
+      setTimeout(() => setAnimatePuzzle2(false), 500);
+    }
+  }, [puzzle2]);
+
+  useEffect(() => {
+    if (puzzle3 !== dokdoPuzzleNone) {
+      setAnimatePuzzle3(true);
+      setTimeout(() => setAnimatePuzzle3(false), 500);
+    }
+  }, [puzzle3]);
+
+  useEffect(() => {
+    if (puzzle4 !== dokdoPuzzleNone) {
+      setAnimatePuzzle4(true);
+      setTimeout(() => setAnimatePuzzle4(false), 500);
+    }
+  }, [puzzle4]);
+
   useEffect(() => {
     if (stage4PuzzleAnswer) {
       setTimerRunning(false);
@@ -146,46 +179,37 @@ function Stage4PuzzleGame() {
     const color = `linear-gradient(to right, beige ${percentage * 100}%, black ${percentage * 100}%)`;
     return color;
   };
-
   return (
-    <div>
+    <div className={styles.Back}>
       <Inventory />
       <div className={styles.TimerBack}>
         <div className={styles.Timer} style={{ background: getTimerBackground() }} />
       </div>
       <div className={styles.PuzzleBack}>
         <div
-          className={styles.dokdoPuzzle1}
-          onDragOver={(e) => {
-            e.preventDefault();
-          }}
+          className={`${styles.dokdoPuzzle} ${animatePuzzle1 ? styles.animate : ''}`}
+          onDragOver={(e) => e.preventDefault()}
           onDrop={handleDropOnPuzzle1}
         >
           <img className={styles.dokdoPuzzleimg} src={puzzle1} alt="dokdopuzzle1" />
         </div>
         <div
-          className={styles.dokdoPuzzle2}
-          onDragOver={(e) => {
-            e.preventDefault();
-          }}
+          className={`${styles.dokdoPuzzle} ${animatePuzzle2 ? styles.animate : ''}`}
+          onDragOver={(e) => e.preventDefault()}
           onDrop={handleDropOnPuzzle2}
         >
           <img className={styles.dokdoPuzzleimg} src={puzzle2} alt="dokdopuzzle2" />
         </div>
         <div
-          className={styles.dokdoPuzzle3}
-          onDragOver={(e) => {
-            e.preventDefault();
-          }}
+          className={`${styles.dokdoPuzzle} ${animatePuzzle3 ? styles.animate : ''}`}
+          onDragOver={(e) => e.preventDefault()}
           onDrop={handleDropOnPuzzle3}
         >
           <img className={styles.dokdoPuzzleimg} src={puzzle3} alt="dokdopuzzle3" />
         </div>
         <div
-          className={styles.dokdoPuzzle4}
-          onDragOver={(e) => {
-            e.preventDefault();
-          }}
+          className={`${styles.dokdoPuzzle} ${animatePuzzle4 ? styles.animate : ''}`}
+          onDragOver={(e) => e.preventDefault()}
           onDrop={handleDropOnPuzzle4}
         >
           <img className={styles.dokdoPuzzleimg} src={puzzle4} alt="dokdopuzzle4" />
@@ -194,6 +218,7 @@ function Stage4PuzzleGame() {
       {ok ? (
         <div>
           <button
+            className={styles.Ok}
             onClick={() => {
               handleItemClick('dokdoPuzzle1');
             }}
@@ -201,6 +226,7 @@ function Stage4PuzzleGame() {
             <img src={dokdoPuzzle1} alt="puzzle1" />
           </button>
           <button
+            className={styles.Ok}
             onClick={() => {
               handleItemClick('dokdoPuzzle2');
             }}
@@ -208,6 +234,7 @@ function Stage4PuzzleGame() {
             <img src={dokdoPuzzle2} alt="puzzle2" />
           </button>
           <button
+            className={styles.Ok}
             onClick={() => {
               handleItemClick('dokdoPuzzle3');
             }}
@@ -215,6 +242,7 @@ function Stage4PuzzleGame() {
             <img src={dokdoPuzzle3} alt="puzzle3" />
           </button>
           <button
+            className={styles.Ok}
             onClick={() => {
               handleItemClick('dokdoPuzzle4');
               setOk(false);

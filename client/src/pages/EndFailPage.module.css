@@ -4,6 +4,15 @@
   font-weight: 10;
 }
 
+@keyframes smoothAppear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .Back {
   position: fixed;
   width: 100%;
@@ -15,4 +24,5 @@
   font-family: 'MapoAgape';
   font-size: 4vh;
   font-weight: lighter;
+  animation: smoothAppear 1s ease;
 }

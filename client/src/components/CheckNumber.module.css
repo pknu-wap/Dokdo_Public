@@ -1,51 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
 .CheckNumberBg {
+  position: relative;
+  left: 0vh;
+  width: 100%;
+  height: 40vh;
+}
+
+.CheckNumberBgimg {
   position: absolute;
-  left: 3%;
-  width: 94%;
-  height: 62%;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .back {
   display: flex;
   flex-direction: row;
-  margin: 0 18%;
+  width: 48vw;
 }
 
 .Back {
   display: flex;
   flex-direction: column;
-  align-items: center;
   position: relative;
+  text-align: center;
 }
 
+.left {
+  width: 30vw;
+}
 .UpButton,
 .DownButton {
   width: 8vh;
-  height: 6vh;
+  height: 5vh;
   z-index: 1;
+  margin-left: 4.5vw;
+  margin-right: 4.5vw;
   border: none;
   background-color: transparent;
-  margin-right: 12vh;
-  margin-left: 7vh;
 }
 .UpButton {
   margin-top: 5vh;
 }
 .DownButton {
-  margin-top: 2vh;
+  margin-top: 3.5vh;
 }
 
 .number {
-  margin-top: 1vh;
-  margin-left: 7vh;
-  margin-right: 12vh;
+  margin-top: 3.5vh;
   font-family: 'Noto Sans KR', sans-serif;
   font-optical-sizing: auto;
   font-weight: bold;
   font-style: normal;
-  font-size: 80px;
+  font-size: 8vh;
   color: rgba(71, 33, 33, 1);
 }
 
