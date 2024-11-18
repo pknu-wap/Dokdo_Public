@@ -1,9 +1,11 @@
 package com.example.rememberdokdo.Service;
 
+import com.example.rememberdokdo.Dto.PuzzleGameResultDto;
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
 import com.example.rememberdokdo.Entity.Stage4ProgressEntity;
 import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
 import com.example.rememberdokdo.Repository.Inventory.InventoryRepository;
+import com.example.rememberdokdo.Repository.SessionRepository;
 import com.example.rememberdokdo.Repository.Stage4ProgressRepository;
 import com.example.rememberdokdo.Repository.StageProgressRepository;
 import jakarta.transaction.Transactional;
@@ -23,6 +25,8 @@ public class Stage4ProgressService {
     private InventoryRepository inventoryRepository;
     @Autowired
     private InventoryItemsRepository inventoryItemsRepository;
+    @Autowired
+    private SessionRepository sessionRepository;
 
     // 초기화(시작) 기능
     public Stage4ProgressDto startMission(Stage4ProgressDto stage4ProgressDto) {
@@ -156,25 +160,51 @@ public class Stage4ProgressService {
 
     // 퍼즐 게임 결과 처리 기능
     @Transactional
-    public Stage4ProgressDto PuzzleResult(String sessionId, boolean isPuzzleCleared) {
+    public PuzzleGameResultDto PuzzleResult(String sessionId, boolean isPuzzleCleared) {
         // 세션 ID 유효성 검사
-        if (sessionId == null || sessionId.isEmpty()){
+        if (sessionId == null || sessionId.isEmpty()) {
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
 
         // 퍼즐 게임 클리어 여부 처리
         if (isPuzzleCleared) {
             // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
-            stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
+            sessionRepository.deleteBySessionId(sessionId); // 세션 삭제
             stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
-            inventoryRepository.deleteAllByInventoryId(sessionId); // 인벤토리 삭제
-            inventoryRepository.deleteAllByInventoryId(sessionId); // 인벤토리 아이템 삭제
+            stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
+            inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
+            inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
+
+            // 방탈출 성공 메시지 추가
+        } else {
+            // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화(세션 ID 유지)
+            stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
+            stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
+            inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
+            inventoryItemsRepository.deleteAllBySessionId(sessionId); // 인벤토리 아이템 삭제
+
+            // 새로운 초기화된 스테이지 4 상태 생성
+            Stage4ProgressEntity newProgress = new Stage4ProgressEntity();
+            newProgress.setSessionId(sessionId); // 기존 세션 ID
+            newProgress.setStage3Cleared(true); // 스테이지3 클리어
+            newProgress.setCurrentMissionId(1); // 첫 번째 미션부터 시작
+            newProgress.setRemainingHearts(3); // 초기 하트 개수 = 3
+            newProgress.setCurrentMissionCleared(false); // 현재 미션 클리어 여부
+            newProgress.setGameOver(false); // 게임 오버 상태 초기화
+
+            // DB에 새로운 Progress 정보 저장
+            stage4ProgressRepository.save(newProgress);
+
+            // 응답 Dto 반환
+            Stage4ProgressDto responseDto = new Stage4ProgressDto();
+            responseDto.setProgressId(newProgress.getProgressId());
+            responseDto.setSessionId(newProgress.getSessionId());
+            responseDto.setCurrentMissionId(newProgress.getCurrentMissionId());
+            responseDto.setRemainingHearts(newProgress.getRemainingHearts());
+            responseDto.setCurrentMissionCleared(newProgress.isCurrentMissionCleared());
+            responseDto.setGameOver(newProgress.isGameOver());
+
+            return responseDto;
         }
-        // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화 => sessionId에 대한 StageProgress도 삭제
-        // 스테이지 4진행 상황 초기화
-        // 스테이지 진행 상황 초기화
-        // 인벤토리 및 인벤토리 아이템 초기화
-        // 세션 정보만 유지
-        return null;
     }
 }
