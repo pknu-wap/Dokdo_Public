@@ -16,41 +16,41 @@
 
 .RightBookWrapper {
   position: absolute;
-  top: 24vh;
-  width: 25vw;
+  top: 17vh;
+  width: 52vh;
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
-  left: 49vw;
+  left: 103vh;
   transform-origin: left center;
 }
 
 .LeftBookWrapper {
   position: absolute;
-  top: 25.5vh;
-  width: 25.5vw;
+  top: 17.3vh;
+  width: 53.5vh;
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
-  left: 23.5vw;
+  left: 49.5vh;
   transform-origin: right center;
 }
 
 .RightBookWrapper1 {
   position: absolute;
-  top: 24vh;
-  width: 25vw;
+  top: 17vh;
+  width: 52vh;
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
-  left: 49vw;
+  left: 103vh;
   transform-origin: left center;
 }
 
 .LeftBookWrapper1 {
   position: absolute;
-  top: 25vh;
-  width: 25vw;
+  top: 17vh;
+  width: 53vh;
   transform-style: preserve-3d;
   transition: transform 1s ease-in-out;
-  left: 24vw;
+  left: 50vh;
   transform-origin: right center;
 }
 
@@ -72,10 +72,10 @@
 }
 
 .PreviousButton {
-  top: 25vh;
-  width: 25vw;
+  top: 17vh;
+  width: 52.5vh;
   height: 60vh;
-  left: 24vw;
+  left: 52.5vh;
   position: absolute;
   background: transparent;
   border: none;
@@ -83,10 +83,10 @@
 }
 
 .NextButton {
-  top: 25vh;
-  width: 25vw;
+  top: 17vh;
+  width: 52.5vh;
   height: 60vh;
-  left: 49vw;
+  left: 101.5vh;
   position: absolute;
   background: transparent;
   border: none;
@@ -95,7 +95,7 @@
 
 .Map {
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: 45%;
   width: 10%;
   background: transparent;

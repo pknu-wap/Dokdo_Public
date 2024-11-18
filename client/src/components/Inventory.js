@@ -5,7 +5,8 @@ import taegeukKey from '../assets/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/clover.png';
 import map from '../assets/stage2/Map.png';
 import codeNote from '../assets/stage2/CodeNote.png';
-import GunHintImage from '../assets/GunHintImage.png';
+import GunHintImage from 'assets/stage3/GunHintImage.png';
+import SpyHintImage from 'assets/stage3/SpyHintImage.png';
 import { useUser } from 'context/UserContext';
 
 const itemImage = {
@@ -14,6 +15,7 @@ const itemImage = {
   map: map,
   codeNote: codeNote,
   GunHintImage: GunHintImage,
+  SpyHintImage: SpyHintImage,
 };
 
 function Inventory() {

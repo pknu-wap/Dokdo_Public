@@ -19,104 +19,100 @@
   height: 13vh;
 }
 
-.DoorClose{
+.DoorClose {
   cursor: pointer;
-  position: fixed; 
-  top: 31vw;
-  left: 30vh;
+  position: fixed;
+  top: 56vh;
+  left: 18vw;
   transform: translate(-50%, -50%);
-  width: 490px;
+  width: 25vw;
   height: auto; /* 높이를 비율에 맞게 자동 설정 */
-  z-index: 1; /* 다른 요소 위에 배치 */
+  z-index: 1;
 }
 
-.DoorOpen{
+.DoorOpen {
   cursor: pointer;
-  position: fixed; 
-  top: 32.5vw;
-  left: 30vh;
+  position: fixed;
+  top: 58.3vh;
+  left: 18vw;
   transform: translate(-50%, -50%);
-  width: 490px;
+  width: 25vw;
   height: auto; /* 높이를 비율에 맞게 자동 설정 */
-  z-index: 1; /* 다른 요소 위에 배치 */
+  z-index: 1;
 }
 
 .Stage3wall {
-  width: 640px;
+  width: 45vw;
   position: fixed;
-  top: 17vw;
-  left: 98vh;
+  top: 18.8vh;
+  left: 59vw;
   cursor: pointer;
   transform: translateX(-50%);
 }
 
-.ModalMent{
+.ModalMent {
+  font-family: 'MapoAgape', sans-serif;
+  font-size: 1.5vw;
+  position: relative;
+  padding: 2vw;
+  top: 0vh;
+  left: 23.5vw;
+}
+
+.NumberGuessModalMent {
   font-size: 2vw;
   position: relative;
-  padding: 30px;
-  top: 2vw;
-  left: 39vh;
+  padding: 2vw;
+  top: 0vh;
+  left: 24vw;
 }
 
-.NumberGuessModalMent{
-  font-size: 2vw;
-  position: relative;
-  padding: 30px;
-  top: 0vw;
-  left: 30vh;
+.SetScore{
+  position: fixed;
+  top: 30vh;
+  left: 24vw;
+  width: 100vh;
+  height: 34vw;
 }
 
-/* 전체 그리드 레이아웃 */
-.ImageGrid {
-  display: grid;
-  grid-template-areas:
-    "flag1 flag2 flag3 flag4 flag5"
-    "flag6 center center center flag7"
-    "flag8 center center center flag9"
-    "flag10 flag11 flag12 flag13 flag14";
-  gap: 10px;
-  justify-items: center;
-  align-items: center;
-  padding: 20px;
-  margin-bottom: 5px;
+.ImageGrid { /* 모달 속 전체 친일파사진 위치  */
+  position: fixed;
+  top: 23vh;
+  left: 25vw;
 }
 
-/* 중앙의 인물 이미지 컨테이너 */
-.CenterContainer {
-  top: 100vw;
+.CenterContainer { /* 모달 속 친일파 사진 그리드 설정 */
   grid-area: center;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 20px;
-  padding: 20px;
+  gap: 2vw;
+  padding: 2vw;
   background-color: transparent;
-  border: 2px solid transparent;
+  border: 0.1vw solid transparent;
 }
 
-/* 인물 이미지 스타일 */
-.ImageItem {
-  width: 11vw;
-  height: 19vh;
+.ImageItem { /* 친일파사진(각각) */
+  width: 10vw;
+  height: 22vh;
   object-fit: cover;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 0.2vw solid transparent;
   transition: border 0.3s ease;
 }
 
-/* 선택된 이미지 스타일 */
 .Selected {
-  border: 4px solid rgb(255, 0, 0);
+  border: 0.4vw solid rgb(255, 0, 0);
 }
 
 .CheckAnswerButton {
-  margin-top: 20px;
+  margin-top: 2vw;
 }
 
 .ResultBanner {
   position: fixed;
-  top: 9vw;
-  left: 97vh;
+  top: 11vh;
+  left: 50vw;
   transform: translateX(-50%);
   background-color: #C1A693;
   color: white;
@@ -124,21 +120,21 @@
   font-size: 1.5vw;
   font-weight: bold;
   z-index: 100;
-  border-radius: 10px;
+  border-radius: 1vw;
   text-align: center;
   width: 30vw;
   height: 9vh;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.2);
   transition: border 0.3s ease;
 }
 
-.KoreaFlag {
+.KoreaFlag { 
   cursor: pointer;
-  width: 5.5vw;
-  height: 6.6vh;
+  width: 7.9vw;
+  height: 9.5vh;
   position: fixed;
-  top: 17.8vw;
-  left: 70.5vh;
+  top: 19.2vh;
+  left: 64.3vw;
 }
 
 .NoteImage {
@@ -146,23 +142,29 @@
   width: 3vw;
   height: auto;
   position: fixed;
-  top: 15.9vw;
-  left: 73vh;;
+  top: 16vh;
+  left: 66.6vw;
 }
 
 .GunHintImage {
   position: fixed;
-  top: 27vw;
-  left: 97vh;
+  top: 50vh;
+  left: 53vw;
   transform: translate(-50%, -50%);
-  width: 50vw;
+  width: 30vw;
   height: auto;
 }
 
-.Stage3Gunhint {
-  position: absolute;
-  height: 4vh;
-  width: auto;
-  top: 4.4vh;
-  left: 6vw;
+.SpyHintImage {
+  position: fixed;
+  top: 27vh;
+  left: 35vw;
+  width: 30vw;
+  z-index: 1000;
+}
+
+.SpyHintImage img {
+  width: 100%; /* 컨테이너 크기에 맞추어 이미지가 조정되도록 설정 */
+  height: auto;
+  object-fit: contain; /* 비율을 유지하며 크기 조정 */
 }
