@@ -62,18 +62,18 @@
 .NumberGuessModalMent {
   font-size: 2vw;
   position: relative;
-  padding: 2vw;
+  /* padding: 2vw;       */
   top: 0vh;
   left: 24vw;
 }
 
-/* .SetScore{
+.SetScore{
   position: fixed;
   top: 30vh;
   left: 24vw;
   width: 105vh;
   height: 34vw;
-} */
+}
 
 .ImageGrid { /* 모달 속 전체 친일파사진 위치  */
   position: fixed;

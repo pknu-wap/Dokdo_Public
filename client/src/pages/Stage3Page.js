@@ -38,6 +38,7 @@ const Stage3PeopleImage = [
 const CorrectAnswer = [1, 6, 8];
 
 function Stage3Page() {
+  const [isStage1Open] = useState(true);
   const [isStage2Open] = useState(true);
   const [isStage3Open] = useState(true);
   const [selectedImage, setSelectedImage] = useState([]);
@@ -51,17 +52,15 @@ function Stage3Page() {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
   const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
   const { items, addItem } = useInventory(); /* Context에서 items도 가져옴 */
-
+  // const { user, fetchUser } = useUser();
+  const navigate = useNavigate(); 
+  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false); /* 친일파 힌트 이미지 상태 */ 
+  
   const [scoreValues, setScoreValues] = useState({
     number1: 0,
     number2: 0,
     number3: 0,
   });   /* CheckNumber 숫자 받아오기 */
-
-  /* 친일파 힌트 이미지 상태 */
-  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false);
-
-  const navigate = useNavigate(); 
 
   const handleItemClick = (itemName) => {
     addItem(itemName);
@@ -166,6 +165,21 @@ function Stage3Page() {
         setIsDoorOpen(true);
       }
   }, []);
+
+  // useEffect(() => {
+  //   fetchUser(); // 유저 불러오기
+  //   if (user?.stages) { 
+  //     if (user.stages[0]) {
+  //       isStage1Open(true);
+  //     }
+  //     if (user.stages[1]) {
+  //       isStage2Open(true);
+  //     }
+  //     if (user.stages[2]) {
+  //       isStage3Open(true);
+  //     }
+  //   }
+  // }, []);
 
   return (
     <div className={styles.Stage3Page}>
