@@ -149,6 +149,10 @@ public class Stage4ProgressService {
     @Transactional
     public Stage4ProgressDto PuzzleResult(String sessionId, boolean isPuzzleCleared) {
         // 세션 ID 유효성 검사
+        if (sessionId == null || sessionId.isEmpty()){
+            throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
+        }
+
         // 퍼즐 게임 클리어 여부 처리
         // 퍼즐 게임 클리어 = true => 세션 ID를 포함한 데이터 삭제
         // 퍼즐 게임 클리어 = false => 세션 ID에 대한 데이터 초기화 => sessionId에 대한 StageProgress도 삭제
