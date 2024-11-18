@@ -2,7 +2,10 @@ package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
 import com.example.rememberdokdo.Entity.Stage4ProgressEntity;
+import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
+import com.example.rememberdokdo.Repository.Inventory.InventoryRepository;
 import com.example.rememberdokdo.Repository.Stage4ProgressRepository;
+import com.example.rememberdokdo.Repository.StageProgressRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,12 @@ public class Stage4ProgressService {
     @Autowired
     private Stage4ProgressRepository stage4ProgressRepository;
     private Stage4ProgressEntity stage4ProgressEntity;
+    @Autowired
+    private StageProgressRepository stageProgressRepository;
+    @Autowired
+    private InventoryRepository inventoryRepository;
+    @Autowired
+    private InventoryItemsRepository inventoryItemsRepository;
 
     // 초기화(시작) 기능
     public Stage4ProgressDto startMission(Stage4ProgressDto stage4ProgressDto) {
@@ -154,8 +163,14 @@ public class Stage4ProgressService {
         }
 
         // 퍼즐 게임 클리어 여부 처리
-        // 퍼즐 게임 클리어 = true => 세션 ID를 포함한 데이터 삭제
-        // 퍼즐 게임 클리어 = false => 세션 ID에 대한 데이터 초기화 => sessionId에 대한 StageProgress도 삭제
+        if (isPuzzleCleared) {
+            // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
+            stage4ProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 4 진행 상황 삭제
+            stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
+            inventoryRepository.deleteAllByInventoryId(sessionId); // 인벤토리 삭제
+            inventoryRepository.deleteAllByInventoryId(sessionId); // 인벤토리 아이템 삭제
+        }
+        // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화 => sessionId에 대한 StageProgress도 삭제
         // 스테이지 4진행 상황 초기화
         // 스테이지 진행 상황 초기화
         // 인벤토리 및 인벤토리 아이템 초기화
