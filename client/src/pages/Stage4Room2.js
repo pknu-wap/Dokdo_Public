@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import styles from './Stage4Room2.module.css';
@@ -12,12 +12,26 @@ import Eomuk from 'assets/stage4/Eomuk.png';
 
 function Stage4Room2() {
   const location = useLocation();
-  const [hearts, setHearts] = useState(location.state?.hearts || 3); // 하트 상태
   const navigate = useNavigate();
 
+  /* 하트 상태를 로컬 스토리지에서 불러오기 */
+  const initialHearts = parseInt(localStorage.getItem('hearts'), 10) || location.state?.hearts || 3;
+  const [hearts, setHearts] = useState(initialHearts);
+
+  /* 하트 상태를 로컬 스토리지에 저장 */
+  useEffect(() => {
+    localStorage.setItem('hearts', hearts);
+
+    /* 하트가 0이면 gameover 페이지로 이동 */
+    if (hearts === 0) {
+      alert('게임 오버!');
+      navigate('/gameover');
+    }
+  }, [hearts, navigate]);
+
   // 드래그 시작 처리
-  const handleDragStart = (gunType) => (e) => {
-    e.dataTransfer.setData('text/plain', gunType); // 드래그 데이터를 설정
+  const handleDragStart = (foodType) => (e) => {
+    e.dataTransfer.setData('text/plain', foodType); // 드래그 데이터를 설정
   };
 
   // 드롭 처리
@@ -26,24 +40,25 @@ function Stage4Room2() {
     const draggedItem = e.dataTransfer.getData('text/plain');
 
     if (draggedItem === 'correctfood') {
-      navigate('/stge4room3', { state: { hearts } }); // 정답일 경우 다음 방으로 이동
+      navigate('/stage4room3', { state: { hearts } }); // 정답일 경우 다음 방으로 이동
     } else {
-      setHearts((prevHearts) => {
-        const updatedHearts = Math.max(prevHearts - 1, 0); // 하트 감소
-        if (updatedHearts === 0) {
-          alert('게임 오버!');
-          navigate('/gameover'); // 하트가 0이 되면 게임 오버 페이지로 이동
-        }
-        return updatedHearts;
-      });
+      setHearts((prevHearts) => Math.max(prevHearts - 1, 0)); // 하트 감소
     }
+  };
+
+  /* room2에서 게임 재시작 시 하트 초기화 */
+  const resetHearts = () => {
+    localStorage.removeItem('hearts'); // 로컬 스토리지 초기화
+    setHearts(3); // 하트 초기화
   };
 
   return (
     <div className={styles.Stage4Bg}>
       <div className={styles.TopBar}>
-        박완영을 죽일 수 있는 독이 든 음식을 선택하라 </div>
+        박완영을 죽일 수 있는 독이 든 음식을 선택하라
+      </div>
       <Inventory />
+
       {/* 하트 표시 */}
       <div className={styles.Heart}>
         {Array.from({ length: hearts }, (_, i) => (
@@ -51,7 +66,7 @@ function Stage4Room2() {
         ))}
       </div>
 
-      {/* 김춘삼 이미지 (드롭 영역) */}
+      {/* 박완영 이미지 (드롭 영역) */}
       <div
         className={styles.ParkHwanyoungWrapper}
         onDragOver={(e) => e.preventDefault()} // 드롭 가능 영역 설정
@@ -60,7 +75,7 @@ function Stage4Room2() {
         <img className={styles.ParkHwanyoung} src={ParkHwanyoung} alt="ParkHwanyoung" />
       </div>
 
-      {/* 총 이미지들 (드래그 가능) */}
+      {/* 음식 이미지들 (드래그 가능) */}
       <div className={styles.Food}>
         <img
           draggable="true"

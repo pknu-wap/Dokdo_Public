@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Stage4Room1.module.css';
 import Inventory from '../components/Inventory.js';
@@ -9,8 +9,22 @@ import Gun_Gray from 'assets/stage4/Gun_Gray.png';
 import Gun_White from 'assets/stage4/Gun_White.png';
 
 function Stage4Room1() {
-  const [hearts, setHearts] = useState(3); /* 하트 상태 */
   const navigate = useNavigate();
+
+  /* 하트 상태를 로컬 스토리지에서 불러오기 */
+  const initialHearts = parseInt(localStorage.getItem('hearts'), 10) || 3; // 기본값 3
+  const [hearts, setHearts] = useState(initialHearts);
+
+  useEffect(() => {
+    /* 하트 상태를 로컬 스토리지에 저장 */
+    localStorage.setItem('hearts', hearts);
+
+    /* 하트가 0이면 gameover 페이지로 이동 */
+    if (hearts === 0) {
+      alert('게임 오버!');
+      navigate('/gameover');
+    }
+  }, [hearts, navigate]);
 
   /* 드래그 시작 처리 */
   const handleDragStart = (gunType) => (e) => {
@@ -23,17 +37,16 @@ function Stage4Room1() {
     const draggedItem = e.dataTransfer.getData('text/plain');
 
     if (draggedItem === 'correctGun') {
-      navigate('/stage4room2', { state: { hearts } }); /* 정답일 경우 다음 방으로 이동 */
+      navigate('/stage4room2'); /* 정답일 경우 다음 방으로 이동 */
     } else {
-      setHearts((prevHearts) => {
-        const updatedHearts = Math.max(prevHearts - 1, 0); /* 하트 감소 */
-        if (updatedHearts === 0) {
-          alert('게임 오버!');
-          navigate('/gameover'); /* 하트가 0이 되면 게임 오버 페이지로 이동 */
-        }
-        return updatedHearts;
-      });
+      setHearts((prevHearts) => Math.max(prevHearts - 1, 0)); /* 하트 감소 */
     }
+  };
+
+  /* room1으로 돌아올 때 하트를 초기화하는 함수 */
+  const resetHearts = () => {
+    localStorage.removeItem('hearts'); /* 로컬 스토리지에서 하트 상태 제거 */
+    setHearts(3); /* 하트 초기화 */
   };
 
   return (
@@ -43,6 +56,7 @@ function Stage4Room1() {
       </div>
       <Inventory />
 
+      {/* 하트 표시 */}
       <div className={styles.Heart}>
         {Array.from({ length: hearts }, (_, i) => (
           <img key={i} src={Heart} alt="Heart" />
@@ -61,21 +75,18 @@ function Stage4Room1() {
       {/* 총 이미지들 (드래그 가능) */}
       <div className={styles.Guns}>
         <img
-          /* className={styles.Gun_Black} */
           draggable="true"
           onDragStart={handleDragStart('wrongGun1')}
           src={Gun_Black}
           alt="Gun_Black"
         />
         <img
-          /* className={styles.Gun_Gray} */
           draggable="true"
           onDragStart={handleDragStart('correctGun')}
           src={Gun_Gray}
           alt="Gun_Gray"
         />
         <img
-          /* className={styles.Gun_White} */
           draggable="true"
           onDragStart={handleDragStart('wrongGun2')}
           src={Gun_White}
