@@ -1,5 +1,6 @@
 package com.example.rememberdokdo.Controller;
 
+import com.example.rememberdokdo.Dto.PuzzleGameResultDto;
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
 import com.example.rememberdokdo.Service.Stage4ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,12 @@ public class Stage4ProgressController {
     public ResponseEntity<Stage4ProgressDto> resetStage4(
             @PathVariable String sessionId){
         return ResponseEntity.ok(stage4ProgressService.resetStage4(sessionId));
+    }
+
+    @PostMapping("/puzzle/result/{sessionId}/{isPuzzleCleared}")
+    public ResponseEntity<PuzzleGameResultDto> puzzleResult(
+            @PathVariable String sessionId,
+            @PathVariable boolean isPuzzleCleared) {
+        return ResponseEntity.ok(stage4ProgressService.PuzzleResult(sessionId, isPuzzleCleared));
     }
 }
