@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class Stage4ProgressServiceC {
+public class Stage4ProgressService {
 
     @Autowired
     private final Stage4ProgressRepository stage4ProgressRepository;
     private final Stage4ItemRepository stage4ItemRepository;
 
     // 생성자를 통해 의존성 주입
-    public Stage4ProgressServiceC(Stage4ProgressRepository stage4ProgressRepository, Stage4ItemRepository stage4ItemRepository) {
+    public Stage4ProgressService(Stage4ProgressRepository stage4ProgressRepository, Stage4ItemRepository stage4ItemRepository) {
         this.stage4ProgressRepository = stage4ProgressRepository;
         this.stage4ItemRepository = stage4ItemRepository;
     }
