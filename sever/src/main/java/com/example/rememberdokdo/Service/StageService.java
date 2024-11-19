@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,17 +18,17 @@ public class StageService {
     private StageProgressRepository stageProgressRepository;
 
     public StageDto checkStageAccess(String sessionId, int stageId) {
-        // 기본적으로 스테이지 ID가 1부터 4 사이일 경우 접근 가능 설정
-        boolean isAccessible = stageId >= 1 && stageId <= 4;
+        // 기본적으로 스테이지 ID가 1부터 6 사이일 경우 접근 가능 설정
+        boolean isAccessible = stageId >= 1 && stageId <= 6;
 
         // 스테이지 1의 클리어 여부 확인
         boolean isStage1Cleared = stageProgressRepository.findBySessionIdAndStageId(sessionId, 1)
                 .map(StageProgressEntity::isCleared)
                 .orElse(false);
 
-        // 스테이지 1을 클리어한 경우 2, 3, 4 스테이지도 접근 가능
+        // 스테이지 1을 클리어한 경우 2, 3, 4, 5, 6 스테이지도 접근 가능
         if (isStage1Cleared) {
-            isAccessible = true;
+            isAccessible = stageId >= 1 && stageId <= 6;
         } else if (stageId > 1) {
             // 스테이지 1을 클리어하지 않았고 현재 요청 스테이지가 1보다 큰 경우 접근 불가
             isAccessible = false;
@@ -59,6 +60,7 @@ public class StageService {
             stageProgress.setCleared(true);
         }
         stageProgressRepository.save(stageProgress);
+
         // 응답 객체 생성
         SessionProgressDto responseDto = new SessionProgressDto();
         responseDto.setSessionId(sessionId);
