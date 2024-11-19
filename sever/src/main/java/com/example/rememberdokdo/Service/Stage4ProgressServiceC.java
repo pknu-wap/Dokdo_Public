@@ -94,15 +94,19 @@ public class Stage4ProgressServiceC {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid mission ID");
         }
 
-        // 아이템 검증 로직: 사용자가 선택한 아이템이 올바른지 확인
-        boolean missionCleared = stage4ItemRepository.findByRelatedMissionIdAndItemName(currentMissionId, selectedItemName)
-                .map(Stage4ItemEntity::isCorrectItem) // 선택된 아이템이 정답인지 확인
-                .orElse(false); // 아이템이 없으면 실패 처리
+        // 데이터베이스에서 현재 미션의 정답 가져오기
+        String correctItemName = stage4ItemRepository.findByRelatedMissionIdAndIsCorrectItem(currentMissionId, true)
+                .map(Stage4ItemEntity::getItemName)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Correct item not found for mission " + currentMissionId));
+
+        // 정답 여부 판단
+        boolean missionCleared = correctItemName.equals(selectedItemName);
 
         if (missionCleared) {
             // **정답일 경우: 하트 감소 X**
             if (progress.getCurrentMissionId() < 3) {
                 progress.setCurrentMissionId(progress.getCurrentMissionId() + 1); // 다음 미션으로 이동
+                progress.setCurrentMissionCleared(false); // 다음 미션으로 넘어갈 때는 미션 클리어 상태 초기화
             } else {
                 // 마지막 미션 성공 시 미션 클리어 상태로 설정
                 progress.setCurrentMissionCleared(true);
