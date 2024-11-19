@@ -103,10 +103,11 @@ public class Stage4ProgressServiceC {
         boolean missionCleared = correctItemName.equals(selectedItemName);
 
         if (missionCleared) {
+
+            progress.setCurrentMissionCleared(true); // 현재 미션 클리어 상태를 true로 설정
             // **정답일 경우: 하트 감소 X**
             if (progress.getCurrentMissionId() < 3) {
                 progress.setCurrentMissionId(progress.getCurrentMissionId() + 1); // 다음 미션으로 이동
-                progress.setCurrentMissionCleared(false); // 다음 미션으로 넘어갈 때는 미션 클리어 상태 초기화
             } else {
                 // 마지막 미션 성공 시 미션 클리어 상태로 설정
                 progress.setCurrentMissionCleared(true);
@@ -114,6 +115,7 @@ public class Stage4ProgressServiceC {
         } else {
             // **오답일 경우: 하트 감소 O**
             progress.setRemainingHearts(progress.getRemainingHearts() - 1); // 남은 하트 감소
+            progress.setCurrentMissionCleared(false); // 미션 실패 시 클리어 상태를 false로 설정
             if (progress.getRemainingHearts() <= 0) {
                 progress.setGameOver(true); // 하트가 0개 이하로 감소하면 게임 오버
             }
