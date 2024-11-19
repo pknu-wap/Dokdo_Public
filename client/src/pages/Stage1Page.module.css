@@ -15,6 +15,12 @@
   height: 13vh;
 }
 
+.Stage1Memo {
+  position: relative;
+  width: 30vw;
+  z-index: 1004;
+}
+
 /* Stage1 물건 */
 
 .Stage1LampBox {

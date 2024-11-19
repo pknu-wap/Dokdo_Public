@@ -3,8 +3,10 @@ import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useInventory } from '../context/InventoryContext.js';
+import { useInventory2 } from 'context/InventoryContext2';
+import { useUser } from 'context/UserContext';
 
+import Stage1Memo from 'assets/stage1/Stage1Memo.png';
 import DoorClose from 'assets/stage1/Stage1DoorClose.png';
 import DoorOpen from 'assets/stage1/Stage1DoorOpen.png';
 import Table from 'assets/stage1/Stage1Table.png';
@@ -20,13 +22,16 @@ function BeatDoor() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
   const [clickTimestamps, setClickTimestamps] = useState([]); /* 클릭 타임 스탬프 저장 */
   const [timer, setTimer] = useState(null); /* 타이머 상태 */
+  const { stageClear, user } = useUser();
 
   useEffect(() => {
-    const savedDoorState = sessionStorage.getItem('stage1Door');
-    if (savedDoorState === 'true') {
-      setIsCorrectTiming(true);
+    if (user?.stages[0]) {
+      const savedDoorState = user.stages[0].cleared;
+      if (savedDoorState === true) {
+        setIsCorrectTiming(true);
+      }
     }
-  });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -78,7 +83,8 @@ function BeatDoor() {
     }
 
     setIsCorrectTiming(true);
-    sessionStorage.setItem('stage1Door', 'true');
+    stageClear(1);
+
     resetAll();
   };
 
@@ -110,12 +116,32 @@ function BeatDoor() {
 }
 
 function Stage1Page() {
-  const isStage1DoorOpen = true;
+  const [isMemoShow, setIsMemoShow] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMusicExpand, setIsMusicExpand] = useState(false);
   const [isLampOn, setIsLampOn] = useState(false);
+  const [isStage2Open, setIsStage2Open] = useState(false);
+  const [isStage3Open, setIsStage3Open] = useState(false);
 
-  const { items, addItem } = useInventory(); /* Context에서 items와 addItem 함수 가져옴 */
+  const { user, fetchUser } = useUser();
+  const [items, setItems] = useState([]);
+
+  const { addItem } = useInventory2();
+
+  useEffect(() => {
+    fetchUser();
+    if (user?.stages) {
+      if (user.stages[0]) {
+        setIsStage2Open(true);
+      }
+      if (user.stages[1]) {
+        setIsStage3Open(true);
+      }
+    }
+    if (!user) {
+      setIsMemoShow(true);
+    }
+  }, []);
 
   const handleDrawerClick = () => {
     const newDrawerState = !isDrawerOpen;
@@ -133,16 +159,33 @@ function Stage1Page() {
 
   const handleBgClick = () => {
     setIsMusicExpand(false);
+    setIsMemoShow(false);
   };
 
   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
-  const handleItemClick = (itemName) => {
-    addItem(itemName);
+  const handleItemClick = async (itemId) => {
+    if (!user?.sessionId) {
+      console.log('Session ID가 없습니다.');
+      return;
+    }
+
+    try {
+      await addItem({ sessionId: user.sessionId, itemId });
+      /* 유저 정보 업데이트 */
+      const updatedUser = await fetchUser();
+
+      if (updatedUser?.inventory) {
+        setItems(updatedUser.inventory);
+      }
+      console.log(updatedUser.inventory);
+    } catch (error) {
+      console.error('아이템 추가 중 오류 발생', error);
+    }
   };
 
   return (
     <>
-      <ToolBar isStage2Open={isStage1DoorOpen} isStage3Open={true} />
+      <ToolBar isStage2Open={isStage2Open} isStage3Open={isStage3Open} />
       <Inventory />
       <div className={styles.Stage1Bg}>
         <div className={styles.Stage1Floor} />
@@ -156,10 +199,10 @@ function Stage1Page() {
           <img className={styles.Stage1Table} src={Table} />
           <img
             className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
-              items.includes('dokdoPuzzle1') ? styles.hidden : ''
+              items && items.some((item) => item.itemName === 'dokdoPuzzle1') ? styles.hidden : ''
             }`}
             src={Clover}
-            onClick={() => handleItemClick('dokdoPuzzle1')}
+            onClick={() => handleItemClick(1)}
           />
         </div>
         <img className={styles.Stage1Music} src={Music} onClick={handleMusicClick} />
@@ -173,10 +216,10 @@ function Stage1Page() {
             />
             <img
               className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1TaegeukKey} ${
-                items.includes('TaegeukKey') ? styles.hidden : ''
+                items.some((item) => item.itemName === 'taegeukKey') ? styles.hidden : ''
               }`}
               src={TaegeukKey}
-              onClick={() => handleItemClick('TaegeukKey')}
+              onClick={() => handleItemClick(5)}
             />
           </div>
         ) : (
@@ -190,6 +233,11 @@ function Stage1Page() {
         {isMusicExpand && (
           <div className={styles.Stage1ObjectBg} onClick={handleBgClick}>
             <img src={Music} className={styles.Stage1MusicExpand} />
+          </div>
+        )}
+        {isMemoShow && (
+          <div className={styles.Stage1ObjectBg} onClick={handleBgClick}>
+            <img src={Stage1Memo} className={styles.Stage1Memo} />
           </div>
         )}
       </div>

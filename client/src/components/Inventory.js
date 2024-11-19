@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
-import { useInventory } from '../context/InventoryContext';
-import TaegeukKey from '../assets/stage1/RedItem.png';
+import taegeukKey from '../assets/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/clover.png';
 import map from '../assets/stage2/Map.png';
-import CodeNote from '../assets/stage2/CodeNote.png';
+import codeNote from '../assets/stage2/CodeNote.png';
 import GunHintImage from 'assets/stage3/GunHintImage.png';
 import SpyHintImage from 'assets/stage3/SpyHintImage.png';
+import { useUser } from 'context/UserContext';
 
 const itemImage = {
-  TaegeukKey: TaegeukKey,
+  taegeukKey: taegeukKey,
   dokdoPuzzle1: dokdoPuzzle1,
   map: map,
   codeNote: CodeNote,
@@ -19,23 +19,29 @@ const itemImage = {
 };
 
 function Inventory() {
-  const boxes = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, items: [] }));
+  const boxes = Array.from({ length: 8 }, (_, i) => ({ id: i + 1, items2: [] }));
 
-  const { items } = useInventory(); /* itmes를 Context에서 가져옴 */
+  const { user } = useUser();
+  const items = user?.inventory || [];
 
   const [inventoryItems, setInventoryItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     /* items에 따라 inventoryItems 업데이트 */
-    const newInventoryItems = items.map((item, index) => ({
-      id: index + 1,
-      name: item,
-      image: itemImage[item],
+    if (items.length === 0) return;
+
+    const newInventoryItems = items.map((item) => ({
+      id: item.itemId,
+      name: item.itemName,
+      image: itemImage[item.itemName],
     }));
 
-    setInventoryItems(newInventoryItems);
-  }, [items]);
+    /* 새로운 items와 이전 items가 다를 경우에만 상태 업데이트 */
+    if (JSON.stringify(inventoryItems) !== JSON.stringify(newInventoryItems)) {
+      setInventoryItems(newInventoryItems);
+    }
+  }, [items, inventoryItems]);
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
