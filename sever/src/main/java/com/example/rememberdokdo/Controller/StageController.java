@@ -34,6 +34,10 @@ public class StageController {
             @RequestParam String sessionId,
             @RequestParam String itemName // 아이템 이름 추가
     ) {
+        // 스테이지 1, 2, 3은 미션 도전 불가
+        if (stageId >= 1 && stageId <= 3) {
+            throw new IllegalArgumentException("스테이지 " + stageId + "은 미션 도전이 불가능합니다. 이전 클리어하고 오세요.");
+        }
         return stageService.processItem(sessionId, stageId, itemName);
     }
 
@@ -43,6 +47,7 @@ public class StageController {
             @PathVariable int stageId,
             @RequestParam String sessionId
     ) {
+
         return stageService.getStageStatus(sessionId, stageId);
     }
 }
