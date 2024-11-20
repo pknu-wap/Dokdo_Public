@@ -1,4 +1,4 @@
-package com.example.rememberdokdo.Service;
+/*package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.Stage4ProgressDto;
 import com.example.rememberdokdo.Entity.Stage4ItemEntity;
@@ -50,10 +50,7 @@ public class Stage4ProgressService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stage 4 is already in progress or game over");
         }
 
-        // Stage 3 클리어 여부 확인
-        if (!progress.isStage3Cleared()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Stage 3 not cleared");
-        }
+
 
         // Stage 4 진행 상태 초기화
         progress.setCurrentMissionId(1); // 첫 번째 미션으로 초기화
@@ -156,4 +153,4 @@ public class Stage4ProgressService {
                 .isGameOver(entity.isGameOver()) // 게임 오버 여부
                 .build();
     }
-}
+}*/
