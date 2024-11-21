@@ -10,6 +10,7 @@ import com.example.rememberdokdo.Repository.StageProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -106,13 +107,18 @@ public class StageService {
 
     //스테이지 4,5,6 미션 도전 처리
     public StageProgressResponseDto processItem(String sessionId, int stageId, String selectedItem) {
-        // 동일 세션 내 가장 최근의 스테이지 상태에서 남은 하트를 가져오거나 기본값 3 설정
-        int previousHearts = stageProgressRepository.findBySessionId(sessionId).stream()
-                .filter(progress -> progress.getStageId() < stageId) // 현재 스테이지보다 낮은 스테이지만 고려
-                .mapToInt(StageProgressEntity::getRemainingHearts)
-                .filter(hearts -> hearts > 0) // 남은 하트가 양수인 경우만
-                .max() // 가장 최근의 남은 하트를 가져옴
-                .orElse(3); // 이전 상태가 없으면 기본값 3
+        // 이전 스테이지의 상태에서 남은 하트를 가져오거나, 기본값 3 설정 (스테이지 4는 무조건 기본값 3)
+        int previousHearts;
+        if (stageId == 4) {
+            previousHearts = 3; // 스테이지 4는 항상 기본값 3
+        } else {
+            previousHearts = stageProgressRepository.findBySessionId(sessionId).stream()
+                    .filter(progress -> progress.getStageId() < stageId) // 현재 스테이지보다 낮은 스테이지만 고려
+                    .sorted(Comparator.comparingInt(StageProgressEntity::getStageId).reversed()) // 최근 스테이지 우선
+                    .findFirst() // 가장 최근 상태
+                    .map(StageProgressEntity::getRemainingHearts)
+                    .orElse(3); // 이전 상태가 없으면 기본값 3
+        }
 
         // 스테이지 진행 상태 가져오기 또는 새로운 상태 생성
         StageProgressEntity stageProgress = stageProgressRepository
@@ -163,8 +169,6 @@ public class StageService {
                 .isCleared(stageProgress.isCleared())
                 .build();
     }
-
-
 
     // GET 요청: 스테이지 상태 조회
     public StageProgressResponseDto getStageStatus(String sessionId, int stageId) {
