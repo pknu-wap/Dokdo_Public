@@ -2,6 +2,9 @@ package com.example.rememberdokdo.Repository.Inventory;
 
 import com.example.rememberdokdo.Entity.Inventory.InventoryItemsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,5 +22,10 @@ public interface InventoryItemsRepository extends JpaRepository<InventoryItemsEn
 
     // 인벤토리 ID로 인벤토리 아이템 목록 조회
     List<InventoryItemsEntity> findByInventoryId(Integer inventoryId);
+
+    // inventoryId가 같은 모든 레코드 삭제하는 메서드
+    @Modifying
+    @Query("DELETE FROM InventoryItemsEntity p WHERE p.inventoryId = :inventoryId")
+    void deleteAllByInventoryId(@Param("inventoryId") int inventoryId);
 }
 
