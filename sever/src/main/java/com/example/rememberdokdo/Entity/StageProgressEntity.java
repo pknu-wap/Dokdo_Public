@@ -16,21 +16,14 @@ public class StageProgressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "progressId") // 컬럼 이름 명시
-    private int progressId; // progressId로 이름 변경
+    private int id;
 
     @Column(name = "sessionId", nullable = false)
-    private String sessionId; // 세션 ID
+    private String sessionId;
 
     @Column(name = "stageId", nullable = false)
-    private int stageId; // 스테이지 ID
+    private int stageId;
 
     @Column(name = "isCleared", nullable = false)
-    private boolean isCleared; // 스테이지 클리어 여부
-
-    @Column(nullable = false)
-    private int remainingHearts=3; // 남은 하트 추가
-
-    @Column(nullable = false)
-    private boolean gameOver;
+    private boolean isCleared;
 }
