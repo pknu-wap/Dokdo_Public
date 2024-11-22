@@ -126,7 +126,7 @@ function Stage4Room2() {
         onDragOver={(e) => e.preventDefault()} // 드롭 가능 영역 설정
         onDrop={handleDrop} // 드롭 처리
       >
-        <img className={styles.ParkHwanyoung} src={ParkHwanyoung} alt="ParkHwanyoung" />
+        <img className={styles.ParkHwanyoung} src={ParkHwanyoung} alt="ParkHwanyoung" onDragStart={(e) => e.preventDefault()}/>
       </div>
 
       {/* 음식 이미지들 (드래그 가능) */}

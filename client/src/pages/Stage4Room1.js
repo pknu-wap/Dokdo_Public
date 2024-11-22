@@ -71,7 +71,7 @@ function Stage4Room1() {
         onDragOver={(e) => e.preventDefault()} /* 드롭 가능 영역 설정 */
         onDrop={handleDrop} /* 드롭 처리 */
       >
-        <img className={styles.KimChunsam} src={KimChunsam} alt="KimChunsam" />
+        <img className={styles.KimChunsam} src={KimChunsam} alt="KimChunsam" onDragStart={(e) => e.preventDefault()}/>
       </div>
 
       {/* 총 이미지들 (드래그 가능) */}

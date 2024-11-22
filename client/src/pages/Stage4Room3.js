@@ -71,7 +71,7 @@ function Stage4Room3() {
         onDragOver={(e) => e.preventDefault()} // 드롭 가능 영역 설정
         onDrop={handleDrop} // 드롭 처리
       >
-        <img className={styles.SonJeongpal} src={SonJeongpal} alt="SonJeongpal" />
+        <img className={styles.SonJeongpal} src={SonJeongpal} alt="SonJeongpal" onDragStart={(e) => e.preventDefault()}/>
       </div>
 
       {/* 무기 이미지들 (드래그 가능) */}
