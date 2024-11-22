@@ -22,17 +22,17 @@ public class StageService {
     private Stage4ItemRepository stage4ItemRepository;
 
     public StageDto checkStageAccess(String sessionId, int stageId) {
-        // 기본적으로 스테이지 ID가 1부터 6 사이일 경우 접근 가능 설정
-        boolean isAccessible = stageId >= 1 && stageId <= 6;
+        // 기본적으로 스테이지 ID가 1부터 7 사이일 경우 접근 가능 설정
+        boolean isAccessible = stageId >= 1 && stageId <= 7;
 
         // 스테이지 1부터 현재 스테이지 직전까지 모두 클리어 상태인지 확인
         boolean isStage1Cleared = stageProgressRepository.findBySessionIdAndStageId(sessionId, 1)
                 .map(StageProgressEntity::isCleared)
                 .orElse(false);
 
-        // 스테이지 1을 클리어한 경우 2, 3, 4, 5, 6 스테이지도 접근 가능
+        // 스테이지 1을 클리어한 경우 2, 3, 4, 5, 6, 7 스테이지도 접근 가능
         if (isStage1Cleared) {
-            isAccessible = stageId >= 1 && stageId <= 6;
+            isAccessible = stageId >= 1 && stageId <= 7;
         } else if (stageId > 1) {
             // 스테이지 1을 클리어하지 않았고 현재 요청 스테이지가 1보다 큰 경우 접근 불가
             isAccessible = false;
