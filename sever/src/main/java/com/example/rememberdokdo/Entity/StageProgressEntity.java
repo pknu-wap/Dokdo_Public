@@ -16,7 +16,8 @@ public class StageProgressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "progressId") // 컬럼 이름 명시
+    private int progressId; // progressId로 이름 변경
 
     @Column(name = "sessionId", nullable = false)
     private String sessionId;
