@@ -168,9 +168,8 @@ function Stage3Page() {
     setTimeout(() => {
       setGunHintVisible(false); /* 3초 후 무기 힌트 이미지를 숨김 */
       if (!items.includes('GunHint')) {
-        setItems('GunHintImage'); /* 인벤토리에 무기 힌트 추가 */
+        handleItemClick(8);
         setIsGunHintCollected(true); /* GunHintImage 수집 상태 true */
-        setIsNumberGuessModalOpen(true); /* 숫자 맞추기 모달 열기 */
       }
     }, 1000);
   };
@@ -223,15 +222,6 @@ function Stage3Page() {
 
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
 
-      {/* <img
-        className={`${styles.Stage3Gunhint} ${
-          items && items.some((item) => item.itemName === 'gunHint') ? styles.hidden : ''
-        }`}
-        src={GunHintImage}
-        alt={GunHintImage}
-        onClick={() => handleItemClick(8)}
-      /> */}
-
       {/* 친일파 찾기 모달 */}
       <Modal
         isOpen={isFindSpyModalOpen}
@@ -283,9 +273,7 @@ function Stage3Page() {
         size="medium"
       >
         <h1 className={styles.NumberGuessModalMent}>자물쇠를 푸시오</h1>
-          {/* <div className={styles.SetScore}> */}
             <CheckNumber setScoreValues={setScoreValues} /> 
-          {/* </div> */}
       </Modal>
 
       {/* 결과 메시지 */}
