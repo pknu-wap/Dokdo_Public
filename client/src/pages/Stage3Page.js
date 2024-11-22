@@ -170,6 +170,7 @@ function Stage3Page() {
       if (!items.includes('GunHint')) {
         setItems('GunHintImage'); /* 인벤토리에 무기 힌트 추가 */
         setIsGunHintCollected(true); /* GunHintImage 수집 상태 true */
+        setIsNumberGuessModalOpen(true); /* 숫자 맞추기 모달 열기 */
       }
     }, 1000);
   };
@@ -262,7 +263,7 @@ function Stage3Page() {
       )}
 
       {/* noteImage - KoreaFlag 클릭 후 표시 */}
-      {noteImage && <img src={noteImage} alt="쪽지" className={styles.NoteImage} onClick={() => handleItemClick(8)} />}
+      {noteImage && <img src={noteImage} alt="쪽지" className={styles.NoteImage} onClick={handleNoteImageClick} />}
 
       {/* 무기 힌트 이미지 */}
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
