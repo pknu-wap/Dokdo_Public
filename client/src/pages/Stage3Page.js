@@ -4,7 +4,8 @@ import Inventory from '../components/Inventory.js';
 import CheckNumber from '../components/CheckNumber.js';
 import Modal from '../components/Modal.js';
 import { useState, useEffect } from 'react';
-import { useInventory } from '../context/InventoryContext';
+import { useInventory2 } from '../context/InventoryContext2';
+import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 import Stage3wall from 'assets/stage3/Stage3wall.png';
@@ -38,9 +39,6 @@ const Stage3PeopleImage = [
 const CorrectAnswer = [1, 6, 8];
 
 function Stage3Page() {
-  const [isStage1Open] = useState(true);
-  const [isStage2Open] = useState(true);
-  const [isStage3Open] = useState(true);
   const [selectedImage, setSelectedImage] = useState([]);
   const [resultMessage, setResultMessage] = useState('');
   const [addKoreaFlagImage, setAddKoreaFlagImage] = useState(null);
@@ -51,20 +49,56 @@ function Stage3Page() {
   const [isDoorOpen, setIsDoorOpen] = useState(false); /* 문이 열렸는지 알아봄 */
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
   const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
-  const { items, addItem } = useInventory(); /* Context에서 items도 가져옴 */
-  // const { user, fetchUser } = useUser();
-  const navigate = useNavigate(); 
   const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false); /* 친일파 힌트 이미지 상태 */ 
-  
+
+  const { addItem } = useInventory2(); /* Context에서 items도 가져옴 */
+  const [items, setItems] = useState([]);
+  const { user, fetchUser } = useUser();
+  const navigate = useNavigate(); 
+
   const [scoreValues, setScoreValues] = useState({
     number1: 0,
     number2: 0,
     number3: 0,
   });   /* CheckNumber 숫자 받아오기 */
 
-  const handleItemClick = (itemName) => {
-    addItem(itemName);
-  };   /* 아이템을 클릭했을 때 인벤토리에 추가하는 함수 */
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  /* 아이템 추가 함수 */
+  let isAddingItem = false;
+
+  const handleItemClick = async (itemId) => {
+    if (isAddingItem) return; /* 이미 추가 요청 중이면 아무 작업도 하지 않음 */ 
+  
+    if (!user?.sessionId) {
+      console.log('Session ID가 없습니다.');
+      return;
+    }
+  
+    if (items.some(item => item.id === itemId)) {
+      console.log('이미 추가된 아이템입니다.');
+      return;
+    }
+  
+    try {
+      isAddingItem = true; /* 추가 요청 시작 */ 
+      await addItem({ sessionId: user.sessionId, itemId });
+      setItems(prevItems => [...prevItems, { id: itemId }]); /*즉시 로컬 업데이트*/ 
+     
+      const updatedUser = await fetchUser();
+      if (updatedUser?.inventory) {
+        setItems(updatedUser.inventory);
+      }
+      console.log("업데이트된 인벤토리:", updatedUser.inventory);
+    } catch (error) {
+      console.error('아이템 추가 중 오류 발생', error);
+    } finally {
+      isAddingItem = false; /* 추가 요청 종료 */ 
+    }
+  };
+  
 
   /* 정답, 오답 3개로 제한 */
   const handleImageClick = (image) => {
@@ -99,11 +133,17 @@ function Stage3Page() {
       setTimeout(() => setResultMessage(''), 1000);
 
       /* Spy 힌트 이미지를 표시하고 2초 후 사라짐과 동시에 인벤토리에 추가 */ 
-      setSpyHintImagesVisible(true);
+      let isSpyHintHandled = false;
+
       setTimeout(() => {
         setSpyHintImagesVisible(false);
-        addItem('SpyHintImage');
+      
+        if (!isSpyHintHandled) {
+          handleItemClick(9);
+          isSpyHintHandled = true; // 중복 호출 방지
+        }
       }, 1000);
+      
 
     } else {
       setResultMessage('오답입니다. 다시 시도해주세요.');
@@ -128,7 +168,7 @@ function Stage3Page() {
     setTimeout(() => {
       setGunHintVisible(false); /* 3초 후 무기 힌트 이미지를 숨김 */
       if (!items.includes('GunHint')) {
-        addItem('GunHintImage'); /* 인벤토리에 무기 힌트 추가 */
+        setItems('GunHintImage'); /* 인벤토리에 무기 힌트 추가 */
         setIsGunHintCollected(true); /* GunHintImage 수집 상태 true */
       }
     }, 1000);
@@ -166,25 +206,10 @@ function Stage3Page() {
       }
   }, []);
 
-  // useEffect(() => {
-  //   fetchUser(); // 유저 불러오기
-  //   if (user?.stages) { 
-  //     if (user.stages[0]) {
-  //       isStage1Open(true);
-  //     }
-  //     if (user.stages[1]) {
-  //       isStage2Open(true);
-  //     }
-  //     if (user.stages[2]) {
-  //       isStage3Open(true);
-  //     }
-  //   }
-  // }, []);
-
   return (
     <div className={styles.Stage3Page}>
       <div className={styles.Stage3Bg} />
-      <ToolBar isStage3Open={isStage3Open} isStage2Open={isStage2Open} />
+      <ToolBar isStage3Open={true} isStage2Open={true} />
       <Inventory />
       <div className={styles.Stage3Floor} />
 
@@ -197,14 +222,14 @@ function Stage3Page() {
 
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
 
-      <img
+      {/* <img
         className={`${styles.Stage3Gunhint} ${
-          items.includes('Stage3Gunhint') ? styles.hidden : ''
+          items && items.some((item) => item.itemName === 'gunHint') ? styles.hidden : ''
         }`}
         src={GunHintImage}
         alt={GunHintImage}
-        onClick={() => handleItemClick('Stage3Gunhint')}
-      />
+        onClick={() => handleItemClick(8)}
+      /> */}
 
       {/* 친일파 찾기 모달 */}
       <Modal
@@ -237,7 +262,7 @@ function Stage3Page() {
       )}
 
       {/* noteImage - KoreaFlag 클릭 후 표시 */}
-      {noteImage && <img src={noteImage} alt="쪽지" className={styles.NoteImage} onClick={handleNoteImageClick} />}
+      {noteImage && <img src={noteImage} alt="쪽지" className={styles.NoteImage} onClick={() => handleItemClick(8)} />}
 
       {/* 무기 힌트 이미지 */}
       {gunHintVisible && <img src={GunHintImage} alt="무기힌트" className={styles.GunHintImage} />}
