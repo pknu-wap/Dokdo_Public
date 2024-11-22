@@ -6,6 +6,10 @@ import Stage1Page from './pages/Stage1Page';
 import IntroPage from './pages/IntroPage';
 import NewsPage from './pages/NewsPage';
 import Stage3Page from './pages/Stage3Page';
+import Stage4Room1 from './pages/Stage4Room1';
+import Stage4Room2 from './pages/Stage4Room2';
+import Stage4Room3 from './pages/Stage4Room3';
+import GameOver from './components/GameOver';
 
 
 function Main() {
@@ -18,7 +22,11 @@ function Main() {
           <Route path="intro/news" element={<NewsPage />} />
           <Route path="stage1" element={<Stage1Page />} />
           <Route path="stage2" element={<Stage2Page />} />
-          <Route path="Stage3" element={<Stage3Page />} />
+          <Route path="stage3" element={<Stage3Page />} />
+          <Route path="stage4room1" element={<Stage4Room1 />} />
+          <Route path="stage4room2" element={<Stage4Room2 />} />
+          <Route path="stage4room3" element={<Stage4Room3 />} />
+          <Route path="gameOver" element={<GameOver />} />
         </Routes>
       </App>
     </BrowserRouter>

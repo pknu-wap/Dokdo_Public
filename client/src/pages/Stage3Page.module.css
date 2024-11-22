@@ -13,41 +13,45 @@
 
 .Stage3Floor {
   position: fixed;
-  bottom: 0;
+  bottom: 0vh;
   background-color: #846b66;
   width: 100vw;
   height: 13vh;
 }
 
 .DoorClose {
-  cursor: pointer;
   position: fixed;
-  top: 56vh;
-  left: 18vw;
   transform: translate(-50%, -50%);
-  width: 25vw;
-  height: auto; /* 높이를 비율에 맞게 자동 설정 */
+  cursor: pointer;
+  height: 64vh;
+  top: 55vh;
+  left: 17vw;
   z-index: 1;
 }
 
 .DoorOpen {
-  cursor: pointer;
   position: fixed;
-  top: 58.3vh;
-  left: 18vw;
   transform: translate(-50%, -50%);
-  width: 25vw;
-  height: auto; /* 높이를 비율에 맞게 자동 설정 */
+  cursor: pointer;
+  height: 65vh;
+  top: 60vh;
+  left: 18vw;
   z-index: 1;
 }
 
 .Stage3wall {
-  width: 45vw;
+  height: 50vh;;
   position: fixed;
-  top: 18.8vh;
-  left: 59vw;
+  top: 19vh;
+  left: 36vw;
   cursor: pointer;
-  transform: translateX(-50%);
+}
+
+.DokdoPuzzle3{
+  position: fixed;
+  height: 8vh;
+  top: 20vh;
+  left: 15vw;
 }
 
 .ModalMent {
@@ -62,22 +66,13 @@
 .NumberGuessModalMent {
   font-size: 2vw;
   position: relative;
-  padding: 2vw;
   top: 0vh;
-  left: 24vw;
-}
-
-.SetScore{
-  position: fixed;
-  top: 30vh;
-  left: 24vw;
-  width: 100vh;
-  height: 34vw;
+  text-align: center;
 }
 
 .ImageGrid { /* 모달 속 전체 친일파사진 위치  */
   position: fixed;
-  top: 23vh;
+  top: 23vh; 
   left: 25vw;
 }
 
@@ -130,29 +125,25 @@
 
 .KoreaFlag { 
   cursor: pointer;
-  width: 7.9vw;
-  height: 9.5vh;
+  height: 9vh;
   position: fixed;
   top: 19.2vh;
-  left: 64.3vw;
+  left: 62.3vw;
 }
 
 .NoteImage {
   cursor: pointer;
-  width: 3vw;
-  height: auto;
+  height: 4vh;
   position: fixed;
-  top: 16vh;
-  left: 66.6vw;
+  top: 15.5vh;
+  left: 64vw;
 }
 
 .GunHintImage {
   position: fixed;
-  top: 50vh;
-  left: 53vw;
-  transform: translate(-50%, -50%);
-  width: 30vw;
-  height: auto;
+  top: 19vh;
+  left: 38vw;
+  height: 50vh;
 }
 
 .SpyHintImage {
