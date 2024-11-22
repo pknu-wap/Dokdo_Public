@@ -15,6 +15,7 @@ import DoorClose from 'assets/stage3/Stage3DoorClose.png';
 import DoorOpen from 'assets/stage3/Stage3DoorOpen.png';
 import NoteImage from 'assets/stage3/noteImage.png';
 import SpyHintImage from 'assets/stage3/SpyHintImage.png';
+import dokdoPuzzle3 from '../assets/clover3.png';
 
 import People1 from 'assets/stage3/친일파(1).png';
 import People2 from 'assets/stage3/친일파(2).png';
@@ -24,6 +25,7 @@ import People5 from 'assets/stage3/친일파(5).png';
 import People6 from 'assets/stage3/친일파(6).png';
 import People7 from 'assets/stage3/친일파(7).png';
 import People8 from 'assets/stage3/친일파(8).png';
+
 
 const Stage3PeopleImage = [
   { id: 1, src: People1, name: '친일파1' },

@@ -13,38 +13,34 @@
   left: 2vw;
   background-color: #C1A693; 
   font-family: 'MapoAgape', sans-serif;
-  font-size: 2.5vw;
-  text-align: center; 
+  font-size: 4vh;
+  text-align: center;
   border-radius: 1vw; /* 둥근 모서리 */
-  padding: 1.5vw; /* 내부 여백 */
+  padding: 1.5vw; 
   box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 }
 
 .SonJeongpalWrapper {
   position: fixed;
-  top: 19vh;
-  left: 34vw;
+  top: 16vh;
+  left: 26vw;
+  z-index: -1;
   display: flex;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.5); /* 배경색 투명도 */
-  border-radius: 0.8vw; /* 드롭 영역 둥글게 */
 }
 
 .SonJeongpal {
-  width: auto;
-  height: 45vh;
+  height:65vh;
   object-fit: contain; /* 이미지 비율 유지 */
 }
 
 .Heart {
   position: fixed;
-  width: 15vw; /* 배경색의 가로 크기 */
-  height: 10vh; /* 배경색의 세로 크기 */
+  height: 10vh;
   top: 3vh;
-  left: 66vw;
-  display: flex; 
+  left: 67vw;
+  display: flex;
   gap: 1vw; 
-  background-color: #C1A693; 
+  background-color: #C1A693;
   border-radius: 1vw; /* 둥근 모서리 */
   padding: 1vw; 
   align-items: center; /* 세로 중앙 정렬 */
@@ -60,16 +56,14 @@
 .Weapon {
   position: fixed;
   top: 73vh;
-  left: 28vw;
+  left: 18vw;
   display: flex;
   gap: 5vw; /* 이미지 간의 간격 */
 }
 
 .Weapon img {
-  width: 15vh;
-  height: auto;
+  height: 23vh;
   cursor: grab;
-  border-radius: 0.8vw; 
   transition: transform 0.2s ease; /* 드래그 효과 */
 }
 
@@ -82,7 +76,6 @@
   position: fixed;
   top: 80vh;
   left: 8vw;
-  width: 70vw;
-  height: auto;
+  height: 28vh;
   z-index: -1;
 }
