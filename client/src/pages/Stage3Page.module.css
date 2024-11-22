@@ -50,7 +50,7 @@
 .DokdoPuzzle3{
   position: fixed;
   height: 8vh;
-  top: 15vh;
+  top: 20vh;
   left: 15vw;
 }
 
@@ -125,7 +125,7 @@
 
 .KoreaFlag { 
   cursor: pointer;
-  height: 9.1vh;
+  height: 9vh;
   position: fixed;
   top: 19.2vh;
   left: 62.3vw;

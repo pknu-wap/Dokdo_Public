@@ -101,7 +101,6 @@ function Stage3Page() {
       isAddingItem = false; /* 추가 요청 종료 */ 
     }
   };
-  
 
   /* 정답, 오답 3개로 제한 */
   const handleImageClick = (image) => {
@@ -259,9 +258,21 @@ function Stage3Page() {
         <img
           className={styles.DokdoPuzzle3}
           src={dokdoPuzzle3}
-          alt="독도 퍼즐 조각"
+          alt="독도 퍼즐 조각3"
           onClick={handleDokdoPuzzleClick}
         />
+      )}
+
+      {/* KoreaFlag 이미지 - 친일파 찾기 모달 이후 표시 */}
+      {addKoreaFlagImage && (
+        <div >
+          <img
+            src={KoreaFlag} 
+            alt="KoreaFlag"
+            className={styles.KoreaFlag}
+            onClick={handleAddKoreaFlagImageClick}
+          />
+        </div>
       )}
 
       {/* noteImage - KoreaFlag 클릭 후 표시 */}

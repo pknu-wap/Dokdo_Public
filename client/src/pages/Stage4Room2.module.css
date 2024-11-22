@@ -79,3 +79,12 @@
   height: 28vh;
   z-index: -1;
 }
+
+.DokdoPuzzle4{
+  cursor: pointer;
+  position: fixed;
+  height: 12vh;
+  top: 25vh;
+  left: 28vw;
+  z-index: 10;
+}
