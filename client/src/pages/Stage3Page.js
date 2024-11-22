@@ -52,6 +52,7 @@ function Stage3Page() {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
   const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
   const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false); /* 친일파 힌트 이미지 상태 */ 
+  const [isDokdoPuzzleVisible, setIsDokdoPuzzleVisible] = useState(true);
 
   const { addItem } = useInventory2(); /* Context에서 items도 가져옴 */
   const [items, setItems] = useState([]);
@@ -208,6 +209,12 @@ function Stage3Page() {
       }
   }, []);
 
+  const handleDokdoPuzzleClick = () => {
+    handleItemClick(3);
+    setIsDokdoPuzzleVisible(false);
+    console.log('독도 퍼즐 조각이 인벤토리에 추가됨');
+  };
+
   return (
     <div className={styles.Stage3Page}>
       <div className={styles.Stage3Bg} />
@@ -247,11 +254,14 @@ function Stage3Page() {
         </div>
       </Modal>
 
-      {/* KoreaFlag 이미지 - 친일파 찾기 모달 이후 표시 */}
-      {addKoreaFlagImage && (
-        <div className={styles.KoreaFlag}>
-          <img src={KoreaFlag} alt="KoreaFlag" className={styles.KoreaFlag} onClick={handleAddKoreaFlagImageClick} />
-        </div>
+      {/* 독도 퍼즐 조각 이미지 */}
+      {isDokdoPuzzleVisible && (
+        <img
+          className={styles.DokdoPuzzle3}
+          src={dokdoPuzzle3}
+          alt="독도 퍼즐 조각"
+          onClick={handleDokdoPuzzleClick}
+        />
       )}
 
       {/* noteImage - KoreaFlag 클릭 후 표시 */}
