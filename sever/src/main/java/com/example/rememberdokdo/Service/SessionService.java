@@ -135,20 +135,8 @@ public class SessionService {
 
         // 스테이지 진행 상황 조회
         List<SessionProgressDto.StageStatus> stages = stageProgressRepository.findBySessionId(sessionId).stream()
-                .map(stage -> {
-                    // 스테이지 4, 5, 6에 대해서만 remainingHearts 추가
-                    Integer remainingHearts = (stage.getStageId() >= 4 && stage.getStageId() <= 6)
-                            ? stage.getRemainingHearts() // 남은 하트 가져오기
-                            : null;
-
-                    return new SessionProgressDto.StageStatus(
-                            stage.getStageId(),
-                            stage.isCleared(),
-                            remainingHearts // 나머지 스테이지는 null
-                    );
-                })
+                .map(stage -> new SessionProgressDto.StageStatus(stage.getStageId(), stage.isCleared()))
                 .collect(Collectors.toList());
-
 
         // 인벤토리 조회
         InventoryEntity inventory = inventoryRepository.findBySessionId(sessionId)
@@ -161,7 +149,8 @@ public class SessionService {
 
         // SessionStatusDto 생성하여 반환
         return new SessionProgressDto(
-                sessionEntity.getSessionId(),
+                null,
+                //sessionEntity.getSessionId(),
                 sessionEntity.getUserId(),
                 stages,
                 inventoryItems,
@@ -185,4 +174,14 @@ public class SessionService {
         stageProgress.setCleared(true);
         stageProgressRepository.save(stageProgress); // 저장
     }
+
+
+    /*사용자 게임 클리어 시 userId 저장 (닉네임 저장)
+    public SessionDto updateUserId(String sessionId, String userId) {
+        SessionEntity session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("Session not found"));
+        session.setUserId(userId);  // 사용자 ID(닉네임) 업데이트
+        sessionRepository.save(session);
+        return SessionDto.fromEntity(session);
+    }*/
 }

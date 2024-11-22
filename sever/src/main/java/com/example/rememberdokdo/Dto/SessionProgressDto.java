@@ -1,13 +1,11 @@
 package com.example.rememberdokdo.Dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +23,6 @@ public class SessionProgressDto {
     public static class StageStatus {
         private int stageId;
         private boolean isCleared;
-        private Integer remainingHearts; // 남은 하트 수 (4, 5, 6 스테이지만 값 포함, 나머지는 null)
     }
 
     @Data
