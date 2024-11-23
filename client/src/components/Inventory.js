@@ -22,6 +22,8 @@ const itemImage = {
   timeLocationHint: timeLocationHint,
   GunHintImage: GunHintImage,
   SpyHintImage: SpyHintImage,
+  gunHint: GunHintImage,
+  japaneseInfo: SpyHintImage,
 };
 
 function Inventory() {

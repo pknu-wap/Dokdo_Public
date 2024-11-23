@@ -1,0 +1,90 @@
+.Stage4Bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fee7d7;
+}
+
+.TopBar {
+  position: fixed;
+  width: 60vw;
+  height: 10vh;
+  top: 3vh;
+  left: 2vw;
+  background-color: #C1A693; 
+  font-family: 'MapoAgape', sans-serif;
+  font-size: 4vh;
+  text-align: center;
+  border-radius: 1vw; /* 둥근 모서리 */
+  padding: 1.5vw; 
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.ParkHwanyoungWrapper {
+  position: fixed;
+  top: 16vh;
+  left: 26vw;
+  z-index: -1;
+  display: flex;
+}
+
+.ParkHwanyoung {
+  height:65vh;
+  object-fit: contain; /* 이미지 비율 유지 */
+}
+
+.Heart {
+  position: fixed;
+  height: 10vh;
+  top: 3vh;
+  left: 67vw;
+  display: flex;
+  gap: 1vw; 
+  background-color: #C1A693;
+  border-radius: 1vw; /* 둥근 모서리 */
+  padding: 1vw; 
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.Heart img {
+  height: 5vh; 
+  object-fit: contain; /* 이미지 비율 유지 */
+}
+
+.Food {
+  position: fixed;
+  top: 73vh;
+  left: 18vw;
+  display: flex;
+  gap: 5vw; /* 이미지 간의 간격 */
+}
+
+.Food img {
+  height: 23vh;
+  cursor: grab;
+  transition: transform 0.2s ease; /* 드래그 효과 */
+}
+
+.Food img:active {
+  cursor: grabbing;
+  transform: scale(1.1); /* 드래그 중 확대 효과 */
+}
+
+.Table {
+  position: fixed;
+  top: 80vh;
+  left: 8vw;
+  height: 28vh;
+  z-index: -1;
+}
+
+.DokdoPuzzle4{
+  cursor: pointer;
+  position: fixed;
+  height: 12vh;
+  top: 25vh;
+  left: 28vw;
+  z-index: 10;
+}
