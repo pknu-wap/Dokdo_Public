@@ -26,7 +26,6 @@ import People6 from 'assets/stage3/친일파(6).png';
 import People7 from 'assets/stage3/친일파(7).png';
 import People8 from 'assets/stage3/친일파(8).png';
 
-
 const Stage3PeopleImage = [
   { id: 1, src: People1, name: '친일파1' },
   { id: 2, src: People2, name: '친일파2' },
@@ -51,19 +50,19 @@ function Stage3Page() {
   const [isDoorOpen, setIsDoorOpen] = useState(false); /* 문이 열렸는지 알아봄 */
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
   const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
-  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false); /* 친일파 힌트 이미지 상태 */ 
+  const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false); /* 친일파 힌트 이미지 상태 */
   const [isDokdoPuzzleVisible, setIsDokdoPuzzleVisible] = useState(true);
 
   const { addItem } = useInventory2(); /* Context에서 items도 가져옴 */
   const [items, setItems] = useState([]);
-  const { user, fetchUser } = useUser();
-  const navigate = useNavigate(); 
+  const { user, fetchUser, stageClear } = useUser();
+  const navigate = useNavigate();
 
   const [scoreValues, setScoreValues] = useState({
     number1: 0,
     number2: 0,
     number3: 0,
-  });   /* CheckNumber 숫자 받아오기 */
+  }); /* CheckNumber 숫자 받아오기 */
 
   useEffect(() => {
     fetchUser();
@@ -73,32 +72,32 @@ function Stage3Page() {
   let isAddingItem = false;
 
   const handleItemClick = async (itemId) => {
-    if (isAddingItem) return; /* 이미 추가 요청 중이면 아무 작업도 하지 않음 */ 
-  
+    if (isAddingItem) return; /* 이미 추가 요청 중이면 아무 작업도 하지 않음 */
+
     if (!user?.sessionId) {
       console.log('Session ID가 없습니다.');
       return;
     }
-  
-    if (items.some(item => item.id === itemId)) {
+
+    if (items.some((item) => item.id === itemId)) {
       console.log('이미 추가된 아이템입니다.');
       return;
     }
-  
+
     try {
-      isAddingItem = true; /* 추가 요청 시작 */ 
+      isAddingItem = true; /* 추가 요청 시작 */
       await addItem({ sessionId: user.sessionId, itemId });
-      setItems(prevItems => [...prevItems, { id: itemId }]); /*즉시 로컬 업데이트*/ 
-     
+      setItems((prevItems) => [...prevItems, { id: itemId }]); /*즉시 로컬 업데이트*/
+
       const updatedUser = await fetchUser();
       if (updatedUser?.inventory) {
         setItems(updatedUser.inventory);
       }
-      console.log("업데이트된 인벤토리:", updatedUser.inventory);
+      console.log('업데이트된 인벤토리:', updatedUser.inventory);
     } catch (error) {
       console.error('아이템 추가 중 오류 발생', error);
     } finally {
-      isAddingItem = false; /* 추가 요청 종료 */ 
+      isAddingItem = false; /* 추가 요청 종료 */
     }
   };
 
@@ -115,15 +114,15 @@ function Stage3Page() {
 
   /* 친일파 찾기 모달 열기 */
   const openFindSpyModal = () => {
-    if (!isAnswerCorrect && !isDoorOpen) { 
+    if (!isAnswerCorrect && !isDoorOpen) {
       /* 정답을 맞추지 않은 경우에만 열림 */
       setIsFindSpyModalOpen(true);
     }
   };
-  
+
   /* 친일파 찾기 정답 확인 */
   const handleCheckAnswer = () => {
-    const selectedIds = selectedImage.map(img => img.id);
+    const selectedIds = selectedImage.map((img) => img.id);
     const isCorrect = JSON.stringify(selectedIds.slice().sort()) === JSON.stringify(CorrectAnswer.slice().sort());
 
     if (isCorrect) {
@@ -134,19 +133,17 @@ function Stage3Page() {
       setSelectedImage([]);
       setTimeout(() => setResultMessage(''), 1000);
 
-      /* Spy 힌트 이미지를 표시하고 2초 후 사라짐과 동시에 인벤토리에 추가 */ 
+      /* Spy 힌트 이미지를 표시하고 2초 후 사라짐과 동시에 인벤토리에 추가 */
       let isSpyHintHandled = false;
 
       setTimeout(() => {
         setSpyHintImagesVisible(false);
-      
+
         if (!isSpyHintHandled) {
           handleItemClick(9);
           isSpyHintHandled = true; // 중복 호출 방지
         }
       }, 1000);
-      
-
     } else {
       setResultMessage('오답입니다. 다시 시도해주세요.');
       setTimeout(() => setResultMessage(''), 1000);
@@ -156,7 +153,8 @@ function Stage3Page() {
   };
 
   const handleAddKoreaFlagImageClick = () => {
-    if (!isGunHintCollected) { /* GunHintImage가 수집되지 않은 경우에만 동작 */
+    if (!isGunHintCollected) {
+      /* GunHintImage가 수집되지 않은 경우에만 동작 */
       setNoteImage(NoteImage);
     }
   };
@@ -185,6 +183,7 @@ function Stage3Page() {
       setTimeout(() => setResultMessage(''), 1000);
       sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
+      stageClear(3);
     } else {
       setResultMessage('오답입니다. 다시 시도해주세요.');
       setTimeout(() => setResultMessage(''), 1000);
@@ -203,9 +202,9 @@ function Stage3Page() {
   /* 새로고침 시 문이 열린 상태 유지 */
   useEffect(() => {
     const savedDoorState = sessionStorage.getItem('stage3DoorOpen');
-      if (savedDoorState === 'true') {
-        setIsDoorOpen(true);
-      }
+    if (savedDoorState === 'true') {
+      setIsDoorOpen(true);
+    }
   }, []);
 
   const handleDokdoPuzzleClick = () => {
@@ -223,9 +222,19 @@ function Stage3Page() {
 
       {/* 문 이미지 - 정답 시 열린 문으로 변경 */}
       {isDoorOpen ? (
-        <img className={`${styles.DoorOpen} ${styles.DoorOpen}`} src={DoorOpen} alt="열린 문" onClick={handleDoorClick} />
+        <img
+          className={`${styles.DoorOpen} ${styles.DoorOpen}`}
+          src={DoorOpen}
+          alt="열린 문"
+          onClick={handleDoorClick}
+        />
       ) : (
-        <img className={`${styles.DoorClose} ${styles.DoorClose}`} src={DoorClose} alt="닫힌 문" onClick={handleDoorClick} />
+        <img
+          className={`${styles.DoorClose} ${styles.DoorClose}`}
+          src={DoorClose}
+          alt="닫힌 문"
+          onClick={handleDoorClick}
+        />
       )}
 
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
@@ -265,13 +274,8 @@ function Stage3Page() {
 
       {/* KoreaFlag 이미지 - 친일파 찾기 모달 이후 표시 */}
       {addKoreaFlagImage && (
-        <div >
-          <img
-            src={KoreaFlag} 
-            alt="KoreaFlag"
-            className={styles.KoreaFlag}
-            onClick={handleAddKoreaFlagImageClick}
-          />
+        <div>
+          <img src={KoreaFlag} alt="KoreaFlag" className={styles.KoreaFlag} onClick={handleAddKoreaFlagImageClick} />
         </div>
       )}
 
@@ -296,7 +300,7 @@ function Stage3Page() {
         size="medium"
       >
         <h1 className={styles.NumberGuessModalMent}>자물쇠를 푸시오</h1>
-            <CheckNumber setScoreValues={setScoreValues} /> 
+        <CheckNumber setScoreValues={setScoreValues} />
       </Modal>
 
       {/* 결과 메시지 */}
