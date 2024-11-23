@@ -39,13 +39,101 @@
   z-index: 1;
 }
 
-.Stage3wall {
-  height: 50vh;;
-  position: fixed;
-  top: 19vh;
-  left: 36vw;
-  cursor: pointer;
+.stage3Container {
+  position: absolute; /* 자식 요소의 기준 */
+  width: 100vh; /* 화면 너비 */
+  left: 30vw;
+  top: 20vh;
+  height: 50vh; /* 화면 높이 */
+  background: #f5f5f5; /* 배경색 */
 }
+
+.Stage3wall {
+  height: 30vh;;
+  position: fixed;
+  /* transform: translate(-50%, -50%); */
+  top: 30vh;
+  left: 45vw;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.flags{
+  position: fixed;
+  height: 10vh;
+}
+
+.flagTopLeft {
+
+  top: 18vh;
+  left: 35vw;
+}
+
+.flagTop2 {
+  top: 5vh;
+  left: 20vw;
+}
+
+.flagTop3 {
+  top: 5vh;
+  left: 35vw;
+}
+
+.flagTop4 {
+  top: 5vh;
+  left: 50vw;
+}
+
+.flagTopRight {
+  top: 5vh;
+  left: 70vw;
+}
+
+.flagLeft {
+  top: 30vh;
+  left: 5vw;
+}
+
+.flagLeft2 {
+  top: 50vh;
+  left: 5vw;
+}
+
+.flagRight {
+  top: 30vh;
+  left: 90vw;
+}
+
+.flagRight2 {
+  top: 50vh;
+  left: 90vw;
+}
+
+.flagBottomLeft {
+  bottom: 5vh;
+  left: 5vw;
+}
+
+.flagBottom2 {
+  bottom: 5vh;
+  left: 20vw;
+}
+
+.flagBottom3 {
+  bottom: 5vh;
+  left: 35vw;
+}
+
+.flagBottom4 {
+  bottom: 5vh;
+  left: 50vw;
+}
+
+.flagBottomRight {
+  bottom: 5vh;
+  left: 90vw;
+}
+
 
 .DokdoPuzzle3{
   position: fixed;

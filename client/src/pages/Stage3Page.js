@@ -9,7 +9,6 @@ import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 import Stage3wall from 'assets/stage3/Stage3wall.png';
-import KoreaFlag from 'assets/stage3/KoreaFlag.png';
 import GunHintImage from 'assets/stage3/GunHintImage.png';
 import DoorClose from 'assets/stage3/Stage3DoorClose.png';
 import DoorOpen from 'assets/stage3/Stage3DoorOpen.png';
@@ -26,6 +25,20 @@ import People6 from 'assets/stage3/친일파(6).png';
 import People7 from 'assets/stage3/친일파(7).png';
 import People8 from 'assets/stage3/친일파(8).png';
 
+import KoreaFlag from 'assets/stage3/KoreaFlag.png';
+import KoreaFlag2 from 'assets/stage3/KoreaFlag2.png';
+import JapanFlag from 'assets/stage3/JapanFlag.png';
+import JapanFlag2 from 'assets/stage3/JapanFlag2.png';
+import Flag1 from 'assets/stage3/국기1.png';
+import Flag2 from 'assets/stage3/국기2.png';
+import Flag3 from 'assets/stage3/국기3.png';
+import Flag4 from 'assets/stage3/국기4.png';
+import Flag5 from 'assets/stage3/국기5.png';
+import Flag6 from 'assets/stage3/국기6.png';
+import Flag7 from 'assets/stage3/국기7.png';
+import Flag8 from 'assets/stage3/국기8.png';
+import Flag9 from 'assets/stage3/국기9.png';
+import Flag10 from 'assets/stage3/국기10.png';
 
 const Stage3PeopleImage = [
   { id: 1, src: People1, name: '친일파1' },
@@ -181,25 +194,28 @@ function Stage3Page() {
 
   /* 새로고침 시 문이 열린 상태 유지 */
   useEffect(() => {
-    console.log("Stage3 cleared status:", user?.stages[2]?.cleared); // 클리어 상태 확인
+    console.log("Stage3 cleared status:", user?.stages[2]?.cleared);
     if (user?.stages[2]?.cleared) {
-      const savedDoorState = user.stages[2].cleared;
-      if (savedDoorState === true) {
-        setIsDoorOpen(true); // Stage3 클리어 상태를 기반으로 문 열림 설정
-      } else {
-        setIsDoorOpen(false); // 클리어 상태가 아니면 문 닫힘
-      }
+      setIsDoorOpen(true); // Stage3 클리어 상태를 기반으로 문 열림 설정
+    } else {
+      setIsDoorOpen(false); // 클리어 상태가 아니면 문 닫힘
     }
   }, [user]);
+  
+  
+
+  let isStageClearing = false;
 
   /* 숫자 확인 함수 */
   const checkNumbers = () => {
+    if (isDoorOpen) return;
+
     const { number1, number2, number3 } = scoreValues;
     console.log("현재 입력 값:", { number1, number2, number3 });
     if (number1 === 3 && number2 === 0 && number3 === 8) {
       console.log("정답입니다. Stage Clear 호출");
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
-      stageClear(3);
+      // stageClear(3);
       setResultMessage('정답입니다!');
       setTimeout(() => setResultMessage(''), 1000);
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
@@ -213,8 +229,17 @@ function Stage3Page() {
 
   const handleDoorClick = () => {
     if (isDoorOpen) {
-      navigate('/Stage4Room1');
+      // 문이 열려 있을 때만 요청을 보내고 이동
+      stageClear(3)
+        .then(() => {
+          console.log("Stage 3 clear 요청 성공");
+          navigate('/Stage4Room1'); // Stage 4로 이동
+        })
+        .catch((error) => {
+          console.error("Stage 3 clear 요청 실패:", error);
+        });
     } else if (!isDoorOpen && isGunHintCollected) {
+      // 문이 닫혀 있을 때 자물쇠 모달 열기
       setIsNumberGuessModalOpen(true);
     }
   };
@@ -250,6 +275,23 @@ function Stage3Page() {
       )}
 
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
+        {/* 국기 추가 */}
+        <div className={styles.flags}>
+          <img src={JapanFlag} alt="JapanFlag" className={styles.flagTopLeft} />
+          <img src={Flag1} alt="Flag1" className={styles.flagTop2} />
+          <img src={KoreaFlag} alt="KoreaFlag" className={styles.flagTop3} />
+          <img src={Flag2} alt="Flag2" className={styles.flagTop4} />
+          <img src={Flag3} alt="Flag3" className={styles.flagTopRight} />
+          <img src={Flag4} alt="Flag4" className={styles.flagLeft} />
+          <img src={KoreaFlag2} alt="KoreaFlag2" className={styles.flagLeft2} />
+          <img src={Flag5} alt="Flag5" className={styles.flagRight} />
+          <img src={Flag6} alt="Flag6" className={styles.flagRight2} />
+          <img src={Flag7} alt="Flag7" className={styles.flagBottomLeft} />
+          <img src={Flag8} alt="Flag8" className={styles.flagBottom2} />
+          <img src={Flag9} alt="Flag9" className={styles.flagBottom3} />
+          <img src={Flag10} alt="Flag10" className={styles.flagBottom4} />
+          <img src={JapanFlag2} alt="JapanFlag2" className={styles.flagBottomRight} />
+        </div>
 
       {/* 친일파 찾기 모달 */}
       <Modal
