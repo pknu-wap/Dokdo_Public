@@ -117,6 +117,15 @@ public class StageService {
 
     //스테이지 4,5,6 미션 도전 처리
     public StageProgressResponseDto processItem(String sessionId, int stageId, String selectedItem) {
+        // 이미 클리어된 스테이지인지 확인
+        boolean isAlreadyCleared = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
+                .map(StageProgressEntity::isCleared)
+                .orElse(false);
+
+        if (isAlreadyCleared) {
+            throw new IllegalStateException("이미 클리어된 스테이지입니다.");
+        }
+
         // 이전 스테이지의 상태에서 남은 하트를 가져오거나, 기본값 3 설정 (스테이지 4는 무조건 기본값 3)
         int previousHearts;
         if (stageId == 4) {
