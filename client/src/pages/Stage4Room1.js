@@ -46,6 +46,7 @@ function Stage4Room1() {
     }
     try {
       const response = await missionClear({ stageId: 4, itemName: draggedItem });
+      console.log('missionClear 응답:', response);
       getHearts();
       if (response.cleared === true) {
         navigate('/stage4room2');

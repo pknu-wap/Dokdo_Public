@@ -75,7 +75,7 @@ export const UserProvider = ({ children }) => {
         }
       );
 
-      const clearedStage = response.data.stages;
+      const clearedStage = response.data;
       return clearedStage;
     } catch (error) {
       console.log('Mission Clear POST 요청 실패', error);
