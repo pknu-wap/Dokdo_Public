@@ -130,6 +130,9 @@ function Stage1Page() {
 
   useEffect(() => {
     fetchUser();
+    if (user?.inventory) {
+      setItems(user.inventory);
+    }
     if (user?.stages) {
       if (user.stages[0]) {
         setIsStage2Open(true);

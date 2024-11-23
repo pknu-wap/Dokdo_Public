@@ -6,7 +6,8 @@ import Book from '../components/Book.js';
 import CheckNumber from '../components/CheckNumber.js';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useInventory } from '../context/InventoryContext.js';
+import { useInventory2 } from 'context/InventoryContext2';
+import { useUser } from 'context/UserContext';
 
 import BoxOpen from 'assets/stage2/OpenBox.png';
 import BoxClose from 'assets/stage2/Box.png';
@@ -15,28 +16,45 @@ import BookShelf from 'assets/stage2/BookShelf.png';
 import ContainMapBook from 'assets/stage2/ContainMapBook.png';
 import Lamp from 'assets/stage2/Lamp.png';
 import DoorOpen from 'assets/stage2/DoorOpen.png';
-import codeNote from 'assets/stage2/CodeNoteCut.png';
+import timeLocationHint from 'assets/stage2/timeLocationHintCut.png';
 import BoxOpenAfter from 'assets/stage2/BoxOpenAfter.png';
+import dokdoPuzzle2 from 'assets/dokdoPuzzle2.png';
 
 function Stage2Page() {
   const navigate = useNavigate();
-  const { items } = useInventory();
-  const { addItem } = useInventory();
+  const [items, setItems] = useState([]);
+  const { addItem } = useInventory2();
 
-  const handleItemClick = (itemName) => {
-    addItem(itemName);
+  const handleItemClick = async (itemId) => {
+    if (!user?.sessionId) {
+      console.log('Session ID가 없습니다.');
+      return;
+    }
+
+    try {
+      await addItem({ sessionId: user.sessionId, itemId });
+      /* 유저 정보 업데이트 */
+      const updatedUser = await fetchUser();
+
+      if (updatedUser?.inventory) {
+        setItems(updatedUser.inventory);
+      }
+      console.log(updatedUser.inventory);
+    } catch (error) {
+      console.error('아이템 추가 중 오류 발생', error);
+    }
   };
 
   const [isBoxOpen, setIsBoxOpen] = useState(false);
   const [isHandleBoxOpen, setIsHandleBoxOpen] = useState(false);
   const [isStage2Open, setIsStage2Open] = useState(true);
-  const [isStage3Open, setIsStage3Open] = useState(true);
+  const [isStage3Open, setIsStage3Open] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBookOpen, setIsBookOpen] = useState(false);
   const [checkPlaceAnswer, setCheckIsPlaceAnswer] = useState(false);
   const [placeAnswer, setPlaceAnswer] = useState('');
   const [isMapFind, setIsMapFind] = useState(false);
-  const [isCodeNoteFind, setIsCodeNoteFind] = useState(false);
+  const [isTimeLocationHintFind, setIsTimeLocationHintFind] = useState(false);
   const [scoreValues, setScoreValues] = useState({
     number1: 0,
     number2: 0,
@@ -44,28 +62,40 @@ function Stage2Page() {
   });
   const [doorOpen, setDoorOpen] = useState(false);
 
-  useEffect(() => {
-    const savedDoorState = sessionStorage.getItem('stage2Door');
-    if (savedDoorState === 'true') {
-      setDoorOpen(true);
-    }
-    const newInventoryItems = items.map((item) => ({
-      id: item,
-      name: item,
-    }));
+  const { user, fetchUser, stageClear } = useUser();
 
-    if (newInventoryItems.some((item) => item.name === 'Map')) {
-      setIsMapFind(true);
+  useEffect(() => {
+    if (user?.inventory) {
+      setItems(user.inventory);
     }
-    if (newInventoryItems.some((item) => item.name === 'CodeNote')) {
-      setIsCodeNoteFind(true);
+    fetchUser();
+    if (user?.stages) {
+      if (user.stages[1]) {
+        setIsStage3Open(true);
+        setCheckIsPlaceAnswer(true);
+        setIsHandleBoxOpen(true);
+        setIsBoxOpen(true);
+        setDoorOpen(true);
+        console.log('clear');
+      }
     }
-  }, [items]);
+  }, []);
 
   const goNextStage = () => {
     setDoorOpen(true);
+    stageClear(2);
     navigate('/Stage3');
   };
+
+  useEffect(() => {
+    if (items.some((item) => item.itemName === 'map')) {
+      setIsMapFind(true);
+    }
+    if (items.some((item) => item.itemName === 'timeLocationHint')) {
+      setIsBoxOpen(true);
+      setIsTimeLocationHintFind(true);
+    }
+  }, [items]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -104,7 +134,7 @@ function Stage2Page() {
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
     if (number1 === 1 && number2 === 3 && number3 === 6) {
-      sessionStorage.setItem('stage2Door', 'true');
+      stageClear(2);
       setDoorOpen(true);
     }
   };
@@ -115,7 +145,7 @@ function Stage2Page() {
 
     console.log('드래그된 아이템:', draggedItem);
 
-    if (draggedItem === 'TaegeukKey') {
+    if (draggedItem === 'taegeukKey') {
       setIsBoxOpen(true);
     }
   };
@@ -129,6 +159,17 @@ function Stage2Page() {
       <img className={styles.Lamp} src={Lamp} />
       <img className={styles.BookShelf} src={BookShelf} alt="bookshelf" />
       <button className={styles.ContainMapBook} onClick={handleOpenBook} />
+
+      <button
+        className={`${items.some((item) => item.itemName === 'dokdoPuzzle2') ? styles.hidden : ''}`}
+        onClick={() => {
+          handleItemClick(2);
+          console.log('성공');
+        }}
+      >
+        <img src={dokdoPuzzle2} alt="dokdoPuzzle4" />
+      </button>
+
       {doorOpen ? (
         <div>
           <button className={styles.DoorOpen} onClick={goNextStage}>
@@ -149,16 +190,16 @@ function Stage2Page() {
             <div>
               <img className={styles.BoxOpen} src={BoxOpen} alt="BoxOpen" />
               <button className={styles.BoxOpenButton} onClick={handleBoxClose} />
-              {!isCodeNoteFind ? (
+              {!isTimeLocationHintFind ? (
                 <div>
                   <button
                     className={styles.CodeNote}
                     onClick={() => {
-                      handleItemClick('codeNote');
-                      setIsCodeNoteFind(true);
+                      handleItemClick(6);
+                      setIsTimeLocationHintFind(true);
                     }}
                   >
-                    <img src={codeNote} alt="codeNote" />
+                    <img src={timeLocationHint} alt="timeLocationHint" />
                   </button>
                 </div>
               ) : null}
