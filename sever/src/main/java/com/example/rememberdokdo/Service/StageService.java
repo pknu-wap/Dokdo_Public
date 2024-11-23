@@ -182,9 +182,19 @@ public class StageService {
 
     // GET 요청: 스테이지 상태 조회
     public StageProgressResponseDto getStageStatus(String sessionId, int stageId) {
+        // 스테이지 정보를 조회
         StageProgressEntity stageProgress = stageProgressRepository
                 .findBySessionIdAndStageId(sessionId, stageId)
-                .orElseThrow(() -> new IllegalArgumentException("스테이지 진행 정보가 없습니다."));
+                .orElse(null);
+
+        if (stageProgress == null) {
+            return StageProgressResponseDto.builder()
+                    .progressId(null) // null 허용
+                    .sessionId(sessionId)
+                    .remainingHearts(3) // 초기 하트 수
+                    .isCleared(false)
+                    .build();
+        }
 
         return StageProgressResponseDto.builder()
                 .progressId(stageProgress.getProgressId())
