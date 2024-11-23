@@ -1,7 +1,8 @@
 import styles from './Stage4PuzzleGame.module.css';
 import Inventory from '../components/Inventory.js';
 import { useState, useEffect } from 'react';
-import { useInventory } from '../context/InventoryContext.js';
+import { useInventory2 } from '../context/InventoryContext2';
+import { useUser } from 'context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 import dokdoPuzzle1 from '../assets/dokdoPuzzle1.png';
@@ -12,9 +13,28 @@ import dokdoPuzzleNone from '../assets/dokdoPuzzleNone.png';
 
 function Stage4PuzzleGame() {
   const navigate = useNavigate();
-  const { addItem } = useInventory();
-  const handleItemClick = (itemName) => {
-    addItem(itemName);
+  const [items, setItems] = useState([]);
+  const { addItem, deleteItem } = useInventory2();
+  const { user, fetchUser } = useUser();
+
+  const handleItemClick = async (itemId) => {
+    if (!user?.sessionId) {
+      console.log('Session ID가 없습니다.');
+      return;
+    }
+
+    try {
+      await addItem({ sessionId: user.sessionId, itemId });
+      /* 유저 정보 업데이트 */
+      const updatedUser = await fetchUser();
+
+      if (updatedUser?.inventory) {
+        setItems(updatedUser.inventory);
+      }
+      console.log(updatedUser.inventory);
+    } catch (error) {
+      console.error('아이템 추가 중 오류 발생', error);
+    }
   };
 
   const [ok, setOk] = useState(true);
@@ -220,7 +240,7 @@ function Stage4PuzzleGame() {
           <button
             className={styles.Ok}
             onClick={() => {
-              handleItemClick('dokdoPuzzle1');
+              handleItemClick(1);
             }}
           >
             <img src={dokdoPuzzle1} alt="puzzle1" />
@@ -228,7 +248,7 @@ function Stage4PuzzleGame() {
           <button
             className={styles.Ok}
             onClick={() => {
-              handleItemClick('dokdoPuzzle2');
+              handleItemClick(2);
             }}
           >
             <img src={dokdoPuzzle2} alt="puzzle2" />
@@ -236,7 +256,7 @@ function Stage4PuzzleGame() {
           <button
             className={styles.Ok}
             onClick={() => {
-              handleItemClick('dokdoPuzzle3');
+              handleItemClick(3);
             }}
           >
             <img src={dokdoPuzzle3} alt="puzzle3" />
@@ -244,7 +264,7 @@ function Stage4PuzzleGame() {
           <button
             className={styles.Ok}
             onClick={() => {
-              handleItemClick('dokdoPuzzle4');
+              handleItemClick(4);
               setOk(false);
             }}
           >

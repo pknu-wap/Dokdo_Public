@@ -7,7 +7,7 @@ import dokdoPuzzle2 from '../assets/dokdoPuzzle2.png';
 import dokdoPuzzle3 from '../assets/dokdoPuzzle3.png';
 import dokdoPuzzle4 from '../assets/dokdoPuzzle4.png';
 import map from '../assets/stage2/Map.png';
-import codeNote from '../assets/stage2/CodeNote.png';
+import timeLocationHint from '../assets/stage2/timeLocationHint.png';
 import GunHintImage from 'assets/stage3/GunHintImage.png';
 import SpyHintImage from 'assets/stage3/SpyHintImage.png';
 import { useUser } from 'context/UserContext';
@@ -19,7 +19,7 @@ const itemImage = {
   dokdoPuzzle3: dokdoPuzzle3,
   dokdoPuzzle4: dokdoPuzzle4,
   map: map,
-  codeNote: codeNote,
+  timeLocationHint: timeLocationHint,
   GunHintImage: GunHintImage,
   SpyHintImage: SpyHintImage,
 };
@@ -60,6 +60,7 @@ function Inventory() {
   const handleDragStart = (e, item) => {
     e.dataTransfer.setData('text/plain', item.name);
   };
+
   return (
     <>
       <div className={styles.InventoryContainer}>

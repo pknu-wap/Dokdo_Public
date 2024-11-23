@@ -5,6 +5,8 @@ import { useInventory } from '../context/InventoryContext.js';
 import LeftPage from 'assets/stage2/LeftPage.png';
 import RightPage from 'assets/stage2/RightPage.png';
 import map from 'assets/stage2/Map.png';
+import { useInventory2 } from 'context/InventoryContext2';
+import { useUser } from 'context/UserContext';
 
 const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
   const [page, setPage] = useState(1);
@@ -44,10 +46,28 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
     updateZIndex();
   }, [page]);
 
-  const { addItem } = useInventory();
+  const [items, setItems] = useState([]);
+  const { addItem } = useInventory2();
+  const { user, fetchUser } = useUser();
 
-  const handleItemClick = (itemName) => {
-    addItem(itemName);
+  const handleItemClick = async (itemId) => {
+    if (!user?.sessionId) {
+      console.log('Session ID가 없습니다.');
+      return;
+    }
+
+    try {
+      await addItem({ sessionId: user.sessionId, itemId });
+      /* 유저 정보 업데이트 */
+      const updatedUser = await fetchUser();
+
+      if (updatedUser?.inventory) {
+        setItems(updatedUser.inventory);
+      }
+      console.log(updatedUser.inventory);
+    } catch (error) {
+      console.error('아이템 추가 중 오류 발생', error);
+    }
   };
 
   useEffect(() => {
@@ -64,6 +84,12 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
 
     showMapButtonAfterDelay();
   }, [page, isMapFind]);
+
+  useEffect(() => {
+    if (items.some((item) => item.itemName === 'map')) {
+      setIsMapFind(true);
+    }
+  });
 
   return (
     <div className={styles.BackGround}>
@@ -100,7 +126,7 @@ const Book = ({ closeBook, setIsMapFind, isMapFind }) => {
         <button
           className={styles.Map}
           onClick={() => {
-            handleItemClick('map');
+            handleItemClick(7);
             setIsMapFind(true);
             closeBook();
           }}
