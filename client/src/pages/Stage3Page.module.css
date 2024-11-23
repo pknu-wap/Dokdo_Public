@@ -159,3 +159,7 @@
   height: auto;
   object-fit: contain; /* 비율을 유지하며 크기 조정 */
 }
+
+.hidden {
+  display: none;
+}

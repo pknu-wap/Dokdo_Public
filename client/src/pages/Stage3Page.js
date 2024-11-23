@@ -3,7 +3,7 @@ import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import CheckNumber from '../components/CheckNumber.js';
 import Modal from '../components/Modal.js';
-import { useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { useInventory2 } from '../context/InventoryContext2';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -52,11 +52,11 @@ function Stage3Page() {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false); /* 자물쇠 정답을 맞춘 상태 */
   const [isGunHintCollected, setIsGunHintCollected] = useState(false); /* GunHintImage 수집 여부 상태 */
   const [spyHintImagesVisible, setSpyHintImagesVisible] = useState(false); /* 친일파 힌트 이미지 상태 */ 
-  const [isDokdoPuzzleVisible, setIsDokdoPuzzleVisible] = useState(true);
+  // const [isDokdoPuzzleVisible, setIsDokdoPuzzleVisible] = useState(true);
 
   const { addItem } = useInventory2(); /* Context에서 items도 가져옴 */
   const [items, setItems] = useState([]);
-  const { user, fetchUser } = useUser();
+  const { user, fetchUser, stageClear } = useUser();
   const navigate = useNavigate(); 
 
   const [scoreValues, setScoreValues] = useState({
@@ -67,6 +67,9 @@ function Stage3Page() {
 
   useEffect(() => {
     fetchUser();
+    if (user?.inventory) {
+      setItems(user.inventory);
+    }
   }, []);
 
   /* 아이템 추가 함수 */
@@ -176,15 +179,31 @@ function Stage3Page() {
     }, 1000);
   };
 
+  /* 새로고침 시 문이 열린 상태 유지 */
+  useEffect(() => {
+    console.log("Stage3 cleared status:", user?.stages[2]?.cleared); // 클리어 상태 확인
+    if (user?.stages[2]?.cleared) {
+      const savedDoorState = user.stages[2].cleared;
+      if (savedDoorState === true) {
+        setIsDoorOpen(true); // Stage3 클리어 상태를 기반으로 문 열림 설정
+      } else {
+        setIsDoorOpen(false); // 클리어 상태가 아니면 문 닫힘
+      }
+    }
+  }, [user]);
+
   /* 숫자 확인 함수 */
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
+    console.log("현재 입력 값:", { number1, number2, number3 });
     if (number1 === 3 && number2 === 0 && number3 === 8) {
+      console.log("정답입니다. Stage Clear 호출");
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
+      stageClear(3);
       setResultMessage('정답입니다!');
       setTimeout(() => setResultMessage(''), 1000);
-      sessionStorage.setItem('stage3DoorOpen', 'true'); /* 문이 열린 상태를 저장 */
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
+
     } else {
       setResultMessage('오답입니다. 다시 시도해주세요.');
       setTimeout(() => setResultMessage(''), 1000);
@@ -200,19 +219,11 @@ function Stage3Page() {
     }
   };
 
-  /* 새로고침 시 문이 열린 상태 유지 */
-  useEffect(() => {
-    const savedDoorState = sessionStorage.getItem('stage3DoorOpen');
-      if (savedDoorState === 'true') {
-        setIsDoorOpen(true);
-      }
-  }, []);
-
-  const handleDokdoPuzzleClick = () => {
-    handleItemClick(3);
-    setIsDokdoPuzzleVisible(false);
-    console.log('독도 퍼즐 조각이 인벤토리에 추가됨');
-  };
+  // const handleDokdoPuzzleClick = () => {
+  //   handleItemClick(3);
+  //   setIsDokdoPuzzleVisible(false);
+  //   console.log('독도 퍼즐 조각이 인벤토리에 추가됨');
+  // };
 
   return (
     <div className={styles.Stage3Page}>
@@ -223,9 +234,19 @@ function Stage3Page() {
 
       {/* 문 이미지 - 정답 시 열린 문으로 변경 */}
       {isDoorOpen ? (
-        <img className={`${styles.DoorOpen} ${styles.DoorOpen}`} src={DoorOpen} alt="열린 문" onClick={handleDoorClick} />
+        <img
+          className={`${styles.DoorOpen}`}
+          src={DoorOpen}
+          alt="열린 문"
+          onClick={handleDoorClick}
+        />
       ) : (
-        <img className={`${styles.DoorClose} ${styles.DoorClose}`} src={DoorClose} alt="닫힌 문" onClick={handleDoorClick} />
+        <img
+          className={`${styles.DoorClose}`}
+          src={DoorClose}
+          alt="닫힌 문"
+          onClick={handleDoorClick}
+        />
       )}
 
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
@@ -254,14 +275,13 @@ function Stage3Page() {
       </Modal>
 
       {/* 독도 퍼즐 조각 이미지 */}
-      {isDokdoPuzzleVisible && (
         <img
-          className={styles.DokdoPuzzle3}
-          src={dokdoPuzzle3}
-          alt="독도 퍼즐 조각3"
-          onClick={handleDokdoPuzzleClick}
-        />
-      )}
+          className={`${styles.DokdoPuzzle3} ${
+              items && items.some((item) => item.itemName === 'dokdoPuzzle3') ? styles.hidden : ''
+            }`}
+            src={dokdoPuzzle3}
+            onClick={() => handleItemClick(3)}
+          />
 
       {/* KoreaFlag 이미지 - 친일파 찾기 모달 이후 표시 */}
       {addKoreaFlagImage && (
