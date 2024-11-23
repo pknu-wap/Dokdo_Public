@@ -120,8 +120,8 @@ function Stage1Page() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMusicExpand, setIsMusicExpand] = useState(false);
   const [isLampOn, setIsLampOn] = useState(false);
-  const [isStage2Open, setIsStage2Open] = useState(false);
-  const [isStage3Open, setIsStage3Open] = useState(false);
+  const [isStage2Open, setIsStage2Open] = useState(true);
+  const [isStage3Open, setIsStage3Open] = useState(true);
 
   const { user, fetchUser } = useUser();
   const [items, setItems] = useState([]);
@@ -130,6 +130,9 @@ function Stage1Page() {
 
   useEffect(() => {
     fetchUser();
+    if (user?.inventory) {
+      setItems(user.inventory);
+    }
     if (user?.stages) {
       if (user.stages[0]) {
         setIsStage2Open(true);
