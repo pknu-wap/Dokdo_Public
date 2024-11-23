@@ -48,6 +48,7 @@
   left: 11vh;
   width: 13vh;
   z-index: 1;
+  cursor: pointer;
 }
 
 .Box {
@@ -174,6 +175,7 @@ h1 {
   left: 164vh;
   transition: transform 0s;
   transform: rotate(65deg);
+  cursor: pointer;
 }
 
 .dokdoPuzzle2 img {

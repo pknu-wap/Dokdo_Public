@@ -36,8 +36,6 @@ function Stage4PuzzleGame() {
       console.error('아이템 추가 중 오류 발생', error);
     }
   };
-
-  const [ok, setOk] = useState(true);
   const [puzzle1, setPuzzle1] = useState(dokdoPuzzleNone);
   const [puzzle2, setPuzzle2] = useState(dokdoPuzzleNone);
   const [puzzle3, setPuzzle3] = useState(dokdoPuzzleNone);
@@ -235,46 +233,6 @@ function Stage4PuzzleGame() {
           <img className={styles.dokdoPuzzleimg} src={puzzle4} alt="dokdopuzzle4" />
         </div>
       </div>
-      {ok ? (
-        <div>
-          <button
-            className={styles.Ok}
-            onClick={() => {
-              handleItemClick(1);
-            }}
-          >
-            <img src={dokdoPuzzle1} alt="puzzle1" />
-          </button>
-          <button
-            className={styles.Ok}
-            onClick={() => {
-              handleItemClick(2);
-            }}
-          >
-            <img src={dokdoPuzzle2} alt="puzzle2" />
-          </button>
-          <button
-            className={styles.Ok}
-            onClick={() => {
-              handleItemClick(3);
-            }}
-          >
-            <img src={dokdoPuzzle3} alt="puzzle3" />
-          </button>
-          <button
-            className={styles.Ok}
-            onClick={() => {
-              handleItemClick(4);
-              setOk(false);
-            }}
-          >
-            <img src={dokdoPuzzle4} alt="puzzle4" />
-          </button>
-        </div>
-      ) : (
-        <div></div>
-      )}
-      <div></div>
     </div>
   );
 }

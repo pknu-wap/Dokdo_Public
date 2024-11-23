@@ -22,10 +22,6 @@
   text-align: center;
 }
 
-.Ok {
-  z-index: 2000;
-}
-
 .Timer {
   position: fixed;
   width: 160vh;
