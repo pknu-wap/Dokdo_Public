@@ -30,14 +30,28 @@ function Stage4Room1() {
     e.dataTransfer.setData('text/plain', gunType); /* 드래그 데이터를 설정 */
   };
 
+  /* 드래그 오버 처리 */
+  const handleDragOver = (e) => {
+    e.preventDefault(); // 드롭 허용
+  };
+
   /* 드롭 처리 */
   const handleDrop = async (e) => {
     e.preventDefault();
     const draggedItem = e.dataTransfer.getData('text/plain');
+    console.log('드래그된 데이터:', draggedItem);
+    if (!draggedItem) {
+      console.log('드래그된 데이터가 유효하지 않습니다.');
+      return;
+    }
     try {
-      missionClear(4, draggedItem);
-    } catch {
-      console.log('드래그 앤 드랍 미션 오류');
+      const response = await missionClear({ stageId: 4, itemName: draggedItem });
+      getHearts();
+      if (response.cleared === true) {
+        navigate('/stage4room2');
+      }
+    } catch (error) {
+      console.log('드래그 앤 드랍 미션 오류', error);
     }
   };
 
@@ -56,10 +70,10 @@ function Stage4Room1() {
       {/* 김춘삼 이미지 (드롭 영역) */}
       <div
         className={styles.KimChunsamWrapper}
-        onDragOver={(e) => e.preventDefault()} /* 드롭 가능 영역 설정 */
+        onDragOver={handleDragOver} /* 드롭 가능 영역 설정 */
         onDrop={handleDrop} /* 드롭 처리 */
       >
-        <img className={styles.KimChunsam} src={KimChunsam} alt="KimChunsam" onDragStart={(e) => e.preventDefault()} />
+        <img className={styles.KimChunsam} src={KimChunsam} alt="KimChunsam" />
       </div>
 
       {/* 총 이미지들 (드래그 가능) */}

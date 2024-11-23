@@ -89,9 +89,9 @@ export const UserProvider = ({ children }) => {
         withCredentials: true,
       });
 
-      if (response.data.remainHearts) {
-        const remainHearts = response.data.remainingHearts;
-        setHearts(remainHearts);
+      if (response.data.remainingHearts) {
+        const remainingHearts = response.data.remainingHearts;
+        setHearts(remainingHearts);
       }
 
       return hearts;
