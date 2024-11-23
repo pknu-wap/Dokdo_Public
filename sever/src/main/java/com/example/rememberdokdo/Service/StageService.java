@@ -48,7 +48,17 @@ public class StageService {
 
     // 스테이지 클리어 상태 저장
     public SessionProgressDto clearStage(String sessionId, int stageId) {
-    // 스테이지 1이 클리어되지 않은 상태에서 2, 3, 4를 시도할 경우 예외 처리
+
+        // 이미 클리어된 스테이지인지 확인
+        boolean isAlreadyCleared = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
+                .map(StageProgressEntity::isCleared)
+                .orElse(false);
+
+        if (isAlreadyCleared) {
+            throw new IllegalStateException("이미 클리어된 스테이지입니다.");
+        }
+
+        // 스테이지 1이 클리어되지 않은 상태에서 2, 3, 4를 시도할 경우 예외 처리
         if (stageId >= 2 && stageId <= 4) {
             boolean isStage1Cleared = stageProgressRepository.findBySessionIdAndStageId(sessionId, 1)
                     .map(StageProgressEntity::isCleared)
