@@ -204,7 +204,7 @@ public class StageService {
                 StageProgressEntity previousStage = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId - 1)
                         .orElse(null);
 
-                if (!previousStage.isCleared()) {
+                if (previousStage == null || !previousStage.isCleared()) {
                     // 이전 스테이지가 클리어되지 않은 경우 예외 발생
                     throw new IllegalArgumentException("이전 스테이지를 클리어하지 않았습니다. sessionId: " + sessionId + ", stageId: " + (stageId - 1));
                 }
