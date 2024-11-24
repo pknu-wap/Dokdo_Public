@@ -23,7 +23,7 @@ import dokdoPuzzle2 from 'assets/dokdoPuzzle2.png';
 function Stage2Page() {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
-  const { addItem } = useInventory2();
+  const { addItem, deleteItem } = useInventory2();
 
   const handleItemClick = async (itemId) => {
     if (!user?.sessionId) {
@@ -45,6 +45,20 @@ function Stage2Page() {
     }
   };
 
+  const handleDeleteItem = async (itemId) => {
+    try {
+      await deleteItem({ sessionId: user.sessionId, itemId });
+      const updatedUser = await fetchUser();
+
+      if (updatedUser?.inventory) {
+        setItems(updatedUser.inventory);
+      }
+      console.log(updatedUser.inventory);
+    } catch (error) {
+      console.error('아이템 삭제 중 오류 발생', error);
+    }
+  };
+
   const [isBoxOpen, setIsBoxOpen] = useState(false);
   const [isHandleBoxOpen, setIsHandleBoxOpen] = useState(false);
   const [isStage2Open, setIsStage2Open] = useState(true);
@@ -62,21 +76,24 @@ function Stage2Page() {
   });
   const [doorOpen, setDoorOpen] = useState(false);
 
-  const { user, fetchUser, stageClear } = useUser();
+  const { stageClear, user, fetchUser } = useUser();
 
   useEffect(() => {
     if (user?.inventory) {
       setItems(user.inventory);
     }
     fetchUser();
-    if (user?.stages) {
-      if (user.stages[1]) {
+  }, []);
+
+  useEffect(() => {
+    if (user?.stages[1]) {
+      const savedDoorState = user.stages[1].cleared;
+      if (savedDoorState === true) {
         setIsStage3Open(true);
         setCheckIsPlaceAnswer(true);
         setIsHandleBoxOpen(true);
         setIsBoxOpen(true);
         setDoorOpen(true);
-        console.log('clear');
       }
     }
   }, []);
@@ -134,7 +151,6 @@ function Stage2Page() {
   const checkNumbers = () => {
     const { number1, number2, number3 } = scoreValues;
     if (number1 === 1 && number2 === 3 && number3 === 6) {
-      stageClear(2);
       setDoorOpen(true);
     }
   };
@@ -147,6 +163,7 @@ function Stage2Page() {
 
     if (draggedItem === 'taegeukKey') {
       setIsBoxOpen(true);
+      handleDeleteItem(5);
     }
   };
 
@@ -159,16 +176,6 @@ function Stage2Page() {
       <img className={styles.Lamp} src={Lamp} />
       <img className={styles.BookShelf} src={BookShelf} alt="bookshelf" />
       <button className={styles.ContainMapBook} onClick={handleOpenBook} />
-
-      <button
-        className={`${items.some((item) => item.itemName === 'dokdoPuzzle2') ? styles.hidden : ''}`}
-        onClick={() => {
-          handleItemClick(2);
-          console.log('성공');
-        }}
-      >
-        <img src={dokdoPuzzle2} alt="dokdoPuzzle4" />
-      </button>
 
       {doorOpen ? (
         <div>
@@ -212,7 +219,8 @@ function Stage2Page() {
           )}
         </div>
       ) : (
-        <div className={styles.Box} onDragOver={(e) => e.preventDefault()} onDrop={handleDropOnBox}>
+        <div className={styles.Box}>
+          <div className={styles.BoxButton} onDragOver={(e) => e.preventDefault()} onDrop={handleDropOnBox}></div>
           <img src={BoxClose} alt="box" />
         </div>
       )}
@@ -231,6 +239,15 @@ function Stage2Page() {
         )}
         {isBookOpen && <Book closeBook={closeBook} setIsMapFind={setIsMapFind} isMapFind={isMapFind} />}
       </div>
+      <button
+        className={`${items.some((item) => item.itemName === 'dokdoPuzzle2') ? '' : styles.dokdoPuzzle2}`}
+        onClick={() => {
+          handleItemClick(2);
+          console.log('성공');
+        }}
+      >
+        <img src={dokdoPuzzle2} alt="dokdoPuzzle4" />
+      </button>
     </div>
   );
 }
