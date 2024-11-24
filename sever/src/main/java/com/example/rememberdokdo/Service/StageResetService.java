@@ -18,7 +18,7 @@ public class StageResetService {
 
     // 초기화(게임 오버, 클리어) 기능
     @Transactional
-    public StageProgressResponseDto resetStage(int stageId, String sessionId) {
+    public StageProgressResponseDto resetStage(int stageId, String sessionId, Boolean isCleared) {
         // 세션 ID 유효성 검사
         if (sessionId == null || sessionId.isEmpty()) {
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
@@ -53,10 +53,27 @@ public class StageResetService {
             throw new IllegalArgumentException("하트 수가 남아있어 게임을 초기화할 수 없습니다.");
         }
 
-        // 모든 스테이지의 진행 상황 처리 메서드
-        // 하트 기반 스테이지 처리(스테이지4,5,6)
-        // 스테이지7 처리
-        // 진행 상태 포함한 DTO 생성
-        // 세션 관련 모든 데이터 삭제
+        // 스테이지7(퍼즐 게임) 처리
+        if (stageId == 7) {
+            // 진행 상황 조회
+            Optional<StageProgressEntity> stageProgressOpt = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId);
+            // 진행 상황 없을 경우 에러 처리
+            if (stageProgressOpt.isEmpty()) {
+                throw new IllegalArgumentException("해당 스테이지의 진행 상황을 찾을 수 없습니다.");
+            }
+
+            // 클리어 여부 처리
+            boolean cleared = (isCleared != null) ? isCleared : false;
+
+            // 세션 정보 삭제
+            stageProgressRepository.deleteAllBySessionId(sessionId);
+
+            // Stage 7은 remainingHearts가 필요 없으므로 null 반환
+            return StageProgressResponseDto.builder()
+                    .sessionId(sessionId)
+                    .remainingHearts(0) // Stage 7은 하트 수가 필요 없음
+                    .isCleared(cleared) // 게임 오버, 클리어 여부
+                    .build();
+        }
     }
 }
