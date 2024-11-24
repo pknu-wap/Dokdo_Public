@@ -101,7 +101,7 @@ function Stage2Page() {
   const goNextStage = () => {
     setDoorOpen(true);
     stageClear(2);
-    navigate('/Stage3');
+    navigate('/stage3');
   };
 
   useEffect(() => {

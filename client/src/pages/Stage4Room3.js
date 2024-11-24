@@ -42,11 +42,12 @@ function Stage4Room3() {
     try {
       const response = await missionClear({ stageId: 6, itemName: draggedItem });
       console.log('missionClear 응답:', response);
+      getHearts(6);
 
-      const updatedHearts = await getHearts(4);
-      if (updatedHearts === 0) {
+      if (response.remainingHearts === 0) {
         navigate('/gameOver');
       }
+
       if (response.cleared === true) {
         navigate('/stage4PuzzleGame');
       }

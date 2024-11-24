@@ -76,8 +76,9 @@ function Stage4Room2() {
       const response = await missionClear({ stageId: 5, itemName: draggedItem });
       console.log('missionClear 응답:', response);
 
-      const updatedHearts = await getHearts(4);
-      if (updatedHearts === 0) {
+      getHearts(5);
+
+      if (response.remainingHearts === 0) {
         navigate('/gameOver');
       }
 
