@@ -189,7 +189,7 @@ public class StageService {
                 .build();
     }
 
-    // GET 요청: 스테이지 상태 조회
+    //GET 각 스테이지 정보 조회
     public StageProgressResponseDto getStageStatus(String sessionId, int stageId) {
         // 스테이지 정보를 조회
         StageProgressEntity stageProgress = stageProgressRepository
@@ -197,14 +197,31 @@ public class StageService {
                 .orElse(null);
 
         if (stageProgress == null) {
+            int initialHearts = 3; // 기본 하트 수
+
+            if (stageId > 4) {
+                // 이전 스테이지 정보 조회
+                StageProgressEntity previousStage = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId - 1)
+                        .orElse(null);
+
+                if (!previousStage.isCleared()) {
+                    // 이전 스테이지가 클리어되지 않은 경우 예외 발생
+                    throw new IllegalArgumentException("이전 스테이지를 클리어하지 않았습니다. sessionId: " + sessionId + ", stageId: " + (stageId - 1));
+                }
+
+                // 이전 스테이지 클리어 시 남은 하트를 그대로 가져옴
+                initialHearts = previousStage.getRemainingHearts();
+            }
+
             return StageProgressResponseDto.builder()
-                    .progressId(null) // null 허용
+                    .progressId(null)
                     .sessionId(sessionId)
-                    .remainingHearts(3) // 초기 하트 수
+                    .remainingHearts(initialHearts)
                     .isCleared(false)
                     .build();
         }
 
+        // 기존 스테이지가 존재하면 해당 정보를 반환
         return StageProgressResponseDto.builder()
                 .progressId(stageProgress.getProgressId())
                 .sessionId(sessionId)
