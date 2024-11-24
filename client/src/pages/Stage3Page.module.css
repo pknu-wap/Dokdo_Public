@@ -39,10 +39,8 @@
   z-index: 1;
 }
 
-
-
 .Stage3wall {
-  height: 32.5vh;;
+  height: 32.5vh;
   position: fixed;
   top: 33.5vh;
   left: 45vw;
@@ -50,7 +48,7 @@
   z-index: 1;
 }
 
-.flags img{
+.flags img {
   position: fixed;
   height: 10vh;
 }
@@ -125,7 +123,8 @@
   left: 75vw;
 }
 
-.DokdoPuzzle3{
+.DokdoPuzzle3 {
+  cursor: pointer;
   position: fixed;
   height: 8vh;
   top: 20vh;
@@ -148,13 +147,15 @@
   text-align: center;
 }
 
-.ImageGrid { /* 모달 속 전체 친일파사진 위치  */
+.ImageGrid {
+  /* 모달 속 전체 친일파사진 위치  */
   position: fixed;
-  top: 23vh; 
+  top: 23vh;
   left: 25vw;
 }
 
-.CenterContainer { /* 모달 속 친일파 사진 그리드 설정 */
+.CenterContainer {
+  /* 모달 속 친일파 사진 그리드 설정 */
   grid-area: center;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -165,7 +166,8 @@
   border: 0.1vw solid transparent;
 }
 
-.ImageItem { /* 친일파사진(각각) */
+.ImageItem {
+  /* 친일파사진(각각) */
   width: 10vw;
   height: 22vh;
   object-fit: cover;
@@ -187,7 +189,7 @@
   top: 11vh;
   left: 50vw;
   transform: translateX(-50%);
-  background-color: #C1A693;
+  background-color: #c1a693;
   color: white;
   font: Noto Sans KR;
   font-size: 1.5vw;
@@ -201,7 +203,7 @@
   transition: border 0.3s ease;
 }
 
-.KoreaFlag { 
+.KoreaFlag {
   cursor: pointer;
   height: 9vh;
   position: fixed;
@@ -234,7 +236,7 @@
 }
 
 .SpyHintImage img {
-  width: 100%; 
+  width: 100%;
   height: auto;
   object-fit: contain;
 }

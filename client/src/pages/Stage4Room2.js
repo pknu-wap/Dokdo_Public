@@ -25,6 +25,7 @@ function Stage4Room2() {
   const { missionClear, getHearts, hearts } = useUser();
 
   useEffect(() => {
+    fetchUser();
     getHearts(4);
 
     /* 하트가 0이면 gameover 페이지로 이동 */
@@ -33,12 +34,7 @@ function Stage4Room2() {
     }
   }, [hearts, navigate]);
 
-  /* 아이템 추가 함수 */
-  let isAddingItem = false;
-
   const handleItemClick = async (itemId) => {
-    if (isAddingItem) return; /* 이미 추가 요청 중이면 아무 작업도 하지 않음 */
-
     if (!user?.sessionId) {
       console.log('Session ID가 없습니다.');
       return;
@@ -50,9 +46,7 @@ function Stage4Room2() {
     }
 
     try {
-      isAddingItem = true; /* 추가 요청 시작 */
       await addItem({ sessionId: user.sessionId, itemId });
-      setItems((prevItems) => [...prevItems, { id: itemId }]); /*즉시 로컬 업데이트*/
 
       const updatedUser = await fetchUser();
       if (updatedUser?.inventory) {
@@ -61,8 +55,6 @@ function Stage4Room2() {
       console.log('업데이트된 인벤토리:', updatedUser.inventory);
     } catch (error) {
       console.error('아이템 추가 중 오류 발생', error);
-    } finally {
-      isAddingItem = false; /* 추가 요청 종료 */
     }
   };
 
