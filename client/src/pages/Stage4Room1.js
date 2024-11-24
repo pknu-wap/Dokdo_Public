@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Stage4Room1.module.css';
 import Inventory from '../components/Inventory.js';
-import Heart from 'assets/stage4/Heart.png';
+import { useUser } from 'context/UserContext';
 
+import Heart from 'assets/stage4/Heart.png';
 import KimChunsam from 'assets/stage4/KimChunsam.png';
 import Gun_Black from 'assets/stage4/Gun_Black.png';
 import Gun_Gray from 'assets/stage4/Gun_Gray.png';
 import Gun_White from 'assets/stage4/Gun_White.png';
 import Table from 'assets/stage4/Table.png';
-import { useUser } from 'context/UserContext';
 
 function Stage4Room1() {
   const navigate = useNavigate();
   const { missionClear, getHearts, hearts } = useUser();
 
   useEffect(() => {
-    getHearts();
+    getHearts(4);
 
     /* 하트가 0이면 gameover 페이지로 이동 */
     if (hearts === 0) {
-      /* alert('실패'); */
       navigate('/gameover');
     }
   }, [hearts, navigate]);
@@ -47,7 +46,10 @@ function Stage4Room1() {
     try {
       const response = await missionClear({ stageId: 4, itemName: draggedItem });
       console.log('missionClear 응답:', response);
-      getHearts();
+      getHearts(4);
+      if (hearts === 0) {
+        navigate('/gameover');
+      }
       if (response.cleared === true) {
         navigate('/stage4room2');
       }

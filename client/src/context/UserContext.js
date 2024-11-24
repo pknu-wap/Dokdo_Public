@@ -83,9 +83,9 @@ export const UserProvider = ({ children }) => {
   };
 
   /* 하트 개수 확인 함수 */
-  const getHearts = async () => {
+  const getHearts = async (stageId) => {
     try {
-      const response = await axios.get(`${apiUrl}/stage/4/status?sessionId=${sessionId}`, null, {
+      const response = await axios.get(`${apiUrl}/stage/${stageId}/status?sessionId=${sessionId}`, null, {
         withCredentials: true,
       });
 

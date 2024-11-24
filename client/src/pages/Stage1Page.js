@@ -16,7 +16,7 @@ import DrawerOpen from 'assets/stage1/Stage1DrawerOpen.png';
 import TaegeukKey from 'assets/stage1/TaegeukCut.png';
 import Lamp from 'assets/stage1/Stage1Lamp.png';
 import Light from 'assets/stage1/Stage1LampLight.png';
-import Clover from '../assets/clover.png';
+import dokdoPuzzle1 from '../assets/dokdoPuzzle1.png';
 
 function BeatDoor() {
   const [isCorrectTiming, setIsCorrectTiming] = useState(false); /* 박자 맞춰 클릭했는지 여부 */
@@ -204,7 +204,7 @@ function Stage1Page() {
             className={`${styles.Stage1Drawer} ${styles.Stage1DrawerOpen} ${styles.Stage1Puzzle} ${
               items && items.some((item) => item.itemName === 'dokdoPuzzle1') ? styles.hidden : ''
             }`}
-            src={Clover}
+            src={dokdoPuzzle1}
             onClick={() => handleItemClick(1)}
           />
         </div>
