@@ -20,7 +20,7 @@ function Stage4Room1() {
 
     /* 하트가 0이면 gameover 페이지로 이동 */
     if (hearts === 0) {
-      navigate('/gameover');
+      navigate('/gameOver');
     }
   }, [hearts, navigate]);
 
@@ -47,8 +47,9 @@ function Stage4Room1() {
       const response = await missionClear({ stageId: 4, itemName: draggedItem });
       console.log('missionClear 응답:', response);
       getHearts(4);
-      if (hearts === 0) {
-        navigate('/gameover');
+
+      if (response.remainingHearts === 0) {
+        navigate('/gameOver');
       }
       if (response.cleared === true) {
         navigate('/stage4room2');
@@ -64,11 +65,13 @@ function Stage4Room1() {
       <Inventory />
 
       {/* 하트 표시 */}
-      <div className={styles.Heart}>
-        {Array.from({ length: hearts }, (_, i) => (
-          <img key={i} src={Heart} alt="Heart" />
-        ))}
-      </div>
+      {hearts > 0 && (
+        <div className={styles.Heart}>
+          {Array.from({ length: hearts }, (_, i) => (
+            <img key={i} src={Heart} alt="Heart" />
+          ))}
+        </div>
+      )}
 
       {/* 김춘삼 이미지 (드롭 영역) */}
       <div

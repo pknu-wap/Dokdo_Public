@@ -26,11 +26,11 @@ function Stage4Room2() {
 
   useEffect(() => {
     fetchUser();
-    getHearts(4);
+    getHearts(5);
 
     /* 하트가 0이면 gameover 페이지로 이동 */
     if (hearts === 0) {
-      navigate('/gameover');
+      navigate('/gameOver');
     }
   }, [hearts, navigate]);
 
@@ -75,10 +75,12 @@ function Stage4Room2() {
     try {
       const response = await missionClear({ stageId: 5, itemName: draggedItem });
       console.log('missionClear 응답:', response);
-      getHearts(4);
-      if (hearts === 0) {
-        navigate('/gameover');
+
+      const updatedHearts = await getHearts(4);
+      if (updatedHearts === 0) {
+        navigate('/gameOver');
       }
+
       if (response.cleared === true) {
         navigate('/stage4room3');
       }

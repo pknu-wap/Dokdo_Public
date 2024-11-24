@@ -120,8 +120,8 @@ function Stage1Page() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMusicExpand, setIsMusicExpand] = useState(false);
   const [isLampOn, setIsLampOn] = useState(false);
-  const [isStage2Open, setIsStage2Open] = useState(true);
-  const [isStage3Open, setIsStage3Open] = useState(true);
+  const [isStage2Open, setIsStage2Open] = useState(false);
+  const [isStage3Open, setIsStage3Open] = useState(false);
 
   const { user, fetchUser } = useUser();
   const [items, setItems] = useState([]);
