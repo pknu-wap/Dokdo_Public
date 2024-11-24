@@ -56,7 +56,6 @@ const CorrectAnswer = [1, 6, 8];
 function Stage3Page() {
   const [selectedImage, setSelectedImage] = useState([]);
   const [resultMessage, setResultMessage] = useState('');
-  const [noteImage, setNoteImage] = useState(null);
   const [isFindSpyModalOpen, setIsFindSpyModalOpen] = useState(false); /* 친일파 찾기 모달 상태 */
   const [isNumberGuessModalOpen, setIsNumberGuessModalOpen] = useState(false); /* 숫자 맞추기 모달 상태 */
   const [gunHintVisible, setGunHintVisible] = useState(false); /* 무기 힌트가 보이는 상태 */
@@ -166,19 +165,11 @@ function Stage3Page() {
     setSelectedImage([]); 
   };
 
-  /* KoreaFlag 클릭 시 noteImage를 표시 */
-  const handleAddKoreaFlagImageClick = () => {
-    if (!isAnswerCorrect || isGunHintCollected) {
-      console.log("태극기 클릭 불가: 건힌트가 이미 수집되었거나 정답 상태가 아님");
-      return; }
-      setNoteImage((prev) => (prev ? null : NoteImage)); 
-  };
-
   /* 무기 힌트 이미지 클릭 */
   const handleNoteImageClick = () => {
     if (items.some((item) => item.itemName === 'GunHint')) return; 
     setGunHintVisible(true); /* GunHintImage를 표시하고 NoteImage를 숨김 */
-    setNoteImage(null); 
+    // setNoteImage(null); 
   
     setTimeout(() => {
       setGunHintVisible(false); 
@@ -187,7 +178,6 @@ function Stage3Page() {
     }, 1000); 
   };
   
-
   /* 새로고침 시 문이 열린 상태 유지 */
   useEffect(() => {
     console.log("Stage3 cleared status:", user?.stages[2]?.cleared);
@@ -255,11 +245,10 @@ function Stage3Page() {
       )}
 
       <img className={styles.Stage3wall} src={Stage3wall} alt="스테이지3벽" onClick={openFindSpyModal} />
-        {/* 국기 추가 */}
         <div className={styles.flags}>
           <img src={JapanFlag} alt="JapanFlag" className={styles.flagTopLeft} />
           <img src={Flag1} alt="Flag1" className={styles.flagTop2} />
-          <img src={KoreaFlag} alt="KoreaFlag" className={styles.flagTop3} onClick={handleAddKoreaFlagImageClick} />
+          <img src={KoreaFlag} alt="KoreaFlag" className={styles.flagTop3} />
           <img src={Flag2} alt="Flag2" className={styles.flagTop4} />
           <img src={Flag3} alt="Flag3" className={styles.flagTopRight} />
           <img src={Flag4} alt="Flag4" className={styles.flagLeft} />
@@ -305,11 +294,11 @@ function Stage3Page() {
             onClick={() => handleItemClick(3)}
         />
 
-      {/* noteImage 이미지 - 친일파 찾기 모달 이후 표시 */}
-      {noteImage && (
-        <div >
+      {/* noteImage 이미지 */}
+      {!isGunHintCollected && !items?.some((item) => item.itemName === 'gunHint') && (
+        <div>
           <img
-            src={noteImage} 
+            src={NoteImage}
             alt="noteImage"
             className={styles.NoteImage}
             onClick={handleNoteImageClick}
@@ -318,10 +307,10 @@ function Stage3Page() {
       )}
 
       {/* 무기 힌트 이미지 */}
-      {gunHintVisible && ( /* 무기 힌트 이미지 - gunHintVisible이 true이고 GunHint가 인벤토리에 없는 경우에만 렌더링 */
+      {gunHintVisible && ( /* gunHintVisible이 true이고 GunHint가 인벤토리에 없는 경우에만 렌더링 */
         <img
           className={`${styles.GunHintImage} ${
-            items && items.some((item) => item.itemName === 'GunHint') ? styles.hidden : ''
+            items && items.some((item) => item.itemName === 'gunHint') ? styles.hidden : ''
           }`}
           src={GunHintImage}
           alt="무기힌트"
