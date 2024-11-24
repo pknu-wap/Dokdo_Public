@@ -185,14 +185,14 @@ function Stage4PuzzleGame() {
     }
   }, [stage4PuzzleAnswer, navigate]);
 
-  useEffect(() => {
-    if (timerRunning) {
-      const id = setInterval(() => {
-        setCount((prevCount) => prevCount - 1);
-      }, 10);
-      return () => clearInterval(id);
-    }
-  }, [timerRunning]);
+  // useEffect(() => {
+  //   if (timerRunning) {
+  //     const id = setInterval(() => {
+  //       setCount((prevCount) => prevCount - 1);
+  //     }, 10);
+  //     return () => clearInterval(id);
+  //   }
+  // }, [timerRunning]);
 
   const getTimerBackground = () => {
     const percentage = count / 1000;

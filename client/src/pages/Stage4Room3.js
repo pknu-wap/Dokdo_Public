@@ -16,7 +16,6 @@ function Stage4Room3() {
   const navigate = useNavigate();
   const { missionClear, getHearts, hearts } = useUser();
 
-  /* 하트 상태를 로컬 스토리지에 저장 */
   useEffect(() => {
     getHearts(6);
 
