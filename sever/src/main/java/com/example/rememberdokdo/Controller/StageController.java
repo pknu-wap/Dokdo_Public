@@ -1,8 +1,10 @@
 package com.example.rememberdokdo.Controller;
 
 import com.example.rememberdokdo.Dto.*;
+import com.example.rememberdokdo.Service.StageResetService;
 import com.example.rememberdokdo.Service.StageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -14,6 +16,8 @@ public class StageController {
 
     @Autowired
     private StageService stageService;
+    @Autowired
+    private StageResetService stageResetService;
 
     // 특정 스테이지 접근 가능 여부 확인
     @GetMapping("/{stageId}/access")
@@ -49,5 +53,13 @@ public class StageController {
     ) {
 
         return stageService.getStageStatus(sessionId, stageId);
+    }
+
+    @PostMapping("/{stageId}/reset")
+    public ResponseEntity<StageProgressResponseDto> resetStage(
+            @PathVariable int stageId,
+            @RequestParam String sessionId,
+            @RequestParam Boolean isCleared) {
+        return ResponseEntity.ok(stageResetService.resetStage(stageId, sessionId, isCleared));
     }
 }
