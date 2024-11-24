@@ -1,7 +1,11 @@
 package com.example.rememberdokdo.Service;
 
 import com.example.rememberdokdo.Dto.StageProgressResponseDto;
+import com.example.rememberdokdo.Entity.Inventory.InventoryEntity;
 import com.example.rememberdokdo.Entity.StageProgressEntity;
+import com.example.rememberdokdo.Repository.Inventory.InventoryItemsRepository;
+import com.example.rememberdokdo.Repository.Inventory.InventoryRepository;
+import com.example.rememberdokdo.Repository.SessionRepository;
 import com.example.rememberdokdo.Repository.StageProgressRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,9 @@ import java.util.Optional;
 public class StageResetService {
     @Autowired
     private StageProgressRepository stageProgressRepository;
+    private SessionRepository sessionRepository;
+    private InventoryRepository inventoryRepository;
+    private InventoryItemsRepository inventoryItemsRepository;
 
 
     // 초기화(게임 오버, 클리어) 기능
@@ -52,10 +59,16 @@ public class StageResetService {
         }
         StageProgressEntity stageProgress = stageProgressOpt.get();
 
+        // 인벤토리에서 세션 ID 조회
+        InventoryEntity inventory = inventoryRepository.findBySessionId(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("인벤토리가 존재하지 않습니다."));
+        int inventoryId = inventory.getInventoryId();
+
         // 하트 수가 0이면 게임 오버
         if (stageProgress.getRemainingHearts() == 0) {
             // 모든 세션 관련 정보 삭제
-            stageProgressRepository.deleteAllBySessionId(sessionId);
+            deleteAllSessionData(sessionId, inventoryId); // 모든 관련 데이터 삭제
+
             return StageProgressResponseDto.builder()
                     .sessionId(sessionId)
                     .remainingHearts(0)
@@ -64,6 +77,15 @@ public class StageResetService {
         }
         // 남은 하트가 있을 경우 에러 처리
         throw new IllegalArgumentException("하트 수가 남아있어 게임을 초기화할 수 없습니다.");
+    }
+
+    // 모든 세션 관련 데이터 삭제하는 메서드
+    private void deleteAllSessionData(String sessionId, int inventoryId) {
+        sessionRepository.deleteBySessionId(sessionId); // 세션 삭제
+        stageProgressRepository.deleteAllBySessionId(sessionId); // 스테이지 진행 상황 삭제
+        inventoryRepository.deleteBySessionId(sessionId); // 인벤토리 삭제
+        inventoryItemsRepository.deleteAllByInventoryId(inventoryId); // 인벤토리 아이템 삭제
+        sessionRepository.deleteBySessionId(sessionId); // 세션 삭제
     }
 
     // 스테이지7(퍼즐 게임) 처리
