@@ -39,12 +39,90 @@
   z-index: 1;
 }
 
+
+
 .Stage3wall {
-  height: 50vh;;
+  height: 32.5vh;;
   position: fixed;
-  top: 19vh;
-  left: 36vw;
+  top: 33.5vh;
+  left: 45vw;
   cursor: pointer;
+  z-index: 1;
+}
+
+.flags img{
+  position: fixed;
+  height: 10vh;
+}
+
+.flagTopLeft {
+  top: 20vh;
+  left: 35vw;
+}
+
+.flagTop2 {
+  top: 20vh;
+  left: 45vw;
+}
+
+.flagTop3 {
+  top: 20vh;
+  left: 55vw;
+}
+
+.flagTop4 {
+  top: 20vh;
+  left: 65vw;
+}
+
+.flagTopRight {
+  top: 20vh;
+  left: 75vw;
+}
+
+.flagLeft {
+  top: 36vh;
+  left: 35vw;
+}
+
+.flagLeft2 {
+  top: 53vh;
+  left: 35vw;
+}
+
+.flagRight {
+  top: 36vh;
+  left: 75vw;
+}
+
+.flagRight2 {
+  top: 53vh;
+  left: 75vw;
+}
+
+.flagBottomLeft {
+  top: 70vh;
+  left: 35vw;
+}
+
+.flagBottom2 {
+  top: 70vh;
+  left: 45vw;
+}
+
+.flagBottom3 {
+  top: 70vh;
+  left: 55vw;
+}
+
+.flagBottom4 {
+  top: 70vh;
+  left: 65vw;
+}
+
+.flagBottomRight {
+  top: 70vh;
+  left: 75vw;
 }
 
 .DokdoPuzzle3{
@@ -135,8 +213,8 @@
   cursor: pointer;
   height: 4vh;
   position: fixed;
-  top: 15.5vh;
-  left: 64vw;
+  top: 16vh;
+  left: 57.5vw;
 }
 
 .GunHintImage {
@@ -144,6 +222,7 @@
   top: 19vh;
   left: 38vw;
   height: 50vh;
+  z-index: 1000;
 }
 
 .SpyHintImage {
@@ -155,7 +234,11 @@
 }
 
 .SpyHintImage img {
-  width: 100%; /* 컨테이너 크기에 맞추어 이미지가 조정되도록 설정 */
+  width: 100%; 
   height: auto;
-  object-fit: contain; /* 비율을 유지하며 크기 조정 */
+  object-fit: contain;
+}
+
+.hidden {
+  display: none;
 }
