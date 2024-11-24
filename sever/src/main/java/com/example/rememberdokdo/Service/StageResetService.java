@@ -20,6 +20,12 @@ public class StageResetService {
         if (sessionId == null || sessionId.isEmpty()) {
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
         }
+
+        // stageId가 1,2,3인 경우 에러 처리
+        if (stageId == 1 || stageId == 2 || stageId == 3) {
+            throw new IllegalArgumentException("해당 스테이지는 초기화할 수 없습니다.");
+        }
+
         // 모든 스테이지의 진행 상황 처리 메서드
         // 하트 기반 스테이지 처리(스테이지4,5,6)
         // 스테이지7 처리
