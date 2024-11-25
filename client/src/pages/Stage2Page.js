@@ -83,6 +83,10 @@ function Stage2Page() {
       setItems(user.inventory);
     }
     fetchUser();
+    const savedDoorState = sessionStorage.getItem('stage2DoorOpen');
+    if (savedDoorState === 'true') {
+      setCheckIsPlaceAnswer(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -103,6 +107,22 @@ function Stage2Page() {
     stageClear(2);
     navigate('/Stage3');
   };
+
+  useEffect(() => {
+    const savedStage2 = JSON.parse(sessionStorage.getItem('stage2')) || [];
+
+    if (savedStage2.some((item) => item.placeAnswerCorrect)) {
+      setCheckIsPlaceAnswer(true);
+    }
+    const handleBeforeUnload = () => {
+      sessionStorage.removeItem('stage2');
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   useEffect(() => {
     if (items.some((item) => item.itemName === 'map')) {
@@ -135,9 +155,14 @@ function Stage2Page() {
   };
 
   const handleCheckPlaceAnswer = () => {
+    const newAnswerStatus = { placeAnswerCorrect: placeAnswer === '포항시' };
+
     if (placeAnswer === '포항시') {
       setCheckIsPlaceAnswer(true);
     }
+    const savedStage2 = JSON.parse(sessionStorage.getItem('stage2')) || [];
+    savedStage2.push(newAnswerStatus);
+    sessionStorage.setItem('stage2', JSON.stringify(savedStage2));
   };
 
   const handleBoxOpen = () => {

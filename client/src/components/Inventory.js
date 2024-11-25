@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
 import taegeukKey from '../assets/stage1/RedItem.png';
-import dokdoPuzzle1 from '../assets/clover.png';
+import dokdoPuzzle1 from '../assets/dokdoPuzzle1.png';
 import dokdoPuzzle2 from '../assets/dokdoPuzzle2.png';
 import dokdoPuzzle3 from '../assets/dokdoPuzzle3.png';
 import dokdoPuzzle4 from '../assets/dokdoPuzzle4.png';

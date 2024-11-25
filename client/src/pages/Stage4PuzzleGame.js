@@ -14,28 +14,9 @@ import dokdoPuzzleNone from '../assets/dokdoPuzzleNone.png';
 function Stage4PuzzleGame() {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
-  const { addItem, deleteItem } = useInventory2();
+  const { deleteItem } = useInventory2();
   const { user, fetchUser } = useUser();
 
-  const handleItemClick = async (itemId) => {
-    if (!user?.sessionId) {
-      console.log('Session ID가 없습니다.');
-      return;
-    }
-
-    try {
-      await addItem({ sessionId: user.sessionId, itemId });
-      /* 유저 정보 업데이트 */
-      const updatedUser = await fetchUser();
-
-      if (updatedUser?.inventory) {
-        setItems(updatedUser.inventory);
-      }
-      console.log(updatedUser.inventory);
-    } catch (error) {
-      console.error('아이템 추가 중 오류 발생', error);
-    }
-  };
   const [puzzle1, setPuzzle1] = useState(dokdoPuzzleNone);
   const [puzzle2, setPuzzle2] = useState(dokdoPuzzleNone);
   const [puzzle3, setPuzzle3] = useState(dokdoPuzzleNone);
@@ -43,7 +24,7 @@ function Stage4PuzzleGame() {
   const [stage4PuzzleAnswer, setStage4PuzzleAnswer] = useState(false);
 
   const [count, setCount] = useState(1000);
-  const [timerRunning, setTimerRunning] = useState(true);
+  const [timerRunning, setTimerRunning] = useState(false);
 
   const handleDropOnPuzzle1 = (e) => {
     e.preventDefault();
