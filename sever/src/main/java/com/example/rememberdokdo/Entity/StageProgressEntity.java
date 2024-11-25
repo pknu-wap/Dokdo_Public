@@ -32,5 +32,8 @@ public class StageProgressEntity {
     private int remainingHearts=3; // 남은 하트 추가
 
     @Column(nullable = false)
-    private boolean gameOver;
+    private boolean gameOver; // 게임 오버
+
+    @Column(nullable = true)
+    private String message; // 게임 클리어, 게임 오버 메시지 추가
 }
