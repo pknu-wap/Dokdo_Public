@@ -107,6 +107,15 @@ public class StageService {
 
     //스테이지 4,5,6 미션 도전 처리
     public StageProgressResponseDto processItem(String sessionId, int stageId, String selectedItem) {
+        // 이미 클리어된 스테이지인지 확인
+        boolean isAlreadyCleared = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
+                .map(StageProgressEntity::isCleared)
+                .orElse(false);
+
+        if (isAlreadyCleared) {
+            throw new IllegalStateException("이미 클리어된 스테이지입니다.");
+        }
+
         // 이전 스테이지의 상태에서 남은 하트를 가져오거나, 기본값 3 설정 (스테이지 4는 무조건 기본값 3)
         int previousHearts;
         if (stageId == 4) {
@@ -170,12 +179,39 @@ public class StageService {
                 .build();
     }
 
-    // GET 요청: 스테이지 상태 조회
+    //GET 각 스테이지 정보 조회
     public StageProgressResponseDto getStageStatus(String sessionId, int stageId) {
+        // 스테이지 정보를 조회
         StageProgressEntity stageProgress = stageProgressRepository
                 .findBySessionIdAndStageId(sessionId, stageId)
-                .orElseThrow(() -> new IllegalArgumentException("스테이지 진행 정보가 없습니다."));
+                .orElse(null);
 
+        if (stageProgress == null) {
+            int initialHearts = 3; // 기본 하트 수
+
+            if (stageId > 4) {
+                // 이전 스테이지 정보 조회
+                StageProgressEntity previousStage = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId - 1)
+                        .orElse(null);
+
+                if (previousStage == null || !previousStage.isCleared()) {
+                    // 이전 스테이지가 클리어되지 않은 경우 예외 발생
+                    throw new IllegalArgumentException("이전 스테이지를 클리어하지 않았습니다. sessionId: " + sessionId + ", stageId: " + (stageId - 1));
+                }
+
+                // 이전 스테이지 클리어 시 남은 하트를 그대로 가져옴
+                initialHearts = previousStage.getRemainingHearts();
+            }
+
+            return StageProgressResponseDto.builder()
+                    .progressId(null)
+                    .sessionId(sessionId)
+                    .remainingHearts(initialHearts)
+                    .isCleared(false)
+                    .build();
+        }
+
+        // 기존 스테이지가 존재하면 해당 정보를 반환
         return StageProgressResponseDto.builder()
                 .progressId(stageProgress.getProgressId())
                 .sessionId(sessionId)
@@ -202,5 +238,38 @@ public class StageService {
                 .isActive(true)
                 .build();
     }
+
+    public SessionProgressDto clearStageForStage7(String sessionId) {
+        // 이전 스테이지(스테이지 6)의 하트 값 가져오기
+        int remainingHearts = stageProgressRepository.findBySessionIdAndStageId(sessionId, 6)
+                .map(StageProgressEntity::getRemainingHearts)
+                .orElse(3); // 기본값 3 사용
+
+        // 스테이지 7 데이터 처리
+        StageProgressEntity stageProgress = stageProgressRepository
+                .findBySessionIdAndStageId(sessionId, 7)
+                .orElseGet(() -> StageProgressEntity.builder()
+                        .sessionId(sessionId)
+                        .stageId(7)
+                        .remainingHearts(remainingHearts)
+                        .isCleared(false)
+                        .build());
+
+        // 스테이지 7 클리어 처리
+        stageProgress.setCleared(true);
+        stageProgress.setRemainingHearts(remainingHearts); // 명시적으로 하트 값 저장
+        stageProgressRepository.save(stageProgress);
+
+        // 응답 객체 생성
+        SessionProgressDto responseDto = new SessionProgressDto();
+        responseDto.setSessionId(sessionId);
+        responseDto.setIsActive(true);
+        responseDto.setExpiresAt(LocalDateTime.now().plusHours(1));
+        responseDto.setStages(List.of(new SessionProgressDto.StageStatus(7, true, remainingHearts)));
+
+        return responseDto;
+    }
+
+
 
 }
