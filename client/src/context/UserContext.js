@@ -7,14 +7,9 @@ export const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [sessionId, setSessionId] = useState(null);
+  const [hearts, setHearts] = useState(3);
   const apiUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (user) {
-  //     fetchUser();
-  //   }
-  // }, [user.inventory]);
 
   /* 유저 정보 가져오기 */
   const fetchUser = async () => {
@@ -69,8 +64,46 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  /* 미션 클리어 여부 확인 함수 */
+  const missionClear = async ({ stageId, itemName }) => {
+    try {
+      const response = await axios.post(
+        `${apiUrl}/stage/${stageId}/attempt?sessionId=${sessionId}&itemName=${itemName}`,
+        null,
+        {
+          withCredentials: true,
+        }
+      );
+
+      const clearedStage = response.data;
+      return clearedStage;
+    } catch (error) {
+      console.log('Mission Clear POST 요청 실패', error);
+    }
+  };
+
+  /* 하트 개수 확인 함수 */
+  const getHearts = async (stageId) => {
+    try {
+      const response = await axios.get(`${apiUrl}/stage/${stageId}/status?sessionId=${sessionId}`, null, {
+        withCredentials: true,
+      });
+
+      if (response.data.remainingHearts) {
+        const remainingHearts = response.data.remainingHearts;
+        setHearts(remainingHearts);
+      }
+
+      return hearts;
+    } catch (error) {
+      console.log('Stage Clear POST 요청 실패', error);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, fetchUser, createSession, stageClear }}>
+    <UserContext.Provider
+      value={{ user, setUser, fetchUser, createSession, stageClear, missionClear, getHearts, hearts }}
+    >
       {children}
     </UserContext.Provider>
   );
