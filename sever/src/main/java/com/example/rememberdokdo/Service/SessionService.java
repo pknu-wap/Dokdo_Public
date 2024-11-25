@@ -137,7 +137,7 @@ public class SessionService {
         List<SessionProgressDto.StageStatus> stages = stageProgressRepository.findBySessionId(sessionId).stream()
                 .map(stage -> {
                     // 스테이지 4, 5, 6에 대해서만 remainingHearts 추가
-                    Integer remainingHearts = (stage.getStageId() >= 4 && stage.getStageId() <= 6)
+                    Integer remainingHearts = (stage.getStageId() >= 4 && stage.getStageId() <= 7)
                             ? stage.getRemainingHearts() // 남은 하트 가져오기
                             : null;
 

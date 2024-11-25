@@ -28,6 +28,10 @@ public class StageController {
     // 스테이지 클리어 정보 저장
     @PostMapping("/{stageId}/clear")
     public SessionProgressDto clearStage(@RequestParam String sessionId, @PathVariable("stageId") int stageId) {
+        if (stageId == 7) {
+            // 스테이지 7 전용 메서드 호출
+            return stageService.clearStageForStage7(sessionId);
+        }
         return stageService.clearStage(sessionId, stageId);
     }
 
