@@ -129,6 +129,7 @@
   height: 8vh;
   top: 20vh;
   left: 15vw;
+  cursor: pointer;
 }
 
 .ModalMent {
@@ -182,6 +183,7 @@
 
 .CheckAnswerButton {
   margin-top: 2vw;
+  cursor: pointer;
 }
 
 .ResultBanner {
@@ -201,14 +203,6 @@
   height: 9vh;
   box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.2);
   transition: border 0.3s ease;
-}
-
-.KoreaFlag {
-  cursor: pointer;
-  height: 9vh;
-  position: fixed;
-  top: 19.2vh;
-  left: 62.3vw;
 }
 
 .NoteImage {
