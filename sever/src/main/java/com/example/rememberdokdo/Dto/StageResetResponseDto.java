@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor // 생성자
 @Builder
-public class Stage4ProgressDto {
+public class StageResetResponseDto {
     private int progressId;
     private String sessionId;
-    private int currentMissionId;
-    private int remainingHearts;
-    private boolean isCurrentMissionCleared;
-    private boolean isGameOver;
+    private String message; // 게임 클리어 여부 메시지
 }
 
