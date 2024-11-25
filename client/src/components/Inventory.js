@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from '../components/Inventory.module.css';
 import { ReactSortable } from 'react-sortablejs';
+import { useUser } from 'context/UserContext';
+
 import taegeukKey from '../assets/stage1/RedItem.png';
 import dokdoPuzzle1 from '../assets/dokdoPuzzle1.png';
 import dokdoPuzzle2 from '../assets/dokdoPuzzle2.png';
@@ -10,7 +12,6 @@ import map from '../assets/stage2/Map.png';
 import timeLocationHint from '../assets/stage2/timeLocationHint.png';
 import GunHintImage from 'assets/stage3/GunHintImage.png';
 import SpyHintImage from 'assets/stage3/SpyHintImage.png';
-import { useUser } from 'context/UserContext';
 
 const itemImage = {
   taegeukKey: taegeukKey,
@@ -20,8 +21,6 @@ const itemImage = {
   dokdoPuzzle4: dokdoPuzzle4,
   map: map,
   timeLocationHint: timeLocationHint,
-  GunHintImage: GunHintImage,
-  SpyHintImage: SpyHintImage,
   gunHint: GunHintImage,
   japaneseInfo: SpyHintImage,
 };

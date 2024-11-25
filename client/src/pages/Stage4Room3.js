@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useUser } from 'context/UserContext';
+
 import styles from './Stage4Room3.module.css';
 import Inventory from '../components/Inventory.js';
-import Heart from 'assets/stage4/Heart.png';
 
+import Heart from 'assets/stage4/Heart.png';
 import SonJeongpal from 'assets/stage4/SonJeongpal.png';
 import Yeontan from 'assets/stage4/Yeontan.png';
 import Bomb from 'assets/stage4/Bomb.png';
@@ -12,21 +13,15 @@ import Dokki from 'assets/stage4/Dokki.png';
 import Table from 'assets/stage4/Table.png';
 
 function Stage4Room3() {
-  const location = useLocation();
   const navigate = useNavigate();
+  const { missionClear, getHearts, hearts } = useUser();
 
-  /* 하트 상태를 로컬 스토리지에서 불러오기 */
-  const initialHearts = parseInt(localStorage.getItem('hearts'), 10) || location.state?.hearts || 3;
-  const [hearts, setHearts] = useState(initialHearts);
-
-  /* 하트 상태를 로컬 스토리지에 저장 */
   useEffect(() => {
-    localStorage.setItem('hearts', hearts);
+    const updatedHearts = getHearts(6);
 
     /* 하트가 0이면 gameover 페이지로 이동 */
-    if (hearts === 0) {
-      /* alert('실패'); */ 
-      navigate('/gameover');
+    if (updatedHearts === 0) {
+      navigate('/gameOver');
     }
   }, [hearts, navigate]);
 
@@ -36,27 +31,34 @@ function Stage4Room3() {
   };
 
   /* 드롭 처리 */
-  const handleDrop = (e) => {
+  const handleDrop = async (e) => {
     e.preventDefault();
     const draggedItem = e.dataTransfer.getData('text/plain');
 
-    if (draggedItem === 'correctweapon') {
-      navigate('/Stage4PuzzleGame', { state: { hearts } }); // 정답일 경우 다음 방으로 이동
-    } else {
-      setHearts((prevHearts) => Math.max(prevHearts - 1, 0)); // 하트 감소
+    if (!draggedItem) {
+      console.log('드래그된 데이터가 유효하지 않습니다.');
+      return;
     }
-  };
+    try {
+      const response = await missionClear({ stageId: 6, itemName: draggedItem });
+      console.log('missionClear 응답:', response);
+      getHearts(6);
 
-  const resetHearts = () => {
-    localStorage.removeItem('hearts'); /* 로컬 스토리지 초기화 */
-    setHearts(3); /* 하트 초기화 */ 
+      if (response.remainingHearts === 0) {
+        navigate('/gameOver');
+      }
+
+      if (response.cleared === true) {
+        navigate('/stage4PuzzleGame');
+      }
+    } catch (error) {
+      console.log('드래그 앤 드랍 미션 오류', error);
+    }
   };
 
   return (
     <div className={styles.Stage4Bg}>
-      <div className={styles.TopBar}>
-      손정팔을 죽일 수 있는 무기를 선택하라.
-      </div>
+      <div className={styles.TopBar}>손정팔을 죽일 수 있는 무기를 선택하라.</div>
       <Inventory />
 
       <div className={styles.Heart}>
@@ -71,29 +73,19 @@ function Stage4Room3() {
         onDragOver={(e) => e.preventDefault()} // 드롭 가능 영역 설정
         onDrop={handleDrop} // 드롭 처리
       >
-        <img className={styles.SonJeongpal} src={SonJeongpal} alt="SonJeongpal" onDragStart={(e) => e.preventDefault()}/>
+        <img
+          className={styles.SonJeongpal}
+          src={SonJeongpal}
+          alt="SonJeongpal"
+          onDragStart={(e) => e.preventDefault()}
+        />
       </div>
 
       {/* 무기 이미지들 (드래그 가능) */}
       <div className={styles.Weapon}>
-        <img
-          draggable="true"
-          onDragStart={handleDragStart('wrongweapon1')}
-          src={Yeontan}
-          alt="Yeontan"
-        />
-        <img
-          draggable="true"
-          onDragStart={handleDragStart('correctweapon')}
-          src={Bomb}
-          alt="Bomb"
-        />
-        <img
-          draggable="true"
-          onDragStart={handleDragStart('wrongweapon2')}
-          src={Dokki}
-          alt="Dokki"
-        />
+        <img draggable="true" onDragStart={handleDragStart('wrongweapon1')} src={Yeontan} alt="Yeontan" />
+        <img draggable="true" onDragStart={handleDragStart('correctweapon')} src={Bomb} alt="Bomb" />
+        <img draggable="true" onDragStart={handleDragStart('wrongweapon2')} src={Dokki} alt="Dokki" />
       </div>
       <img className={styles.Table} src={Table} alt="Table" />
     </div>

@@ -11,12 +11,12 @@
   height: 10vh;
   top: 3vh;
   left: 2vw;
-  background-color: #C1A693; 
+  background-color: #c1a693;
   font-family: 'MapoAgape', sans-serif;
   font-size: 4vh;
   text-align: center;
   border-radius: 1vw; /* 둥근 모서리 */
-  padding: 1.5vw; 
+  padding: 1.5vw;
   box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 }
 
@@ -26,10 +26,11 @@
   left: 26vw;
   z-index: -1;
   display: flex;
+  pointer-events: auto;
 }
 
 .KimChunsam {
-  height:63vh;
+  height: 63vh;
   object-fit: contain; /* 이미지 비율 유지 */
 }
 
@@ -39,17 +40,17 @@
   top: 3vh;
   left: 67vw;
   display: flex;
-  gap: 1vw; 
-  background-color: #C1A693;
+  gap: 1vw;
+  background-color: #c1a693;
   border-radius: 1vw; /* 둥근 모서리 */
-  padding: 1vw; 
+  padding: 1vw;
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 가로 중앙 정렬 */
   box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 }
 
 .Heart img {
-  height: 5vh; 
+  height: 5vh;
   object-fit: contain; /* 이미지 비율 유지 */
 }
 

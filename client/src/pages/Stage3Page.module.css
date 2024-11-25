@@ -40,18 +40,96 @@
 }
 
 .Stage3wall {
-  height: 50vh;;
+  height: 32.5vh;
   position: fixed;
-  top: 19vh;
-  left: 36vw;
+  top: 33.5vh;
+  left: 45vw;
   cursor: pointer;
+  z-index: 1;
 }
 
-.DokdoPuzzle3{
+.flags img {
+  position: fixed;
+  height: 10vh;
+}
+
+.flagTopLeft {
+  top: 20vh;
+  left: 35vw;
+}
+
+.flagTop2 {
+  top: 20vh;
+  left: 45vw;
+}
+
+.flagTop3 {
+  top: 20vh;
+  left: 55vw;
+}
+
+.flagTop4 {
+  top: 20vh;
+  left: 65vw;
+}
+
+.flagTopRight {
+  top: 20vh;
+  left: 75vw;
+}
+
+.flagLeft {
+  top: 36vh;
+  left: 35vw;
+}
+
+.flagLeft2 {
+  top: 53vh;
+  left: 35vw;
+}
+
+.flagRight {
+  top: 36vh;
+  left: 75vw;
+}
+
+.flagRight2 {
+  top: 53vh;
+  left: 75vw;
+}
+
+.flagBottomLeft {
+  top: 70vh;
+  left: 35vw;
+}
+
+.flagBottom2 {
+  top: 70vh;
+  left: 45vw;
+}
+
+.flagBottom3 {
+  top: 70vh;
+  left: 55vw;
+}
+
+.flagBottom4 {
+  top: 70vh;
+  left: 65vw;
+}
+
+.flagBottomRight {
+  top: 70vh;
+  left: 75vw;
+}
+
+.DokdoPuzzle3 {
+  cursor: pointer;
   position: fixed;
   height: 8vh;
   top: 20vh;
   left: 15vw;
+  cursor: pointer;
 }
 
 .ModalMent {
@@ -70,13 +148,15 @@
   text-align: center;
 }
 
-.ImageGrid { /* 모달 속 전체 친일파사진 위치  */
+.ImageGrid {
+  /* 모달 속 전체 친일파사진 위치  */
   position: fixed;
-  top: 23vh; 
+  top: 23vh;
   left: 25vw;
 }
 
-.CenterContainer { /* 모달 속 친일파 사진 그리드 설정 */
+.CenterContainer {
+  /* 모달 속 친일파 사진 그리드 설정 */
   grid-area: center;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -87,7 +167,8 @@
   border: 0.1vw solid transparent;
 }
 
-.ImageItem { /* 친일파사진(각각) */
+.ImageItem {
+  /* 친일파사진(각각) */
   width: 10vw;
   height: 22vh;
   object-fit: cover;
@@ -102,6 +183,7 @@
 
 .CheckAnswerButton {
   margin-top: 2vw;
+  cursor: pointer;
 }
 
 .ResultBanner {
@@ -109,7 +191,7 @@
   top: 11vh;
   left: 50vw;
   transform: translateX(-50%);
-  background-color: #C1A693;
+  background-color: #c1a693;
   color: white;
   font: Noto Sans KR;
   font-size: 1.5vw;
@@ -123,20 +205,12 @@
   transition: border 0.3s ease;
 }
 
-.KoreaFlag { 
-  cursor: pointer;
-  height: 9vh;
-  position: fixed;
-  top: 19.2vh;
-  left: 62.3vw;
-}
-
 .NoteImage {
   cursor: pointer;
   height: 4vh;
   position: fixed;
-  top: 15.5vh;
-  left: 64vw;
+  top: 16vh;
+  left: 57.5vw;
 }
 
 .GunHintImage {
@@ -144,6 +218,7 @@
   top: 19vh;
   left: 38vw;
   height: 50vh;
+  z-index: 1000;
 }
 
 .SpyHintImage {
@@ -155,7 +230,11 @@
 }
 
 .SpyHintImage img {
-  width: 100%; /* 컨테이너 크기에 맞추어 이미지가 조정되도록 설정 */
+  width: 100%;
   height: auto;
-  object-fit: contain; /* 비율을 유지하며 크기 조정 */
+  object-fit: contain;
+}
+
+.hidden {
+  display: none;
 }
