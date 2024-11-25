@@ -192,7 +192,7 @@ public class StageService {
             if (stageId > 4) {
                 // 이전 스테이지 정보 조회
                 StageProgressEntity previousStage = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId - 1)
-                        .orElse(null);
+                        .orElseThrow(() -> new IllegalArgumentException("스테이지 진행 정보가 없습니다. "));
 
                 if (previousStage == null || !previousStage.isCleared()) {
                     // 이전 스테이지가 클리어되지 않은 경우 예외 발생
