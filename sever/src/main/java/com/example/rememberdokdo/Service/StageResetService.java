@@ -27,9 +27,7 @@ public class StageResetService {
     @Transactional
     public StageResetResponseDto resetStage(String sessionId, int stageId) {
         // 세션 ID 유효성 검사
-        if (sessionId == null || sessionId.isEmpty()) {
-            throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
-        }
+        validateSessionId(sessionId);
 
         // stageId가 1,2,3인 경우 에러 처리
         if (stageId == 1 || stageId == 2 || stageId == 3) {
@@ -48,6 +46,13 @@ public class StageResetService {
 
         // 알 수 없는 스테이지 ID에 대한 처리
         throw new IllegalArgumentException("알 수 없는 스테이지 ID입니다.");
+    }
+
+    // 세션 ID 유효성 검사
+    private void validateSessionId(String sessionId) {
+        if (sessionId == null || sessionId.isEmpty()) {
+            throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
+        }
     }
 
     // stage 4,5,6 처리(남은 하트 수 기반)
