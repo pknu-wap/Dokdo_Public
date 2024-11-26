@@ -97,13 +97,11 @@ public class StageResetService {
         InventoryEntity inventory = getInventoryBySessionId(sessionId);
 
         // StageProgress에서 sessionId로 isCleared 조회
-        StageProgressEntity stageProgress = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 스테이지 상태입니다. 세션 ID 또는 스테이지 ID를 확인해주세요."));
-        boolean isCleared = stageProgress.isCleared();
+        StageProgressEntity stageProgress = getStageProgressBySessionAndStage(sessionId, stageId);
 
         StageProgressEntity progressEntity;
 
-        if (isCleared) {
+        if (stageProgress.isCleared()) {
             // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
             deleteAllSessionData(sessionId, inventory.getInventoryId()); // 모든 관련 데이터 삭제
             // 성공 데이터 저장
@@ -128,10 +126,16 @@ public class StageResetService {
                 .orElseThrow(() -> new IllegalArgumentException("인벤토리가 존재하지 않습니다."));
     }
 
-    // 최신 스테이지 진행 상태 조회
+    // 최신 스테이지 진행 상황 조회
     private StageProgressEntity getLatestStageProgress(String sessionId) {
         return stageProgressRepository.findLatestBySessionId(sessionId)
                 .orElseThrow(() -> new IllegalArgumentException("스테이지 진행 정보가 존재하지 않습니다."));
+    }
+
+    // 특정 스테이지 진행 상황 조회
+    private StageProgressEntity getStageProgressBySessionAndStage(String sessionId, int stageId) {
+        return stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 스테이지 상태입니다. 세션 ID 또는 스테이지 ID를 확인해주세요."));
     }
 
     // 초기화 조건 검증 => 하트 수가 0개이고, isCleared가 false
