@@ -62,8 +62,7 @@ public class StageController {
     @PostMapping("/{stageId}/reset")
     public ResponseEntity<StageResetResponseDto> resetStage(
             @PathVariable int stageId,
-            @RequestParam String sessionId,
-            @RequestParam Boolean isCleared) {
-        return ResponseEntity.ok(stageResetService.resetStage(stageId, sessionId, isCleared));
+            @RequestParam String sessionId) {
+        return ResponseEntity.ok(stageResetService.resetStage(sessionId, stageId));
     }
 }

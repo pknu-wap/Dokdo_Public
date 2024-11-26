@@ -25,7 +25,7 @@ public class StageResetService {
 
     // 초기화(게임 오버, 클리어) 기능
     @Transactional
-    public StageResetResponseDto resetStage(int stageId, String sessionId, Boolean isCleared) {
+    public StageResetResponseDto resetStage(String sessionId, int stageId) {
         // 세션 ID 유효성 검사
         if (sessionId == null || sessionId.isEmpty()) {
             throw new IllegalArgumentException("세션이 만료되었거나 유효하지 않습니다.");
@@ -43,7 +43,7 @@ public class StageResetService {
 
         // Stage 7 (퍼즐 게임) 처리
         if (stageId == 7) {
-            return stage7(sessionId, isCleared);
+            return stage7(sessionId, stageId);
         }
 
         // 알 수 없는 스테이지 ID에 대한 처리
@@ -88,7 +88,7 @@ public class StageResetService {
     }
 
     // 스테이지7(퍼즐 게임) 처리
-    private StageResetResponseDto stage7(String sessionId, Boolean isCleared){
+    private StageResetResponseDto stage7(String sessionId, int stageId){
         // 새로운 Dto 생성
         StageResetResponseDto responseDto = new StageResetResponseDto();
         responseDto.setSessionId(sessionId); // sessionId에 따라 한 번 생성
@@ -98,12 +98,14 @@ public class StageResetService {
                 .orElseThrow(() -> new IllegalArgumentException("인벤토리가 존재하지 않습니다."));
         int inventoryId = inventory.getInventoryId();
 
+        // StageProgress에서 sessionId로 isCleared 조회
+        StageProgressEntity stageProgress = stageProgressRepository.findBySessionIdAndStageId(sessionId, stageId)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 스테이지 상태입니다. 세션 ID 또는 스테이지 ID를 확인해주세요."));
+        boolean isCleared = stageProgress.isCleared();
+
         StageProgressEntity progressEntity;
 
-        // 클리어 여부 처리
-        boolean cleared = (isCleared != null) ? isCleared : false;
-
-        if (cleared) {
+        if (isCleared) {
             // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
             deleteAllSessionData(sessionId, inventoryId); // 모든 관련 데이터 삭제
             // 성공 데이터 저장
