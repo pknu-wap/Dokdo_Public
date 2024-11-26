@@ -26,10 +26,7 @@ public class StageResetService {
     // 초기화(게임 오버, 클리어) 기능
     @Transactional
     public StageResetResponseDto resetStage(String sessionId, int stageId) {
-        // 세션 ID 유효성 검사
         validateSessionId(sessionId);
-
-        // stageId가 1,2,3인 경우 에러 처리 => 초기화 불가능한 스테이지 ID 검증
         validateStageId(stageId);
 
         // Stage 4, 5, 6 처리 (공통 처리 로직)
@@ -41,7 +38,6 @@ public class StageResetService {
             return progressStage7(sessionId, stageId);
         }
 
-        // 알 수 없는 스테이지 ID에 대한 처리
         throw new IllegalArgumentException("알 수 없는 스테이지 ID입니다.");
     }
 
@@ -65,16 +61,12 @@ public class StageResetService {
         StageResetResponseDto responseDto = new StageResetResponseDto();
         responseDto.setSessionId(sessionId); // sessionId에 따라 한 번 생성
 
-        // 인벤토리에서 세션 ID 조회
         InventoryEntity inventory = getInventoryBySessionId(sessionId);
-
-        // 최신 진행 상태 조회
         StageProgressEntity progressEntity = getLatestStageProgress(sessionId);
 
-        // 초기화 가능 조건 : 하트 수가 0개이고, isCleared가 false
         validateStageResetConditions(progressEntity);
 
-        // 조건 충족 : 데이터 초기화
+        // 조건 충족 : 데이터 삭제
         deleteAllSessionData(sessionId, inventory.getInventoryId()); // 모든 관련 데이터 삭제
 
         // 실패 메시지와 함께 새로운 진행 상태 저장
@@ -93,15 +85,13 @@ public class StageResetService {
         StageResetResponseDto responseDto = new StageResetResponseDto();
         responseDto.setSessionId(sessionId); // sessionId에 따라 한 번 생성
 
-        // 인벤토리에서 세션 ID 조회
         InventoryEntity inventory = getInventoryBySessionId(sessionId);
-
-        // StageProgress에서 sessionId로 isCleared 조회
         StageProgressEntity stageProgress = getStageProgressBySessionAndStage(sessionId, stageId);
 
         StageProgressEntity progressEntity;
 
-        deleteAllSessionData(sessionId, inventory.getInventoryId()); // 모든 관련 데이터 삭제
+        // 조건 충족 : 데이터 삭제
+        deleteAllSessionData(sessionId, inventory.getInventoryId());
         if (stageProgress.isCleared()) {
             // 성공 데이터 저장
             progressEntity = resetStageProgress(sessionId, "퍼즐 게임을 클리어하여 방탈출에 성공하였습니다.");
