@@ -101,16 +101,13 @@ public class StageResetService {
 
         StageProgressEntity progressEntity;
 
+        deleteAllSessionData(sessionId, inventory.getInventoryId()); // 모든 관련 데이터 삭제
         if (stageProgress.isCleared()) {
-            // 퍼즐 게임 성공 => 세션 ID를 포함한 데이터 삭제
-            deleteAllSessionData(sessionId, inventory.getInventoryId()); // 모든 관련 데이터 삭제
             // 성공 데이터 저장
             progressEntity = resetStageProgress(sessionId, "퍼즐 게임을 클리어하여 방탈출에 성공하였습니다.");
             // 새로운 Dto에 방탈출 성공 메시지 추가
             responseDto.setMessage("퍼즐 게임을 클리어하여 방탈출에 성공하였습니다.");
         } else {
-            // 퍼즐 게임 실패 => 세션 ID에 대한 데이터 초기화(세션 ID 유지)
-            deleteAllSessionData(sessionId, inventory.getInventoryId()); // 모든 관련 데이터 삭제
             // 실패 데이터 저장
             progressEntity = resetStageProgress(sessionId, "퍼즐 게임을 시간 안에 클리어하지 못 해 방탈출에 실패하였습니다.");
             // 새로운 Dto에 방탈출 실패 메시지 추가
