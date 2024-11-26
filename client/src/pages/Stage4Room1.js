@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Stage4Room1.module.css';
 import Inventory from '../components/Inventory.js';
@@ -14,6 +14,7 @@ import Table from 'assets/stage4/Table.png';
 function Stage4Room1() {
   const navigate = useNavigate();
   const { missionClear, getHearts, hearts } = useUser();
+  const [banner, setBanner] = useState('');
 
   useEffect(() => {
     getHearts(4);
@@ -56,6 +57,8 @@ function Stage4Room1() {
       }
     } catch (error) {
       console.log('드래그 앤 드랍 미션 오류', error);
+      setBanner('이미 클리어 된 스테이지입니다.');
+      setTimeout(() => setBanner(''), 1000);
     }
   };
 
@@ -92,6 +95,12 @@ function Stage4Room1() {
         <img draggable="true" onDragStart={handleDragStart('wrongGun1')} src={Gun_Gray} alt="Gun_Gray" />
         <img draggable="true" onDragStart={handleDragStart('wrongGun2')} src={Gun_White} alt="Gun_White" />
       </div>
+
+      {banner && (
+        <div className={styles.Banner}>
+          <p>{banner}</p>
+        </div>
+      )}
     </div>
   );
 }

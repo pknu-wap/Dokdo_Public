@@ -98,3 +98,25 @@
   left: 8vw;
   height: 28vh;
 }
+
+.Banner {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 30vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  background-color: #c1a693;
+  color: white;
+  font: Noto Sans KR;
+  font-size: 1.5vw;
+  font-weight: bold;
+  z-index: 100;
+  border-radius: 1vw;
+  text-align: center;
+  width: 30vw;
+  height: 9vh;
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.2);
+  transition: border 0.3s ease;
+}

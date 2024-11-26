@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from 'context/UserContext';
 
@@ -15,6 +15,7 @@ import Table from 'assets/stage4/Table.png';
 function Stage4Room3() {
   const navigate = useNavigate();
   const { missionClear, getHearts, hearts } = useUser();
+  const [banner, setBanner] = useState('');
 
   useEffect(() => {
     const updatedHearts = getHearts(6);
@@ -53,19 +54,28 @@ function Stage4Room3() {
       }
     } catch (error) {
       console.log('드래그 앤 드랍 미션 오류', error);
+      setBanner('이미 클리어 된 스테이지입니다.');
+      setTimeout(() => setBanner(''), 1000);
     }
   };
 
   return (
     <div className={styles.Stage4Bg}>
-      <div className={styles.TopBar}>손정팔을 죽일 수 있는 무기를 선택하라.</div>
-      <Inventory />
-
-      <div className={styles.Heart}>
-        {Array.from({ length: hearts }, (_, i) => (
-          <img key={i} src={Heart} alt="Heart" />
-        ))}
+      <div className={styles.TopBarBg}>
+        <div className={styles.TopBar}>손정팔을 죽일 수 있는 무기를 선택하라.</div>
+        {/* 하트 표시 */}
+        <div className={styles.Heart}>
+          {hearts > 0 && (
+            <>
+              {Array.from({ length: hearts }, (_, i) => (
+                <img key={i} src={Heart} alt="Heart" />
+              ))}
+            </>
+          )}
+        </div>
       </div>
+      <Inventory />
+      <div className={styles.Stage4Floor} />
 
       {/* 손정팔 이미지 (드롭 영역) */}
       <div
@@ -81,13 +91,19 @@ function Stage4Room3() {
         />
       </div>
 
+      <img className={styles.Table} src={Table} alt="Table" />
       {/* 무기 이미지들 (드래그 가능) */}
       <div className={styles.Weapon}>
         <img draggable="true" onDragStart={handleDragStart('wrongweapon1')} src={Yeontan} alt="Yeontan" />
         <img draggable="true" onDragStart={handleDragStart('correctweapon')} src={Bomb} alt="Bomb" />
         <img draggable="true" onDragStart={handleDragStart('wrongweapon2')} src={Dokki} alt="Dokki" />
       </div>
-      <img className={styles.Table} src={Table} alt="Table" />
+
+      {banner && (
+        <div className={styles.Banner}>
+          <p>{banner}</p>
+        </div>
+      )}
     </div>
   );
 }
