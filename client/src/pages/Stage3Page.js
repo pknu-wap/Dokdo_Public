@@ -3,7 +3,7 @@ import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import CheckNumber from '../components/CheckNumber.js';
 import Modal from '../components/Modal.js';
-import { createContext, useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useInventory2 } from '../context/InventoryContext2';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
