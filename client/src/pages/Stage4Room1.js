@@ -61,17 +61,21 @@ function Stage4Room1() {
 
   return (
     <div className={styles.Stage4Bg}>
-      <div className={styles.TopBar}>김춘삼을 죽일 수 있는 총을 선택하라</div>
-      <Inventory />
-
-      {/* 하트 표시 */}
-      {hearts > 0 && (
+      <div className={styles.TopBarBg}>
+        <div className={styles.TopBar}>김춘삼을 죽일 수 있는 총을 선택하라</div>
+        {/* 하트 표시 */}
         <div className={styles.Heart}>
-          {Array.from({ length: hearts }, (_, i) => (
-            <img key={i} src={Heart} alt="Heart" />
-          ))}
+          {hearts > 0 && (
+            <>
+              {Array.from({ length: hearts }, (_, i) => (
+                <img key={i} src={Heart} alt="Heart" />
+              ))}
+            </>
+          )}
         </div>
-      )}
+      </div>
+      <Inventory />
+      <div className={styles.Stage4Floor} />
 
       {/* 김춘삼 이미지 (드롭 영역) */}
       <div
@@ -81,14 +85,13 @@ function Stage4Room1() {
       >
         <img className={styles.KimChunsam} src={KimChunsam} alt="KimChunsam" />
       </div>
-
+      <img className={styles.Table} src={Table} alt="Table" />
       {/* 총 이미지들 (드래그 가능) */}
       <div className={styles.Guns}>
         <img draggable="true" onDragStart={handleDragStart('correctGun')} src={Gun_Black} alt="Gun_Black" />
         <img draggable="true" onDragStart={handleDragStart('wrongGun1')} src={Gun_Gray} alt="Gun_Gray" />
         <img draggable="true" onDragStart={handleDragStart('wrongGun2')} src={Gun_White} alt="Gun_White" />
       </div>
-      <img className={styles.Table} src={Table} alt="Table" />
     </div>
   );
 }
