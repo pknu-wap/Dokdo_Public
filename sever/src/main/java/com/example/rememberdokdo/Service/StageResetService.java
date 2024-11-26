@@ -29,19 +29,16 @@ public class StageResetService {
         // 세션 ID 유효성 검사
         validateSessionId(sessionId);
 
-        // stageId가 1,2,3인 경우 에러 처리
-        if (stageId == 1 || stageId == 2 || stageId == 3) {
-            throw new IllegalArgumentException("해당 스테이지는 초기화할 수 없습니다.");
-        }
+        // stageId가 1,2,3인 경우 에러 처리 => 초기화 불가능한 스테이지 ID 검증
+        validateStageId(stageId);
 
         // Stage 4, 5, 6 처리 (공통 처리 로직)
         if (stageId == 4 || stageId == 5 || stageId == 6) {
-            return stage456(sessionId);
+            return progressStage456(sessionId);
         }
-
         // Stage 7 (퍼즐 게임) 처리
-        if (stageId == 7) {
-            return stage7(sessionId, stageId);
+        else if (stageId == 7) {
+            return progressStage7(sessionId, stageId);
         }
 
         // 알 수 없는 스테이지 ID에 대한 처리
@@ -55,8 +52,15 @@ public class StageResetService {
         }
     }
 
+    // 초기화 불가능한 스테이지 ID 검증
+    private void validateStageId(int stageId) {
+        if (stageId == 1 || stageId == 2 || stageId == 3) {
+            throw new IllegalArgumentException("해당 스테이지는 초기화할 수 없습니다.");
+        }
+    }
+
     // stage 4,5,6 처리(남은 하트 수 기반)
-    private StageResetResponseDto stage456(String sessionId){
+    private StageResetResponseDto progressStage456(String sessionId){
         // 새로운 Dto 생성
         StageResetResponseDto responseDto = new StageResetResponseDto();
         responseDto.setSessionId(sessionId); // sessionId에 따라 한 번 생성
@@ -93,7 +97,7 @@ public class StageResetService {
     }
 
     // 스테이지7(퍼즐 게임) 처리
-    private StageResetResponseDto stage7(String sessionId, int stageId){
+    private StageResetResponseDto progressStage7(String sessionId, int stageId){
         // 새로운 Dto 생성
         StageResetResponseDto responseDto = new StageResetResponseDto();
         responseDto.setSessionId(sessionId); // sessionId에 따라 한 번 생성
