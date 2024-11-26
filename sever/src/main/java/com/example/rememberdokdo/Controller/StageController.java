@@ -59,6 +59,7 @@ public class StageController {
         return stageService.getStageStatus(sessionId, stageId);
     }
 
+    // POST /stage/{stageId}/retry
     @PostMapping("/{stageId}/reset")
     public ResponseEntity<StageResetResponseDto> resetStage(
             @PathVariable int stageId,
