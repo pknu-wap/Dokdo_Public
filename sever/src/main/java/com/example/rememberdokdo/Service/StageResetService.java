@@ -68,9 +68,8 @@ public class StageResetService {
         // 인벤토리에서 세션 ID 조회
         InventoryEntity inventory = getInventoryBySessionId(sessionId);
 
-        // 진행 상태 조회(가장 최근 상태)
-        StageProgressEntity progressEntity = stageProgressRepository.findLatestBySessionId(sessionId)
-                .orElseThrow(() -> new IllegalArgumentException("스테이지 진행 정보가 존재하지 않습니다."));
+        // 최신 진행 상태 조회
+        StageProgressEntity progressEntity = getLatestStageProgress(sessionId);
 
         // 초기화 가능 조건 : 하트 수가 0개이고, isCleared가 false
         if (progressEntity.getRemainingHearts() > 0) {
@@ -133,6 +132,12 @@ public class StageResetService {
     private InventoryEntity getInventoryBySessionId(String sessionId) {
         return inventoryRepository.findBySessionId(sessionId)
                 .orElseThrow(() -> new IllegalArgumentException("인벤토리가 존재하지 않습니다."));
+    }
+
+    // 최신 스테이지 진행 상태 조회
+    private StageProgressEntity getLatestStageProgress(String sessionId) {
+        return stageProgressRepository.findLatestBySessionId(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("스테이지 진행 정보가 존재하지 않습니다."));
     }
 
     // 스테이지 4 진행 상황 초기화
