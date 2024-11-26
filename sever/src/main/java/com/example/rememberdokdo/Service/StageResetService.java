@@ -88,6 +88,9 @@ public class StageResetService {
         InventoryEntity inventory = getInventoryBySessionId(sessionId);
         StageProgressEntity stageProgress = getStageProgressBySessionAndStage(sessionId, stageId);
 
+        // 스테이지 7 진입 전 남은 하트 수 검증
+        checkRemainingHearts(stageProgress.getRemainingHearts());
+
         StageProgressEntity progressEntity;
 
         // 조건 충족 : 데이터 삭제
@@ -105,6 +108,13 @@ public class StageResetService {
         }
         responseDto.setProgressId(progressEntity.getProgressId());
         return responseDto;
+    }
+
+    // 남은 하트 수 확인
+    private void checkRemainingHearts(int remainingHearts){
+        if (remainingHearts <= 0) {
+            throw new IllegalArgumentException("남은 하트가 0개이므로 스테이지 7에 진입할 수 없습니다.");
+        }
     }
 
     // 인벤토리 조회
