@@ -72,13 +72,7 @@ public class StageResetService {
         StageProgressEntity progressEntity = getLatestStageProgress(sessionId);
 
         // 초기화 가능 조건 : 하트 수가 0개이고, isCleared가 false
-        if (progressEntity.getRemainingHearts() > 0) {
-            throw new IllegalArgumentException("하트가 남아있어 초기화할 수 없습니다.");
-        }
-
-        if (progressEntity.isCleared()) {
-            throw new IllegalArgumentException("현재 스테이지가 클리어된 상태여서 초기화할 수 없습니다.");
-        }
+        validateStageResetConditions(progressEntity);
 
         // 조건 충족 : 데이터 초기화
         deleteAllSessionData(sessionId, inventory.getInventoryId()); // 모든 관련 데이터 삭제
@@ -138,6 +132,17 @@ public class StageResetService {
     private StageProgressEntity getLatestStageProgress(String sessionId) {
         return stageProgressRepository.findLatestBySessionId(sessionId)
                 .orElseThrow(() -> new IllegalArgumentException("스테이지 진행 정보가 존재하지 않습니다."));
+    }
+
+    // 초기화 조건 검증 => 하트 수가 0개이고, isCleared가 false
+    private void validateStageResetConditions(StageProgressEntity progressEntity) {
+        if (progressEntity.getRemainingHearts() > 0) {
+            throw new IllegalArgumentException("하트가 남아있어 초기화할 수 없습니다.");
+        }
+
+        if (progressEntity.isCleared()) {
+            throw new IllegalArgumentException("현재 스테이지가 클리어된 상태여서 초기화할 수 없습니다.");
+        }
     }
 
     // 스테이지 4 진행 상황 초기화
