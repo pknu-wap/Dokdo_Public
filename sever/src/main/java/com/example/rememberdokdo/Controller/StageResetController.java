@@ -13,9 +13,9 @@ public class StageResetController {
     private StageResetService stageResetService;
 
     // DELETE /stage/reset
-    @DeleteMapping("/reset")
+    @DeleteMapping("/reset/{sessionId}")
     public ResponseEntity<StageResetResponseDto> resetStage(
-            @RequestParam String sessionId) {
+            @PathVariable String sessionId) {
         return ResponseEntity.ok(stageResetService.resetStage(sessionId));
     }
 }
