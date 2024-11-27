@@ -16,8 +16,6 @@ public class StageController {
 
     @Autowired
     private StageService stageService;
-    @Autowired
-    private StageResetService stageResetService;
 
     // 특정 스테이지 접근 가능 여부 확인
     @GetMapping("/{stageId}/access")
@@ -55,15 +53,6 @@ public class StageController {
             @PathVariable int stageId,
             @RequestParam String sessionId
     ) {
-
         return stageService.getStageStatus(sessionId, stageId);
-    }
-
-    // POST /stage/{stageId}/retry
-    @PostMapping("/{stageId}/reset")
-    public ResponseEntity<StageResetResponseDto> resetStage(
-            @PathVariable int stageId,
-            @RequestParam String sessionId) {
-        return ResponseEntity.ok(stageResetService.resetStage(sessionId, stageId));
     }
 }
