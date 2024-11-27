@@ -12,8 +12,8 @@ public class StageResetController {
     @Autowired
     private StageResetService stageResetService;
 
-    // POST /stage/reset
-    @PostMapping("/reset")
+    // DELETE /stage/reset
+    @DeleteMapping("/reset")
     public ResponseEntity<StageResetResponseDto> resetStage(
             @RequestParam String sessionId) {
         return ResponseEntity.ok(stageResetService.resetStage(sessionId));
