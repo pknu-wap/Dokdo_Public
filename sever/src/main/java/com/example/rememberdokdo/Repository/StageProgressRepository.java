@@ -20,9 +20,5 @@ public interface StageProgressRepository extends JpaRepository<StageProgressEnti
     @Modifying
     @Query("DELETE FROM StageProgressEntity p WHERE p.sessionId = :sessionId")
     void deleteAllBySessionId(@Param("sessionId") String sessionId);
-
-    // sessionId가 같은 진행 상황 중 가장 최신의 정보 찾기
-    @Query("SELECT sp FROM StageProgressEntity sp WHERE sp.sessionId = :sessionId ORDER BY sp.progressId DESC LIMIT 1")
-    Optional<StageProgressEntity> findLatestBySessionId(@Param("sessionId") String sessionId);
 }
 
