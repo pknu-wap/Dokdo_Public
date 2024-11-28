@@ -129,12 +129,12 @@ function Stage3Page() {
 
   /* 친일파 찾기 모달 열기 */
   const openFindSpyModal = () => {
-    if (!isAnswerCorrect && !isDoorOpen) {
+    const isSpyHintInInventory = items.some((item) => item.itemName === 'japaneseInfo');
+    if (!isAnswerCorrect && !isDoorOpen && !isSpyHintInInventory) {
       /* 정답을 맞추지 않은 경우에만 열림 */
       setIsFindSpyModalOpen(true);
     }
   };
-
   /* 친일파 찾기 정답 확인 */
   const handleCheckAnswer = () => {
     const selectedIds = selectedImage.map((img) => img.id);
@@ -159,7 +159,7 @@ function Stage3Page() {
       setIsFindSpyModalOpen(false); /* 오답일 경우 모달 닫기 */
     }
     setSelectedImage([]);
-};
+  };
 
   /* 무기 힌트 이미지 클릭 */
   const handleNoteImageClick = () => {
@@ -178,8 +178,6 @@ function Stage3Page() {
     console.log('Stage3 cleared status:', user?.stages[2]?.cleared);
     if (user?.stages[2]?.cleared) {
       setIsDoorOpen(true);
-    } else {
-      setIsDoorOpen(false);
     }
   }, [user]);
 
