@@ -45,13 +45,15 @@
   position: absolute;
   width: 80vh;
   height: 55vh;
-  top: 25vh;
-  left: 65vh;
+  transform: translate(-50%, -50%);
+  top: 50vh;
+  left: 50vw;
 }
 .notice {
   position: absolute;
-  left: 90vh;
+  transform: translate(-50%, -50%);
   top: 50vh;
+  left: 50vw;
 }
 
 .Back {
