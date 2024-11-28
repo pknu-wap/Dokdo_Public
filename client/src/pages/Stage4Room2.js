@@ -17,6 +17,7 @@ import dokdoPuzzle4 from '../assets/dokdoPuzzle4.png';
 function Stage4Room2() {
   const { addItem } = useInventory2();
   const [items, setItems] = useState([]);
+  const [banner, setBanner] = useState('');
   const { user, fetchUser } = useUser();
   const navigate = useNavigate();
 
@@ -87,6 +88,8 @@ function Stage4Room2() {
       }
     } catch (error) {
       console.log('드래그 앤 드랍 미션 오류', error);
+      setBanner('이미 클리어 된 스테이지입니다.');
+      setTimeout(() => setBanner(''), 1000);
     }
   };
 
@@ -98,8 +101,21 @@ function Stage4Room2() {
 
   return (
     <div className={styles.Stage4Bg}>
-      <div className={styles.TopBar}>박환영을 죽일 수 있는 독이 든 음식을 선택하라</div>
+      <div className={styles.TopBarBg}>
+        <div className={styles.TopBar}>박환영을 죽일 수 있는 독이 든 음식을 선택하라</div>
+        {/* 하트 표시 */}
+        <div className={styles.Heart}>
+          {hearts > 0 && (
+            <>
+              {Array.from({ length: hearts }, (_, i) => (
+                <img key={i} src={Heart} alt="Heart" />
+              ))}
+            </>
+          )}
+        </div>
+      </div>
       <Inventory />
+      <div className={styles.Stage4Floor} />
 
       {/* 독도 퍼즐 조각 이미지 */}
       {isDokdoPuzzleVisible && (
@@ -110,13 +126,6 @@ function Stage4Room2() {
           onClick={handleDokdoPuzzleClick}
         />
       )}
-
-      {/* 하트 표시 */}
-      <div className={styles.Heart}>
-        {Array.from({ length: hearts }, (_, i) => (
-          <img key={i} src={Heart} alt="Heart" />
-        ))}
-      </div>
 
       {/* 박완영 이미지 (드롭 영역) */}
       <div
@@ -131,14 +140,19 @@ function Stage4Room2() {
           onDragStart={(e) => e.preventDefault()}
         />
       </div>
-
+      <img className={styles.Table} src={Table} alt="Table" />
       {/* 음식 이미지들 (드래그 가능) */}
       <div className={styles.Food}>
         <img draggable="true" onDragStart={handleDragStart('correctfood')} src={Bibimbap} alt="Bibimbap" />
         <img draggable="true" onDragStart={handleDragStart('wrongfood1')} src={Hallabong} alt="Hallabong" />
         <img draggable="true" onDragStart={handleDragStart('wrongfood2')} src={Eomuk} alt="Eomuk" />
       </div>
-      <img className={styles.Table} src={Table} alt="Table" />
+
+      {banner && (
+        <div className={styles.Banner}>
+          <p>{banner}</p>
+        </div>
+      )}
     </div>
   );
 }

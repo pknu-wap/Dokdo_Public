@@ -34,8 +34,7 @@
 .BoxOpen img,
 .Door img,
 .DoorOpen img,
-.CodeNote img,
-.ContainMapBook img {
+.CodeNote img {
   width: 100%;
   height: 100%;
 }
@@ -45,15 +44,16 @@
   background: transparent;
   position: fixed;
   top: 65vh;
-  left: 11vh;
+  left: 6vh;
   width: 13vh;
   z-index: 1;
+  cursor: pointer;
 }
 
 .Box {
   position: fixed;
   top: 60.5vh;
-  left: 8vh;
+  left: 3vh;
   width: 52.3vh;
   height: auto;
   color: transparent;
@@ -65,7 +65,7 @@
 .BoxButton {
   position: fixed;
   top: 63vh;
-  left: 10vh;
+  left: 5vh;
   width: 28vh;
   height: 16vh;
   color: transparent;
@@ -78,7 +78,7 @@
 .BoxOpen {
   position: fixed;
   top: 60.4vh;
-  left: 6.2vh;
+  left: 1.2vh;
   width: 54vh;
   height: auto;
   color: transparent;
@@ -89,7 +89,7 @@
 .BoxOpenButton {
   position: fixed;
   top: 63vh;
-  left: 5vh;
+  left: 0vh;
   width: 35vh;
   height: 17.5vh;
   color: transparent;
@@ -102,7 +102,7 @@
 .Door {
   position: fixed;
   top: 26vh;
-  left: 72vh;
+  left: 60vh;
   width: 45vh;
   height: auto;
   background: none;
@@ -114,7 +114,7 @@
 .DoorOpen {
   position: fixed;
   top: 26vh;
-  left: 72vh;
+  left: 60vh;
   width: 45vh;
   height: auto;
   background: none;
@@ -132,14 +132,14 @@
 .BookShelf {
   position: fixed;
   top: 15vh;
-  left: 125vh;
+  left: 110vh;
   width: 50vh;
 }
 
 .ContainMapBook {
   position: fixed;
   top: 17.4vh;
-  left: 140vh;
+  left: 125vh;
   width: 5vh;
   height: 17vh;
   background-color: transparent;
@@ -166,14 +166,15 @@ h1 {
 }
 .dokdoPuzzle2 {
   position: fixed;
-  top: 31vh;
+  top: 32vh;
   border: none;
   background: transparent;
-  width: 5vh;
-  height: 5vh;
-  left: 164vh;
+  width: 5.5vh;
+  height: 4.5vh;
+  left: 116vh;
   transition: transform 0s;
-  transform: rotate(65deg);
+  transform: rotate(145deg);
+  cursor: pointer;
 }
 
 .dokdoPuzzle2 img {
