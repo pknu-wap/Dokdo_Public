@@ -49,6 +49,7 @@
   top: 50vh;
   left: 50vw;
 }
+
 .notice {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -59,7 +60,10 @@
 .Back {
   width: 100vw;
   height: 100vh;
-  background-color: #fee7d7;
+  background-image: url('../assets/StartBg.png');
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100vh;
 }
 
 .TimerBack {
@@ -72,11 +76,12 @@
 
 .Timer {
   position: fixed;
-  width: 160vh;
-  left: 10vh;
+  width: 140vh;
+  left: 43vw;
+  transform: translate(-50%, 0);
   top: 2vh;
   height: 8vh;
-  background-color: rgba(193, 166, 147, 1);
+  background-color: #aa8973;
   border-radius: 3vh;
   transition: background 1s ease;
 }

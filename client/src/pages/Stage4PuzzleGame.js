@@ -167,7 +167,7 @@ function Stage4PuzzleGame() {
 
   const getTimerBackground = () => {
     const percentage = count / 1000;
-    const color = `linear-gradient(to right, beige ${percentage * 100}%, black ${percentage * 100}%)`;
+    const color = `linear-gradient(to right, #aa8973 ${percentage * 100}%, black ${percentage * 100}%)`;
     return color;
   };
 
