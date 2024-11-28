@@ -246,15 +246,7 @@ function Stage2Page() {
           <img src={BoxClose} alt="box" />
         </div>
       )}
-      <button
-        className={`${items.some((item) => item.itemName === 'dokdoPuzzle2') ? '' : styles.dokdoPuzzle2}`}
-        onClick={() => {
-          handleItemClick(2);
-          console.log('성공');
-        }}
-      >
-        <img src={dokdoPuzzle2} alt="dokdoPuzzle4" />
-      </button>
+
       <div className={styles.Stage2Modal}>
         {checkPlaceAnswer ? (
           <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={checkNumbers} size="medium">
@@ -268,6 +260,15 @@ function Stage2Page() {
           </Modal>
         )}
         {isBookOpen && <Book closeBook={closeBook} setIsMapFind={setIsMapFind} isMapFind={isMapFind} />}
+        <button
+          className={`${items.some((item) => item.itemName === 'dokdoPuzzle2') ? '' : styles.dokdoPuzzle2}`}
+          onClick={() => {
+            handleItemClick(2);
+            console.log('성공');
+          }}
+        >
+          <img src={dokdoPuzzle2} alt="dokdoPuzzle4" />
+        </button>
       </div>
     </div>
   );

@@ -8,6 +8,8 @@
 }
 
 .BackGround {
+  z-index: 50;
+  position: fixed;
   position: relative;
   width: 100%;
   height: 100%;
