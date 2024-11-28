@@ -62,7 +62,7 @@ function Stage4Room3() {
   return (
     <div className={styles.Stage4Bg}>
       <div className={styles.TopBarBg}>
-        <div className={styles.TopBar}>손정팔을 죽일 수 있는 무기를 선택하라.</div>
+        <div className={styles.TopBar}>손정팔을 죽일 수 있는 무기를 선택하라</div>
         {/* 하트 표시 */}
         <div className={styles.Heart}>
           {hearts > 0 && (
