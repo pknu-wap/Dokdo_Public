@@ -3,7 +3,7 @@ import ToolBar from '../components/ToolBar.js';
 import Inventory from '../components/Inventory.js';
 import CheckNumber from '../components/CheckNumber.js';
 import Modal from '../components/Modal.js';
-import { createContext, useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useInventory2 } from '../context/InventoryContext2';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -147,30 +147,24 @@ function Stage3Page() {
       setSelectedImage([]);
       setTimeout(() => setResultMessage(''), 1000);
 
-      /* Spy 힌트 이미지를 표시하고 2초 후 사라짐과 동시에 인벤토리에 추가 */
-      let isSpyHintHandled = false;
-
+      /* Spy 힌트 이미지를 표시하고 일정 시간 후 사라짐과 동시에 인벤토리에 추가 */
+      setSpyHintImagesVisible(true);
       setTimeout(() => {
         setSpyHintImagesVisible(false);
-
-        if (!isSpyHintHandled) {
-          handleItemClick(9);
-          isSpyHintHandled = true;
-        }
-      }, 1000);
+        handleItemClick(9); /* Spy 힌트 아이템 추가 */
+      }, 1000); /* 1초 뒤 인벤토리에 추가 */
     } else {
       setResultMessage('오답입니다. 다시 시도해주세요.');
       setTimeout(() => setResultMessage(''), 1000);
       setIsFindSpyModalOpen(false); /* 오답일 경우 모달 닫기 */
     }
     setSelectedImage([]);
-  };
+};
 
   /* 무기 힌트 이미지 클릭 */
   const handleNoteImageClick = () => {
     if (items.some((item) => item.itemName === 'GunHint')) return;
     setGunHintVisible(true); /* GunHintImage를 표시하고 NoteImage를 숨김 */
-    // setNoteImage(null);
 
     setTimeout(() => {
       setGunHintVisible(false);
@@ -198,7 +192,6 @@ function Stage3Page() {
     if (number1 === 3 && number2 === 0 && number3 === 8) {
       console.log('정답입니다. Stage Clear 호출');
       setIsDoorOpen(true); /* 정답 시 문이 열린 상태로 설정 */
-      // stageClear(3);
       setResultMessage('정답입니다!');
       setTimeout(() => setResultMessage(''), 1000);
       setIsNumberGuessModalOpen(false); /* 숫자 맞추기 모달 닫기 */
