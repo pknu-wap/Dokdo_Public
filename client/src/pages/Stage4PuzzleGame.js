@@ -152,6 +152,7 @@ function Stage4PuzzleGame() {
   useEffect(() => {
     if (stage4PuzzleAnswer) {
       setTimerRunning(false);
+      setTimeout(() => navigate('/EndSuccess'), 1500);
     }
   }, [stage4PuzzleAnswer, navigate]);
 
