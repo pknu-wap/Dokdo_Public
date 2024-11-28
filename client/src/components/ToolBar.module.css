@@ -1,0 +1,54 @@
+@keyframes fadein {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.ToolBarBackground {
+  position: absolute;
+  background-color: #c1a693;
+  height: 10%;
+  width: 100%;
+  z-index: -1;
+}
+
+.ToolBartrue {
+  position: relative;
+  top: 25px;
+  background-color: #ddc2af;
+  border-radius: 15px;
+  text-align: center;
+  font-size: large;
+  border-right: 5px solid #a98974;
+  border-top: 3px solid #a98974;
+  color: #000000;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  margin-left: 5px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.ToolBarfalse {
+  position: relative;
+  top: 25px;
+  background-color: darkgrey;
+  border-radius: 15px;
+  text-align: center;
+  font-size: large;
+  border-right: 5px solid grey;
+  border-top: 3px solid grey;
+  color: grey;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  margin-left: 5px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.ToolBartrue:hover {
+  animation: fadein 1.5s;
+}

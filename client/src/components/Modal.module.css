@@ -1,0 +1,36 @@
+.ModalContainer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.ModalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.ModalContent.small {
+  width: 300px; /* 작은 모달 */
+  height: 200px;
+}
+
+.ModalContent.medium {
+  width: 600px; /* 중간 모달 */
+  height: 400px;
+}
+
+.ModalContent.large {
+  width: 900px; /* 큰 모달 */
+  height: 700px;
+}
+
+.CloseButtonBox {
+  display: flex;
+  justify-content: flex-end;
+}
