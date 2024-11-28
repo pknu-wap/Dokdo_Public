@@ -160,9 +160,6 @@ function Stage2Page() {
     if (placeAnswer === '포항시') {
       setCheckIsPlaceAnswer(true);
     }
-    const savedStage2 = JSON.parse(sessionStorage.getItem('stage2')) || [];
-    savedStage2.push(newAnswerStatus);
-    sessionStorage.setItem('stage2', JSON.stringify(savedStage2));
   };
 
   const handleBoxOpen = () => {
