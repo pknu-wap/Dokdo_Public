@@ -1,0 +1,243 @@
+.Stage3Page {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Stage3Bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: #fee7d7;
+}
+
+.Stage3Floor {
+  position: fixed;
+  bottom: 0vh;
+  background-color: #846b66;
+  width: 100vw;
+  height: 13vh;
+}
+
+.DoorClose {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  height: 64vh;
+  top: 55vh;
+  left: 17vw;
+  z-index: 1;
+}
+
+.DoorOpen {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  height: 65vh;
+  top: 60vh;
+  left: 18vw;
+  z-index: 1;
+}
+
+.Stage3wall {
+  height: 32.5vh;
+  position: fixed;
+  top: 33.5vh;
+  left: 45vw;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.flags img {
+  position: fixed;
+  height: 10vh;
+}
+
+.flagTopLeft {
+  top: 20vh;
+  left: 35vw;
+}
+
+.flagTop2 {
+  top: 20vh;
+  left: 45vw;
+}
+
+.flagTop3 {
+  top: 20vh;
+  left: 55vw;
+}
+
+.flagTop4 {
+  top: 20vh;
+  left: 65vw;
+}
+
+.flagTopRight {
+  top: 20vh;
+  left: 75vw;
+}
+
+.flagLeft {
+  top: 36vh;
+  left: 35vw;
+}
+
+.flagLeft2 {
+  top: 53vh;
+  left: 35vw;
+}
+
+.flagRight {
+  top: 36vh;
+  left: 75vw;
+}
+
+.flagRight2 {
+  top: 53vh;
+  left: 75vw;
+}
+
+.flagBottomLeft {
+  top: 70vh;
+  left: 35vw;
+}
+
+.flagBottom2 {
+  top: 70vh;
+  left: 45vw;
+}
+
+.flagBottom3 {
+  top: 70vh;
+  left: 55vw;
+}
+
+.flagBottom4 {
+  top: 70vh;
+  left: 65vw;
+}
+
+.flagBottomRight {
+  top: 70vh;
+  left: 75vw;
+}
+
+.DokdoPuzzle3 {
+  cursor: pointer;
+  position: fixed;
+  height: 8vh;
+  top: 20vh;
+  left: 15vw;
+  cursor: pointer;
+}
+
+.ModalMent {
+  font-family: 'MapoAgape', sans-serif;
+  font-size: 1.5vw;
+  position: relative;
+  padding: 2vw;
+  top: 0vh;
+  left: 23.5vw;
+}
+
+.NumberGuessModalMent {
+  font-size: 2vw;
+  position: relative;
+  top: 0vh;
+  text-align: center;
+}
+
+.ImageGrid {
+  /* 모달 속 전체 친일파사진 위치  */
+  position: fixed;
+  top: 23vh;
+  left: 25vw;
+}
+
+.CenterContainer {
+  /* 모달 속 친일파 사진 그리드 설정 */
+  grid-area: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2vw;
+  padding: 2vw;
+  background-color: transparent;
+  border: 0.1vw solid transparent;
+}
+
+.ImageItem {
+  /* 친일파사진(각각) */
+  width: 10vw;
+  height: 22vh;
+  object-fit: cover;
+  cursor: pointer;
+  border: 0.2vw solid transparent;
+  transition: border 0.3s ease;
+}
+
+.Selected {
+  border: 0.4vw solid rgb(255, 0, 0);
+}
+
+.CheckAnswerButton {
+  margin-top: 2vw;
+  cursor: pointer;
+}
+
+.ResultBanner {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 11vh;
+  left: 50vw;
+  transform: translateX(-50%);
+  background-color: #c1a693;
+  color: white;
+  font: Noto Sans KR;
+  font-size: 1.5vw;
+  font-weight: bold;
+  z-index: 100;
+  border-radius: 1vw;
+  text-align: center;
+  width: 30vw;
+  height: 9vh;
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.2);
+  transition: border 0.3s ease;
+}
+
+.NoteImage {
+  cursor: pointer;
+  height: 4vh;
+  position: fixed;
+  top: 16vh;
+  left: 57.5vw;
+}
+
+.GunHintImage {
+  position: fixed;
+  top: 19vh;
+  left: 38vw;
+  height: 50vh;
+  z-index: 1000;
+}
+
+.SpyHintImage {
+  position: fixed;
+  top: 27vh;
+  left: 35vw;
+  width: 30vw;
+  z-index: 1000;
+}
+
+.SpyHintImage img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hidden {
+  display: none;
+}

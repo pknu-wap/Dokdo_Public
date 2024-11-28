@@ -1,0 +1,159 @@
+@keyframes smoothAppear {
+  from {
+    opacity: 0;
+    transform: scale(1.05, 1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@font-face {
+  font-family: 'MapoAgape';
+  src: url('../fonts/MapoAgape.ttf') format('truetype');
+  font-weight: 10;
+}
+
+.StartMessage {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  padding: 46vh;
+  color: rgba(102, 78, 73, 1);
+  background: transparent;
+  text-align: center;
+  font-family: 'MapoAgape';
+  font-size: 4vh;
+  font-weight: lighter;
+  position: relative;
+  z-index: 1001;
+}
+.StartMessage::after {
+  width: 100%;
+  height: 100%;
+  content: '';
+  background-color: grey;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.StartMessage img {
+  position: absolute;
+  width: 80vh;
+  height: 55vh;
+  transform: translate(-50%, -50%);
+  top: 50vh;
+  left: 50vw;
+}
+
+.notice {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50vh;
+  left: 50vw;
+}
+
+.Back {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../assets/StartBg.png');
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100vh;
+}
+
+.TimerBack {
+  position: fixed;
+  width: 180vh;
+  height: 13vh;
+  font-size: 8vh;
+  text-align: center;
+}
+
+.Timer {
+  position: fixed;
+  width: 140vh;
+  left: 43vw;
+  transform: translate(-50%, 0);
+  top: 2vh;
+  height: 8vh;
+  background-color: #aa8973;
+  border-radius: 3vh;
+  transition: background 1s ease;
+}
+
+.PuzzleBack {
+  display: grid;
+  grid-template-columns: 35vh 35vh;
+  grid-template-rows: 35vh 35vh;
+  grid-template-areas:
+    'a b'
+    'c d';
+  grid-gap: 0px;
+  position: fixed;
+  top: 20vh;
+  left: 52vh;
+  width: 70vh;
+  height: 70vh;
+  background-color: rgba(225, 226, 228, 1);
+}
+
+.dokdoPuzzle1,
+.dokdoPuzzle2,
+.dokdoPuzzle3,
+.dokdoPuzzle4 {
+  z-index: 3;
+  position: relative;
+}
+
+.dokdoPuzzle1.animate,
+.dokdoPuzzle2.animate,
+.dokdoPuzzle3.animate,
+.dokdoPuzzle4.animate {
+  animation: smoothAppear 0.5s ease forwards;
+}
+
+.dokdoPuzzleimg1 {
+  position: absolute;
+  width: 35vh;
+  height: 46vh;
+}
+.dokdoPuzzleimg2 {
+  position: absolute;
+  width: 35vh;
+  height: 46vh;
+  bottom: -5.5vh;
+  right: 5.5vh;
+  transform: rotate(90deg);
+  float: right;
+}
+.dokdoPuzzleimg3 {
+  position: absolute;
+  left: 5.5vh;
+  top: -5.5vh;
+  width: 35vh;
+  height: 46vh;
+  transform: rotate(-90deg);
+}
+.dokdoPuzzleimg4 {
+  position: absolute;
+  width: 35vh;
+  height: 46vh;
+  bottom: 0vh;
+  right: 0vh;
+  transform: rotate(180deg);
+}
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.dokdoPuzzleNone {
+  position: absolute;
+  width: 70vh;
+  height: 70vh;
+}

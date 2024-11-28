@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'MapoAgape';
+  src: url('../fonts/MapoAgape.ttf') format('truetype');
+  font-weight: 10;
+}
+
+@keyframes smoothAppear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.Back {
+  z-index: 1005;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  padding: 46vh;
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-family: 'MapoAgape';
+  font-size: 4vh;
+  font-weight: lighter;
+  animation: smoothAppear 1s ease;
+}

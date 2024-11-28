@@ -1,0 +1,163 @@
+/* Stage1 배경 및 바닥 */
+
+.Stage1Bg {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: #fee7d7;
+}
+
+.Stage1Floor {
+  position: fixed;
+  bottom: 0;
+  background-color: #846b66;
+  width: 100vw;
+  height: 13vh;
+}
+
+.Stage1Memo {
+  position: relative;
+  width: 30vw;
+  z-index: 1004;
+}
+
+/* Stage1 물건 */
+
+.Stage1LampBox {
+  width: auto;
+  height: auto;
+  position: fixed;
+  top: 8vh;
+  left: 33.5vw;
+  display: inline-block;
+}
+
+.Stage1Lamp {
+  cursor: pointer;
+  position: relative;
+  height: 17vh;
+  display: block;
+}
+
+.Stage1Light {
+  position: absolute;
+  top: 12vh;
+  left: 50%;
+  transform: translate(-50%);
+  width: 40vw;
+  height: fit-content;
+}
+
+.Stage1DoorImg {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.Stage1DoorClose {
+  height: 64vh;
+  top: 55vh;
+  left: 70vw;
+  transition: transform 0.3s ease;
+}
+
+.Stage1DoorClose:active {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.Stage1DoorOpen {
+  top: 58vh;
+  left: 70vw;
+  height: 70vh;
+}
+
+.Stage1TableBox {
+  width: auto;
+  height: auto;
+  position: fixed;
+  top: 62vh;
+  left: 32vw;
+  display: inline-block;
+}
+
+.Stage1Table {
+  position: relative;
+  display: block;
+  height: 35vh;
+}
+
+.Stage1Music {
+  position: fixed;
+  top: 33vh;
+  left: 25vw;
+  height: 19vh;
+  cursor: pointer;
+}
+
+.Stage1DrawerBox {
+  width: auto;
+  height: auto;
+  position: fixed;
+  top: 72.5vh;
+  left: 1.8vw;
+  display: inline-block;
+}
+
+.Stage1Drawer {
+  cursor: pointer;
+  display: block;
+}
+
+.Stage1DrawerClose {
+  position: fixed;
+  top: 73.3vh;
+  left: 5vw;
+  height: 20vh;
+}
+
+.Stage1DrawerOpen {
+  position: relative;
+  height: 23vh;
+}
+
+/* Stage1 아이템 */
+
+.hidden {
+  display: none;
+}
+
+.Stage1TaegeukKey {
+  position: absolute;
+  height: 4vh;
+  width: auto;
+  top: 4.4vh;
+  left: 6vw;
+}
+
+.Stage1Puzzle {
+  position: absolute;
+  height: 8vh;
+  width: fit-content;
+  top: 2vh;
+  left: 4.3vw;
+}
+
+/* Stage1 물건 확대 */
+
+.Stage1ObjectBg {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  z-index: 1003;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Stage1MusicExpand {
+  position: relative;
+  width: 70vw;
+  z-index: 1004;
+}

@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'MapoGoldenPier';
+  src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoGoldenPierA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.BackGround {
+  background-image: url('assets/StartBg.png');
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100vh;
+}
+
+.Logo {
+  width: 25vw;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 42vh;
+  left: 50%;
+}
+
+.Button {
+  cursor: pointer;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 70vh;
+  left: 50%;
+  font-family: 'MapoGoldenPier';
+  font-size: 4vh;
+  color: #fff;
+  width: 17vw;
+  height: 8vh;
+  background-color: transparent;
+  border: 0.2vh solid #fff;
+  border-radius: 1vh;
+  transition: transform 0.3s ease;
+}
+
+.Button:hover {
+  transform: scale(1.1);
+}

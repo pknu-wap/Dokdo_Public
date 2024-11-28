@@ -1,0 +1,122 @@
+.Stage4Bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fee7d7;
+}
+
+.TopBarBg {
+  position: fixed;
+  top: 0;
+  background-color: #c1a693;
+  height: fit-content;
+  width: 100vw;
+  padding: 3vh 2vw;
+  padding-bottom: 0;
+  z-index: 1000;
+  display: flex;
+  gap: 4vw;
+  align-items: center;
+}
+
+.TopBar {
+  width: 60vw;
+  height: 9vh;
+  display: flex;
+  align-items: center;
+  background-image: url('../assets/ToolBar2.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  font-family: 'Noto Sans';
+  font-size: 2vw;
+  font-weight: 600;
+  color: #fff;
+  padding: 1.5vw 3vw;
+}
+
+.Heart {
+  width: 15vw;
+  height: 9vh;
+  display: flex;
+  gap: 1vw;
+  background-image: url('../assets/ToolBar1.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 1.2vw 2.5vw 1vw 2vw;
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+.Heart img {
+  height: 5vh;
+  object-fit: contain; /* 이미지 비율 유지 */
+}
+
+.Stage4Floor {
+  position: fixed;
+  bottom: 0;
+  background-color: #846b66;
+  width: 100vw;
+  height: 13vh;
+}
+
+.KimChunsamWrapper {
+  position: fixed;
+  top: 19vh;
+  left: 26vw;
+  z-index: -1;
+  display: flex;
+  pointer-events: auto;
+}
+
+.KimChunsam {
+  height: 63vh;
+  object-fit: contain; /* 이미지 비율 유지 */
+}
+
+.Guns {
+  position: fixed;
+  top: 73vh;
+  left: 17vw;
+  display: flex;
+  gap: 5vw; /* 총 이미지 간의 간격 */
+}
+
+.Guns img {
+  height: 17vh;
+  cursor: grab;
+  transition: transform 0.2s ease; /* 드래그 효과 */
+}
+
+.Guns img:active {
+  cursor: grabbing;
+  transform: scale(1.1); /* 드래그 중 확대 효과 */
+}
+
+.Table {
+  position: fixed;
+  top: 80vh;
+  left: 8vw;
+  height: 28vh;
+}
+
+.Banner {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 30vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  background-color: #c1a693;
+  color: white;
+  font: Noto Sans KR;
+  font-size: 1.5vw;
+  font-weight: bold;
+  z-index: 100;
+  border-radius: 1vw;
+  text-align: center;
+  width: 30vw;
+  height: 9vh;
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.2);
+  transition: border 0.3s ease;
+}
