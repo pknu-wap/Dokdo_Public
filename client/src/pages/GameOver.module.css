@@ -1,5 +1,6 @@
 .GameOver {
-  position: fixed;  
+  z-index: 1005;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: #000000; /* 검정색 */
@@ -12,23 +13,23 @@
 
 .RestartButton {
   background-color: #ff6347; /* 버튼 배경색 (토마토색) */
-  color: white; 
-  border: none; 
-  border-radius: 1vw; 
-  padding: 2vh 2vw; 
-  font-size: 1.5vw; 
+  color: white;
+  border: none;
+  border-radius: 1vw;
+  padding: 2vh 2vw;
+  font-size: 1.5vw;
   font-family: 'MapoAgape', sans-serif;
-  cursor: pointer; 
-  transition: background-color 0.3s ease; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   position: fixed;
   top: 10vh;
   left: 5vw;
 }
 
 .RestartButton:hover {
-  background-color: #e5533d; 
+  background-color: #e5533d;
 }
 
 .RestartButton:active {
-  background-color: #c74a32; 
+  background-color: #c74a32;
 }

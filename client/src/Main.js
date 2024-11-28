@@ -8,6 +8,7 @@ import NewsPage from './pages/NewsPage';
 import Stage3Page from './pages/Stage3Page';
 import Stage4PuzzleGame from 'pages/Stage4PuzzleGame';
 import EndFailPage from 'pages/EndFailPage';
+import EndSuccessPage from 'pages/EndSuccessPage';
 import Stage4Room1 from './pages/Stage4Room1';
 import Stage4Room2 from './pages/Stage4Room2';
 import Stage4Room3 from './pages/Stage4Room3';
@@ -25,6 +26,7 @@ function Main() {
           <Route path="stage2" element={<Stage2Page />} />
           <Route path="stage4PuzzleGame" element={<Stage4PuzzleGame />} />
           <Route path="EndFail" element={<EndFailPage />} />
+          <Route path="EndSuccess" element={<EndSuccessPage />} />
           <Route path="stage3" element={<Stage3Page />} />
           <Route path="stage4room1" element={<Stage4Room1 />} />
           <Route path="stage4room2" element={<Stage4Room2 />} />
