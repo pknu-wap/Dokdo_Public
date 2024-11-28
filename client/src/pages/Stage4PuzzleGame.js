@@ -10,12 +10,15 @@ import dokdoPuzzle2 from '../assets/dokdoPuzzle2_2.png';
 import dokdoPuzzle3 from '../assets/dokdoPuzzle3_2.png';
 import dokdoPuzzle4 from '../assets/dokdoPuzzle4_2.png';
 import dokdoPuzzleNone from '../assets/dokdoPuzzleNone.png';
+import puzzle from '../assets/puzzle안내.png';
 
 function Stage4PuzzleGame() {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const { deleteItem } = useInventory2();
-  const { user, fetchUser } = useUser();
+  const { user, fetchUser, reset } = useUser();
+
+  const [showStartMessage, setShowStartMessage] = useState(true);
 
   const [puzzle1, setPuzzle1] = useState(dokdoPuzzleNone);
   const [puzzle2, setPuzzle2] = useState(dokdoPuzzleNone);
@@ -24,7 +27,7 @@ function Stage4PuzzleGame() {
   const [stage4PuzzleAnswer, setStage4PuzzleAnswer] = useState(false);
 
   const [count, setCount] = useState(1000);
-  const [timerRunning, setTimerRunning] = useState(true);
+  const [timerRunning, setTimerRunning] = useState(false);
 
   const handleDropOnPuzzle1 = (e) => {
     e.preventDefault();
@@ -166,6 +169,7 @@ function Stage4PuzzleGame() {
     const color = `linear-gradient(to right, beige ${percentage * 100}%, black ${percentage * 100}%)`;
     return color;
   };
+
   return (
     <div className={styles.Back}>
       <Inventory />
@@ -219,6 +223,18 @@ function Stage4PuzzleGame() {
           />
         </div>
       </div>
+      {showStartMessage ? (
+        <button
+          className={styles.StartMessage}
+          onClick={() => {
+            setShowStartMessage(false);
+            setTimerRunning(true);
+          }}
+        >
+          <img src={puzzle} alt="퍼즐 안내"></img>
+          <div className={styles.notice}>퍼즐을 맞추세요!</div>
+        </button>
+      ) : null}
     </div>
   );
 }

@@ -100,9 +100,22 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const reset = async () => {
+    try {
+      const response = await axios.delete(`${apiUrl}/stage/reset/${sessionId}`, null, {
+        withCredentials: true,
+      });
+
+      const reset = response.data.message;
+      console.log(reset);
+    } catch (error) {
+      console.log('Reset POST 요청 실패', error);
+    }
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, setUser, fetchUser, createSession, stageClear, missionClear, getHearts, hearts }}
+      value={{ user, setUser, fetchUser, createSession, stageClear, missionClear, getHearts, hearts, reset }}
     >
       {children}
     </UserContext.Provider>

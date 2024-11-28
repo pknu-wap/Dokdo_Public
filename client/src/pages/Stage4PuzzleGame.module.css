@@ -8,6 +8,52 @@
     transform: scale(1);
   }
 }
+
+@font-face {
+  font-family: 'MapoAgape';
+  src: url('../fonts/MapoAgape.ttf') format('truetype');
+  font-weight: 10;
+}
+
+.StartMessage {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  padding: 46vh;
+  color: rgba(102, 78, 73, 1);
+  background: transparent;
+  text-align: center;
+  font-family: 'MapoAgape';
+  font-size: 4vh;
+  font-weight: lighter;
+  position: relative;
+  z-index: 1001;
+}
+.StartMessage::after {
+  width: 100%;
+  height: 100%;
+  content: '';
+  background-color: grey;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.StartMessage img {
+  position: absolute;
+  width: 80vh;
+  height: 55vh;
+  top: 25vh;
+  left: 65vh;
+}
+.notice {
+  position: absolute;
+  left: 90vh;
+  top: 50vh;
+}
+
 .Back {
   width: 100vw;
   height: 100vh;
