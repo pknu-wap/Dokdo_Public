@@ -27,7 +27,7 @@ function Stage4Room3() {
 
   /* 드래그 시작 처리 */
   const handleDragStart = (weaponType) => (e) => {
-    e.dataTransfer.setData('text/plain', weaponType); // 드래그 데이터를 설정
+    e.dataTransfer.setData('text/plain', weaponType); /*  드래그 데이터를 설정 */
   };
 
   /* 드롭 처리 */
