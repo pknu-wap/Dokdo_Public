@@ -188,6 +188,9 @@
 
 .ResultBanner {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 11vh;
   left: 50vw;
   transform: translateX(-50%);
