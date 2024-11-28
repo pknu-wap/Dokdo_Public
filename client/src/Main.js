@@ -11,7 +11,7 @@ import EndFailPage from 'pages/EndFailPage';
 import Stage4Room1 from './pages/Stage4Room1';
 import Stage4Room2 from './pages/Stage4Room2';
 import Stage4Room3 from './pages/Stage4Room3';
-import GameOver from './components/GameOver';
+import GameOver from './pages/GameOver';
 
 function Main() {
   return (
