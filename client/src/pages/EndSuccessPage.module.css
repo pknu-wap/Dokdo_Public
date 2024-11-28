@@ -30,8 +30,9 @@
 
 .letter {
   position: absolute;
-  width: 50vh;
+  width: 55vh;
   z-index: 2000;
-  left: 80vh;
-  top: 15vh;
+  transform: translate(-50%, -50%);
+  left: 50vw;
+  top: 50vh;
 }
