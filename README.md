@@ -25,28 +25,27 @@
 
 눈을 뜨니 낯선 공간, 이곳은 어디지? 탈출을 시도하라!
 
-<br>
+<hr>
 
 ### STAGE 2: 문제 풀이
 ![KakaoTalk_20241204_221916600_02](https://github.com/user-attachments/assets/fdcec83f-c696-40a6-a665-50c22ce31920)
 
 문을 통과하여 진실에 다가가라. 모든 방이 퍼즐이다.
 
-<br>
+<hr>
 
 ### STAGE 3: 독립운동가 찾기
 ![KakaoTalk_20241204_221916600_03](https://github.com/user-attachments/assets/447486de-69ee-4e74-b507-07472f8f0a2b)
 
 친일파의 흔적을 쫓아 정의를 실현하라.
 
-<br>
+<hr>
 
 ### STAGE 4: 최종 단계
 ![KakaoTalk_20241204_221916600_04](https://github.com/user-attachments/assets/eb21429b-1f9b-43dd-87fc-d2da4edc9513)
 
 모든 것을 바로잡고, 원래 세상으로 돌아와라!
 
-<br>
 
 ## 🛠️Teck Stacks
 ### Front-End
